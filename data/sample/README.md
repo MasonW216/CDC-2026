@@ -43,13 +43,24 @@ exactly the bugs `tests/data/test_noaa.py` exists to catch.
 
 ## `county_windows_sample.csv`
 
-Ten model-ready rows matching the `county_windows.parquet` schema in
-[docs/data_card.md](../../docs/data_card.md): five positive and five negative,
+Twelve model-ready rows matching the `county_windows.parquet` schema in
+[docs/data_card.md](../../docs/data_card.md): seven positive and five negative,
 spanning the mountain (Buncombe, Haywood, Transylvania), Piedmont (Mecklenburg,
-Alamance, Wake), and coastal (New Hanover, Carteret, Onslow) regions, and
-covering all four split labels.
+Alamance, Wake), and coastal plain (New Hanover, Carteret, Edgecombe, Halifax)
+regions, and covering all four split labels.
 
-The positive rate here (50%) is **deliberately unrealistic**. It keeps the
+Every label is consistent with `storm_events_sample.csv` under the locked onset
+rule (`window_start <= event_begin < window_end`, UTC), and
+`tests/data/test_windows.py` enforces it. Worth noting:
+
+- Transylvania is positive in the **12:00** window: event 600012 begins at
+  07:00 EST, which is 12:00 UTC.
+- New Hanover is **negative** during event 600007 because Heavy Rain does not qualify.
+- Halifax's zero-duration event 600015 at exactly 06:00 UTC makes the window
+  **starting** at 06:00 positive and the window **ending** there negative.
+- `month_sin` and `month_cos` are `sin(2π·month/12)` and `cos(2π·month/12)`.
+
+The positive rate here (58%) is **deliberately unrealistic**. It keeps the
 fixture small and readable. The real positive rate is rare-event scale, is
 measured in Milestone 2, and is reported in
 [reports/eda/eda_findings.md](../../reports/eda/eda_findings.md). Never quote a

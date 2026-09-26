@@ -129,7 +129,7 @@ drafting may proceed; unsupported analytical claims may not.
 - **Blocked by:** #6
 - **Acceptance**
   - [ ] Full 100-county × six-hour grid, 2015–2024, anchored at 00:00 UTC
-  - [ ] Labels follow the locked overlap rule
+  - [ ] Labels follow the locked onset rule (`window_start <= begin < window_end`)
   - [ ] Tests: midnight, year-end, exact boundary, multi-window events
   - [ ] Split column assigned by calendar year; splits disjoint
   - [ ] Row count equals expected count after documented exclusions

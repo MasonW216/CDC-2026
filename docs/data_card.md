@@ -12,7 +12,7 @@
 | Geography | North Carolina, 100 counties |
 | Period | 2015–2024 |
 | Unit | county × six-hour window, anchored at 00:00 UTC |
-| Label | ≥ 1 Flood, Flash Flood, or Debris Flow event overlaps the window |
+| Label | ≥ 1 Flood, Flash Flood, or Debris Flow event begins in the window (`window_start <= begin < window_end`) |
 | Sources | NOAA Storm Events · ERA5-Land · Census TIGER/Line 2024 · (optional) USGS 3DEP |
 | Registry | [`data/data_manifest.yaml`](../data/data_manifest.yaml) |
 

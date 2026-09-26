@@ -10,7 +10,7 @@
 
 | | |
 |---|---|
-| Task | Probability that a Flood, Flash Flood, or Debris Flow event is reported in a NC county during a six-hour window |
+| Task | Probability that a reported Flood, Flash Flood, or Debris Flow event begins in a NC county during a six-hour window |
 | Family | Gradient-boosted trees (XGBoost), monotone-increasing in rainfall and soil moisture |
 | Calibration | Sigmoid (Platt), fit on 2023 only |
 | Baselines | Smoothed county-month climatology · regularized logistic regression |
@@ -77,6 +77,8 @@ See [responsible_ai.md](responsible_ai.md#evaluation-slices--tbd-milestone-8).
 - **Train-serve skew.** Trained on reanalysis; live use would see forecasts.
   Metrics are an upper bound on live performance.
 - **Resolution.** County × six hours; says nothing about a specific road.
+- **Onset label.** A window is positive only if an event *begins* in it; later
+  windows of a still-ongoing flood are negative.
 - **Test-year concentration.** Helene may dominate 2024.
 - **Rare positives.** Wide intervals are expected and will be reported, not hidden.
 

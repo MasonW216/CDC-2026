@@ -38,12 +38,15 @@ label:
     - Flood
     - Flash Flood
     - Debris Flow
-  # A window is positive when a qualifying event overlaps it:
-  #   event_begin < window_end AND event_end > window_start
-  overlap_rule: "event_begin < window_end AND event_end > window_start"
+  # A window is positive when a qualifying event BEGINS in it (build guide
+  # §2.1; see docs/adr/0001-county-six-hour-target.md). Windows are half-open,
+  # so every event lands in exactly one window, including zero-duration events
+  # that begin exactly on a boundary. Event end time is not used.
+  rule: onset
+  onset_rule: "window_start <= event_begin < window_end"
   positive_meaning: >-
-    At least one qualifying event was reported as beginning or ongoing in this
-    county during this window.
+    At least one qualifying event was reported as beginning in this county
+    during this window.
   negative_meaning: >-
     No qualifying event was reported. This is not evidence of safe road
     conditions.

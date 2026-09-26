@@ -69,7 +69,7 @@ Details are in [docs/architecture.md](docs/architecture.md).
 | | |
 |---|---|
 | Unit | North Carolina county × six-hour window, 2015–2024 |
-| Label | ≥ 1 Flood, Flash Flood, or Debris Flow event reported in the window |
+| Label | ≥ 1 Flood, Flash Flood, or Debris Flow event begins in the window |
 | Features | Rolling precipitation, soil moisture, temperature, wind, terrain, season |
 | Model | Monotonic gradient-boosted trees, sigmoid-calibrated |
 | Baselines | County-month climatology · logistic regression |
