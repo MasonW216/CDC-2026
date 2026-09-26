@@ -18,7 +18,7 @@ Run the checks relevant to the change you are told about (run everything if unsu
 5. If routing, cache, or demo code changed: `make demo-cache`, then confirm the replay works with no network where the issue requires it
 6. Any extra command named in the issue's acceptance criteria (e.g. a county-count test for #3)
 
-Also check `git status --porcelain` and `git diff --cached --name-only` for forbidden paths: `data/raw/`, `data/interim/`, `data/processed/`, `*.parquet`, `*.joblib`, `.env`, or absolute paths like `/Users/`.
+Also check `git status --porcelain` and `git diff --cached --name-only` for forbidden paths: `data/raw/`, `data/interim/`, `data/processed/`, `*.parquet`, `*.joblib`, `.env`, or absolute local home-directory paths (macOS or Linux user folders).
 
 ## How to report
 
