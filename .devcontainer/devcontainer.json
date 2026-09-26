@@ -1,6 +1,6 @@
 {
   "name": "StormRoute (Python 3.11 + Node 20)",
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bookworm",
+  "build": { "dockerfile": "Dockerfile" },
 
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
@@ -12,8 +12,6 @@
     },
     "ghcr.io/devcontainers/features/sshd:1": {}
   },
-
-  "onCreateCommand": "bash .devcontainer/on-create.sh",
 
   "postCreateCommand": "make setup",
 
