@@ -63,13 +63,7 @@ jobs:
         run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Install locked dependencies
-        run: |
-          if [ -f uv.lock ]; then
-            uv sync --locked --extra dev --extra notebook
-          else
-            echo "::warning::uv.lock is missing; resolving dependencies without a lock. Commit uv.lock for reproducible CI."
-            uv sync --extra dev --extra notebook
-          fi
+        run: uv sync --locked --extra dev --extra notebook
 
       - name: Ruff format check
         run: uv run ruff format --check .
