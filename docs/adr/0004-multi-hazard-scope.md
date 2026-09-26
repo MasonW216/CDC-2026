@@ -1,6 +1,6 @@
 # ADR 0004 — Extend the hazard scope beyond flooding (phased)
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-26
 - **Proposed by:** Jeffrey
 - **Requires:** all three members' approval; does not change anything before the flood model passes Milestone 4
@@ -25,7 +25,7 @@ National in-vehicle deaths per 1,000 events (fatalities file, 2015-2024):
 tropical 17.9, dense fog 13.2, **flooding 6.4, winter 5.6**, wind/severe 0.7.
 Nationally, winter caused 531 in-vehicle deaths vs. 558 for flooding.
 
-## Decision (proposed)
+## Decision 
 
 Extend in **phases**, so the flood pipeline and its gates are never put at risk:
 
