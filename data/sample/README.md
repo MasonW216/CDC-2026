@@ -68,9 +68,22 @@ measured in Milestone 2, and is reported in
 [reports/eda/eda_findings.md](../../reports/eda/eda_findings.md). Never quote a
 rate computed from this file.
 
+## `nc_counties_sample.geojson`
+
+All 100 North Carolina counties from the 2024 Census TIGER/Line file, run
+through `stormroute.data.geography` and then **heavily simplified** (Shapely
+`simplify(0.01°)`, about 1 km, coordinates rounded to 4 decimals) so it stays
+about 50 KB. It exists so the EDA choropleth and the route spatial-join tests
+work in sample mode.
+
+Columns match the canonical county table: `county_fips` (5-character string),
+`name`, geometry in EPSG:4326. Borders are approximate: good for maps and for
+routing tests at county scale, never for deciding which county a point near a
+border is in. Regenerate from the real file rather than editing by hand.
+
 ## Rules
 
 - Public, already-published values only. Never a private or re-identifiable record.
-- Keep both files under a few kilobytes.
+- Keep the CSV fixtures under a few kilobytes; the county GeoJSON is the one exception (~50 KB).
 - Preserve the real column names and types of the upstream source.
 - A fixture change and its test change belong in the same pull request.

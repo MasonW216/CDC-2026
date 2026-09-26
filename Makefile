@@ -49,9 +49,7 @@ setup: ## Install Python, notebook, and frontend dependencies
 
 download: ## Download/version required source data (Milestone 1)
 	$(UV) run $(PYTHON) scripts/download_noaa.py
-	@echo ""
-	@echo "  NOTE: county boundaries are not downloaded yet: scripts/download_boundaries.py"
-	@echo "  is pending (issue #3, CS major). The EDA choropleth needs it."
+	$(UV) run $(PYTHON) scripts/download_boundaries.py
 
 eda: ## Execute the EDA notebook top to bottom in a clean kernel (Milestone 2)
 	$(UV) run jupyter nbconvert --to notebook --execute \

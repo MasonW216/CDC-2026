@@ -157,9 +157,10 @@ datasets:
     license: U.S. Government work, public domain
     local_raw_path: data/raw/census_tiger
     expected_file_pattern: "tl_2024_us_county.zip"
-    access_date: TBD
-    resolved_files: TBD
-    checksum: TBD
+    access_date: 2026-09-26
+    resolved_files:
+      - {file: tl_2024_us_county.zip, bytes: 83913260}
+    checksum: sha256:04e668d3502757c837c13444730547cd967f28a2c49aeffb873d1792ab2cb97b
     pipeline_script: scripts/download_boundaries.py
     consumed_by: src/stormroute/data/geography.py
     notes: Expect exactly 100 North Carolina counties.
