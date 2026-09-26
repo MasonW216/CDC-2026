@@ -36,7 +36,7 @@ dependencies = [
     # pandas 2.3 predates numpy 2.5, whose timedelta deprecation fires inside
     # pandas itself (e.g. pd.Timedelta(hours=1)). Lift this cap with pandas 3.
     "numpy>=1.26,<2.5",
-    "pyarrow>=16,<21",
+    "pyarrow>=16,<26",
     # Geospatial
     "geopandas>=1.0,<2",
     "shapely>=2.0,<3",
