@@ -2,7 +2,7 @@
 
 > **Owner:** Mason · **Independent evaluation:** Econ/Stats major · **Milestone:** 4
 >
-> Structure and fixed facts only. Every metric is _TBD_ until the single final
+> Planned model design; no trained-model performance is established. Every metric is _TBD_ until the single final
 > evaluation on 2024. No number enters this card without a matching entry in
 > `outputs/metrics/`.
 
@@ -44,7 +44,8 @@ Features and exclusions: see [data_card.md](data_card.md).
 
 ## Metrics — _TBD_
 
-Intervals are 95% bootstrap intervals resampled by storm episode.
+Planned intervals are 95% bootstrap intervals resampled by storm episode;
+no intervals have been computed or validated yet.
 
 | Model | PR-AUC | Brier | Log loss | Recall @ top 1% | Precision @ top 1% |
 |---|---|---|---|---|---|
@@ -74,8 +75,9 @@ See [responsible_ai.md](responsible_ai.md#evaluation-slices--tbd-milestone-8).
 ## Limitations and risks
 
 - **Reporting bias.** The model learns what gets reported.
-- **Train-serve skew.** Trained on reanalysis; live use would see forecasts.
-  Metrics are an upper bound on live performance.
+- **Train-serve skew.** Planned training uses reanalysis; live use would see forecasts.
+  Retrospective metrics do not establish live performance or a numerical bound
+  on it. Archived-forecast evaluation is required before live-accuracy claims.
 - **Resolution.** County × six hours; says nothing about a specific road.
 - **Onset label.** A window is positive only if an event *begins* in it; later
   windows of a still-ongoing flood are negative.

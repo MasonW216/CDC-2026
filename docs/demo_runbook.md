@@ -5,6 +5,11 @@
 > Skeleton. Expected values are filled in from `artifacts/demo/demo_scores.json`
 > every time `make demo-cache` runs.
 
+**Verification status:** this is a planned checklist. Offline operation, fallback
+behavior, and the click sequence have not been demonstrated by the sample EDA.
+Do not describe the demo as reliable or working offline until the CS owner
+records a successful rehearsal with versioned artifacts.
+
 ## Before going on stage
 
 | Check | Command / action | Owner |
