@@ -10,6 +10,7 @@ slides, or DevPost entry must trace to a file here.
 | `eda_event_durations.json` | `make eda`, section 6 | 2 |
 | `eda_reporting_coverage.json` | `make eda`, section 6 | 2 |
 | `eda_helene_comparison.json` | `make eda`, section 6 | 2 |
+| `eda_reported_impacts.json` | `make eda`, section 8 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -58,3 +59,12 @@ all study-period reports as explicit denominators; empty denominators produce
 null shares. The chart is `eda_helene_comparison.png`. Unequal observation
 periods prevent interpreting totals as relative hazard rates, and dates alone
 do not establish Helene attribution. Full-data findings remain pending.
+
+The impact export summarizes injuries, deaths, and nominal property-damage USD
+overall and by hazard, including known/missing/zero/positive counts, reported
+totals, median, 90th/95th percentiles, and maximum. Unknown values are excluded
+from statistics; groups without known values have null statistics. Injury/death
+totals are unknown if either direct or indirect counts are missing. The chart
+`eda_reported_impacts.png` contrasts zero, positive, and unknown outcomes.
+These post-event outcomes are not model inputs or traveler-specific risk
+estimates. Full-data findings remain pending.
