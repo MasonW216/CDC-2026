@@ -62,6 +62,26 @@ datasets:
     consumed_by: src/stormroute/data/geography.py
     notes: Include only if the Milestone 2 geography audit shows it is needed.
 
+  - name: noaa_storm_events_fatalities
+    required: false
+    publisher: NOAA National Centers for Environmental Information (NCEI)
+    description: >-
+      One record per storm death, including where it occurred (e.g. Vehicle/Towed
+      Trailer). ANALYSIS ONLY: impact statistics and the proposed severity
+      weights in docs/adr/0004. Never a model feature.
+    source_url: https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/
+    years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    geography: United States
+    license: U.S. Government work, public domain
+    local_raw_path: data/raw/noaa_storm_events
+    expected_file_pattern: "StormEvents_fatalities-ftp_v1.0_d{year}_c*.csv.gz"
+    access_date: "2026-09-26"
+    resolved_files: TBD
+    checksum: TBD
+    pipeline_script: scripts/download_noaa.py
+    consumed_by: notebooks/01_storm_events_eda.ipynb
+    usage_restriction: Outcome data. Must never enter the feature matrix.
+
   # -------------------------------------------------------------------------
   # 2. Features
   # -------------------------------------------------------------------------
@@ -69,28 +89,35 @@ datasets:
     required: true
     publisher: Copernicus Climate Change Service (C3S) / ECMWF
     description: >-
-      Hourly reanalysis: precipitation, temperature, wind, and soil moisture.
-      Source of every weather feature.
-    source_url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+      Hourly reanalysis: precipitation, temperature, snow depth, wind, and soil
+      moisture. Source of every gridded weather feature.
+    source_url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries
     documentation_url: https://confluence.ecmwf.int/display/CKB/ERA5-Land
-    access_method: TBD
+    access_method: >-
+      PROPOSED in docs/adr/0005: CDS point time-series API (cdsapi), one request
+      per county at the Census Gazetteer internal point (nearest 0.1 deg cell),
+      CSV output. Variables 2m_temperature, total_precipitation, snow_depth,
+      10m_u_component_of_wind, 10m_v_component_of_wind,
+      volumetric_soil_water_level_1.
     years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
-    geography: North Carolina bounding box, aggregated to county
+    geography: 100 NC counties (+ 5 TN counties retrieved, unused unless a TN scenario is added)
     license: >-
       Copernicus Licence. Free to use and redistribute with attribution;
       Copernicus is not liable for downstream use.
     local_raw_path: data/raw/weather
-    expected_file_pattern: "era5_land_{variable}_{year}.nc"
-    access_date: TBD
-    resolved_files: TBD
-    checksum: TBD
+    expected_file_pattern: "era5_land_timeseries/{county_fips}.csv and era5_land_soil/{county_fips}.csv"
+    access_date: "2026-09-26"
+    resolved_files: 105 + 105 CSVs, 87,672 hourly rows each (2015-01-01T00Z to 2024-12-31T23Z)
+    checksum: per-file SHA-256 in data/raw/weather/SHA256SUMS
     pipeline_script: scripts/fetch_weather.py
     consumed_by: src/stormroute/data/weather.py
     notes: >-
       Reanalysis is retrospective and is NOT what a live deployment would see.
       This train-serve boundary is documented in
       docs/adr/0003-reanalysis-live-forecast-boundary.md and must be stated in
-      the model card and in the app.
+      the model card and in the app. Units: t2m K, tp m per hour
+      (de-accumulated), sde m, u10/v10 m/s, swvl1 m3/m3. ERA5-Land has no wind
+      gust; see iem_asos. A single point per county is not an area average.
 
   - name: census_tiger_counties_2024
     required: true
@@ -108,6 +135,78 @@ datasets:
     pipeline_script: scripts/download_boundaries.py
     consumed_by: src/stormroute/data/geography.py
     notes: Expect exactly 100 North Carolina counties.
+
+  - name: iem_asos
+    required: false
+    publisher: Iowa Environmental Mesonet (IEM), Iowa State University, from NWS/FAA ASOS
+    description: >-
+      Hourly airport station observations (routine + special METARs): wind
+      gust, peak wind gust, visibility, present-weather codes (FZRA, SN, FG,
+      TS), ice accretion, precipitation, temperature. PROPOSED in
+      docs/adr/0005 as the wind-gust source.
+    source_url: https://mesonet.agron.iastate.edu/request/download.phtml
+    years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    geography: NC_ASOS network
+    license: Derived from U.S. Government observations; cite IEM
+    local_raw_path: data/raw/weather/asos
+    access_date: "2026-09-26 (download in progress)"
+    resolved_files: TBD
+    checksum: TBD
+    pipeline_script: TBD
+    consumed_by: src/stormroute/data/weather.py
+    notes: M = missing, T = trace (treat as 0). Gusts only reported when gusty.
+
+  - name: iem_vtec_alert_archive
+    required: false
+    publisher: Iowa Environmental Mesonet (IEM), archive of NWS VTEC products
+    description: >-
+      Historical watches, warnings, and advisories with polygons and
+      issue/expire times. PROPOSED in docs/adr/0007 as the alert-floor source
+      for replay scenarios (the live NWS API serves only active alerts).
+    source_url: https://mesonet.agron.iastate.edu/request/gis/watchwarn.phtml
+    geography: NC (1,856 records) and TN (884 records)
+    period: events starting 2024-09-22T00Z to 2024-10-01T00Z
+    license: Derived from U.S. Government products; cite IEM
+    local_raw_path: data/raw/nws_alerts_archive
+    expected_file_pattern: "helene_{nc,tn}.zip"
+    access_date: "2026-09-26"
+    resolved_files: [helene_nc.zip, helene_tn.zip]
+    checksum:
+      helene_nc.zip: 04ba02a70d2b66e484b4165a158420810814f5e295d03c5b146f97a7b4877cdc
+      helene_tn.zip: 0338a46e78cff7ed034573e2d404c1fa5cbd40beda13ba8bd460c55ff5a04553
+    pipeline_script: scripts/cache_demo.py
+    consumed_by: src/stormroute/scoring/alerts.py
+
+  - name: census_gazetteer_counties_2023
+    required: false
+    publisher: U.S. Census Bureau
+    description: County internal points (INTPTLAT, INTPTLONG); the weather lookup location per county.
+    source_url: https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/2023_Gaz_counties_national.zip
+    license: U.S. Government work, public domain
+    local_raw_path: data/raw/census_gazetteer
+    access_date: "2026-09-26"
+    resolved_files: [2023_Gaz_counties_national.zip]
+    checksum: 919df59ba90759cce85468c0337e898e4b39c08eaffce86ddd88fa41f1f7f0c8
+    pipeline_script: scripts/fetch_weather.py
+    consumed_by: src/stormroute/data/weather.py
+
+  - name: nws_zone_county_correlation
+    required: false
+    publisher: NOAA National Weather Service
+    description: >-
+      Public forecast zone to county FIPS crosswalk. Candidate input for
+      zone_to_county_strategy in configs/data.yaml (all NC winter events and
+      most tropical/high-wind events are zone-coded).
+    source_url: https://www.weather.gov/source/gis/Shapefiles/County/bp16ap26.dbx
+    documentation_url: https://www.weather.gov/gis/ZoneCounty
+    license: U.S. Government work, public domain
+    local_raw_path: data/raw/nws_zones
+    access_date: "2026-09-26"
+    resolved_files: [nws_zone_county_bp16ap26.txt]
+    checksum: 69d3472d4d576b8a4924efb7a43108f7c64111f503e15efd650f43dc617a6f12
+    pipeline_script: TBD
+    consumed_by: src/stormroute/data/geography.py
+    notes: Valid 16 April 2026; zones changed over 2015-2024, so verify old zone codes resolve.
 
   # -------------------------------------------------------------------------
   # 3. Live services (no bulk download; documented for attribution and limits)
