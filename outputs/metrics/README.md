@@ -6,6 +6,7 @@ slides, or DevPost entry must trace to a file here.
 | File | Produced by | Milestone |
 |---|---|---|
 | `eda_missingness.json` | `make eda`, section 3 | 2 |
+| `eda_event_counts.json` | `make eda`, section 6 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -22,3 +23,10 @@ null fractions, not a claim of zero missingness.
 Sample-mode EDA writes to `outputs/metrics/sample/` and
 `outputs/figures/sample/`, which are ignored. These synthetic results must not
 be used as population findings. Full-data missingness results remain pending.
+
+The event-count export provides annual, pooled-month, observed-county, and hazard
+totals for unique cleaned events beginning within the configured UTC period.
+Each breakdown reconciles to the same event total. It also records events
+excluded at the UTC period boundaries, source checksums, mode, and Git commit.
+County FIPS remain strings. Absent counties are not inferred to have zero
+reports without a complete county inventory. Full-data counts remain pending.
