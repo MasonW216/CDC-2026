@@ -14,11 +14,13 @@ from shapely.geometry import Polygon, box
 
 from stormroute.config import data_path
 from stormroute.data.geography import (
+    AREA_CRS,
     COUNTY_COLUMNS,
     COUNTY_CRS,
     TIGER_COUNTY_FILENAME,
     counties_from_tiger,
     load_nc_counties,
+    load_sample_counties,
     plan_boundary_download,
     record_boundary_download,
     validate_counties,
@@ -39,11 +41,20 @@ def tiger_rows(nc_count: int = 100, *, countyfp_as_int: bool = False) -> gpd.Geo
                 "STATEFP": "37",
                 "COUNTYFP": code if countyfp_as_int else f"{code:03d}",
                 "NAME": f"County {code}",
+                "ALAND": 1_000_000 + i,
                 "geometry": box(i, 0, i + 1, 1),
             }
         )
-    rows.append({"STATEFP": "47", "COUNTYFP": "001", "NAME": "Anderson", "geometry": box(0, 5, 1, 6)})
-    rows.append({"STATEFP": "45", "COUNTYFP": "001", "NAME": "Abbeville", "geometry": box(0, 7, 1, 8)})
+    for state, name, y in (("47", "Anderson", 5), ("45", "Abbeville", 7)):
+        rows.append(
+            {
+                "STATEFP": state,
+                "COUNTYFP": "001",
+                "NAME": name,
+                "ALAND": 1,
+                "geometry": box(0, y, 1, y + 1),
+            }
+        )
     return gpd.GeoDataFrame(rows, crs="EPSG:4269")
 
 
@@ -105,6 +116,13 @@ def test_missing_or_invalid_geometry_is_an_error():
         validate_counties(counties)
 
 
+def test_missing_or_nonpositive_land_area_is_an_error():
+    counties = counties_from_tiger(tiger_rows())
+    counties.loc[counties.index[0], "land_area_m2"] = 0
+    with pytest.raises(DataContractError, match="land_area_m2"):
+        validate_counties(counties)
+
+
 def test_missing_crs_is_an_error():
     counties = counties_from_tiger(tiger_rows()).set_crs(None, allow_override=True)
     with pytest.raises(DataContractError, match="CRS"):
@@ -123,6 +141,15 @@ def test_sample_fixture_meets_the_county_contract(monkeypatch):
     assert counties.crs == COUNTY_CRS
 
 
+def test_sample_fixture_has_no_gaps_or_overlaps_between_counties():
+    projected = load_sample_counties().to_crs(AREA_CRS)
+    union = projected.union_all()
+    overlap_km2 = (projected.area.sum() - union.area) / 1e6
+    assert overlap_km2 < 0.01
+    parts = getattr(union, "geoms", [union])
+    assert sum(len(part.interiors) for part in parts) == 0
+
+
 def test_full_mode_without_download_explains_how_to_get_the_file(tmp_path):
     with pytest.raises(FileNotFoundError, match="make download"):
         load_nc_counties(tmp_path / TIGER_COUNTY_FILENAME)
@@ -138,6 +165,9 @@ def test_real_tiger_file_yields_exactly_100_nc_counties():
     assert len(counties) == 100
     assert counties["county_fips"].str.match(FIPS_PATTERN).all()
     assert {"37001", "37021", "37119", "37199"} <= set(counties["county_fips"])
+    sample = load_sample_counties()
+    columns = ["county_fips", "name", "land_area_m2"]
+    assert sample[columns].equals(counties[columns])
 
 
 # --- download planning ------------------------------------------------------

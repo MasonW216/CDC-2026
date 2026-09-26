@@ -71,19 +71,21 @@ rate computed from this file.
 ## `nc_counties_sample.geojson`
 
 All 100 North Carolina counties from the 2024 Census TIGER/Line file, run
-through `stormroute.data.geography` and then **heavily simplified** (Shapely
-`simplify(0.01°)`, about 1 km, coordinates rounded to 4 decimals) so it stays
-about 50 KB. It exists so the EDA choropleth and the route spatial-join tests
-work in sample mode.
+through `stormroute.data.geography` and then simplified with
+`shapely.coverage_simplify(0.01)` (coordinates rounded to 4 decimals) so it stays
+about 80 KB. Coverage simplification keeps shared borders shared: the fixture
+has no gaps or overlaps between neighbouring counties, so every point inside
+North Carolina falls in exactly one county, as with the real file.
 
 Columns match the canonical county table: `county_fips` (5-character string),
-`name`, geometry in EPSG:4326. Borders are approximate: good for maps and for
-routing tests at county scale, never for deciding which county a point near a
-border is in. Regenerate from the real file rather than editing by hand.
+`name`, `land_area_m2` (TIGER ALAND), geometry in EPSG:4326. Borders are about
+1 km coarser than the real file, so a point within ~1 km of a county line may
+land in the neighbouring county; keep sample-mode test points away from borders.
+Regenerate from the real file rather than editing by hand.
 
 ## Rules
 
 - Public, already-published values only. Never a private or re-identifiable record.
-- Keep the CSV fixtures under a few kilobytes; the county GeoJSON is the one exception (~50 KB).
+- Keep the CSV fixtures under a few kilobytes; the county GeoJSON is the one exception (~80 KB).
 - Preserve the real column names and types of the upstream source.
 - A fixture change and its test change belong in the same pull request.

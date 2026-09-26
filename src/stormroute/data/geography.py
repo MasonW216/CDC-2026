@@ -14,8 +14,12 @@ Contract for the county table (`COUNTY_COLUMNS`):
   * `county_fips` is a 5-character string, state FIPS + zero-padded county
     code (`37001`), never an integer;
   * `name` is the TIGER short name (`Alamance`, not `Alamance County`);
+  * `land_area_m2` is TIGER's ALAND. TIGER polygons include inland and coastal
+    water (so bridges and ferry legs still join to a county), which makes
+    geometry area overstate coastal counties; normalize by land area instead;
   * geometry is stored in `crs_storage` from configs/data.yaml (EPSG:4326).
-    Project to a metric CRS before measuring distances or areas;
+    Project to `AREA_CRS` (`crs_area`, EPSG:5070) before measuring distances
+    or areas;
   * rows are sorted by `county_fips`.
 """
 
@@ -39,7 +43,8 @@ _GEOGRAPHY = load_config("data")["geography"]
 STATE_FIPS: str = _GEOGRAPHY["state_fips"]
 EXPECTED_COUNTY_COUNT: int = _GEOGRAPHY["expected_county_count"]
 COUNTY_CRS = CRS.from_user_input(_GEOGRAPHY["crs_storage"])
-COUNTY_COLUMNS = ["county_fips", "name", "geometry"]
+AREA_CRS = CRS.from_user_input(_GEOGRAPHY["crs_area"])
+COUNTY_COLUMNS = ["county_fips", "name", "land_area_m2", "geometry"]
 
 # ---------------------------------------------------------------------------
 # Source file
@@ -142,6 +147,10 @@ def validate_counties(counties: gpd.GeoDataFrame) -> None:
         duplicated = sorted(set(fips[fips.duplicated()].astype(str)))
         if duplicated:
             failures.append(f"duplicate county FIPS: {duplicated}")
+    if "land_area_m2" in counties:
+        land = counties["land_area_m2"]
+        if land.isna().any() or not (land > 0).all():
+            failures.append("land_area_m2 must be present and positive for every county")
     if counties.crs is None:
         failures.append("CRS is missing")
     elif counties.crs != COUNTY_CRS:
@@ -166,6 +175,7 @@ def counties_from_tiger(tiger: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         {
             "county_fips": STATE_FIPS + nc["COUNTYFP"].astype(str).str.zfill(3),
             "name": nc["NAME"].astype(str),
+            "land_area_m2": nc["ALAND"].astype("int64"),
         },
         geometry=nc.geometry,
         crs=tiger.crs,
@@ -179,6 +189,7 @@ def load_sample_counties() -> gpd.GeoDataFrame:
     """Return the tracked, simplified 100-county fixture from `data/sample/`."""
     counties = gpd.read_file(data_path("sample") / SAMPLE_FILENAME)
     counties["county_fips"] = counties["county_fips"].astype(str)
+    counties["land_area_m2"] = counties["land_area_m2"].astype("int64")
     counties = counties[COUNTY_COLUMNS].to_crs(COUNTY_CRS)
     validate_counties(counties)
     return counties

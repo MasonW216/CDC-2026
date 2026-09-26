@@ -88,20 +88,30 @@ def main(argv: list[str] | None = None) -> int:
     if action.kind == "download":
         print(f"Downloading {TIGER_COUNTY_URL} ...", flush=True)
         with httpx.Client(timeout=TIMEOUT, follow_redirects=True) as client:
-            sha256, size = download_file(client, TIGER_COUNTY_URL, destination)
-        record_boundary_download(raw_dir, sha256, size)
-    elif action.kind == "adopt":
-        record_boundary_download(
-            raw_dir, sha256_of(destination), destination.stat().st_size, note="adopted from disk"
-        )
+            download_file(client, TIGER_COUNTY_URL, destination)
 
+    # Validate before recording: a bad file must never become the checksum that
+    # later runs trust and skip.
     try:
         counties = load_nc_counties(destination)
-    except DataContractError as error:
-        print(error, file=sys.stderr)
+    except Exception as error:  # pyogrio raises its own types for unreadable files
+        print(f"{destination.name} failed validation:\n{error}", file=sys.stderr)
+        if action.kind == "download":
+            destination.unlink(missing_ok=True)
+            print("The downloaded file was deleted and not recorded.", file=sys.stderr)
         return 1
+
+    if action.kind in ("download", "adopt"):
+        note = "downloaded" if action.kind == "download" else "adopted from disk"
+        record_boundary_download(
+            raw_dir, sha256_of(destination), destination.stat().st_size, note=note
+        )
     print(f"Validated {len(counties)} North Carolina counties.")
-    print(f"Download record: {(raw_dir / RECORD_FILENAME).relative_to(REPO_ROOT)}")
+    record_path = raw_dir / RECORD_FILENAME
+    shown = (
+        record_path.relative_to(REPO_ROOT) if record_path.is_relative_to(REPO_ROOT) else record_path
+    )
+    print(f"Download record: {shown}")
     return 0
 
 
