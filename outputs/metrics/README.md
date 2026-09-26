@@ -3,6 +3,12 @@
 Machine-readable results. Every number quoted in the README, model card,
 slides, or DevPost entry must trace to a file here.
 
+`sample/independent_climatology_review.json` is Cameron's independent arithmetic
+review of the prepared synthetic county-window fixture. Produced by
+`notebooks/independent_climatology_review.ipynb`, it records training-only
+county-month counts, exact unsmoothed fractions, excluded split counts, and source
+hashes. It is ignored as sample output and is not a production climatology model.
+
 | File | Produced by | Milestone |
 |---|---|---|
 | `eda_missingness.json` | `make eda`, section 3 | 2 |
