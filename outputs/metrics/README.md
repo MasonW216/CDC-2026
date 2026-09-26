@@ -12,6 +12,7 @@ slides, or DevPost entry must trace to a file here.
 | `eda_helene_comparison.json` | `make eda`, section 6 | 2 |
 | `eda_reported_impacts.json` | `make eda`, section 8 | 2 |
 | `eda_geographic_distribution.json` | `make eda`, section 7 | 2 |
+| `eda_label_experiment.json` | `make eda`, section 9 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -77,3 +78,12 @@ and boundary provenance accompany the results. `eda_county_choropleth.png` maps
 reports per 1,000 land km2 per study year. Sample geometry is derived from real
 Census data; sample events remain synthetic. Frequencies are not road-risk
 estimates and do not establish reporting completeness.
+
+The label experiment builds all 146,400 county-six-hour windows in training year
+2020, labels qualifying UTC onsets, and reports monthly and county class balance.
+It compares the literal overlap predicate separately, retaining the locked onset
+definition. Missing end times do not affect onset labels and are counted in the
+comparison metadata. `eda_class_imbalance.png` displays monthly positive fractions
+and the distribution of county positive fractions. Sample rates are synthetic,
+and negative labels do not establish safe conditions. This is an EDA experiment,
+not a production training table or approval of the EDA gate.
