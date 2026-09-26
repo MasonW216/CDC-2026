@@ -15,4 +15,22 @@ Planned routes:
 Run with: make api
 """
 
-# TODO(milestone-6): implement. See docs/build_guide.md.
+from fastapi import FastAPI
+
+from stormroute_api import __version__
+from stormroute_api.config import Settings
+from stormroute_api.routes import health
+
+
+def create_app(settings: Settings | None = None) -> FastAPI:
+    """Build the API with the given settings (read from the environment by default)."""
+    app = FastAPI(title="StormRoute API", version=__version__)
+    app.state.settings = settings or Settings()
+    app.include_router(health.router)
+    return app
+
+
+app = create_app()
+
+# TODO(milestone-6): mount /api/v1 routers, CORS allowlist, request-ID logging,
+# and static frontend. See docs/build_guide.md.
