@@ -1,9 +1,19 @@
 # References
 
-> Maintained by the Econ/Stats major. Every source cited anywhere in the project
+> Maintained by Cameron (Econ/Stats). Every source cited anywhere in the project
 > appears here. Access dates are filled when data is actually retrieved.
 
 ## Data
+
+NOAA export documentation and the Census 2024 landing page were reviewed on
+2026-09-26 for the [Milestone 1 handoff](source_data.md). This is a documentation
+review date, not a dataset retrieval date. Dataset access dates below remain
+pending until downloads are recorded in the manifest.
+
+- NOAA NCEI. [Storm Data Export Format](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/Storm-Data-Export-Format.pdf).
+  Field definitions for event identity, county/zone codes, times, and damage.
+- U.S. Census Bureau. [2024 TIGER/Line Shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.2024.html).
+  Boundary vintage and download documentation.
 
 1. NOAA National Centers for Environmental Information. *Storm Events Database.*
    https://www.ncei.noaa.gov/stormevents/ — Accessed _TBD_.

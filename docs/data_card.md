@@ -1,6 +1,6 @@
 # Data Card
 
-> **Owner:** Econ/Stats major · **Reviewer:** Mason
+> **Owner:** Cameron (Econ/Stats) · **Reviewer:** Mason
 >
 > Canonical schemas are **locked** below. Counts, coverage, and quality results
 > are _TBD_ until Milestones 1–3.
@@ -17,6 +17,18 @@
 | Registry | [`data/data_manifest.yaml`](../data/data_manifest.yaml) |
 
 ## Sources
+
+Milestone 1 provenance and review requirements are in the
+[source-data handoff](source_data.md). Retrieval, coverage, and quality results
+remain pending; the tracked fixtures are synthetic test inputs.
+
+**Definition conflict to resolve at the EDA gate:** the build guide section
+2.1 requires an event to begin within the window; `configs/data.yaml` and
+this card currently describe overlap. The build guide takes precedence under
+[ADR 0000](adr/0000-specification-precedence.md). Mason and Cameron must record
+the gate decision and reconcile the config, card, and fixture expectations
+before production labels are built. The overlap definition below is not an
+approved alternative to the build guide.
 
 See the manifest for URLs, licenses, access dates, resolved filenames, and
 checksums. Summary:

@@ -12,6 +12,22 @@ manifest_version: 1
 last_updated: "2026-09-26"
 geography: North Carolina
 period: "2015-2024"
+maintainer: Cameron (Econ/Stats)
+provenance_contract: docs/source_data.md
+
+# Retrieval fields below remain TBD until source bytes have been downloaded.
+# Documentation review does not establish dataset retrieval or validation.
+retrieval_contract:
+  access_date_format: ISO-8601 UTC timestamp
+  checksum_algorithm: sha256
+  checksum_scope: original downloaded bytes before extraction or transformation
+  resolved_files_format: list of exact upstream filenames
+  checksum_format: mapping from each resolved filename to its lowercase SHA-256 digest
+  overwrite_policy: reject differing bytes at an existing path
+  required_for_milestone_1:
+    - noaa_storm_events_details
+    - census_tiger_counties_2024
+  documentation_review_date: "2026-09-26"
 
 datasets:
 

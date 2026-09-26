@@ -13,6 +13,11 @@ data/sample/      Tiny public fixtures for tests and CI.    Hand-authored. Alway
 dataset is, where it came from, and when it was retrieved. If a dataset is not
 in the manifest, it may not be used.
 
+The [source-data handoff](../docs/source_data.md) defines Milestone 1 inputs,
+retrieval evidence, and the review checklist. Cameron maintains the manifest
+and documentation; Mason owns NOAA ingestion and the CS lead owns boundaries.
+Source files have not yet been retrieved or validated in this checkout.
+
 ## Rules
 
 1. **Never edit a raw file by hand.** If a raw file is wrong, fix the

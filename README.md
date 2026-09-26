@@ -150,7 +150,7 @@ More detail is in [docs/responsible_ai.md](docs/responsible_ai.md).
 |---|---|
 | Mason, product and AI lead | NOAA ingestion, labels, model, scoring, narrative |
 | _TBD_, CS major, geospatial and web lead | Repository, routing, API, website, demo reliability |
-| _TBD_, Econ/Stats major, evaluation and impact lead | Data quality, evaluation, responsible AI, DevPost |
+| Cameron, Econ/Stats major, evaluation and impact lead | Data quality, evaluation, responsible AI, DevPost |
 
 How we work is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
