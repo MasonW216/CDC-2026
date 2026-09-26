@@ -8,6 +8,7 @@ slides, or DevPost entry must trace to a file here.
 | `eda_missingness.json` | `make eda`, section 3 | 2 |
 | `eda_event_counts.json` | `make eda`, section 6 | 2 |
 | `eda_event_durations.json` | `make eda`, section 6 | 2 |
+| `eda_reporting_coverage.json` | `make eda`, section 6 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -40,3 +41,10 @@ Quantiles use linear interpolation. Disjoint duration bins reconcile to the
 known-duration count and produce `eda_event_durations.png`. Intervals are not
 clipped at midnight or year end. These descriptive report durations are neither
 predictors nor measurements of road closure. Full-data findings remain pending.
+
+The reporting-coverage export includes every UTC calendar month, consecutive
+zero-report runs, and annual count and percent changes. Percent changes are
+null for the first year or a zero previous-year count. Annual source-file
+coverage is separate and unassessed (`null`) in sample mode. The corresponding
+`eda_reporting_coverage.png` marks months with no retained reports. These are
+exploratory diagnostics, not tests of reporting completeness or flood absence.
