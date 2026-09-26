@@ -33,7 +33,9 @@ classifiers = [
 dependencies = [
     # Tabular and numeric core
     "pandas>=2.2,<3",
-    "numpy>=1.26,<3",
+    # pandas 2.3 predates numpy 2.5, whose timedelta deprecation fires inside
+    # pandas itself (e.g. pd.Timedelta(hours=1)). Lift this cap with pandas 3.
+    "numpy>=1.26,<2.5",
     "pyarrow>=16,<21",
     # Geospatial
     "geopandas>=1.0,<2",
