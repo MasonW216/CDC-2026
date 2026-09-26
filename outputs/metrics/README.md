@@ -13,6 +13,7 @@ slides, or DevPost entry must trace to a file here.
 | `eda_reported_impacts.json` | `make eda`, section 8 | 2 |
 | `eda_geographic_distribution.json` | `make eda`, section 7 | 2 |
 | `eda_label_experiment.json` | `make eda`, section 9 | 2 |
+| `eda_leakage_audit.json` | `make eda`, section 11 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -87,3 +88,10 @@ comparison metadata. `eda_class_imbalance.png` displays monthly positive fractio
 and the distribution of county positive fractions. Sample rates are synthetic,
 and negative labels do not establish safe conditions. This is an EDA experiment,
 not a production training table or approval of the EDA gate.
+
+The leakage audit classifies every configured candidate and exclusion, plus
+future-derived aggregates, source identifiers, and restricted vulnerability data.
+It records timing, design decisions, required evidence, and configuration hashes.
+An added or reclassified candidate requires explicit review. The export is a
+design audit, not proof that feature availability or production leakage tests
+pass. Live availability depends on issue/publication time as well as valid time.
