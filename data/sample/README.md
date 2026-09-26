@@ -68,9 +68,24 @@ measured in Milestone 2, and is reported in
 [reports/eda/eda_findings.md](../../reports/eda/eda_findings.md). Never quote a
 rate computed from this file.
 
+## `weather_sample.csv`
+
+48 hours (2024-09-26 00:00 to 2024-09-27 23:00 UTC) of hourly Open-Meteo archive
+data during Hurricane Helene, for the three representative points in EDA section
+10 (Buncombe, Mecklenburg, New Hanover). It covers **both** models the notebook
+compares:
+
+- `era5_land`: precipitation and wind are **empty**, exactly as Open-Meteo
+  returns them. That gap is the section 10 finding, so it is preserved, not filled.
+- `era5_seamless`: every variable present. Precipitation and wind come from
+  ERA5; temperature and soil moisture from ERA5-Land.
+
+Units: mm, °C, m/s, m³/m³. Times are UTC. At 25 KB it is the largest fixture;
+anything shorter than 48 hours cannot exercise the 24-hour rolling features.
+
 ## Rules
 
 - Public, already-published values only. Never a private or re-identifiable record.
-- Keep both files under a few kilobytes.
+- Keep every file small: tens of kilobytes at most.
 - Preserve the real column names and types of the upstream source.
 - A fixture change and its test change belong in the same pull request.
