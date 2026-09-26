@@ -1,0 +1,96 @@
+# ---------------------------------------------------------------------------
+# Locked data definitions.
+#
+# These values are the project's canonical scope. Changing any of them
+# requires whole-team approval, an updated docs/data_card.md, updated
+# validation tests, and a pull request labeled area:data.
+#
+# Read this file through stormroute.config rather than re-parsing it.
+# ---------------------------------------------------------------------------
+
+version: 1
+
+geography:
+  state: North Carolina
+  state_fips: "37"
+  state_abbrev: NC
+  # All 100 NC counties. FIPS are strings: leading zeroes are meaningful and
+  # must never be parsed as integers.
+  expected_county_count: 100
+  crs_storage: EPSG:4326     # lat/lon for storage and API payloads
+  crs_area: EPSG:5070        # equal-area for distances and spatial joins
+
+period:
+  start_year: 2015
+  end_year: 2024
+
+prediction_unit:
+  entity: county
+  window_hours: 6
+  # Windows are anchored to 00:00 UTC, giving four windows per day.
+  window_anchor_utc: "00:00"
+  timezone_storage: UTC
+
+label:
+  name: label_flood_event
+  # Exactly these three NOAA event types. Nothing else qualifies.
+  hazard_event_types:
+    - Flood
+    - Flash Flood
+    - Debris Flow
+  # A window is positive when a qualifying event overlaps it:
+  #   event_begin < window_end AND event_end > window_start
+  overlap_rule: "event_begin < window_end AND event_end > window_start"
+  positive_meaning: >-
+    At least one qualifying event was reported as beginning or ongoing in this
+    county during this window.
+  negative_meaning: >-
+    No qualifying event was reported. This is not evidence of safe road
+    conditions.
+
+geocoding:
+  # NOAA codes events by county (CZ_TYPE = C) or by forecast zone
+  # (CZ_TYPE = Z). Zone-coded events need a crosswalk; events that cannot be
+  # assigned confidently are excluded and counted, never silently dropped.
+  county_coded_flag: C
+  zone_coded_flag: Z
+  zone_to_county_strategy: TODO   # decided in Milestone 2, recorded in the EDA report
+  unresolved_geography_policy: exclude_and_count
+
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  sample: data/sample
+  noaa_raw: data/raw/noaa_storm_events
+  boundaries_raw: data/raw/census_tiger
+  weather_raw: data/raw/weather
+  events_table: data/interim/events.parquet
+  county_windows_table: data/processed/county_windows.parquet
+  data_quality_report: outputs/metrics/data_quality.json
+
+weather:
+  provider: TODO              # ERA5-Land directly or via Open-Meteo; decided in Milestone 2
+  cadence_hours: 1
+  # Rolling windows computed strictly from hours at or before the prediction
+  # timestamp. See src/stormroute/features/rolling_weather.py.
+  rolling_precip_hours: [1, 3, 6, 24, 72]
+  required_variables:
+    - precipitation
+    - temperature
+    - wind_speed
+    - wind_gust
+    - soil_moisture_shallow
+    - soil_moisture_deep
+
+quality_thresholds:
+  max_missing_fraction_per_feature: 0.05
+  max_missing_fraction_per_county_year: 0.10
+  require_unique_event_ids: true
+  require_timezone_aware_timestamps: true
+
+modes:
+  # `sample` reads the tracked fixtures in data/sample/ so notebooks and CI run
+  # without a download. `full` reads data/raw/. Selected by STORMROUTE_DATA_MODE.
+  default: full
+  allowed: [full, sample]

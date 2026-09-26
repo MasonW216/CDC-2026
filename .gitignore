@@ -1,0 +1,81 @@
+# ---------------------------------------------------------------------------
+# StormRoute .gitignore
+#
+# Rule of thumb: source, configuration, documentation, tiny fixtures, and
+# final presentation artifacts are tracked. Downloads, caches, virtual
+# environments, secrets, and large generated tables are not.
+# ---------------------------------------------------------------------------
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+
+# Data layers: raw downloads and derived tables stay out of Git.
+data/raw/*
+data/interim/*
+data/processed/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# data/sample/ is intentionally tracked in full: tiny public fixtures that
+# make the EDA notebook and CI runnable without a download.
+
+# Generated predictions are large; keep the directory, drop the contents.
+outputs/predictions/*
+!outputs/predictions/.gitkeep
+
+# Figures and metrics: track the final committed artifacts, ignore scratch.
+outputs/figures/*
+!outputs/figures/.gitkeep
+!outputs/figures/README.md
+!outputs/figures/*.png
+!outputs/figures/*.svg
+outputs/metrics/*
+!outputs/metrics/.gitkeep
+!outputs/metrics/README.md
+!outputs/metrics/*.json
+
+# Model artifacts: the manifest is tracked, the binary is not.
+artifacts/models/*
+!artifacts/models/.gitkeep
+!artifacts/models/model_manifest.json
+artifacts/cache/
+
+# Cached demo scenario is small and must survive a network failure on stage.
+!artifacts/demo/
+!artifacts/demo/**
+
+# Logs and OS noise
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor local state
+.vscode/*
+!.vscode/extensions.json
+.idea/

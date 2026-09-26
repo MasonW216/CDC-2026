@@ -1,0 +1,91 @@
+name: Feature or task
+description: A product, model, or engineering outcome to build.
+title: "[feat] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Work that belongs to a milestone later than the current one stays in
+        **Backlog** until its gate opens. The EDA gate (Milestone 2) blocks
+        issues 7-26 in the build guide.
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: One user-facing or technical outcome, in one or two sentences.
+      placeholder: A traveler can see the travel-time cost of the recommended departure change.
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: One GitHub handle. Exactly one person is accountable.
+      placeholder: "@handle"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Milestone
+      options:
+        - "0 - Repository scaffold"
+        - "1 - Reproducible source data"
+        - "2 - EDA gate"
+        - "3 - Production data pipeline"
+        - "4 - Baselines, model, calibration"
+        - "5 - Routing, scoring, recommendations"
+        - "6 - FastAPI service"
+        - "7 - React website"
+        - "8 - Responsible AI and final evaluation"
+        - "9 - Demo, documentation, release"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [data, eda, model, geospatial, api, frontend, docs, presentation]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [must, should, stretch]
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checklist
+      description: Explicit, checkable conditions. A reviewer verifies these, not your intent.
+      value: |
+        - [ ]
+        - [ ]
+        - [ ] Tests added or updated
+        - [ ] Documentation updated
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Required evidence
+      description: What will be attached to the pull request to prove this works.
+      placeholder: Screenshot of the results page; outputs/metrics/model_comparison.json diff.
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocked_by
+    attributes:
+      label: Blocked by
+      description: Issue numbers this cannot start before.

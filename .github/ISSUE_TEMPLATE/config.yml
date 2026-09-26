@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Build guide and milestone order
+    url: https://github.com/OWNER/stormroute/blob/main/docs/build_guide.md
+    about: Check the required build order before opening work that is still blocked.

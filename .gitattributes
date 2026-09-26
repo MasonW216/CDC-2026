@@ -1,0 +1,30 @@
+# Normalize line endings so Codespaces, macOS, and Windows agree.
+* text=auto eol=lf
+
+*.py    text diff=python
+*.md    text
+*.yaml  text
+*.yml   text
+*.json  text
+*.ts    text
+*.tsx   text
+*.css   text
+*.html  text
+Makefile text
+
+# Notebooks: keep them out of textual diffs and merge resolution. Outputs are
+# stripped by pre-commit (nbstripout), so conflicts should be rare.
+*.ipynb text linguist-language=Jupyter\ Notebook -diff merge=binary
+
+# Binary or effectively-binary data.
+*.parquet binary
+*.joblib  binary
+*.png     binary
+*.jpg     binary
+*.pdf     binary
+*.zip     binary
+*.geojson -diff
+
+# Keep vendored/generated files out of language statistics.
+frontend/package-lock.json linguist-generated=true
+uv.lock                    linguist-generated=true

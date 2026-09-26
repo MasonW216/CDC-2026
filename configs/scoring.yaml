@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------------------
+# Weather Safety Score policy.
+#
+# Everything here is product policy, not a learned quantity. The values are
+# defensible defaults chosen by the team and must be reported as such, with a
+# sensitivity analysis, in docs/risk_methodology.md.
+#
+# docs/risk_methodology.md and this file must agree exactly. If you change a
+# number here, change the document in the same pull request.
+# ---------------------------------------------------------------------------
+
+version: 1
+
+aggregation:
+  # Cumulative-hazard aggregation weighted by time exposed:
+  #
+  #   h_i           = -ln(1 - clamp(p_i, 0, probability_clamp_max))
+  #   H_route       = sum((segment_hours_i / window_hours) * h_i)
+  #   R_data        = 1 - exp(-H_route)
+  #   R_trip        = max(R_data, highest_official_alert_floor)
+  #   safety_score  = round(100 * (1 - R_trip))
+  #
+  # This form is additive in exposure time, so splitting one interval into
+  # smaller pieces cannot change the result. See tests/scoring/.
+  method: cumulative_hazard
+  probability_clamp_min: 0.0
+  probability_clamp_max: 0.999
+  window_hours: 6
+  deduplicate_by: [county_fips, window_start_utc]
+
+alerts:
+  # Official NWS products may only raise modeled risk. An alert can never
+  # improve a score. Enforced by tests/scoring/test_alert_floor.py.
+  direction: raise_only
+  floors:
+    none: 0.00
+    watch: 0.35
+    advisory: 0.50
+    warning: 0.80
+    emergency: 0.98
+  precedence: >-
+    Official guidance is displayed above any model-generated recommendation
+    whenever an alert intersects the route.
+
+bands:
+  # The highest band is never labeled "Safe".
+  - { min: 85, max: 100, label: "Lower modeled weather risk",
+      response: "Show ordinary cautions and official-alert status" }
+  - { min: 70, max: 84,  label: "Use caution",
+      response: "Explain the main exposure and the best available improvement" }
+  - { min: 50, max: 69,  label: "High caution",
+      response: "Lead with a safer route or departure time" }
+  - { min: 0,  max: 49,  label: "Delay or avoid",
+      response: "Do not recommend proceeding; show official guidance first" }
+
+routing:
+  candidate_routes_min: 2
+  candidate_routes_max: 3
+  sample_spacing_km: [5, 10]
+  sample_at_county_boundaries: true
+  merge_adjacent_equivalent_segments: true
+
+recommendations:
+  # Departure alternatives: every two hours across the next twelve.
+  departure_offsets_hours: [2, 4, 6, 8, 10, 12]
+  # Below this improvement, a change is noise dressed up as advice.
+  min_score_improvement: 5
+  low_cost:
+    max_added_travel_minutes: 30
+    max_delay_hours: 2
+  max_displayed_recommendations: 3
+  selection_order:
+    - largest_score_improvement
+    - best_low_cost_improvement
+    - official_warning_action
+  # The current trip is never offered as its own alternative.
+  exclude_self: true
+  no_option_message: >-
+    No lower-exposure option found. Consider delaying the trip and follow
+    official National Weather Service guidance and road closures.
+
+explanation:
+  # Values the API must expose so any displayed score can be reconstructed.
+  expose_components:
+    - segment_probabilities
+    - segment_hours
+    - per_segment_hazard
+    - route_cumulative_hazard
+    - risk_before_alert_policy
+    - risk_after_alert_policy
+    - applied_alert_floor
+  top_contributing_factors: 3
+
+confidence:
+  # Coverage signals shown to the user; these qualify the score, they do not
+  # change it.
+  report:
+    - fraction_of_route_within_modeled_geography
+    - weather_data_completeness
+    - counties_with_sparse_historical_reporting

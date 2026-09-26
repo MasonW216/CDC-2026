@@ -1,0 +1,27 @@
+{
+  "_comment": "Skeleton. Every value is written by `make train` (Milestone 4). Keys are fixed; tests/modeling/test_model_contract.py enforces them.",
+  "manifest_version": 1,
+  "model_class": null,
+  "library": null,
+  "library_version": null,
+  "artifact_path": "artifacts/models/stormroute_model.joblib",
+  "artifact_sha256": null,
+  "splits": {
+    "train": { "start": "2015-01-01", "end": "2021-12-31" },
+    "selection": { "start": "2022-01-01", "end": "2022-12-31" },
+    "calibration": { "start": "2023-01-01", "end": "2023-12-31" },
+    "test": { "start": "2024-01-01", "end": "2024-12-31" }
+  },
+  "features": [],
+  "monotone_constraints": {},
+  "hyperparameters": {},
+  "calibration": { "method": "sigmoid", "fit_on": "calibration" },
+  "data_manifest_version": null,
+  "git_commit_sha": null,
+  "trained_at_utc": null,
+  "metrics": {
+    "selection": null,
+    "calibration": null,
+    "test": null
+  }
+}

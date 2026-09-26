@@ -1,0 +1,179 @@
+# ---------------------------------------------------------------------------
+# Source-of-truth dataset registry.
+#
+# A dataset that is not listed here may not be used by any script, notebook, or
+# service. Fill in `access_date`, `resolved_files`, and `checksum` when the
+# download actually runs — they are evidence, not decoration.
+#
+# TBD means "not yet retrieved". It must not survive into the final release.
+# ---------------------------------------------------------------------------
+
+manifest_version: 1
+last_updated: "2026-09-26"
+geography: North Carolina
+period: "2015-2024"
+
+datasets:
+
+  # -------------------------------------------------------------------------
+  # 1. Labels
+  # -------------------------------------------------------------------------
+  - name: noaa_storm_events_details
+    required: true
+    publisher: NOAA National Centers for Environmental Information (NCEI)
+    description: >-
+      Reported storm event records. Source of the Flood, Flash Flood, and Debris
+      Flow events that define the positive label.
+    source_url: https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/
+    documentation_url: https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/Storm-Data-Export-Format.pdf
+    years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    geography: United States, filtered to North Carolina downstream
+    license: >-
+      U.S. Government work, public domain (17 U.S.C. 105). Attribution to NOAA
+      NCEI required by convention.
+    local_raw_path: data/raw/noaa_storm_events
+    expected_file_pattern: "StormEvents_details-ftp_v1.0_d{year}_c*.csv.gz"
+    access_date: TBD
+    resolved_files: TBD
+    checksum: TBD
+    pipeline_script: scripts/download_noaa.py
+    consumed_by: src/stormroute/data/noaa.py
+    notes: >-
+      Filenames carry a creation-date suffix (c-date) that changes when NCEI
+      re-publishes a year. Record the resolved filename, not just the year, or
+      the run is not reproducible.
+
+  - name: noaa_storm_events_locations
+    required: false
+    publisher: NOAA National Centers for Environmental Information (NCEI)
+    description: >-
+      Per-event location points. Used only to help assign zone-coded events to a
+      county; not used as a model feature.
+    source_url: https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/
+    years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    geography: United States
+    license: U.S. Government work, public domain
+    local_raw_path: data/raw/noaa_storm_events
+    expected_file_pattern: "StormEvents_locations-ftp_v1.0_d{year}_c*.csv.gz"
+    access_date: TBD
+    resolved_files: TBD
+    checksum: TBD
+    pipeline_script: scripts/download_noaa.py
+    consumed_by: src/stormroute/data/geography.py
+    notes: Include only if the Milestone 2 geography audit shows it is needed.
+
+  # -------------------------------------------------------------------------
+  # 2. Features
+  # -------------------------------------------------------------------------
+  - name: era5_land_hourly
+    required: true
+    publisher: Copernicus Climate Change Service (C3S) / ECMWF
+    description: >-
+      Hourly reanalysis: precipitation, temperature, wind, and soil moisture.
+      Source of every weather feature.
+    source_url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+    documentation_url: https://confluence.ecmwf.int/display/CKB/ERA5-Land
+    access_method: TBD
+    years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    geography: North Carolina bounding box, aggregated to county
+    license: >-
+      Copernicus Licence. Free to use and redistribute with attribution;
+      Copernicus is not liable for downstream use.
+    local_raw_path: data/raw/weather
+    expected_file_pattern: "era5_land_{variable}_{year}.nc"
+    access_date: TBD
+    resolved_files: TBD
+    checksum: TBD
+    pipeline_script: scripts/fetch_weather.py
+    consumed_by: src/stormroute/data/weather.py
+    notes: >-
+      Reanalysis is retrospective and is NOT what a live deployment would see.
+      This train-serve boundary is documented in
+      docs/adr/0003-reanalysis-live-forecast-boundary.md and must be stated in
+      the model card and in the app.
+
+  - name: census_tiger_counties_2024
+    required: true
+    publisher: U.S. Census Bureau
+    description: TIGER/Line county boundaries; the spatial base for every county join.
+    source_url: https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/
+    vintage: 2024
+    geography: United States, filtered to STATEFP = 37
+    license: U.S. Government work, public domain
+    local_raw_path: data/raw/census_tiger
+    expected_file_pattern: "tl_2024_us_county.zip"
+    access_date: TBD
+    resolved_files: TBD
+    checksum: TBD
+    pipeline_script: scripts/download_boundaries.py
+    consumed_by: src/stormroute/data/geography.py
+    notes: Expect exactly 100 North Carolina counties.
+
+  # -------------------------------------------------------------------------
+  # 3. Live services (no bulk download; documented for attribution and limits)
+  # -------------------------------------------------------------------------
+  - name: nws_api
+    required: true
+    publisher: NOAA National Weather Service
+    description: >-
+      Official forecasts and active alerts. Alerts may only raise modeled risk,
+      never lower it.
+    source_url: https://api.weather.gov
+    documentation_url: https://www.weather.gov/documentation/services-web-api
+    license: U.S. Government work, public domain
+    access_method: live HTTPS API
+    requires_user_agent: true
+    rate_limits: >-
+      No published hard limit; a descriptive User-Agent with a contact address
+      is required. Cache aggressively and never poll from the browser.
+    local_raw_path: artifacts/demo/demo_weather.json
+    access_date: TBD
+    pipeline_script: scripts/cache_demo.py
+    consumed_by: backend/src/stormroute_api/services/weather_service.py
+
+  - name: osrm_routing
+    required: true
+    publisher: Project OSRM, on OpenStreetMap data
+    description: Candidate route geometry and travel durations.
+    source_url: https://router.project-osrm.org
+    documentation_url: http://project-osrm.org/docs/v5.24.0/api/
+    data_license: >-
+      Route geometry derives from OpenStreetMap, (c) OpenStreetMap
+      contributors, ODbL 1.0. Attribution must be visible in the app and README.
+    access_method: live HTTPS API
+    rate_limits: >-
+      The public demo server is rate limited and unsuitable for judging. The
+      stage demo replays cached routes from artifacts/demo/.
+    local_raw_path: artifacts/demo/demo_routes.geojson
+    access_date: TBD
+    pipeline_script: scripts/cache_demo.py
+    consumed_by: src/stormroute/routing/client.py
+
+  # -------------------------------------------------------------------------
+  # 4. Optional
+  # -------------------------------------------------------------------------
+  - name: usgs_3dep_elevation
+    required: false
+    publisher: U.S. Geological Survey
+    description: Elevation and derived slope, as static terrain features.
+    source_url: https://www.usgs.gov/3d-elevation-program
+    license: U.S. Government work, public domain
+    local_raw_path: data/raw/elevation
+    access_date: TBD
+    pipeline_script: scripts/download_boundaries.py
+    consumed_by: src/stormroute/features/terrain.py
+
+  - name: cdc_atsdr_svi
+    required: false
+    publisher: CDC/ATSDR
+    description: Social Vulnerability Index, by census tract and county.
+    source_url: https://www.atsdr.cdc.gov/place-health/php/svi/index.html
+    license: Public domain, U.S. Government work
+    local_raw_path: data/raw/svi
+    access_date: TBD
+    pipeline_script: TBD
+    consumed_by: docs/responsible_ai.md
+    usage_restriction: >-
+      EVALUATION AND CONTEXT ONLY. Vulnerability data must never enter the
+      feature matrix and must never change an individual trip score. Enforced
+      by tests/data/test_no_leakage.py.

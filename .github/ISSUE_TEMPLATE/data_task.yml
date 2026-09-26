@@ -1,0 +1,88 @@
+name: Data task
+description: Ingestion, schema, feature, or data-quality work.
+title: "[data] "
+labels: ["area:data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Data work carries extra obligations: the manifest, the schema, the
+        leakage classification, and the tests move together or not at all.
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      placeholder: county_windows.parquet carries leakage-safe 72-hour antecedent precipitation.
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      placeholder: "@handle"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Milestone
+      options:
+        - "1 - Reproducible source data"
+        - "2 - EDA gate"
+        - "3 - Production data pipeline"
+        - "8 - Responsible AI and final evaluation"
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Source datasets
+      description: Name every dataset touched, with its entry in data/data_manifest.yaml.
+    validations:
+      required: true
+
+  - type: textarea
+    id: schema
+    attributes:
+      label: Schema change
+      description: Columns added, removed, renamed, or retyped. Write "None" if unchanged.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: leakage
+    attributes:
+      label: Leakage classification of any new feature
+      description: Anything not known before departure cannot be a model input.
+      options:
+        - "Known before departure - usable as a feature"
+        - "Contemporaneous - usable only with a documented justification"
+        - "Known only after the event - excluded from features"
+        - "Not applicable - no new feature"
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checklist
+      value: |
+        - [ ] `make data` reproduces the table from raw inputs
+        - [ ] Schema matches docs/data_card.md
+        - [ ] Row counts match the expected county-window count after documented exclusions
+        - [ ] Leakage tests cover every new feature
+        - [ ] County FIPS retain leading zeroes
+        - [ ] Timestamps are timezone-aware UTC
+        - [ ] data/data_manifest.yaml updated with access date and version
+        - [ ] outputs/metrics/data_quality.json regenerated
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocked_by
+    attributes:
+      label: Blocked by

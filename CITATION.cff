@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+title: "StormRoute: Explainable AI for Weather-Aware Travel Safety"
+message: "If you reference this project, please cite it as below."
+type: software
+abstract: >-
+  StormRoute assigns a 0-100 Weather Safety Score to a proposed North Carolina
+  road trip, identifies the route segment contributing the most modeled
+  flood-hazard exposure, and recommends a route or departure-time change that
+  reduces it. A calibrated, temporally validated gradient-boosted classifier
+  estimates the probability that a reported Flood, Flash Flood, or Debris Flow
+  event begins in a county during a six-hour window; route-level exposure is
+  aggregated as a cumulative hazard weighted by time exposed. The score is a
+  comparative weather-hazard exposure index, not a crash probability.
+authors:
+  - given-names: Mason
+    family-names: Wang
+    affiliation: "StormRoute Team"
+    roles: ["Product and AI lead"]
+  # TODO(milestone-9): add remaining teammates before tagging v1.0.0-cdc2026.
+  - name: "StormRoute Team"
+version: 0.1.0
+date-released: "2026-09-26"
+license: MIT
+repository-code: "https://github.com/OWNER/stormroute"
+keywords:
+  - explainable AI
+  - flood hazard
+  - travel safety
+  - geospatial
+  - probability calibration
+  - AI for social good
+  - Carolina Data Challenge
+references:
+  - type: data
+    title: "NOAA NCEI Storm Events Database"
+    authors:
+      - name: "NOAA National Centers for Environmental Information"
+    notes: "Reported event records, 2015-2024. See data/data_manifest.yaml."
+  - type: data
+    title: "ERA5-Land hourly reanalysis"
+    authors:
+      - name: "Copernicus Climate Change Service (C3S)"
+    notes: "Hourly meteorological drivers. See data/data_manifest.yaml."
+  - type: data
+    title: "TIGER/Line Shapefiles, 2024"
+    authors:
+      - name: "U.S. Census Bureau"
+    notes: "North Carolina county boundaries. See data/data_manifest.yaml."

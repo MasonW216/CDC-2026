@@ -1,0 +1,52 @@
+# Install once per clone with `make setup` (or `pre-commit install`).
+# These hooks are the same checks CI runs, caught before the push instead of
+# after it.
+default_language_version:
+  python: python3.11
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.md$
+      - id: end-of-file-fixer
+        exclude: \.ipynb$
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+        exclude: \.ipynb$
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      # Nothing large belongs in Git: data lives in data/ and stays ignored.
+      - id: check-added-large-files
+        args: [--maxkb=512]
+      - id: detect-private-key
+      - id: check-case-conflict
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # Notebook outputs are not review artifacts and cause noisy conflicts.
+  # Figures are exported to outputs/figures/ instead.
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+  - repo: local
+    hooks:
+      - id: no-committed-data
+        name: block raw/interim/processed data and model binaries
+        entry: >
+          bash -c 'for f in "$@"; do case "$f" in
+          data/raw/*|data/interim/*|data/processed/*|*.parquet|*.joblib)
+          echo "Refusing to commit $f — generated data stays out of Git."; exit 1;;
+          esac; done'
+        language: system
+        pass_filenames: true

@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------
+# Cached presentation scenario.
+#
+# The stage demo must not depend on a live external service. `make demo-cache`
+# rebuilds these artifacts; the judging demo replays them.
+#
+# The primary route stays entirely inside North Carolina. A route crossing into
+# Tennessee cannot honestly be presented as covered by a North-Carolina-only
+# model.
+# ---------------------------------------------------------------------------
+
+version: 1
+
+default_scenario: helene_asheville_charlotte
+
+scenarios:
+  helene_asheville_charlotte:
+    label: "Hurricane Helene replay — Asheville to Charlotte"
+    description: >-
+      A westbound-to-Piedmont trip during the September 2024 Helene period,
+      when flood-hazard exposure varied sharply by departure time.
+    origin:
+      label: "Asheville, NC"
+      lat: 35.5951
+      lon: -82.5515
+    destination:
+      label: "Charlotte, NC"
+      lat: 35.2271
+      lon: -80.8431
+    departure_time: "2024-09-27T12:00:00-04:00"
+    mode: cached_replay
+    fully_within_modeled_geography: true
+    expected_counties:
+      - Buncombe
+      - McDowell
+      - Rutherford
+      - Burke
+      - Catawba
+      - Lincoln
+      - Gaston
+      - Mecklenburg
+    notes: >-
+      Expected scores are recorded in docs/demo_runbook.md after
+      `make demo-cache` runs, and must match what the site displays on stage.
+
+  # Stretch: a non-hurricane flood period, so the evaluation story is not a
+  # single storm. Populated only if Milestone 8 has time.
+  non_hurricane_replay:
+    label: "TODO — second replay (non-hurricane flood period)"
+    status: stretch
+    origin: TODO
+    destination: TODO
+    departure_time: TODO
+    mode: cached_replay
+
+artifacts:
+  routes: artifacts/demo/demo_routes.geojson
+  scores: artifacts/demo/demo_scores.json
+  weather: artifacts/demo/demo_weather.json
+  frontend_fixture: frontend/src/fixtures/demoScore.json
+
+replay:
+  # With this true, no code path may contact an external API. The demo has to
+  # survive conference wifi.
+  offline_only: true
+  fail_loudly_if_artifact_missing: true
+  checksum_artifacts: true

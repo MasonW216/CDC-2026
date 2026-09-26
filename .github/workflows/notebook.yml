@@ -1,0 +1,95 @@
+name: Notebooks
+
+# Proves the notebooks are executable end to end in a clean kernel. CI runs
+# against the tiny tracked fixtures in data/sample/, never the full dataset:
+# full-data verification is evidence recorded in the EDA pull request and in
+# reports/eda/eda_findings.md.
+
+on:
+  pull_request:
+    paths:
+      - "notebooks/**"
+      - "data/sample/**"
+      - "src/stormroute/data/**"
+      - "src/stormroute/features/**"
+      - "configs/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/notebook.yml"
+  push:
+    branches: [main]
+    paths:
+      - "notebooks/**"
+      - "data/sample/**"
+      - "src/stormroute/**"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+concurrency:
+  group: notebooks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  execute:
+    name: Execute notebooks (sample mode)
+    runs-on: ubuntu-latest
+    env:
+      # Notebooks read this to select the tracked fixtures over a download.
+      STORMROUTE_ENV: test
+      STORMROUTE_DATA_MODE: sample
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system geospatial libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gdal-bin libgdal-dev libgeos-dev libproj-dev proj-bin
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      - name: Install dependencies
+        run: |
+          if [ -f uv.lock ]; then
+            uv sync --locked --extra dev --extra notebook
+          else
+            uv sync --extra dev --extra notebook
+          fi
+
+      - name: Execute notebooks in order, failing on any exception
+        run: |
+          set -euo pipefail
+          mkdir -p outputs/executed
+          shopt -s nullglob
+          for nb in notebooks/[0-9][0-9]_*.ipynb; do
+            echo "::group::$nb"
+            uv run jupyter nbconvert \
+              --to notebook \
+              --execute \
+              --ExecutePreprocessor.timeout=900 \
+              --ExecutePreprocessor.kernel_name=python3 \
+              --output-dir outputs/executed \
+              "$nb"
+            echo "::endgroup::"
+          done
+
+      - name: Upload executed notebooks and figures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: executed-notebooks
+          path: |
+            outputs/executed/
+            outputs/figures/
+          if-no-files-found: warn
+          retention-days: 14

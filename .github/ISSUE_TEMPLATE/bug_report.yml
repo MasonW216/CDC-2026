@@ -1,0 +1,78 @@
+name: Bug report
+description: Something behaves incorrectly, including a wrong number or a misleading display.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A score, chart, or explanation that is technically rendered but
+        **misleads a traveler** is a bug here, not a polish item.
+
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Expected vs. actual
+      value: |
+        **Expected:**
+
+        **Actual:**
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [data, eda, model, geospatial, api, frontend, docs, presentation]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "Blocks the demo"
+        - "Produces a wrong or misleading number shown to a user"
+        - "Wrong behavior, not user facing"
+        - "Cosmetic"
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      placeholder: "@handle"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - Codespace or local:
+        - Commit SHA:
+        - Cached replay or live mode:
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checklist
+      value: |
+        - [ ] Root cause stated in the pull request
+        - [ ] Regression test added
+        - [ ] Fix verified against the reproduction steps above

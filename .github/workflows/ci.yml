@@ -1,0 +1,190 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A new push to the same branch cancels the previous run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "20"
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Decides which optional jobs can run. The frontend job is inert until
+  # frontend/package-lock.json is committed, because `npm ci` requires a lock.
+  # ---------------------------------------------------------------------------
+  guards:
+    name: Guards
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_ready: ${{ steps.check.outputs.frontend_ready }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        run: |
+          if [ -f frontend/package-lock.json ]; then
+            echo "frontend_ready=true" >> "$GITHUB_OUTPUT"
+            echo "Frontend lockfile present: frontend checks will run."
+          else
+            echo "frontend_ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::frontend/package-lock.json is missing. Run 'make setup' in a Codespace and commit the lockfile to activate frontend CI."
+          fi
+
+  # ---------------------------------------------------------------------------
+  # Formatting, linting, typing, and unit tests for the Python side.
+  # ---------------------------------------------------------------------------
+  python:
+    name: Python (lint, types, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system geospatial libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gdal-bin libgdal-dev libgeos-dev libproj-dev proj-bin
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install locked dependencies
+        run: |
+          if [ -f uv.lock ]; then
+            uv sync --locked --extra dev --extra notebook
+          else
+            echo "::warning::uv.lock is missing; resolving dependencies without a lock. Commit uv.lock for reproducible CI."
+            uv sync --extra dev --extra notebook
+          fi
+
+      - name: Ruff format check
+        run: uv run ruff format --check .
+
+      - name: Ruff lint
+        run: uv run ruff check --output-format=github .
+
+      - name: Mypy
+        run: uv run mypy
+
+      - name: Pytest
+        run: uv run pytest --cov --cov-report=xml --cov-report=term-missing
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-python
+          path: coverage.xml
+          if-no-files-found: ignore
+
+  # ---------------------------------------------------------------------------
+  # TypeScript checks, unit tests, and a production build.
+  # ---------------------------------------------------------------------------
+  frontend:
+    name: Frontend (types, tests, build)
+    runs-on: ubuntu-latest
+    needs: guards
+    if: needs.guards.outputs.frontend_ready == 'true'
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: TypeScript
+        run: npm run typecheck
+
+      - name: Vitest
+        run: npm run test -- --run
+
+      - name: Production build
+        run: npm run build
+
+  # ---------------------------------------------------------------------------
+  # Repository hygiene. Cheap, fast, and catches the mistakes that embarrass a
+  # public repository: committed secrets, committed data, absolute local paths.
+  # ---------------------------------------------------------------------------
+  hygiene:
+    name: Hygiene (secrets, data, paths)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No tracked environment files or data artifacts
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -E '(^|/)\.env$|^data/(raw|interim|processed)/[^.]|\.parquet$|\.joblib$'; then
+            echo "::error::A secret file, raw/derived dataset, or model binary is tracked. See .gitignore."
+            exit 1
+          fi
+          echo "No forbidden files tracked."
+
+      - name: No absolute local paths
+        run: |
+          set -euo pipefail
+          if git grep -nIE '(/Users/|/home/[a-z]+/|C:\\\\Users\\\\)' -- \
+               ':!docs/build_guide.md' ':!docs/project_specification.md' \
+               ':!.github/workflows/ci.yml'; then
+            echo "::error::An absolute local path is committed. Resolve paths from the repository root or from configuration."
+            exit 1
+          fi
+          echo "No absolute local paths found."
+
+      - name: No obvious committed credentials
+        run: |
+          set -euo pipefail
+          # Deliberately narrow: high-signal token shapes only, so this stays
+          # useful instead of becoming a check people learn to ignore.
+          if git grep -nIE \
+               '(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{22,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|sk-[A-Za-z0-9]{32,})' \
+               -- ':!.github/workflows/ci.yml'; then
+            echo "::error::A credential-shaped string is committed. Rotate it, then remove it from history."
+            exit 1
+          fi
+          echo "No credential-shaped strings found."
+
+      - name: Notebooks contain no stored outputs
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pathlib, sys
+
+          offenders = []
+          for nb_path in pathlib.Path("notebooks").rglob("*.ipynb"):
+              nb = json.loads(nb_path.read_text())
+              for cell in nb.get("cells", []):
+                  if cell.get("outputs") or cell.get("execution_count") is not None:
+                      offenders.append(str(nb_path))
+                      break
+          if offenders:
+              print("::error::Stored notebook outputs found in: " + ", ".join(sorted(set(offenders))))
+              print("Run 'pre-commit run nbstripout --all-files' before committing.")
+              sys.exit(1)
+          print("All notebooks are output-free.")
+          PY

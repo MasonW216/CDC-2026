@@ -1,0 +1,141 @@
+# ---------------------------------------------------------------------------
+# Locked modeling definitions.
+#
+# The split years are immutable. 2024 is untouched until the single final
+# evaluation; no hyperparameter, threshold, or feature decision may be made
+# against it.
+# ---------------------------------------------------------------------------
+
+version: 1
+
+task:
+  type: binary_classification
+  target: label_flood_event
+  unit: county x six-hour window
+  # The positive class is rare. Metric choices follow from this, not from habit.
+  imbalance: severe
+
+splits:
+  train:      { years: [2015, 2016, 2017, 2018, 2019, 2020, 2021] }
+  selection:  { years: [2022] }
+  calibration: { years: [2023] }
+  test:       { years: [2024], locked: true }
+  # Splits are assigned by calendar year at table-build time and written into
+  # the `split` column, so a later shuffle cannot silently reorder them.
+  assignment: immutable_column
+  allow_overlap: false
+
+baselines:
+  climatology:
+    description: Smoothed county-month positive rate from the training years.
+    smoothing: TODO           # Milestone 4
+  logistic_regression:
+    description: Regularized logistic regression on the same feature matrix.
+    penalty: l2
+    class_weight: balanced
+
+# Adoption rule (project spec §7.8). The boosted model is used only if it:
+#   1. beats climatology on PR-AUC or on recall at the alert budget;
+#   2. matches or beats climatology on Brier score after calibration;
+#   3. passes the no-temporal-leakage tests; and
+#   4. is stable under reasonable feature and threshold sensitivity checks.
+# Otherwise ship calibrated logistic regression, or climatology. The site must
+# never imply a more complex model is better without this evidence.
+selection_rule:
+  fallback_order: [gradient_boosted_trees, logistic_regression, climatology]
+
+final_model:
+  family: gradient_boosted_trees
+  library: xgboost
+  objective: binary:logistic
+  # Monotonic constraints keep the model physically defensible: more rain or
+  # wetter soil must never reduce modeled hazard.
+  monotone_constraints:
+    precip_1h: increasing
+    precip_3h: increasing
+    precip_6h: increasing
+    precip_24h: increasing
+    precip_72h: increasing
+    max_precip_intensity: increasing
+    soil_moisture_shallow: increasing
+    soil_moisture_deep: increasing
+  hyperparameters:
+    n_estimators: TODO
+    max_depth: TODO
+    learning_rate: TODO
+    min_child_weight: TODO
+    subsample: TODO
+    colsample_bytree: TODO
+    reg_lambda: TODO
+    scale_pos_weight: TODO
+  random_seed: 20260926
+
+calibration:
+  method: sigmoid             # Platt scaling
+  fit_on: calibration         # 2023 only, never on train or test
+  clip_probabilities: [0.0, 1.0]
+
+features:
+  # Every entry here must be classifiable as "known before departure" in the
+  # Milestone 2 leakage audit. See docs/model_card.md.
+  weather:
+    - precip_1h
+    - precip_3h
+    - precip_6h
+    - precip_24h
+    - precip_72h
+    - max_precip_intensity
+    - temperature
+    - wind_speed
+    - wind_gust
+    - soil_moisture_shallow
+    - soil_moisture_deep
+  static:
+    - elevation_mean
+    - slope_mean
+  temporal:
+    - month_sin
+    - month_cos
+  optional:
+    # Evaluated with and without, because it can encode reporting bias rather
+    # than hazard. See the required comparisons in docs/build_guide.md, §11.
+    - historical_event_rate
+  excluded:
+    # Known only after the event, or otherwise unusable. Enforced by
+    # tests/data/test_no_leakage.py.
+    injuries: outcome known only after the event
+    deaths: outcome known only after the event
+    property_damage_usd: outcome known only after the event
+    event_narrative: written after the event
+    end_utc: not known at departure
+    episode_id: assigned during post-event curation
+
+metrics:
+  primary: pr_auc
+  required:
+    - pr_auc
+    - brier_score
+    - log_loss
+    - calibration_curve
+    - recall_at_alert_budget
+    - precision_at_alert_budget
+  secondary:
+    - event_level_recall
+    - expected_calibration_error
+  # ROC-AUC may appear in an appendix. It is not the headline result under
+  # severe class imbalance. Accuracy is never a success metric.
+  appendix: [roc_auc]
+  # Top 1% of county-windows by predicted probability (project spec §7.6).
+  alert_budget_fraction: 0.01
+  bootstrap:
+    iterations: 1000
+    # Resample by episode/month, not by row: county-windows are correlated.
+    group_by: storm_episode
+    confidence_level: 0.95
+
+artifacts:
+  model_path: artifacts/models/stormroute_model.joblib
+  manifest_path: artifacts/models/model_manifest.json
+  predictions_path: outputs/predictions/predictions_2024.parquet
+  comparison_metrics: outputs/metrics/model_comparison.json
+  final_test_metrics: outputs/metrics/final_test_metrics.json

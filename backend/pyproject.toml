@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# StormRoute API service.
+#
+# Declared separately from the root project so the deployable service's runtime
+# dependencies stay visible and minimal: the API needs FastAPI and the scoring
+# package, not JupyterLab. Development and testing still happen from the root
+# environment, which installs this package in editable mode.
+# ---------------------------------------------------------------------------
+
+[build-system]
+requires = ["hatchling>=1.24,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stormroute-api"
+version = "0.1.0"
+description = "FastAPI service exposing StormRoute trip scoring and cached demo scenarios."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = { text = "MIT" }
+
+dependencies = [
+    "fastapi>=0.114,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "pydantic>=2.8,<3",
+    "pydantic-settings>=2.4,<3",
+    "httpx>=0.27,<1",
+    "joblib>=1.4,<2",
+    "stormroute",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2,<9", "pytest-asyncio>=0.24,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/stormroute_api"]
+
+[tool.uv.sources]
+stormroute = { path = "..", editable = true }

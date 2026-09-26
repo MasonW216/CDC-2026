@@ -1,0 +1,14 @@
+/**
+ * Global styles and the design tokens the whole app shares.
+ *
+ * Defines the risk palette. Two hard constraints:
+ *
+ *   * risk is never encoded by color alone -- every risk level also carries a
+ *     label, an icon, or a pattern, because a colorblind traveler must be able
+ *     to read the result;
+ *   * contrast meets WCAG AA at minimum.
+ *
+ * Also respects prefers-reduced-motion and prefers-color-scheme.
+ *
+ * TODO(milestone-7): implement. See docs/build_guide.md.
+ */
