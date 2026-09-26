@@ -18,15 +18,24 @@ DEMO_ARTIFACT_KEYS = ("routes", "scores", "weather")
 
 
 def _demo_artifact_paths() -> list[Path]:
-    """Return the cached-replay artifacts listed in configs/demo.yaml."""
-    artifacts = yaml.safe_load(DEMO_CONFIG.read_text())["artifacts"]
-    return [REPO_ROOT / artifacts[key] for key in DEMO_ARTIFACT_KEYS]
+    """Return the cached-replay artifacts listed in configs/demo.yaml.
+
+    An unreadable config yields no paths, which /health reports as the demo
+    being unavailable rather than crashing the service at import.
+    """
+    try:
+        artifacts = yaml.safe_load(DEMO_CONFIG.read_text())["artifacts"]
+        return [REPO_ROOT / artifacts[key] for key in DEMO_ARTIFACT_KEYS]
+    except (OSError, yaml.YAMLError, KeyError, TypeError):
+        return []
 
 
 class Settings(BaseSettings):
     """Runtime configuration, read from STORMROUTE_* environment variables."""
 
-    model_config = SettingsConfigDict(env_prefix="STORMROUTE_", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_prefix="STORMROUTE_", env_file=REPO_ROOT / ".env", extra="ignore"
+    )
 
     env: str = "development"
     model_path: Path = REPO_ROOT / "artifacts" / "models" / "stormroute_model.joblib"

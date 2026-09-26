@@ -8,7 +8,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from stormroute_api.config import Settings
+from stormroute_api.config import REPO_ROOT, Settings
 from stormroute_api.main import create_app
 
 DEMO_FILES = ("demo_routes.geojson", "demo_scores.json", "demo_weather.json")
@@ -68,7 +68,7 @@ def test_scaffold_placeholders_do_not_count_as_available(tmp_path):
     settings = _settings(tmp_path)
     routes, scores, weather = settings.demo_artifact_paths
     routes.parent.mkdir(parents=True)
-    routes.write_text('{"type": "FeatureCollection", "features": []}')
+    routes.write_text('{"type": "FeatureCollection", "placeholder": true, "features": []}')
     scores.write_text('{"placeholder": true, "scenarios": {}}')
     weather.write_text('{"placeholder": true}')
     assert _get_health(settings)["demo_available"] is False
@@ -81,3 +81,30 @@ def test_unreadable_artifact_does_not_count_as_available(tmp_path):
         path.write_text("{}")
     settings.demo_artifact_paths[0].write_text("not json")
     assert _get_health(settings)["demo_available"] is False
+
+
+def test_real_but_empty_geojson_counts_as_available(tmp_path):
+    settings = _settings(tmp_path)
+    for path in settings.demo_artifact_paths:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('{"type": "FeatureCollection", "features": []}')
+    assert _get_health(settings)["demo_available"] is True
+
+
+def test_non_object_json_artifact_counts_as_available(tmp_path):
+    settings = _settings(tmp_path)
+    for path in settings.demo_artifact_paths:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("[]")
+    assert _get_health(settings)["demo_available"] is True
+
+
+def test_no_configured_demo_artifacts_means_unavailable(tmp_path):
+    settings = Settings(model_path=tmp_path / "model.joblib", demo_artifact_paths=[])
+    assert _get_health(settings)["demo_available"] is False
+
+
+def test_relative_paths_resolve_against_repo_root():
+    settings = Settings(model_path="artifacts/models/stormroute_model.joblib")
+    resolved = settings.resolve(settings.model_path)
+    assert resolved == REPO_ROOT / "artifacts" / "models" / "stormroute_model.joblib"

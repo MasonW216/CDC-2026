@@ -31,8 +31,8 @@ class HealthResponse(BaseModel):
 def _is_real_artifact(path: Path) -> bool:
     """Return True if a demo artifact exists and is not the scaffold placeholder.
 
-    The scaffold commits placeholder files marked ``"placeholder": true`` (or an
-    empty GeoJSON FeatureCollection) until ``make demo-cache`` replaces them.
+    The scaffold commits placeholder files marked ``"placeholder": true`` until
+    ``make demo-cache`` replaces them.
     """
     if not path.is_file():
         return False
@@ -42,7 +42,7 @@ def _is_real_artifact(path: Path) -> bool:
         return False
     if not isinstance(content, dict):
         return True
-    return content.get("placeholder") is not True and content.get("features") != []
+    return content.get("placeholder") is not True
 
 
 @router.get("/health")
@@ -53,7 +53,6 @@ def health(request: Request) -> HealthResponse:
         status="ok",
         version=__version__,
         model_available=settings.resolve(settings.model_path).is_file(),
-        demo_available=all(
-            _is_real_artifact(settings.resolve(path)) for path in settings.demo_artifact_paths
-        ),
+        demo_available=bool(settings.demo_artifact_paths)
+        and all(_is_real_artifact(settings.resolve(path)) for path in settings.demo_artifact_paths),
     )
