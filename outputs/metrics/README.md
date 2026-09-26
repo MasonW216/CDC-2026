@@ -9,6 +9,7 @@ slides, or DevPost entry must trace to a file here.
 | `eda_event_counts.json` | `make eda`, section 6 | 2 |
 | `eda_event_durations.json` | `make eda`, section 6 | 2 |
 | `eda_reporting_coverage.json` | `make eda`, section 6 | 2 |
+| `eda_helene_comparison.json` | `make eda`, section 6 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -48,3 +49,12 @@ null for the first year or a zero previous-year count. Annual source-file
 coverage is separate and unassessed (`null`) in sample mode. The corresponding
 `eda_reporting_coverage.png` marks months with no retained reports. These are
 exploratory diagnostics, not tests of reporting completeness or flood absence.
+
+The Helene comparison uses the exploratory onset window September 25, 2024
+00:00 UTC (inclusive) to September 30 00:00 UTC (exclusive). It partitions
+retained events into that window, the rest of 2024, and 2015–2023, with hazard
+counts and distinct observed counties for each group. Shares use all 2024 or
+all study-period reports as explicit denominators; empty denominators produce
+null shares. The chart is `eda_helene_comparison.png`. Unequal observation
+periods prevent interpreting totals as relative hazard rates, and dates alone
+do not establish Helene attribution. Full-data findings remain pending.
