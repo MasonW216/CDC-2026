@@ -1,0 +1,721 @@
+{
+  "source": "Saved real-release NOAA cleaned events; not sample data",
+  "source_release": "https://github.com/MasonW216/CDC-2026/releases/tag/data-2026-09-26",
+  "source_archive_sha256": "858deeb5f332dd24a14f0e288b4ab7e2babd704116a05d7bb4899f86417b8272",
+  "input_sha256": {
+    "data\\interim\\events.parquet": "6af1dfe44f05009d7bde9ae8580adc40eaed6293df29609fc01c479b0594d675",
+    "data\\interim\\events.csv": "7d4b00ca1c949a7ccffa64a6001c0cb5ecd275ec7542545bf41f9df1ae6bf772"
+  },
+  "provenance_sha256": "c233b79a1a771a561d8e3ecdb982b88e55de72494b5383e30f866c83a8d962fa",
+  "script_sha256": "1e2db888a8be436802a4fc6cfe88fa0dfc3ba9f1661a1f30004538be45a98e01",
+  "rows": 2220,
+  "columns": 10,
+  "missing_cells": 0,
+  "duplicate_event_ids": 0,
+  "csv_parquet_agree": true,
+  "counties_with_reports": 99,
+  "grouping": "UTC event onset; month pools all configured years",
+  "limitations": [
+    "Counts are event records, not unique storms, probabilities, or road risk",
+    "Zero reports do not establish absence of flooding",
+    "NOAA summer timestamp interpretation still awaits external verification",
+    "Weather is not included; this is not a model-ready county-window table"
+  ],
+  "tables": {
+    "year": [
+      {
+        "year": 2015,
+        "event_count": 198,
+        "share_of_retained_events": 0.0891891891891892
+      },
+      {
+        "year": 2016,
+        "event_count": 245,
+        "share_of_retained_events": 0.11036036036036036
+      },
+      {
+        "year": 2017,
+        "event_count": 107,
+        "share_of_retained_events": 0.0481981981981982
+      },
+      {
+        "year": 2018,
+        "event_count": 362,
+        "share_of_retained_events": 0.16306306306306306
+      },
+      {
+        "year": 2019,
+        "event_count": 114,
+        "share_of_retained_events": 0.051351351351351354
+      },
+      {
+        "year": 2020,
+        "event_count": 399,
+        "share_of_retained_events": 0.17972972972972973
+      },
+      {
+        "year": 2021,
+        "event_count": 111,
+        "share_of_retained_events": 0.05
+      },
+      {
+        "year": 2022,
+        "event_count": 89,
+        "share_of_retained_events": 0.04009009009009009
+      },
+      {
+        "year": 2023,
+        "event_count": 155,
+        "share_of_retained_events": 0.06981981981981981
+      },
+      {
+        "year": 2024,
+        "event_count": 440,
+        "share_of_retained_events": 0.1981981981981982
+      }
+    ],
+    "month": [
+      {
+        "month": 1,
+        "event_count": 77,
+        "share_of_retained_events": 0.034684684684684684
+      },
+      {
+        "month": 2,
+        "event_count": 83,
+        "share_of_retained_events": 0.03738738738738739
+      },
+      {
+        "month": 3,
+        "event_count": 14,
+        "share_of_retained_events": 0.006306306306306306
+      },
+      {
+        "month": 4,
+        "event_count": 116,
+        "share_of_retained_events": 0.05225225225225225
+      },
+      {
+        "month": 5,
+        "event_count": 130,
+        "share_of_retained_events": 0.05855855855855856
+      },
+      {
+        "month": 6,
+        "event_count": 154,
+        "share_of_retained_events": 0.06936936936936937
+      },
+      {
+        "month": 7,
+        "event_count": 237,
+        "share_of_retained_events": 0.10675675675675676
+      },
+      {
+        "month": 8,
+        "event_count": 385,
+        "share_of_retained_events": 0.17342342342342343
+      },
+      {
+        "month": 9,
+        "event_count": 465,
+        "share_of_retained_events": 0.20945945945945946
+      },
+      {
+        "month": 10,
+        "event_count": 313,
+        "share_of_retained_events": 0.140990990990991
+      },
+      {
+        "month": 11,
+        "event_count": 159,
+        "share_of_retained_events": 0.07162162162162163
+      },
+      {
+        "month": 12,
+        "event_count": 87,
+        "share_of_retained_events": 0.03918918918918919
+      }
+    ],
+    "county_fips": [
+      {
+        "county_fips": "37001",
+        "event_count": 20,
+        "share_of_retained_events": 0.009009009009009009
+      },
+      {
+        "county_fips": "37003",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37005",
+        "event_count": 12,
+        "share_of_retained_events": 0.005405405405405406
+      },
+      {
+        "county_fips": "37007",
+        "event_count": 16,
+        "share_of_retained_events": 0.007207207207207207
+      },
+      {
+        "county_fips": "37009",
+        "event_count": 35,
+        "share_of_retained_events": 0.015765765765765764
+      },
+      {
+        "county_fips": "37011",
+        "event_count": 12,
+        "share_of_retained_events": 0.005405405405405406
+      },
+      {
+        "county_fips": "37013",
+        "event_count": 11,
+        "share_of_retained_events": 0.004954954954954955
+      },
+      {
+        "county_fips": "37015",
+        "event_count": 12,
+        "share_of_retained_events": 0.005405405405405406
+      },
+      {
+        "county_fips": "37017",
+        "event_count": 42,
+        "share_of_retained_events": 0.01891891891891892
+      },
+      {
+        "county_fips": "37019",
+        "event_count": 87,
+        "share_of_retained_events": 0.03918918918918919
+      },
+      {
+        "county_fips": "37021",
+        "event_count": 21,
+        "share_of_retained_events": 0.00945945945945946
+      },
+      {
+        "county_fips": "37023",
+        "event_count": 36,
+        "share_of_retained_events": 0.016216216216216217
+      },
+      {
+        "county_fips": "37025",
+        "event_count": 30,
+        "share_of_retained_events": 0.013513513513513514
+      },
+      {
+        "county_fips": "37027",
+        "event_count": 30,
+        "share_of_retained_events": 0.013513513513513514
+      },
+      {
+        "county_fips": "37029",
+        "event_count": 10,
+        "share_of_retained_events": 0.0045045045045045045
+      },
+      {
+        "county_fips": "37031",
+        "event_count": 43,
+        "share_of_retained_events": 0.01936936936936937
+      },
+      {
+        "county_fips": "37033",
+        "event_count": 11,
+        "share_of_retained_events": 0.004954954954954955
+      },
+      {
+        "county_fips": "37035",
+        "event_count": 18,
+        "share_of_retained_events": 0.008108108108108109
+      },
+      {
+        "county_fips": "37037",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37039",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37041",
+        "event_count": 7,
+        "share_of_retained_events": 0.003153153153153153
+      },
+      {
+        "county_fips": "37043",
+        "event_count": 5,
+        "share_of_retained_events": 0.0022522522522522522
+      },
+      {
+        "county_fips": "37045",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37047",
+        "event_count": 35,
+        "share_of_retained_events": 0.015765765765765764
+      },
+      {
+        "county_fips": "37049",
+        "event_count": 10,
+        "share_of_retained_events": 0.0045045045045045045
+      },
+      {
+        "county_fips": "37051",
+        "event_count": 39,
+        "share_of_retained_events": 0.01756756756756757
+      },
+      {
+        "county_fips": "37053",
+        "event_count": 20,
+        "share_of_retained_events": 0.009009009009009009
+      },
+      {
+        "county_fips": "37055",
+        "event_count": 20,
+        "share_of_retained_events": 0.009009009009009009
+      },
+      {
+        "county_fips": "37057",
+        "event_count": 29,
+        "share_of_retained_events": 0.013063063063063063
+      },
+      {
+        "county_fips": "37059",
+        "event_count": 4,
+        "share_of_retained_events": 0.0018018018018018018
+      },
+      {
+        "county_fips": "37061",
+        "event_count": 36,
+        "share_of_retained_events": 0.016216216216216217
+      },
+      {
+        "county_fips": "37063",
+        "event_count": 42,
+        "share_of_retained_events": 0.01891891891891892
+      },
+      {
+        "county_fips": "37065",
+        "event_count": 14,
+        "share_of_retained_events": 0.006306306306306306
+      },
+      {
+        "county_fips": "37067",
+        "event_count": 26,
+        "share_of_retained_events": 0.011711711711711712
+      },
+      {
+        "county_fips": "37069",
+        "event_count": 19,
+        "share_of_retained_events": 0.008558558558558558
+      },
+      {
+        "county_fips": "37071",
+        "event_count": 12,
+        "share_of_retained_events": 0.005405405405405406
+      },
+      {
+        "county_fips": "37073",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37075",
+        "event_count": 0,
+        "share_of_retained_events": 0.0
+      },
+      {
+        "county_fips": "37077",
+        "event_count": 6,
+        "share_of_retained_events": 0.002702702702702703
+      },
+      {
+        "county_fips": "37079",
+        "event_count": 15,
+        "share_of_retained_events": 0.006756756756756757
+      },
+      {
+        "county_fips": "37081",
+        "event_count": 58,
+        "share_of_retained_events": 0.026126126126126126
+      },
+      {
+        "county_fips": "37083",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37085",
+        "event_count": 24,
+        "share_of_retained_events": 0.010810810810810811
+      },
+      {
+        "county_fips": "37087",
+        "event_count": 7,
+        "share_of_retained_events": 0.003153153153153153
+      },
+      {
+        "county_fips": "37089",
+        "event_count": 34,
+        "share_of_retained_events": 0.015315315315315315
+      },
+      {
+        "county_fips": "37091",
+        "event_count": 7,
+        "share_of_retained_events": 0.003153153153153153
+      },
+      {
+        "county_fips": "37093",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37095",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37097",
+        "event_count": 11,
+        "share_of_retained_events": 0.004954954954954955
+      },
+      {
+        "county_fips": "37099",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37101",
+        "event_count": 32,
+        "share_of_retained_events": 0.014414414414414415
+      },
+      {
+        "county_fips": "37103",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37105",
+        "event_count": 7,
+        "share_of_retained_events": 0.003153153153153153
+      },
+      {
+        "county_fips": "37107",
+        "event_count": 27,
+        "share_of_retained_events": 0.012162162162162163
+      },
+      {
+        "county_fips": "37109",
+        "event_count": 5,
+        "share_of_retained_events": 0.0022522522522522522
+      },
+      {
+        "county_fips": "37111",
+        "event_count": 41,
+        "share_of_retained_events": 0.018468468468468467
+      },
+      {
+        "county_fips": "37113",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37115",
+        "event_count": 6,
+        "share_of_retained_events": 0.002702702702702703
+      },
+      {
+        "county_fips": "37117",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37119",
+        "event_count": 35,
+        "share_of_retained_events": 0.015765765765765764
+      },
+      {
+        "county_fips": "37121",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37123",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37125",
+        "event_count": 21,
+        "share_of_retained_events": 0.00945945945945946
+      },
+      {
+        "county_fips": "37127",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37129",
+        "event_count": 90,
+        "share_of_retained_events": 0.04054054054054054
+      },
+      {
+        "county_fips": "37131",
+        "event_count": 7,
+        "share_of_retained_events": 0.003153153153153153
+      },
+      {
+        "county_fips": "37133",
+        "event_count": 24,
+        "share_of_retained_events": 0.010810810810810811
+      },
+      {
+        "county_fips": "37135",
+        "event_count": 33,
+        "share_of_retained_events": 0.014864864864864866
+      },
+      {
+        "county_fips": "37137",
+        "event_count": 3,
+        "share_of_retained_events": 0.0013513513513513514
+      },
+      {
+        "county_fips": "37139",
+        "event_count": 17,
+        "share_of_retained_events": 0.0076576576576576575
+      },
+      {
+        "county_fips": "37141",
+        "event_count": 46,
+        "share_of_retained_events": 0.02072072072072072
+      },
+      {
+        "county_fips": "37143",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37145",
+        "event_count": 7,
+        "share_of_retained_events": 0.003153153153153153
+      },
+      {
+        "county_fips": "37147",
+        "event_count": 33,
+        "share_of_retained_events": 0.014864864864864866
+      },
+      {
+        "county_fips": "37149",
+        "event_count": 18,
+        "share_of_retained_events": 0.008108108108108109
+      },
+      {
+        "county_fips": "37151",
+        "event_count": 27,
+        "share_of_retained_events": 0.012162162162162163
+      },
+      {
+        "county_fips": "37153",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37155",
+        "event_count": 27,
+        "share_of_retained_events": 0.012162162162162163
+      },
+      {
+        "county_fips": "37157",
+        "event_count": 48,
+        "share_of_retained_events": 0.021621621621621623
+      },
+      {
+        "county_fips": "37159",
+        "event_count": 11,
+        "share_of_retained_events": 0.004954954954954955
+      },
+      {
+        "county_fips": "37161",
+        "event_count": 15,
+        "share_of_retained_events": 0.006756756756756757
+      },
+      {
+        "county_fips": "37163",
+        "event_count": 36,
+        "share_of_retained_events": 0.016216216216216217
+      },
+      {
+        "county_fips": "37165",
+        "event_count": 10,
+        "share_of_retained_events": 0.0045045045045045045
+      },
+      {
+        "county_fips": "37167",
+        "event_count": 27,
+        "share_of_retained_events": 0.012162162162162163
+      },
+      {
+        "county_fips": "37169",
+        "event_count": 26,
+        "share_of_retained_events": 0.011711711711711712
+      },
+      {
+        "county_fips": "37171",
+        "event_count": 52,
+        "share_of_retained_events": 0.023423423423423424
+      },
+      {
+        "county_fips": "37173",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      },
+      {
+        "county_fips": "37175",
+        "event_count": 38,
+        "share_of_retained_events": 0.017117117117117116
+      },
+      {
+        "county_fips": "37177",
+        "event_count": 1,
+        "share_of_retained_events": 0.00045045045045045046
+      },
+      {
+        "county_fips": "37179",
+        "event_count": 22,
+        "share_of_retained_events": 0.00990990990990991
+      },
+      {
+        "county_fips": "37181",
+        "event_count": 4,
+        "share_of_retained_events": 0.0018018018018018018
+      },
+      {
+        "county_fips": "37183",
+        "event_count": 156,
+        "share_of_retained_events": 0.07027027027027027
+      },
+      {
+        "county_fips": "37185",
+        "event_count": 9,
+        "share_of_retained_events": 0.004054054054054054
+      },
+      {
+        "county_fips": "37187",
+        "event_count": 1,
+        "share_of_retained_events": 0.00045045045045045046
+      },
+      {
+        "county_fips": "37189",
+        "event_count": 68,
+        "share_of_retained_events": 0.03063063063063063
+      },
+      {
+        "county_fips": "37191",
+        "event_count": 23,
+        "share_of_retained_events": 0.01036036036036036
+      },
+      {
+        "county_fips": "37193",
+        "event_count": 37,
+        "share_of_retained_events": 0.016666666666666666
+      },
+      {
+        "county_fips": "37195",
+        "event_count": 24,
+        "share_of_retained_events": 0.010810810810810811
+      },
+      {
+        "county_fips": "37197",
+        "event_count": 19,
+        "share_of_retained_events": 0.008558558558558558
+      },
+      {
+        "county_fips": "37199",
+        "event_count": 8,
+        "share_of_retained_events": 0.0036036036036036037
+      }
+    ],
+    "event_type": [
+      {
+        "event_type": "Flood",
+        "event_count": 535,
+        "share_of_retained_events": 0.240990990990991
+      },
+      {
+        "event_type": "Flash Flood",
+        "event_count": 1665,
+        "share_of_retained_events": 0.75
+      },
+      {
+        "event_type": "Debris Flow",
+        "event_count": 20,
+        "share_of_retained_events": 0.009009009009009009
+      }
+    ]
+  },
+  "duration_and_impact": {
+    "duration_hours": {
+      "rows": 2220,
+      "missing": 0,
+      "zero": 231,
+      "positive": 1989,
+      "sum": 14203.216666666667,
+      "median": 2.5833333333333335,
+      "p95": 22.25083333333324,
+      "p99": 85.00249999999971,
+      "max": 193.5,
+      "upper_tail_review_count": 23
+    },
+    "injuries": {
+      "rows": 2220,
+      "missing": 0,
+      "zero": 2215,
+      "positive": 5,
+      "sum": 8.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 4.0,
+      "upper_tail_review_count": 5
+    },
+    "deaths": {
+      "rows": 2220,
+      "missing": 0,
+      "zero": 2162,
+      "positive": 58,
+      "sum": 142.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "p99": 1.0,
+      "max": 15.0,
+      "upper_tail_review_count": 58
+    },
+    "property_damage_usd": {
+      "rows": 2220,
+      "missing": 0,
+      "zero": 1232,
+      "positive": 988,
+      "sum": 3155355110.0,
+      "median": 0.0,
+      "p95": 500000.0,
+      "p99": 31862999.999999873,
+      "max": 300000000.0,
+      "upper_tail_review_count": 23
+    }
+  },
+  "review_queue_rows": 311,
+  "review_policy": "Retain all records. Flag zero duration and positive values at or above each field's overall empirical 99th percentile (linear interpolation, ties included). Flags prioritize inspection; they do not establish errors. Impacts are outcomes, not prediction features. Timestamp source interpretation remains pending for all rows.",
+  "generated_files_sha256": {
+    "data/interim/noaa_descriptive/counts_by_county_fips.csv": "0964cca040cd6fbf948dd976f27ec7c6504a832dc7c6ae258bab6f3cec4d6d39",
+    "data/interim/noaa_descriptive/counts_by_event_type.csv": "c6a9402f4708349ff546e9719ef42aab5fae93d74f84638c7b56d35a02d60aed",
+    "data/interim/noaa_descriptive/counts_by_month.csv": "a6ab7599420ab5a970bb59f6a42f6db9987f8367473ad702ab8f132c7dc0a01d",
+    "data/interim/noaa_descriptive/counts_by_year.csv": "f385fba6d9ecc8a6fbad54a36e82ae00f12d75f9435748e31c3a3e414bc8be02",
+    "data/interim/noaa_descriptive/events_review.parquet": "00643cc28b0f2289deaac7a3671660dd2a94406a9d1fd3da0d91579fe35cf589",
+    "data/interim/noaa_descriptive/events_review.csv": "2c376045582eb1cc082f23ac386daeaab4d8a780d7f83559db82a5df3db72c88",
+    "data/interim/noaa_descriptive/review_queue.csv": "1e87c3fe033a764eb8ab7829faaa790681ee2eef8ff6deb663c6c501c3bb8363",
+    "outputs/figures/noaa_real_event_counts.png": "50a059a280d89501040b42aaa637c59046bcc602a9be1723ae0ca02db59710b9"
+  }
+}
