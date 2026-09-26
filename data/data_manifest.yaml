@@ -117,7 +117,35 @@ datasets:
       docs/adr/0003-reanalysis-live-forecast-boundary.md and must be stated in
       the model card and in the app. Units: t2m K, tp m per hour
       (de-accumulated), sde m, u10/v10 m/s, swvl1 m3/m3. ERA5-Land has no wind
-      gust; see iem_asos. A single point per county is not an area average.
+      gust; see era5_single_levels_timeseries. A single point per county is
+      not an area average.
+
+  - name: era5_single_levels_timeseries
+    required: false
+    publisher: Copernicus Climate Change Service (C3S) / ECMWF
+    description: >-
+      Hourly ERA5 reanalysis at each county point: 10 m wind gust (max in the
+      past hour), 2 m dewpoint, and cloud base height. PROPOSED in
+      docs/adr/0005 as the wind-gust source and fog signal.
+    source_url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-timeseries
+    access_method: >-
+      CDS point time-series API (cdsapi), one request per county at the Census
+      Gazetteer internal point, CSV. Variables
+      10m_wind_gust_since_previous_post_processing, 2m_dewpoint_temperature,
+      cloud_base_height.
+    years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    geography: 100 NC counties + 5 TN counties (0.25 deg grid)
+    license: CC-BY 4.0 (Copernicus); attribution required
+    local_raw_path: data/raw/weather/era5_single_levels
+    expected_file_pattern: "{county_fips}.csv"
+    access_date: "2026-09-26"
+    resolved_files: 105 CSVs, 87,672 hourly rows each
+    checksum: per-file SHA-256 in data/raw/weather/era5_single_levels/SHA256SUMS
+    pipeline_script: scripts/fetch_weather.py
+    consumed_by: src/stormroute/data/weather.py
+    notes: >-
+      Units fg10 m/s, d2m K, cbh m. cbh is blank when there is no cloud; blank
+      means clear sky, not missing.
 
   - name: census_tiger_counties_2024
     required: true
@@ -142,8 +170,8 @@ datasets:
     description: >-
       Hourly airport station observations (routine + special METARs): wind
       gust, peak wind gust, visibility, present-weather codes (FZRA, SN, FG,
-      TS), ice accretion, precipitation, temperature. PROPOSED in
-      docs/adr/0005 as the wind-gust source.
+      TS), ice accretion, precipitation, temperature. OPTIONAL per
+      docs/adr/0005 (measured validation for ERA5 gusts).
     source_url: https://mesonet.agron.iastate.edu/request/download.phtml
     years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
     geography: NC_ASOS network
