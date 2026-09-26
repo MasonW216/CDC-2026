@@ -28,7 +28,7 @@ jobs:
     outputs:
       frontend_ready: ${{ steps.check.outputs.frontend_ready }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: check
         run: |
           if [ -f frontend/package-lock.json ]; then
@@ -46,7 +46,7 @@ jobs:
     name: Python (lint, types, tests)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install system geospatial libraries
         run: |
@@ -103,7 +103,7 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v4
         with:
@@ -134,7 +134,7 @@ jobs:
     name: Hygiene (secrets, data, paths)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: No tracked environment files or data artifacts
         run: |
