@@ -13,6 +13,7 @@ from pathlib import Path
 from fastapi import APIRouter, Request
 from pydantic import BaseModel
 
+from stormroute.config import resolve_path
 from stormroute_api import __version__
 from stormroute_api.config import Settings
 
@@ -52,7 +53,7 @@ def health(request: Request) -> HealthResponse:
     return HealthResponse(
         status="ok",
         version=__version__,
-        model_available=settings.resolve(settings.model_path).is_file(),
+        model_available=resolve_path(settings.model_path).is_file(),
         demo_available=bool(settings.demo_artifact_paths)
-        and all(_is_real_artifact(settings.resolve(path)) for path in settings.demo_artifact_paths),
+        and all(_is_real_artifact(resolve_path(path)) for path in settings.demo_artifact_paths),
     )

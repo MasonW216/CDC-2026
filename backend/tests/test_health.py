@@ -8,6 +8,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from stormroute.config import resolve_path
 from stormroute_api.config import REPO_ROOT, Settings
 from stormroute_api.main import create_app
 
@@ -106,5 +107,5 @@ def test_no_configured_demo_artifacts_means_unavailable(tmp_path):
 
 def test_relative_paths_resolve_against_repo_root():
     settings = Settings(model_path="artifacts/models/stormroute_model.joblib")
-    resolved = settings.resolve(settings.model_path)
+    resolved = resolve_path(settings.model_path)
     assert resolved == REPO_ROOT / "artifacts" / "models" / "stormroute_model.joblib"

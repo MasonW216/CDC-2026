@@ -12,7 +12,8 @@ import yaml
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+from stormroute.config import REPO_ROOT
+
 DEMO_CONFIG = REPO_ROOT / "configs" / "demo.yaml"
 DEMO_ARTIFACT_KEYS = ("routes", "scores", "weather")
 
@@ -40,7 +41,3 @@ class Settings(BaseSettings):
     env: str = "development"
     model_path: Path = REPO_ROOT / "artifacts" / "models" / "stormroute_model.joblib"
     demo_artifact_paths: list[Path] = Field(default_factory=_demo_artifact_paths)
-
-    def resolve(self, path: Path) -> Path:
-        """Resolve a configured path against the repository root."""
-        return path if path.is_absolute() else REPO_ROOT / path
