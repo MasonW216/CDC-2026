@@ -66,7 +66,7 @@ dev = [
 ]
 notebook = [
     "jupyterlab>=4.2,<5",
-    "ipykernel>=6.29,<7",
+    "ipykernel>=6.29,<8",
     "nbclient>=0.10,<1",
     "nbformat>=5.10,<6",
     "nbstripout>=0.7,<1",
