@@ -11,6 +11,7 @@ slides, or DevPost entry must trace to a file here.
 | `eda_reporting_coverage.json` | `make eda`, section 6 | 2 |
 | `eda_helene_comparison.json` | `make eda`, section 6 | 2 |
 | `eda_reported_impacts.json` | `make eda`, section 8 | 2 |
+| `eda_geographic_distribution.json` | `make eda`, section 7 | 2 |
 | `data_quality.json` | `make data` | 3 |
 | `model_comparison.json` | `make evaluate` | 4 |
 | `final_test_metrics.json` | `make evaluate` | 4 |
@@ -68,3 +69,11 @@ totals are unknown if either direct or indirect counts are missing. The chart
 `eda_reported_impacts.png` contrasts zero, positive, and unknown outcomes.
 These post-event outcomes are not model inputs or traveler-specific risk
 estimates. Full-data findings remain pending.
+
+The geographic export includes all 100 counties and every configured county-year,
+zero-report counties, reports per study year, and land-area-normalized frequencies.
+It uses Census `ALAND` square meters, not simplified polygon area. Source hashes
+and boundary provenance accompany the results. `eda_county_choropleth.png` maps
+reports per 1,000 land km2 per study year. Sample geometry is derived from real
+Census data; sample events remain synthetic. Frequencies are not road-risk
+estimates and do not establish reporting completeness.

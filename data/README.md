@@ -6,7 +6,7 @@ Four layers, one direction of travel. Nothing flows backwards.
 data/raw/         Immutable downloaded source files.        Never edited. Never committed.
 data/interim/     Cleaned, source-specific tables.          Reproducible. Never committed.
 data/processed/   Model-ready county-window tables.         Reproducible. Never committed.
-data/sample/      Tiny public fixtures for tests and CI.    Hand-authored. Always committed.
+data/sample/      Public fixtures for tests and CI.         Always committed.
 ```
 
 [`data_manifest.yaml`](data_manifest.yaml) is the source of truth for what a
@@ -38,7 +38,11 @@ make download   # NOAA Storm Events 2015-2024 + Census county boundaries
 make data       # build data/processed/county_windows.parquet
 ```
 
-Neither is implemented yet; see Milestones 1 and 3 in
+`make download` runs NOAA and county-boundary downloads. To retrieve or verify
+only the county archive, run `uv run python scripts/download_boundaries.py`.
+The manifest records the retrieved 2024 Census archive. The offline sample map
+is derived from that archive; sample event rows remain hand-authored.
+`make data` remains pending; see Milestone 3 in
 [docs/build_guide.md](../docs/build_guide.md).
 
 To work without any download:

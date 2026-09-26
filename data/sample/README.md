@@ -5,7 +5,7 @@ tests, and CI all run in a fresh clone with **no download and no network**.
 
 Selected with `STORMROUTE_DATA_MODE=sample` (see `configs/data.yaml`).
 
-These files are hand-authored. They are not a random sample: every row is here
+The CSV files are hand-authored. They are not a random sample: every row is here
 to exercise a specific failure mode. If you change a row, update this table and
 the test that depends on it.
 
@@ -68,7 +68,20 @@ measured in Milestone 2, and is reported in
 [reports/eda/eda_findings.md](../../reports/eda/eda_findings.md). Never quote a
 rate computed from this file.
 
-## Rules
+## `nc_counties_2024.geojson`
+
+Real Census TIGER/Line 2024 boundaries for all 100 NC counties, simplified at
+1,000 meters in EPSG:5070 and stored in EPSG:4326 for offline EDA display.
+Unlike the event fixtures, these county identities and boundaries are derived
+from real public source data. The adjacent JSON records the source URL,
+retrieval timestamp, archive checksum, derivation, and fixture checksum.
+`ALAND` preserves Census land area; never measure area from simplified geometry.
+This map is not suitable for precise spatial joins or routing.
+
+Rebuild with `uv run python scripts/download_boundaries.py --write-sample`.
+Synthetic event counts plotted on this real map remain synthetic.
+
+## Event fixture rules
 
 - Public, already-published values only. Never a private or re-identifiable record.
 - Keep both files under a few kilobytes.
