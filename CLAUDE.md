@@ -28,4 +28,6 @@ Every Claude session and subagent in this repo inherits these rules.
 - `verifier` runs the checks and reports pass/fail. It never edits code.
 - `code-reviewer` reviews a diff against the issue, ADRs, and schemas. It is read-only.
 - `ux-claims-reviewer` reviews user-facing UI and text for accessibility and product language. It is read-only.
+- `api-researcher` fetches cited facts from official docs for external APIs and libraries (ORS, NWS, TIGER, Leaflet). It is read-only.
+- `/status [owner]` reports progress against the gates and drafts a team update. Set the clock in `.claude/event.json`.
 - `/work-issue <number>` runs the full loop: plan, implement, verify, review, fix, re-verify, hand off.
