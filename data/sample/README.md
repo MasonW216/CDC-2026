@@ -11,9 +11,11 @@ the test that depends on it.
 
 ## `storm_events_sample.csv`
 
-NOAA Storm Events *details* column subset, 16 rows, in the **exact format NCEI
-publishes**: `CZ_FIPS`, `BEGIN_DAY`, and `BEGIN_TIME` are not zero-padded
-(`21`, `8`, `0`), exactly as in the real 2024 file.
+NOAA Storm Events *details* column subset (30 of 51 columns), 16 rows, in the
+**exact format NCEI publishes**: `CZ_FIPS`, `BEGIN_DAY`, and `BEGIN_TIME` are not
+zero-padded (`21`, `8`, `0`), exactly as in the real 2024 file. `BEGIN_DATE_TIME`
+and `END_DATE_TIME` are NCEI's own text rendering of the same local times; EDA
+section 4 cross-checks the parsed timestamps against them.
 
 All local times are `EST-5`, so **UTC = local + 5 hours**. A six-hour window
 boundary (00, 06, 12, 18 UTC) is 19:00, 01:00, 07:00, or 13:00 local.

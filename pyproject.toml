@@ -117,6 +117,9 @@ ignore = [
 "backend/tests/**" = ["D103", "D104", "ANN001", "ANN201"]
 # Scripts are thin entry points.
 "scripts/**" = ["D103"]
+# Notebooks are narrated by Markdown cells, not docstrings, and their displayed
+# text uses real typography ("2015–2024", "county × window").
+"*.ipynb" = ["D", "ANN", "RUF001"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

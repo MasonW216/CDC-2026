@@ -45,6 +45,10 @@ data/processed/*
 # data/sample/ is intentionally tracked in full: tiny public fixtures that
 # make the EDA notebook and CI runnable without a download.
 
+# Executed notebook copies from `make eda` and CI; the tracked notebooks stay
+# output-free.
+outputs/executed/
+
 # Generated predictions are large; keep the directory, drop the contents.
 outputs/predictions/*
 !outputs/predictions/.gitkeep

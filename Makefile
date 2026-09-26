@@ -54,8 +54,9 @@ download: ## Download/version required source data (Milestone 1)
 	@echo "  is pending (issue #3, CS major). The EDA choropleth needs it."
 
 eda: ## Execute the EDA notebook top to bottom in a clean kernel (Milestone 2)
-	$(UV) run jupyter nbconvert --to notebook --execute --inplace \
-		--ExecutePreprocessor.timeout=1800 $(EDA_NOTEBOOK)
+	$(UV) run jupyter nbconvert --to notebook --execute \
+		--ExecutePreprocessor.timeout=1800 --output-dir outputs/executed $(EDA_NOTEBOOK)
+	@echo "Executed copy: outputs/executed/ (ignored). The tracked notebook stays output-free."
 
 data: ## Build the production county-window table (Milestone 3)
 	$(call not_yet,make data,Milestone 3)
