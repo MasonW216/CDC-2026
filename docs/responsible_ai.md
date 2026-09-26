@@ -1,6 +1,6 @@
 # Responsible AI
 
-> **Owner:** Econ/Stats major · **Reviewer:** Mason · **Milestone:** 8
+> **Owner:** Cameron (Econ/Stats) · **Reviewer:** Mason · **Milestone:** 8
 >
 > The six safety statements and the language rules below are **decided now**
 > and apply from the first line of product code. The evaluation sections are
@@ -31,7 +31,8 @@ These appear in the app, the README, the model card, and the presentation.
 3. **The model is not a crash predictor.** The score is a comparative
    weather-hazard exposure index.
 4. **Reanalysis evaluation is retrospective and differs from live forecast
-   inputs.** Reported metrics describe performance given accurate weather. See
+   inputs.** Future reanalysis metrics describe performance on retrospective
+   inputs; they do not establish live forecast accuracy. See
    [ADR 0003](adr/0003-reanalysis-live-forecast-boundary.md).
 5. **Recommendations never override road closures, evacuation orders, or NWS
    guidance.** Official guidance is shown above any model recommendation.
@@ -52,7 +53,18 @@ These appear in the app, the README, the model card, and the presentation.
 SVI may appear only in aggregate evaluation and impact analysis. It never
 enters the feature matrix, never lowers the score of a trip through a
 vulnerable community, and is never used to route travelers away from one.
-Enforced by `tests/data/test_no_leakage.py`.
+Required enforcement belongs in `tests/data/test_no_leakage.py`, currently a
+placeholder. The restriction is established; production enforcement remains
+unverified.
+
+## Current evidence limits
+
+The [data card](data_card.md) records what has actually been verified. Real Census
+boundaries are available, but completed analysis checks use synthetic event
+fixtures. Their rates, impacts, and maps must not be presented as historical
+findings. Feature-timing requirements are documented; production leakage tests,
+real-data performance, and usability sessions remain pending. Planned mitigations
+below are requirements, not claims that the application already implements them.
 
 ## Known sources of bias
 
