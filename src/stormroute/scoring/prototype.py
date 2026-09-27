@@ -22,7 +22,8 @@ Rules that the tests pin down
 -----------------------------
   * Official alerts and rainfall combine by maximum: an alert can raise the level and
     never lower it.
-  * Missing rainfall never produces "Lower concern": with no alert the level is None.
+  * Missing rainfall never produces "Lower concern". A known elevated rainfall
+    tier or active alert may still raise concern with partial weather coverage.
   * Only alerts issued at or before the decision time count (no hindsight).
   * The same inputs always give the same output. Nothing here touches the network.
 
@@ -197,6 +198,13 @@ def assess_segment(segment: SegmentInput, decision_utc: datetime) -> SegmentAsse
         level: int | None = None
         status = "missing_weather"
         reason = "No rainfall data for this county and no active flood product: not assessed."
+    elif rain_missing and rain_level == 0 and not used:
+        level = None
+        status = "partial_weather"
+        reason = (
+            "Rainfall coverage is incomplete and the available total is below its first "
+            "concern tier; not assessed."
+        )
     else:
         level = max(rain_level or 0, alert_level)
         status = "complete" if not rain_missing else "partial_weather"

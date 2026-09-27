@@ -87,6 +87,11 @@ are in [`tests/scoring/test_prototype_real_data.py`](../tests/scoring/test_proto
 | Add a pre-departure test flash flood warning to Catawba `37035` | **PASS** | Both Catawba stretches rise from High (level 2) to Severe (level 3); no level falls. The added warning is a synthetic test perturbation, not a real archived warning. |
 | Run `scripts/run_prototype.py` twice with socket connections blocked | **PASS** | The two output files are byte-identical. This proves deterministic offline replay on this checkout, not that the full browser workflow works offline. |
 
+A separate partial-coverage check found and fixed a safety edge case: with one
+rainfall total missing and the other below its first tier, the rule had shown
+“Lower concern.” It now shows **Not assessed** with `partial_weather`. An
+observed higher rainfall tier or an active alert can still raise the level.
+
 After Jeffrey's `math.fsum` fix reached `Mason`, I reran the **exact** script
 twice with socket connections denied, writing to
 `artifacts/demo/prototype_result.json` both times. On local Python 3.11.9,

@@ -45,7 +45,12 @@ def test_missing_rainfall_with_alert_still_raises():
 
 
 def test_partial_rainfall_is_reported_partial():
-    assert assess_segment(seg(10.0, None), DECISION).data_status == "partial_weather"
+    result = assess_segment(seg(10.0, None), DECISION)
+    assert result.data_status == "partial_weather"
+    assert result.level is None
+    assert result.label == "Not assessed"
+    assert assess_segment(seg(None, 10.0), DECISION).label == "Not assessed"
+    assert assess_segment(seg(60.0, None), DECISION).level == 2
 
 
 def test_alert_never_lowers_concern():
