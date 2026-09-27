@@ -27,6 +27,8 @@ from fastapi import FastAPI
 
 from stormroute_api import __version__
 from stormroute_api.config import Settings
+from stormroute_api.cors import configure_cors
+from stormroute_api.request_context import install_request_context
 from stormroute_api.routes import (
     case_study,
     geocode,
@@ -34,6 +36,7 @@ from stormroute_api.routes import (
     health,
     methodology,
     routing,
+    scenarios,
     score,
 )
 
@@ -42,6 +45,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     """Build the API with the given settings (read from the environment by default)."""
     app = FastAPI(title="StormRoute API", version=__version__)
     app.state.settings = settings or Settings()
+    install_request_context(app)
+    configure_cors(app, app.state.settings)
     app.include_router(health.router)
     app.include_router(geocode.router)
     app.include_router(routing.router)
@@ -49,11 +54,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(methodology.router)
     app.include_router(case_study.router)
     app.include_router(geography.router)
+    app.include_router(scenarios.router)
     return app
 
 
 app = create_app()
 
-# TODO(milestone-6+): mount /api/v1/scenarios, CORS allowlist, request-ID
-# logging, and static frontend. See docs/build_guide.md.
-# /api/v1/trips/score and /api/v1/methodology are mounted above.
+# TODO(milestone-6+): mount the static frontend. See docs/build_guide.md.
