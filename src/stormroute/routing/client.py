@@ -15,6 +15,10 @@ checked 2026-09-26):
     guaranteed, so fewer than two routes is reported as an error;
   * with `overview=full`, each leg's `annotation.duration` / `.distance` hold one
     value per edge (coordinates - 1), in seconds and meters;
+  * the annotation durations sum to slightly less than the route's `duration`
+    (about 1% on Asheville-Charlotte, measured 2026-09-26), because turn and
+    endpoint costs are not attributed to edges. Edge times are scaled so they
+    sum to `duration`, the trip time the user is shown;
   * the public server requires an identifying User-Agent, gives no uptime
     guarantee, and uses static road speeds (no live traffic).
 """
@@ -94,12 +98,17 @@ def _parse_route(index: int, route: dict[str, Any]) -> CandidateRoute:
             f"{len(edge_meters)} distance annotation values (expected coordinates - 1). "
             "Was the request made with overview=full?"
         )
+    duration_s = float(route["duration"])
+    annotated_s = sum(edge_seconds)
+    if annotated_s > 0:
+        scale = duration_s / annotated_s
+        edge_seconds = [seconds * scale for seconds in edge_seconds]
     return CandidateRoute(
         route_id=f"route_{index}",
         coordinates=coordinates,
         edge_seconds=tuple(edge_seconds),
         edge_meters=tuple(edge_meters),
-        duration_s=float(route["duration"]),
+        duration_s=duration_s,
         distance_m=float(route["distance"]),
     )
 

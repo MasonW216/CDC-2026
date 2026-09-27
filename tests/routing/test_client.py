@@ -91,6 +91,14 @@ def test_multi_leg_annotations_are_concatenated():
     assert route.edge_seconds == (10.0, 20.0, 30.0, 40.0)
 
 
+def test_edge_times_are_scaled_to_sum_to_the_route_duration():
+    body = payload(1)
+    body["routes"][0]["duration"] = 132.0  # annotations sum to 120 s, as OSRM under-attributes
+    route = parse_osrm_response(body)[0]
+    assert sum(route.edge_seconds) == pytest.approx(132.0)
+    assert route.edge_seconds[0] == pytest.approx(33.0)
+
+
 def test_annotation_length_mismatch_is_an_error():
     body = payload(1)
     body["routes"][0]["legs"][0]["annotation"]["duration"].pop()
