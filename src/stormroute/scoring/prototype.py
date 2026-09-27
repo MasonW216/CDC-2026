@@ -22,7 +22,8 @@ Rules that the tests pin down
 -----------------------------
   * Official alerts and rainfall combine by maximum: an alert can raise the level and
     never lower it.
-  * Missing rainfall never produces "Lower concern": with no alert the level is None.
+  * Missing rainfall never produces "Lower concern". A known elevated rainfall
+    tier or active alert may still raise concern with partial weather coverage.
   * Only alerts issued at or before the decision time count (no hindsight).
   * The same inputs always give the same output. Nothing here touches the network.
 
@@ -87,7 +88,7 @@ ADVISORY: dict[int, str] = {
         "or a different route, and check DriveNC road closures before leaving."
     ),
     3: (
-        "Official flood warnings or extreme rainfall on part of this route. Consider "
+        "The prototype indicates severe flood-related concern on part of this route. Consider "
         "delaying or reducing travel through the affected counties, and follow official "
         "guidance and road closures."
     ),
@@ -95,7 +96,8 @@ ADVISORY: dict[int, str] = {
 
 REPLAY_CAVEAT = (
     "Replay of a past storm using reanalysis rainfall and archived alerts. A traveler "
-    "would not have had this rainfall at departure time. Alerts use their original "
+    "would not have had this rainfall at departure time; later stretches use rainfall "
+    "after departure. Alerts use their original "
     "expiry, so a warning extended before departure counts as expired. Prototype rule, "
     "not a calibrated probability or a validated score."
 )
@@ -157,6 +159,7 @@ def active_alerts(
         for a in alerts
         if (a.phenomena, a.significance) in ALERT_LEVELS
         and a.known_utc <= decision_utc
+        and a.issued_utc <= decision_utc
         and a.issued_utc <= arrival_utc < a.expires_utc
     ]
 
@@ -182,8 +185,9 @@ def assess_segment(segment: SegmentInput, decision_utc: datetime) -> SegmentAsse
     if rain_levels:
         sources.append("ERA5 reanalysis rainfall (Open-Meteo)")
         parts.append(
-            f"rainfall {_fmt(segment.precip_24h_mm)} mm in the prior 24 h and "
-            f"{_fmt(segment.precip_72h_mm)} mm in the prior 72 h"
+            f"24 h rain {_fmt(segment.precip_24h_mm)} mm and 72 h rain "
+            f"{_fmt(segment.precip_72h_mm)} mm, both ending "
+            f"{segment.window_start_utc:%Y-%m-%d %H:%M UTC}"
         )
     if used:
         sources.append("NWS flood products (IEM archive)")
@@ -194,6 +198,13 @@ def assess_segment(segment: SegmentInput, decision_utc: datetime) -> SegmentAsse
         level: int | None = None
         status = "missing_weather"
         reason = "No rainfall data for this county and no active flood product: not assessed."
+    elif rain_missing and rain_level == 0 and not used:
+        level = None
+        status = "partial_weather"
+        reason = (
+            "Rainfall coverage is incomplete and the available total is below its first "
+            "concern tier; not assessed."
+        )
     else:
         level = max(rain_level or 0, alert_level)
         status = "complete" if not rain_missing else "partial_weather"

@@ -45,7 +45,12 @@ def test_missing_rainfall_with_alert_still_raises():
 
 
 def test_partial_rainfall_is_reported_partial():
-    assert assess_segment(seg(10.0, None), DECISION).data_status == "partial_weather"
+    result = assess_segment(seg(10.0, None), DECISION)
+    assert result.data_status == "partial_weather"
+    assert result.level is None
+    assert result.label == "Not assessed"
+    assert assess_segment(seg(None, 10.0), DECISION).label == "Not assessed"
+    assert assess_segment(seg(60.0, None), DECISION).level == 2
 
 
 def test_alert_never_lowers_concern():
@@ -64,6 +69,10 @@ def test_higher_rainfall_never_lowers_concern():
 def test_alert_issued_after_decision_is_not_used():
     late = alert(known=+30, issued=+30)
     assert assess_segment(seg(0.0, 0.0, [late]), DECISION).level == 0
+    # An inconsistent archive row can have a pre-departure product timestamp
+    # but a later event issue timestamp. Do not use that future issue either.
+    inconsistent = alert(known=-30, issued=+20)
+    assert assess_segment(seg(0.0, 0.0, [inconsistent]), DECISION).level == 0
 
 
 def test_expired_or_not_yet_valid_alert_is_not_used():
@@ -130,6 +139,16 @@ def test_trailing_rainfall_uses_only_hours_up_to_window_start():
 
 
 def test_cached_result_matches_a_fresh_run():
+    def stable(value: object) -> object:
+        # Summing the same tenth-mm inputs may produce adjacent binary floats.
+        if isinstance(value, float):
+            return round(value, 6)
+        if isinstance(value, dict):
+            return {key: stable(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [stable(item) for item in value]
+        return value
+
     root = Path(__file__).resolve().parents[2] / "artifacts" / "demo"
     if not (root / "prototype_result.json").exists():
         return
@@ -145,7 +164,9 @@ def test_cached_result_matches_a_fresh_run():
         root / "prototype_routes_provisional.json", root / "prototype_inputs_helene.json"
     )
     cached = json.loads((root / "prototype_result.json").read_text())
-    assert json.loads(json.dumps(fresh, sort_keys=True)) == cached
+    assert stable(json.loads(json.dumps(fresh, sort_keys=True))) == stable(cached)
+    assert fresh["comparison"]["levels"] == {"route_0": 3, "route_1": 3}
+    assert fresh["comparison"]["lower_indicated_concern_route"] is None
 
 
 def test_frontend_fixture_is_a_copy_of_the_artifact():
@@ -166,6 +187,7 @@ def test_results_page_renders_with_required_elements_and_no_forbidden_claims():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     page = module.render(json.loads((root / "artifacts/demo/prototype_result.json").read_text()))
+    assert page == (root / "artifacts/demo/results.html").read_text(encoding="utf-8")
     lowered = page.lower()
     for required in [
         "prototype hazard indicator",
@@ -178,4 +200,5 @@ def test_results_page_renders_with_required_elements_and_no_forbidden_claims():
         assert required in lowered
     for forbidden in ["safe route", "safest", "guaranteed safe", "zero risk", "flood probability"]:
         assert forbidden not in lowered
-    assert lowered.index("official nws flood products") < lowered.index("advisory.")
+    assert lowered.index('class="card alerts"') < lowered.index("<strong>advisory.")
+    assert "rainfall status: complete" in lowered

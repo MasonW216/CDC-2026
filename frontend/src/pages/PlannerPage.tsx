@@ -47,8 +47,9 @@ export default function PlannerPage() {
       <p role="note">
         StormRoute compares the modeled weather-hazard exposure of routes and departure times based
         on available weather data. It is a comparative decision index, not a guarantee of safety,
-        and it never overrides an official National Weather Service warning. For current conditions
-        and official warnings, visit weather.gov.
+        and it never overrides an official National Weather Service warning. This demo replays
+        archived Hurricane Helene conditions with a prototype hazard indicator, not a live forecast.
+        For current conditions and official warnings, visit weather.gov.
       </p>
 
       <button type="button" onClick={loadDemoScenario}>

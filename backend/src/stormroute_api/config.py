@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     env: str = "development"
     model_path: Path = REPO_ROOT / "artifacts" / "models" / "stormroute_model.joblib"
     demo_artifact_paths: list[Path] = Field(default_factory=_demo_artifact_paths)
-    # Unprefixed, like NWS_USER_AGENT and ROUTING_BASE_URL in .env.example:
-    # an external-service credential, not a STORMROUTE_-namespaced setting.
+    # Unprefixed, like NWS_USER_AGENT and ORS_API_KEY: an external-service
+    # setting, not a STORMROUTE_-namespaced one.
     ors_api_key: str | None = Field(default=None, validation_alias="ORS_API_KEY")
+    routing_base_url: str = Field(
+        default="https://router.project-osrm.org", validation_alias="ROUTING_BASE_URL"
+    )
