@@ -2,8 +2,8 @@
  "schema_version": "prototype-score/1",
  "score_name": "Prototype weather-concern index (0-100, higher means more indicated concern)",
  "mode": "live",
- "requested_at_utc": "2026-09-27T05:33:49+00:00",
- "departure_utc": "2026-09-27T08:00:00+00:00",
+ "requested_at_utc": "2026-09-27T07:32:41+00:00",
+ "departure_utc": "2026-09-27T10:00:00+00:00",
  "routes": [
   {
    "route_id": "route_0",
@@ -17,7 +17,7 @@
    "highest_concern_segment": {
     "county_fips": "37021",
     "county_name": "Buncombe",
-    "arrival_utc": "2026-09-27T08:00:00+00:00",
+    "arrival_utc": "2026-09-27T10:00:00+00:00",
     "minutes": 19.7,
     "km": 23.7,
     "alerts": [],
@@ -32,7 +32,7 @@
     {
      "county_fips": "37021",
      "county_name": "Buncombe",
-     "arrival_utc": "2026-09-27T08:00:00+00:00",
+     "arrival_utc": "2026-09-27T10:00:00+00:00",
      "minutes": 19.7,
      "km": 23.7,
      "alerts": [],
@@ -46,7 +46,7 @@
     {
      "county_fips": "37089",
      "county_name": "Henderson",
-     "arrival_utc": "2026-09-27T08:19:39.073247+00:00",
+     "arrival_utc": "2026-09-27T10:19:39.073247+00:00",
      "minutes": 20.8,
      "km": 27.6,
      "alerts": [],
@@ -60,7 +60,7 @@
     {
      "county_fips": "37149",
      "county_name": "Polk",
-     "arrival_utc": "2026-09-27T08:40:26.399099+00:00",
+     "arrival_utc": "2026-09-27T10:40:26.399099+00:00",
      "minutes": 23.2,
      "km": 32.7,
      "alerts": [],
@@ -74,7 +74,7 @@
     {
      "county_fips": "37161",
      "county_name": "Rutherford",
-     "arrival_utc": "2026-09-27T09:03:36.023218+00:00",
+     "arrival_utc": "2026-09-27T11:03:36.023218+00:00",
      "minutes": 18.3,
      "km": 26.9,
      "alerts": [],
@@ -88,7 +88,7 @@
     {
      "county_fips": "37045",
      "county_name": "Cleveland",
-     "arrival_utc": "2026-09-27T09:21:52.968230+00:00",
+     "arrival_utc": "2026-09-27T11:21:52.968230+00:00",
      "minutes": 33.0,
      "km": 39.7,
      "alerts": [],
@@ -102,9 +102,23 @@
     {
      "county_fips": "37071",
      "county_name": "Gaston",
-     "arrival_utc": "2026-09-27T09:54:55.608610+00:00",
-     "minutes": 23.1,
-     "km": 30.6,
+     "arrival_utc": "2026-09-27T11:54:55.608610+00:00",
+     "minutes": 5.1,
+     "km": 7.0,
+     "alerts": [],
+     "rain_rate_mm_h": 0.0,
+     "rain_24h_mm": 0.0,
+     "status": "assessed",
+     "index": 0,
+     "band": "Lower concern",
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+    },
+    {
+     "county_fips": "37071",
+     "county_name": "Gaston",
+     "arrival_utc": "2026-09-27T12:00:00+00:00",
+     "minutes": 18.0,
+     "km": 23.7,
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
@@ -116,7 +130,7 @@
     {
      "county_fips": "37119",
      "county_name": "Mecklenburg",
-     "arrival_utc": "2026-09-27T10:18:02.578407+00:00",
+     "arrival_utc": "2026-09-27T12:18:02.578407+00:00",
      "minutes": 16.2,
      "km": 17.4,
      "alerts": [],
@@ -131,7 +145,8 @@
    "alerts": [],
    "reasons": [
     "Highest concern in Buncombe: Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-   ]
+   ],
+   "contributing_factors": []
   },
   {
    "route_id": "route_1",
@@ -145,7 +160,7 @@
    "highest_concern_segment": {
     "county_fips": "37021",
     "county_name": "Buncombe",
-    "arrival_utc": "2026-09-27T08:00:00+00:00",
+    "arrival_utc": "2026-09-27T10:00:00+00:00",
     "minutes": 23.2,
     "km": 29.6,
     "alerts": [],
@@ -160,7 +175,7 @@
     {
      "county_fips": "37021",
      "county_name": "Buncombe",
-     "arrival_utc": "2026-09-27T08:00:00+00:00",
+     "arrival_utc": "2026-09-27T10:00:00+00:00",
      "minutes": 23.2,
      "km": 29.6,
      "alerts": [],
@@ -174,7 +189,7 @@
     {
      "county_fips": "37111",
      "county_name": "McDowell",
-     "arrival_utc": "2026-09-27T08:23:14.870357+00:00",
+     "arrival_utc": "2026-09-27T10:23:14.870357+00:00",
      "minutes": 29.9,
      "km": 41.9,
      "alerts": [],
@@ -188,7 +203,7 @@
     {
      "county_fips": "37023",
      "county_name": "Burke",
-     "arrival_utc": "2026-09-27T08:53:06.658102+00:00",
+     "arrival_utc": "2026-09-27T10:53:06.658102+00:00",
      "minutes": 30.5,
      "km": 42.5,
      "alerts": [],
@@ -202,9 +217,23 @@
     {
      "county_fips": "37035",
      "county_name": "Catawba",
-     "arrival_utc": "2026-09-27T09:23:38.406522+00:00",
-     "minutes": 36.5,
-     "km": 42.7,
+     "arrival_utc": "2026-09-27T11:23:38.406522+00:00",
+     "minutes": 36.4,
+     "km": 42.6,
+     "alerts": [],
+     "rain_rate_mm_h": 0.0,
+     "rain_24h_mm": 0.0,
+     "status": "assessed",
+     "index": 0,
+     "band": "Lower concern",
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+    },
+    {
+     "county_fips": "37035",
+     "county_name": "Catawba",
+     "arrival_utc": "2026-09-27T12:00:00+00:00",
+     "minutes": 0.1,
+     "km": 0.2,
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
@@ -216,7 +245,7 @@
     {
      "county_fips": "37109",
      "county_name": "Lincoln",
-     "arrival_utc": "2026-09-27T10:00:07.755232+00:00",
+     "arrival_utc": "2026-09-27T12:00:07.755232+00:00",
      "minutes": 16.6,
      "km": 19.8,
      "alerts": [],
@@ -230,7 +259,7 @@
     {
      "county_fips": "37119",
      "county_name": "Mecklenburg",
-     "arrival_utc": "2026-09-27T10:16:46.173378+00:00",
+     "arrival_utc": "2026-09-27T12:16:46.173378+00:00",
      "minutes": 30.5,
      "km": 34.6,
      "alerts": [],
@@ -245,7 +274,8 @@
    "alerts": [],
    "reasons": [
     "Highest concern in Buncombe: Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-   ]
+   ],
+   "contributing_factors": []
   }
  ],
  "comparison": {
@@ -260,7 +290,7 @@
  "coverage": {
   "forecast": {
    "source": "Open-Meteo forecast API (best-match model), hourly precipitation",
-   "retrieved_utc": "2026-09-27T05:33:49.952537+00:00",
+   "retrieved_utc": "2026-09-27T07:32:42.480915+00:00",
    "horizon_hours": 72,
    "missing_counties": [],
    "from_cache": false,
@@ -268,7 +298,7 @@
   },
   "alerts": {
    "source": "NWS api.weather.gov active alerts, NC",
-   "retrieved_utc": "2026-09-27T05:33:50.141629+00:00",
+   "retrieved_utc": "2026-09-27T07:32:42.717620+00:00",
    "ok": true,
    "error": null,
    "from_cache": false,
@@ -281,6 +311,7 @@
   }
  },
  "alerts": [],
+ "better_departure": null,
  "limitations": [
   "Prototype rule, not a calibrated flood probability or a validated score.",
   "Forecasts are uncertain and can be wrong.",

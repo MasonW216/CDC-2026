@@ -26,6 +26,7 @@ from stormroute.scoring.concern import (
     LIMITATIONS,
     SCHEMA_VERSION,
     SCORE_NAME,
+    TIE_POINTS,
     RouteInput,
     Stretch,
     compare,
@@ -41,6 +42,7 @@ from stormroute.scoring.live_forecast import (
 
 DEFAULT_CACHE = REPO_ROOT / "artifacts" / "demo" / "live_cache"
 PAST_TOLERANCE = timedelta(minutes=15)
+DEPARTURE_OFFSETS_HOURS: tuple[float, ...] = (1, 2, 3, 4, 6, 8, 10, 12)
 
 
 class TripNotSupportedError(ValueError):
@@ -120,6 +122,84 @@ def routes_from_intervals(
             )
         )
     return routes
+
+
+def _shift_stretches(route: RouteInput, delta: timedelta) -> RouteInput:
+    """Same route (same counties, same drive time), every arrival shifted by `delta`.
+
+    Travel time between stretches does not depend on time of day in this pipeline (no
+    live-traffic model), so a later departure keeps identical stretches and just moves
+    everyone's clock forward: no new OSRM call needed to price a different departure.
+    """
+    return RouteInput(
+        route.route_id,
+        route.duration_minutes,
+        route.distance_km,
+        [
+            Stretch(s.county_fips, s.county_name, s.arrival_utc + delta, s.minutes, s.km)
+            for s in route.stretches
+        ],
+    )
+
+
+def _primary_index(scored_routes: Sequence[Mapping[str, Any]]) -> int | None:
+    """The index a traveler would actually be shown: the best fully-assessed route.
+
+    None when no route is fully assessed at this departure, so a coverage gap can never
+    be read as an improvement.
+    """
+    indexes = [
+        r["index"] for r in scored_routes if r["status"] == "assessed" and r["index"] is not None
+    ]
+    return min(indexes) if indexes else None
+
+
+def recommend_departure(
+    routes: Sequence[RouteInput],
+    base_departure: datetime,
+    base_scored: Sequence[Mapping[str, Any]],
+    forecast: ForecastData | None,
+    alerts: AlertData,
+    requested_at: datetime,
+    *,
+    offsets_hours: Sequence[float] = DEPARTURE_OFFSETS_HOURS,
+) -> dict[str, Any] | None:
+    """A later departure that lowers the index by a real margin, if one exists.
+
+    Reuses the forecast and alert data already fetched for the base departure: shifting a
+    stretch's arrival time and rescoring is pure computation, so this makes no extra
+    network calls. Only offers a departure where every route is fully `assessed` there
+    too (never trades a real score for a coverage gap), and only when the drop is at
+    least `TIE_POINTS` -- the same margin the comparison uses to call two results a tie,
+    so "better" here means the same thing it means everywhere else in this module.
+    """
+    base_index = _primary_index(base_scored)
+    if base_index is None:
+        return None
+    best: dict[str, Any] | None = None
+    for hours in offsets_hours:
+        delta = timedelta(hours=hours)
+        shifted = [_shift_stretches(r, delta) for r in routes]
+        scored = [score_route(r, forecast, alerts, requested_at) for r in shifted]
+        index = _primary_index(scored)
+        if index is None or (best is not None and index >= best["index_after"]):
+            continue
+        best = {
+            "offset_hours": hours,
+            "departure_utc": (base_departure + delta).isoformat(),
+            "index_before": base_index,
+            "index_after": index,
+        }
+    if best is None or base_index - best["index_after"] < TIE_POINTS:
+        return None
+    best["extra_wait_minutes"] = round(best["offset_hours"] * 60, 0)
+    best["message"] = (
+        f"Leaving about {best['offset_hours']:.0f} hour"
+        f"{'s' if best['offset_hours'] != 1 else ''} later would lower the indicated "
+        f"concern index from {best['index_before']} to {best['index_after']} on the same "
+        "route. Drive time is not recalculated for a different time of day."
+    )
+    return best
 
 
 def score_trip(
@@ -205,6 +285,9 @@ def score_trip(
             },
         },
         "alerts": sorted(every_alert.values(), key=lambda a: (-a["floor"], a["id"])),
+        "better_departure": recommend_departure(
+            routes, departure, scored, forecast, alerts, requested
+        ),
         "limitations": list(LIMITATIONS),
     }
 

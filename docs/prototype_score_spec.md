@@ -73,8 +73,31 @@ A `partial` or `unassessed` route makes the comparison `unavailable` (no confide
 The fastest route is the smallest `duration_minutes`; a tie in minutes goes to the first
 route returned.
 
+## Contributing factors (`contributing_factors`)
+
+Up to 3 of a route's highest-index stretches, each tagged `kind: "rain"` or `kind: "alert"`
+by which component actually set that stretch's index, for a UI icon or label. **A factor
+can only be built from a field this rule already computes** (`rain_rate_mm_h`,
+`rain_24h_mm`, the matched alerts): never a fixed list, never an input this rule does not
+read. A UI must not invent a factor such as "saturated ground" unless a real soil-moisture
+input is added here first, with its own row in the Inputs table above and its own test.
+
+## Better departure (`better_departure`)
+
+After scoring the requested departure, the same routes are rescored at later offsets
+(1, 2, 3, 4, 6, 8, 10, 12 hours) by shifting every stretch's `arrival_utc` by that offset
+and nothing else: drive time does not depend on time of day here (no live-traffic model),
+so this needs no new OSRM call, and it reuses the one forecast and alert fetch already
+made for the request. `null` unless an offset lowers the best fully-`assessed` route's
+index by at least the tie margin (5 points) — the same margin `compare` uses, so "better"
+means the same thing everywhere in this contract. Never recommends a departure that trades
+a real number for a coverage gap: only offsets where the route is still fully `assessed`
+are considered. Drive time (`duration_minutes`) does not change between offsets; say so
+when displaying a delta.
+
 ## Fixed limitations to display
 
 Forecasts are uncertain and can be wrong. The index does not know road closures, drainage,
 or terrain. A missing alert is not a guarantee that none exists. Alerts issued after the
 request are not seen. One forecast point per county. Not a calibrated flood probability.
+`better_departure` assumes traffic conditions do not change with departure time.

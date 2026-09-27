@@ -44,6 +44,23 @@ export interface SegmentScore {
   alerts: AlertUse[];
 }
 
+/**
+ * One thing that actually drove a stretch's index, built only from fields the rule
+ * computed for it (never a fixed list). `kind` is currently only 'rain' or 'alert' --
+ * a UI must not render any other factor (e.g. "saturated ground") unless a real input
+ * for it exists in this contract; see docs/prototype_score_spec.md.
+ */
+export interface ContributingFactor {
+  kind: 'rain' | 'alert';
+  county_name: string;
+  /** Short label: an alert's event name, or "Heavy rainfall, <county>". */
+  label: string;
+  /** The segment's own `reason` text, shown as written. */
+  detail: string;
+  arrival_utc: string;
+  index: number;
+}
+
 export interface RouteScore {
   route_id: string;
   duration_minutes: number;
@@ -60,6 +77,22 @@ export interface RouteScore {
   alerts: AlertUse[];
   /** Short bullet reasons for the route level. */
   reasons: string[];
+  /** Up to 3 stretches that actually set the index, for an icon list. May be empty. */
+  contributing_factors: ContributingFactor[];
+}
+
+/**
+ * A later departure that lowers the index by a real margin, or null if none does.
+ * `duration_minutes` does not change between offsets: no live-traffic model here.
+ */
+export interface BetterDeparture {
+  offset_hours: number;
+  extra_wait_minutes: number;
+  departure_utc: string;
+  index_before: number;
+  index_after: number;
+  /** The sentence to show, already states the "same route, no faster drive" caveat. */
+  message: string;
 }
 
 export interface Comparison {
@@ -113,5 +146,6 @@ export interface ScoreResponse {
   coverage: Coverage;
   /** Every alert across all routes, for the banner above any recommendation. */
   alerts: AlertUse[];
+  better_departure: BetterDeparture | null;
   limitations: string[];
 }

@@ -362,3 +362,86 @@ def test_saved_trip_replays_offline_with_identical_scores():
         == original["coverage"]["forecast"]["retrieved_utc"]
     )
     assert replay["coverage"]["forecast"]["from_cache"] is True
+
+
+def test_contributing_factors_are_grounded_in_real_computed_fields():
+    """No factor can appear that the rule did not actually compute."""
+    fc = forecast({"37021": {2: 20.0}, "37115": 0.0})
+    alerts = AlertData((warning(fips="37115", event="Flood Advisory", floor=50),), NOW, True)
+    a = score_route(route("a", [stretch()]), fc, alerts, NOW)
+    b = score_route(route("b", [stretch("37115", name="Person")], 130.0), fc, alerts, NOW)
+    rain_driven = a["contributing_factors"][0]
+    alert_driven = b["contributing_factors"][0]
+    assert rain_driven["kind"] == "rain" and "Buncombe" in rain_driven["label"]
+    assert alert_driven["kind"] == "alert" and alert_driven["label"] == "Flood Advisory"
+    for factor in [*a["contributing_factors"], *b["contributing_factors"]]:
+        assert factor["kind"] in ("rain", "alert")  # never an invented kind like "soil moisture"
+        assert factor["index"] > 0
+
+
+def test_contributing_factors_empty_when_nothing_drove_the_score():
+    fc = forecast({"37021": 0.0})
+    scored = score_route(route("a", [stretch()]), fc, NO_ALERTS, NOW)
+    assert scored["contributing_factors"] == []
+
+
+def test_severe_advice_wording_matches_route_count():
+    fc = forecast({"37021": 0.0})
+    alerts = AlertData((warning(),), NOW, True)
+    single = compare([score_route(route("only", [stretch()]), fc, alerts, NOW)])
+    assert single["severe_advice"] and "This route does not avoid" in single["severe_advice"]
+
+    a = score_route(route("a", [stretch()]), fc, alerts, NOW)
+    b = score_route(route("b", [stretch("37115", name="Person")], 130.0), fc, alerts, NOW)
+    both = compare([a, b])
+    assert both["severe_advice"] and "None of the routes avoid" in both["severe_advice"]
+
+
+def test_recommend_departure_finds_a_real_improvement_without_new_network_calls(monkeypatch):
+    from stormroute.scoring.trip import recommend_departure
+
+    def boom(*_args: object, **_kwargs: object) -> None:
+        raise AssertionError("recommend_departure must not touch the network")
+
+    monkeypatch.setattr("stormroute.scoring.trip.fetch_forecast", boom)
+    monkeypatch.setattr("stormroute.scoring.trip.fetch_alerts", boom)
+
+    # A one-hour spike right at arrival; dry every other hour, so once the arrival
+    # window moves past it, both the peak rate and the 24h trailing sum drop.
+    fc = forecast({"37021": {3: 25.0}})
+    routes = [route("only", [stretch(at=2, minutes=30.0)])]
+    base_scored = [score_route(routes[0], fc, NO_ALERTS, NOW)]
+    result = recommend_departure(routes, NOW + timedelta(hours=2), base_scored, fc, NO_ALERTS, NOW)
+    assert result is not None
+    assert result["index_after"] < result["index_before"]
+    assert result["offset_hours"] > 0
+    assert "same route" in result["message"]
+
+
+def test_recommend_departure_none_when_no_offset_helps():
+    from stormroute.scoring.trip import recommend_departure
+
+    fc = forecast({"37021": 0.0})
+    routes = [route("only", [stretch(at=2, minutes=30.0)])]
+    base_scored = [score_route(routes[0], fc, NO_ALERTS, NOW)]
+    result = recommend_departure(routes, NOW + timedelta(hours=2), base_scored, fc, NO_ALERTS, NOW)
+    assert result is None
+
+
+def test_recommend_departure_never_trades_a_coverage_gap_for_a_lower_number():
+    from stormroute.scoring.trip import recommend_departure
+
+    # Rain is heavy now; forecast simply has no data far enough ahead to score any offset.
+    fc = forecast({"37021": {k: 30.0 for k in range(-2, 5)}}, with_gaps=set())
+    # Truncate the table so every shifted offset falls outside coverage.
+    truncated = ForecastData(
+        {"37021": {t: v for t, v in fc.hourly["37021"].items() if t <= "2026-09-27T10:00"}},
+        fc.retrieved_utc,
+        False,
+    )
+    routes = [route("only", [stretch(at=2, minutes=30.0)])]
+    base_scored = [score_route(routes[0], fc, NO_ALERTS, NOW)]
+    result = recommend_departure(
+        routes, NOW + timedelta(hours=2), base_scored, truncated, NO_ALERTS, NOW
+    )
+    assert result is None
