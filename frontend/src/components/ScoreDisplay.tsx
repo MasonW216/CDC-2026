@@ -10,9 +10,13 @@
  * Layout rule inherited by every caller: official NWS alerts render above any advisory
  * or recommendation, never below or beside it.
  */
+import AlertSummary from './AlertSummary';
+import ContributingFactorChips from './ContributingFactorChips';
+import RouteMap from './RouteMap';
 import RiskGauge from '@/components/RiskGauge';
-import { BAND_CLASS, formatInstant } from '@/utils/scoreDisplay';
+import type { CountyBoundaries } from '@/types/geography';
 import type { AlertUse, RouteScore } from '@/types/score';
+import { BAND_CLASS, formatInstant } from '@/utils/scoreDisplay';
 
 /** Color is always paired with the text label (`band`), never used alone. */
 export function LevelBadge({ band, index }: { band: string; index: number | null }) {
@@ -43,7 +47,15 @@ export function AlertList({ alerts }: { alerts: AlertUse[] }) {
   );
 }
 
-export function RouteCard({ label, route }: { label: string; route: RouteScore }) {
+interface RouteCardProps {
+  label: string;
+  route: RouteScore;
+  origin: { lat: number; lon: number };
+  destination: { lat: number; lon: number };
+  counties: CountyBoundaries | null;
+}
+
+export function RouteCard({ label, route, origin, destination, counties }: RouteCardProps) {
   return (
     <article className="card" aria-labelledby={`route-heading-${label}`}>
       <h3 id={`route-heading-${label}`} className="subsection-title" style={{ marginTop: 0 }}>
@@ -61,7 +73,9 @@ export function RouteCard({ label, route }: { label: string; route: RouteScore }
         </p>
       )}
 
-      <AlertList alerts={route.alerts} />
+      <AlertSummary route={route} />
+
+      <ContributingFactorChips factors={route.contributing_factors} />
 
       {route.reasons.length > 0 && (
         <ul>
@@ -86,43 +100,11 @@ export function RouteCard({ label, route }: { label: string; route: RouteScore }
         </section>
       )}
 
-      <h4 className="subsection-title">Route timeline</h4>
-      <table className="timeline">
-        <caption
-          style={{
-            textAlign: 'left',
-            color: 'var(--color-text-faint)',
-            fontSize: '0.8rem',
-            marginBottom: 'var(--space-1)',
-          }}
-        >
-          County stretches for {label}, in order of arrival
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">County</th>
-            <th scope="col">Arrival (UTC)</th>
-            <th scope="col">Prototype indicator</th>
-            <th scope="col">24 h rainfall</th>
-          </tr>
-        </thead>
-        <tbody>
-          {route.segments.map((segment) => (
-            <tr key={`${segment.county_fips}-${segment.arrival_utc}`}>
-              <td>{segment.county_name}</td>
-              <td>{formatInstant(segment.arrival_utc)}</td>
-              <td>
-                <LevelBadge band={segment.band} index={segment.index} />
-              </td>
-              <td>
-                {segment.rain_24h_mm !== null
-                  ? `${Math.round(segment.rain_24h_mm)} mm`
-                  : 'not available'}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h4 className="subsection-title">Route map</h4>
+      <p className="note" style={{ marginTop: 0 }}>
+        Counties this route crosses, colored by indicated concern. Click or tap a county for detail.
+      </p>
+      <RouteMap origin={origin} destination={destination} route={route} counties={counties} />
     </article>
   );
 }

@@ -14,9 +14,13 @@
  * Layout rule: official NWS alerts render above the advisory, never below or
  * beside it.
  */
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import RouteComparisonChart from '@/components/RouteComparisonChart';
 import { RouteCard } from '@/components/ScoreDisplay';
+import { fetchCountyBoundaries } from '@/services/api';
+import type { CountyBoundaries } from '@/types/geography';
 import type { ScoreResponse } from '@/types/score';
 import type { TripRequest } from '@/types/trip';
 import { formatInstant } from '@/utils/scoreDisplay';
@@ -48,12 +52,30 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
   } | null;
   const score = props.score ?? state?.score;
   const request = props.request ?? state?.request;
+  const [counties, setCounties] = useState<CountyBoundaries | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    // Map decoration only -- a failure here must not block the page; RouteMap already
+    // handles counties === null (no county coloring, still shows the road geometry).
+    fetchCountyBoundaries()
+      .then((data) => {
+        if (!cancelled) setCounties(data);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (!score || !request) {
     return <NoTripYet />;
   }
 
   const { comparison, coverage } = score;
+  const routeLabels = Object.fromEntries(
+    score.routes.map((route, index) => [route.route_id, `Route ${index + 1}`]),
+  );
 
   return (
     <section aria-labelledby="results-heading">
@@ -72,7 +94,14 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
 
       <div className="card-grid" style={{ marginTop: 'var(--space-4)' }}>
         {score.routes.map((route, index) => (
-          <RouteCard key={route.route_id} label={`Route ${index + 1}`} route={route} />
+          <RouteCard
+            key={route.route_id}
+            label={`Route ${index + 1}`}
+            route={route}
+            origin={request.origin}
+            destination={request.destination}
+            counties={counties}
+          />
         ))}
       </div>
 
@@ -80,6 +109,7 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
         <h3 id="comparison-heading" className="section-title" style={{ marginTop: 0 }}>
           Comparison
         </h3>
+        <RouteComparisonChart routes={score.routes} comparison={comparison} labels={routeLabels} />
         <p>{comparison.message}</p>
         {comparison.severe_advice && <p>{comparison.severe_advice}</p>}
       </section>

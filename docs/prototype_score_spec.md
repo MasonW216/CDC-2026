@@ -40,7 +40,8 @@ this ID, never by array position.
 ```
 rain_component  = 100 * min(1, max(rain_rate_mm_h / 20, rain_24h_mm / 100))
 alert_component = highest floor among valid flood products, else 0
-segment_index   = round(max(rain_component, alert_component))
+county_component = fitted Bayesian county-history term, else 0 (see below)
+segment_index   = round(max(rain_component, alert_component, county_component))
 route_index     = max(segment_index over assessed stretches)
 ```
 
@@ -69,6 +70,46 @@ not duration-weighted**: a 5-minute stretch through a Severe county and a 3-hour
 through the same county contribute the same route index. `minutes_at_or_above_50` is
 reported alongside it as separate exposure-duration context, never folded into the index
 itself; a UI must not describe the index as accounting for how long the concern lasts.
+
+## County history term (`county_prior_component`)
+
+The live rule above uses only tonight's forecast and today's official alerts -- by design,
+it reads none of the 2,220 real NOAA Storm Events (2015-2024) the EDA already validated.
+`county_prior_component` closes that gap with a real, closed-form Bayesian model, built in
+`src/stormroute/scoring/county_prior.py`:
+
+- **Model**: one Beta-Binomial per county -- a textbook conjugate hierarchical model. A
+  population prior `Beta(alpha, beta)` is fit by the method of moments on the 100 counties'
+  own observed six-hour-window positive rates (the same onset rule as the EDA: a county
+  window is positive if a qualifying event begins inside it). Each county's posterior is
+  `Beta(alpha + positive_windows, beta + total_windows - positive_windows)`; its posterior
+  mean is that county's fitted rate. This is partial pooling by construction: a county with
+  zero observed positives (e.g. Graham) is pulled toward the state-wide rate instead of
+  being reported as a hard zero, while a data-rich county (e.g. Wake, 76 positive windows
+  over 10 years) stays close to its own observed rate, since its own data dominates the
+  weak population prior there.
+- **Scaling**: the posterior mean is compared against the state-wide posterior mean as a
+  ratio. A county at or below the state average contributes 0. A county at
+  `RATE_RATIO_FULL_SCALE` (4x, `county_prior.py`) or more above the state average reaches
+  the component's own ceiling, `MAX_COMPONENT = 45` -- deliberately below `SEVERE_INDEX`
+  (80), so a county's history alone, with no live rain and no active alert, can never push a
+  segment into Severe concern.
+- **Fitted once, cached**: `artifacts/models/county_prior.json` holds the fitted per-county
+  rates, credible intervals, and provenance (method, hyperparameters, source, computed
+  timestamp); `load_county_components()` reads it once per process rather than refitting
+  per request. Regenerate it with `python -m stormroute.scoring.county_prior` after any
+  change to the underlying NOAA data.
+- **Never lowers the index**: like the alert term, `county_component` only ever enters a
+  `max()` -- it can raise `segment_index`, never lower it, and a below-average county
+  contributes exactly 0, not a negative adjustment.
+- **Descriptive, not predictive.** This is a historical summary, not a forecast: no
+  held-out test, no calibration, and it is not the Milestone 4 trained model. It answers
+  "how has this county behaved over the last 10 years", not "what will happen on this
+  trip". Never describe it as validated or as a probability in anything shown to a user.
+- **Wire shape**: `county_prior_component` is present on every segment (it needs no live
+  forecast to compute), and, when it is the reason a stretch's index is nonzero, its
+  contribution is named in that segment's `reason` text ("...county's 2015-2024 history
+  runs above the state average").
 
 ## Coverage and missing data
 
@@ -113,12 +154,13 @@ route returned.
 
 ## Contributing factors (`contributing_factors`)
 
-Up to 3 of a route's highest-index stretches, each tagged `kind: "rain"` or `kind: "alert"`
-by which component actually set that stretch's index, for a UI icon or label. **A factor
-can only be built from a field this rule already computes** (`rain_rate_mm_h`,
-`rain_24h_mm`, the matched alerts): never a fixed list, never an input this rule does not
-read. A UI must not invent a factor such as "saturated ground" unless a real soil-moisture
-input is added here first, with its own row in the Inputs table above and its own test.
+Up to 3 of a route's highest-index stretches, each tagged `kind: "rain"`, `kind: "alert"`,
+or `kind: "historical"` by which component actually set that stretch's index, for a UI icon
+or label. **A factor can only be built from a field this rule already computes**
+(`rain_rate_mm_h`, `rain_24h_mm`, the matched alerts, `county_prior_component`): never a
+fixed list, never an input this rule does not read. A UI must not invent a factor such as
+"saturated ground" unless a real soil-moisture input is added here first, with its own row
+in the Inputs table above and its own test.
 
 ## Better departure (`better_departure`)
 
@@ -132,6 +174,29 @@ means the same thing everywhere in this contract. Never recommends a departure t
 a real number for a coverage gap: only offsets where the route is still fully `assessed`
 are considered. Drive time (`duration_minutes`) does not change between offsets; say so
 when displaying a delta.
+
+## Route geometry (`RouteScore.geometry`)
+
+Additive field: `[[lon, lat], ...] | null`, the real road polyline for that route (OSRM
+convention, matching `GET /api/v1/routing/route`'s coordinate order). Does not affect the
+score -- attached to an already-scored route as the last step of `build_response`, never
+threaded into `RouteInput`/`Stretch`/`score_route`/`score_segment`.
+
+- `mode: "live"`: taken directly from the OSRM data already fetched during scoring
+  (`CandidateRoute.coordinates`) -- no second network call.
+- `mode: "cached"` / `"historical_case_study"`: baked into the fixture JSON once, alongside
+  `stretches`, under a `"geometry"` key per route (see `geometry_from_fixture`). These pages
+  stay fully offline and deterministic; the geometry is real, just captured in advance.
+- `null` means no real geometry is available for this route. A UI must fall back to a
+  schematic line through the segment county centers and say so, never draw nothing and never
+  claim a schematic line is the real road.
+
+## County boundaries (`GET /api/v1/geography/counties`)
+
+Serves `data/sample/nc_counties_2024.geojson` unchanged: 100 features, `Polygon` geometry,
+property `GEOID` (5-character county FIPS) matching `SegmentScore.county_fips` exactly, so a
+client joins a scored segment to its county shape with no server-side spatial logic. Static
+data, cached in memory at import time, no request parameters.
 
 ## Historical case study (`GET /api/v1/demo/helene`)
 

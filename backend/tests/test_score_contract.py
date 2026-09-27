@@ -89,6 +89,7 @@ def test_valid_request_returns_the_prototype_score_shape(client):
     assert len(body["routes"]) == 2
     for route in body["routes"]:
         assert {"route_id", "status", "index", "band", "segments", "reasons"} <= route.keys()
+        assert route["geometry"]  # the mocked CANDIDATES carry real coordinate tuples
 
 
 def test_response_never_makes_a_lower_concern_claim_on_a_tie(client):

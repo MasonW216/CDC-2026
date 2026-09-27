@@ -211,6 +211,7 @@ def score_trip(
     cache_dir: Path | None = None,
     client: httpx.Client | None = None,
     points: Mapping[str, tuple[float, float]] | None = None,
+    geometry: Mapping[str, Sequence[tuple[float, float]]] | None = None,
 ) -> dict[str, Any]:
     """Score all routes for a departure and return the `prototype-score/1` response.
 
@@ -253,6 +254,7 @@ def score_trip(
         requested,
         mode="cached" if (forecast and forecast.from_cache) or alerts.from_cache else "live",
         forecast_error=forecast_error,
+        geometry=geometry,
     )
 
 
@@ -265,6 +267,7 @@ def build_response(
     *,
     mode: str,
     forecast_error: str | None = None,
+    geometry: Mapping[str, Sequence[tuple[float, float]]] | None = None,
 ) -> dict[str, Any]:
     """Assemble the `prototype-score/1` response from already-fetched inputs.
 
@@ -272,8 +275,21 @@ def build_response(
     `stormroute.scoring.historical_case_study` (historical reanalysis + archived alerts),
     so both produce byte-identical shapes through one code path -- `mode` is the only
     thing that tells them apart, never a second response contract.
+
+    `geometry` (optional): `{route_id: [(lon, lat), ...]}`, the real road polyline for a
+    route, attached to its scored dict as-is. Geometry does not affect the score, so it is
+    never threaded into `RouteInput`/`Stretch`/`score_route`/`score_segment` -- it is pure
+    presentation data, added here as the last step. `None` (or a missing route_id) means
+    "no real geometry available"; the frontend falls back to a schematic line through the
+    segment county centers rather than drawing nothing.
     """
     scored = [score_route(r, forecast, alerts, requested) for r in routes]
+    for route in scored:
+        route["geometry"] = (
+            [list(point) for point in geometry[route["route_id"]]]
+            if geometry and route["route_id"] in geometry
+            else None
+        )
     outside = sorted({s.county_name for r in routes for s in r.stretches if s.county_fips is None})
     missing = sorted(
         {
@@ -325,6 +341,22 @@ def build_response(
     }
 
 
+def geometry_from_fixture(
+    fixture: Mapping[str, Any],
+) -> dict[str, list[tuple[float, float]]]:
+    """`{route_id: [(lon, lat), ...]}` from a fixture's optional `"geometry"` key per route.
+
+    A route with no `"geometry"` key (an older fixture, not yet regenerated) is simply
+    absent from the result, which `build_response` already treats as "no real geometry" --
+    the frontend's schematic-line fallback, not a missing-data error.
+    """
+    return {
+        route_id: [(float(lon), float(lat)) for lon, lat in route["geometry"]]
+        for route_id, route in fixture["routes"].items()
+        if route.get("geometry")
+    }
+
+
 def replay_saved_trip(saved: Mapping[str, Any], *, cache_dir: Path | None = None) -> dict[str, Any]:
     """Re-score a saved trip from cached upstream responses only, with no network.
 
@@ -338,6 +370,7 @@ def replay_saved_trip(saved: Mapping[str, Any], *, cache_dir: Path | None = None
         now=_utc(saved["as_of_utc"]),
         offline=True,
         cache_dir=cache_dir,
+        geometry=geometry_from_fixture(saved),
     )
 
 

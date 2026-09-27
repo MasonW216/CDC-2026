@@ -7,6 +7,7 @@
  * planner page), the live routing preview, and trip scoring.
  */
 
+import type { CountyBoundaries } from '@/types/geography';
 import type { RouteResponse } from '@/types/route';
 import type { ScoreResponse } from '@/types/score';
 import type { Location, TripRequest } from '@/types/trip';
@@ -136,4 +137,17 @@ export function scoreTrip(request: TripRequest): Promise<ScoreResponse> {
  */
 export function fetchHeleneCaseStudy(): Promise<ScoreResponse> {
   return get<ScoreResponse>('/api/v1/demo/helene', {});
+}
+
+let countyBoundariesCache: Promise<CountyBoundaries> | null = null;
+
+/**
+ * NC county boundaries (GET /api/v1/geography/counties), for map styling. The data is
+ * static (it never changes at runtime), so this fetches once per page session and every
+ * caller after the first reuses the same in-flight/resolved promise -- two route cards on
+ * the same results page share one network call, not one each.
+ */
+export function fetchCountyBoundaries(): Promise<CountyBoundaries> {
+  countyBoundariesCache ??= get<CountyBoundaries>('/api/v1/geography/counties', {});
+  return countyBoundariesCache;
 }

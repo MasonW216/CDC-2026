@@ -20,4 +20,15 @@ beforeEach(() => {
       throw new Error('Network call attempted in a component test. Mock the API client instead.');
     }),
   );
+  // jsdom has no layout engine, so it never implements ResizeObserver; recharts'
+  // <ResponsiveContainer> (RouteComparisonChart) requires one to exist, even though it
+  // never fires a real resize in a test. A no-op stub is enough.
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
 });

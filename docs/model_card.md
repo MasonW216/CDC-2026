@@ -17,18 +17,26 @@ What the live product runs tonight is a different, much simpler thing:
 [`prototype_score_spec.md`](prototype_score_spec.md), and returned as plain text by
 `GET /api/v1/methodology`). It is:
 
-- **A fixed, published formula, not a trained model.** `segment_index = round(max(100 *
-  min(1, max(rain_rate_mm_h / 20, rain_24h_mm / 100)), alert_floor))`. There are no
-  learned weights, no training data, and no fitted parameters anywhere in it. Every number
-  it can produce is reproducible by hand from the formula and the raw forecast/alert
-  response -- see the worked example in `prototype_score_spec.md`.
-- **Not this card's classifier, early or otherwise.** It does not use, and was not derived
-  from, the NOAA Storm Events labels, the EDA in `reports/eda/`, or any file under
+- **A fixed, published formula, mostly not a trained model.** `segment_index =
+  round(max(rain_component, alert_component, county_prior_component))`, where
+  `rain_component` and `alert_component` have no learned weights and are reproducible by
+  hand from the raw forecast/alert response -- see the worked example in
+  `prototype_score_spec.md`.
+- **One term is a small, fitted, non-predictive exception.** `county_prior_component`
+  (`src/stormroute/scoring/county_prior.py`) is a Beta-Binomial conjugate hierarchical fit
+  on the 2015-2024 NOAA Storm Events history -- the one place this formula does use that
+  data. It is deliberately capped well below `SEVERE_INDEX`, so it can only nudge a dry,
+  alert-free segment up, never manufacture a Severe score on its own, and it is still not
+  this card's classifier: no held-out test, no calibration, and it answers "how has this
+  county behaved historically," not "what will happen." See `prototype_score_spec.md`'s
+  "County history term" section for the full honesty caveats.
+- **Not this card's classifier, early or otherwise.** Aside from that one capped term, the
+  rule does not use, and was not derived from, the EDA in `reports/eda/` or any file under
   `data/processed/`. Those exist for the *future* model this card describes.
 - **Not validated for predictive accuracy**, because it does not predict anything: it is a
   team-authored comparison index, "higher means more indicated concern," checked only for
-  internal consistency (an alert or worse rain cannot lower it; see
-  `tests/scoring/test_concern.py`), not against outcomes.
+  internal consistency (an alert, worse rain, or a worse historical rate cannot lower it;
+  see `tests/scoring/test_concern.py`), not against outcomes.
 - **Team-authored on top of external data.** The upstream weather forecast (Open-Meteo) and
   official alerts (NWS) are third-party sources StormRoute reads as-is; the formula that
   turns them into an index is the only part StormRoute wrote.

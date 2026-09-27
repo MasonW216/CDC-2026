@@ -28,7 +28,7 @@
   "lat": 35.5951,
   "lon": -82.5515
  },
- "route_fixture_provenance": "OSRM public demo server via stormroute.routing.client; counties from data/sample/nc_counties_sample.geojson (simplified boundaries, about 1 km coarse); stretches from stormroute.routing.sampling and collapse_intervals",
+ "route_fixture_provenance": "OSRM public demo server via stormroute.routing.client; counties from data/sample/nc_counties_sample.geojson (simplified boundaries, about 1 km coarse); stretches from stormroute.routing.sampling and collapse_intervals Real OSRM road geometry added 2026-09-27, matched to the existing county-stretch sequences by county-set overlap.",
  "routes": {
   "route_0": {
    "advisory": "The prototype indicates severe flood-related concern on part of this route. Consider delaying or reducing travel through the affected counties, and follow official guidance and road closures.",

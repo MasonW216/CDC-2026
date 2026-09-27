@@ -28,7 +28,7 @@ from typing import Any
 
 from stormroute.config import REPO_ROOT
 from stormroute.scoring.live_forecast import ALERT_FLOORS, Alert, AlertData, ForecastData
-from stormroute.scoring.trip import build_response, routes_from_fixture
+from stormroute.scoring.trip import build_response, geometry_from_fixture, routes_from_fixture
 
 INPUTS_FILE = REPO_ROOT / "artifacts" / "demo" / "prototype_inputs_helene.json"
 ROUTES_FILE = REPO_ROOT / "artifacts" / "demo" / "prototype_routes_provisional.json"
@@ -138,6 +138,7 @@ def helene_case_study() -> dict[str, Any]:
         alerts,
         requested=departure,  # scored as of the decision time, not today
         mode="historical_case_study",
+        geometry=geometry_from_fixture(fixture),
     )
     response["case_study"] = {
         "name": "Hurricane Helene",
