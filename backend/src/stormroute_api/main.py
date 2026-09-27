@@ -12,9 +12,11 @@ Planned routes:
     POST /api/v1/trips/score
     GET  /api/v1/methodology
 
-Also mounted, ahead of that list (see routes/geocode.py for why):
+Also mounted, ahead of that list (see routes/geocode.py and routes/routing.py
+for why):
     GET  /api/v1/geocode/search
     GET  /api/v1/geocode/reverse
+    GET  /api/v1/routing/route
 
 Run with: make api
 """
@@ -23,7 +25,7 @@ from fastapi import FastAPI
 
 from stormroute_api import __version__
 from stormroute_api.config import Settings
-from stormroute_api.routes import geocode, health
+from stormroute_api.routes import geocode, health, routing
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -32,6 +34,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.settings = settings or Settings()
     app.include_router(health.router)
     app.include_router(geocode.router)
+    app.include_router(routing.router)
     return app
 
 

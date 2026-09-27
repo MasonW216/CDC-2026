@@ -7,6 +7,9 @@
  *                  indicator replay, not the real ResultsPage -- see that
  *                  file, milestone 7, for the production Weather Safety Score)
  *    /methodology  MethodologyPage   (not yet built -- shows a placeholder)
+ *    /route        LiveRoutePage     (dev preview: a live OSRM path between
+ *                  any two points, no hazard assessment -- not part of the
+ *                  MVP demo, calls the rate-limited public OSRM server)
  *
  * Also owns the persistent header and map/data source attribution required by
  * the OpenStreetMap and NOAA licenses. The full standing safety disclaimer
@@ -15,6 +18,7 @@
  */
 import { NavLink, Route, Routes } from 'react-router-dom';
 
+import LiveRoutePage from './pages/LiveRoutePage';
 import PlannerPage from './pages/PlannerPage';
 import PrototypeResultsPage from './pages/PrototypeResultsPage';
 
@@ -34,6 +38,7 @@ export default function App() {
         <h1>StormRoute</h1>
         <nav aria-label="Primary">
           <NavLink to="/">Plan a trip</NavLink>
+          <NavLink to="/route">Live route (dev)</NavLink>
           <NavLink to="/methodology">Methodology</NavLink>
         </nav>
       </header>
@@ -41,6 +46,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<PlannerPage />} />
           <Route path="/results" element={<PrototypeResultsPage />} />
+          <Route path="/route" element={<LiveRoutePage />} />
           <Route path="/methodology" element={<ComingSoon page="methodology page" />} />
           <Route path="*" element={<ComingSoon page="page" />} />
         </Routes>
