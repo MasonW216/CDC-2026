@@ -13,7 +13,8 @@ work). Verified by running it, not by reading it.
 | Prototype hazard indicator (new) | Runs offline. `scripts/run_prototype.py` writes `artifacts/demo/prototype_result.json`, identical on repeat runs. |
 | Cached Helene inputs (new) | `artifacts/demo/prototype_inputs_helene.json`: rainfall for all 100 counties and county-coded NWS flood products. |
 | Backend score endpoint | **Stub.** `routes/score.py` is 12 lines, no scoring. |
-| Results screen | **Not built.** `frontend/src/fixtures/demoScore.json` is an empty placeholder. |
+| Results screen (fallback) | `artifacts/demo/results.html`, one self-contained page, opens in any browser, no Node and no network. Made by `scripts/render_results.py`. |
+| Results screen (React) | **Not built.** `frontend/src/fixtures/demoScore.json` is an empty placeholder. |
 | Trained model, calibration, held-out evaluation | **None.** Not part of the MVP. |
 
 ## What the indicator is
@@ -56,6 +57,17 @@ PYTHONPATH=src .venv/bin/python scripts/run_prototype.py
 ```
 
 Needs no network. `scripts/build_prototype_inputs.py` rebuilds the cached inputs and does.
+
+## Fallback demo (works today)
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/run_prototype.py
+PYTHONPATH=src .venv/bin/python scripts/render_results.py
+open artifacts/demo/results.html
+```
+
+Node is not installed on Mason's machine, so the React screen has not been built or run
+here. If it is not stable by the 06:00 freeze, present this page.
 
 ## Demo command and owner
 
