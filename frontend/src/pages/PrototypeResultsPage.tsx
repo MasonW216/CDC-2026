@@ -22,10 +22,15 @@ import type { PrototypeResult, PrototypeRoute } from '@/types/prototype';
 const result = prototypeResult as PrototypeResult;
 
 const DATA_STATUS_LABEL: Record<string, string> = {
-  complete: 'Complete data',
-  partial_weather: 'Partial weather data',
-  missing_weather: 'Missing weather data',
+  complete: '24 h and 72 h rainfall available',
+  partial_weather: 'Incomplete rainfall',
+  missing_weather: 'No rainfall available',
 };
+
+function routeLabel(id: string): string {
+  const match = /^route_(\d+)$/.exec(id);
+  return match ? `Route ${match[1]}` : id;
+}
 
 function formatInstant(iso: string, timeZone: string): string {
   return `${new Intl.DateTimeFormat('en-US', {
@@ -58,8 +63,8 @@ function RouteCard({ label, route }: { label: string; route: PrototypeRoute }) {
       </p>
 
       {alerts.length > 0 && (
-        <div role="alert" aria-label={`Official alerts for ${label}`}>
-          <h4>Official alerts</h4>
+        <div role="alert" aria-label={`County-coded NWS flood products for ${label}`}>
+          <h4>County-coded NWS flood products active at a displayed stretch's arrival</h4>
           <ul>
             {alerts.map((alert) => (
               <li key={alert}>{alert}</li>
@@ -71,9 +76,9 @@ function RouteCard({ label, route }: { label: string; route: PrototypeRoute }) {
       <p>{route.advisory}</p>
 
       {route.highest_concern_segment && (
-        <section aria-label={`Highest-concern segment for ${label}`}>
+        <section aria-label={`First stretch at the highest concern level for ${label}`}>
           <h4>
-            Highest-concern segment: {route.highest_concern_segment.county_name} (
+            First stretch at highest concern level: {route.highest_concern_segment.county_name} (
             {route.highest_concern_segment.label})
           </h4>
           <p>{route.highest_concern_segment.reason}</p>
@@ -89,7 +94,7 @@ function RouteCard({ label, route }: { label: string; route: PrototypeRoute }) {
             <th scope="col">County</th>
             <th scope="col">Arrival (UTC)</th>
             <th scope="col">Prototype indicator</th>
-            <th scope="col">Data status</th>
+            <th scope="col">Rainfall coverage</th>
           </tr>
         </thead>
         <tbody>
@@ -113,71 +118,52 @@ function RouteCard({ label, route }: { label: string; route: PrototypeRoute }) {
   );
 }
 
-export default function PrototypeResultsPage() {
-  const routeIds = Object.keys(result.routes);
-  const comparison = result.comparison;
+export default function PrototypeResultsPage({
+  data = result,
+}: {
+  data?: PrototypeResult;
+} = {}) {
+  const routeIds = Object.keys(data.routes);
+  const comparison = data.comparison;
 
   return (
     <section aria-labelledby="results-heading">
       <h2 id="results-heading">
-        {result.origin.label} to {result.destination.label}
+        {data.origin.label} to {data.destination.label}
       </h2>
       <p role="note">
-        Prototype hazard indicator: a rule over rainfall and NWS flood products, based on available
-        weather data. It is not a model, not a probability, and not a validated score.
+        Prototype hazard indicator: a rule over cached historical rainfall and county-coded NWS
+        flood products. It is not a live forecast, trained model, probability, or validated score.
       </p>
-      <p>Departing {formatInstant(result.departure_time, 'America/New_York')}</p>
+      <p>Departing {formatInstant(data.departure_time, 'America/New_York')}</p>
 
-      {routeIds.map((id, index) => {
-        const route = result.routes[id];
+      {routeIds.map((id) => {
+        const route = data.routes[id];
         if (!route) {
           return null;
         }
-        return <RouteCard key={id} label={`Route ${index + 1}`} route={route} />;
+        return <RouteCard key={id} label={routeLabel(id)} route={route} />;
       })}
 
       {comparison && (
         <section aria-labelledby="comparison-heading">
           <h3 id="comparison-heading">Comparison</h3>
           <p>{comparison.note}</p>
-          {(() => {
-            const bestIndex = routeIds.indexOf(comparison.lower_indicated_concern_route);
-            const otherIndex = routeIds.indexOf(comparison.other_route);
-            const bestLevel = comparison.levels[comparison.lower_indicated_concern_route];
-            const otherLevel = comparison.levels[comparison.other_route];
-            const bestLabel =
-              bestIndex >= 0 ? `Route ${bestIndex + 1}` : comparison.lower_indicated_concern_route;
-            const otherLabel = otherIndex >= 0 ? `Route ${otherIndex + 1}` : comparison.other_route;
-            const minutes = Math.abs(comparison.extra_minutes);
-            const shorterOrLonger = comparison.extra_minutes <= 0 ? 'shorter' : 'longer';
-            return bestLevel === otherLevel ? (
-              <p>
-                Both routes show the same prototype indicator level; {bestLabel} is {minutes}{' '}
-                minutes {shorterOrLonger} than {otherLabel}.
-              </p>
-            ) : (
-              <p>
-                {bestLabel} shows a lower prototype indicator level than {otherLabel}, and is{' '}
-                {minutes} minutes {shorterOrLonger}. This compares indicator levels only; it does
-                not say either route is safe.
-              </p>
-            );
-          })()}
         </section>
       )}
 
       <section aria-labelledby="provenance-heading">
         <h3 id="provenance-heading">Inputs and provenance</h3>
         <ul>
-          <li>Precipitation: {result.inputs_provenance.sources.precipitation}</li>
-          <li>Alerts: {result.inputs_provenance.sources.alerts}</li>
+          <li>Precipitation: {data.inputs_provenance.sources.precipitation}</li>
+          <li>Alerts: {data.inputs_provenance.sources.alerts}</li>
         </ul>
-        <p>Retrieved {result.inputs_provenance.retrieved_utc}.</p>
+        <p>Retrieved {data.inputs_provenance.retrieved_utc}.</p>
         <p>
-          {result.inputs_provenance.zone_coded_alert_rows_excluded} zone-coded alert rows were not
+          {data.inputs_provenance.zone_coded_alert_rows_excluded} zone-coded alert rows were not
           mapped to a county and are excluded from this replay.
         </p>
-        <p>{result.route_fixture_provenance}</p>
+        <p>{data.route_fixture_provenance}</p>
       </section>
     </section>
   );
