@@ -3,7 +3,7 @@
  *
  * Fetches GET /api/v1/demo/helene on mount -- never posts anything, never reachable from
  * the planner. Renders with the exact same components as the live results page
- * (LevelBadge, AlertList, RouteCard, from PrototypeResultsPage.tsx) so a Severe-concern
+ * (LevelBadge, RouteCard, from ScoreDisplay.tsx) so a Severe-concern
  * result looks identical whether it came from a live trip or from here: one visual
  * language, one prototype-score/1 contract, two different `mode` values.
  *
@@ -13,7 +13,8 @@
  */
 import { useEffect, useState } from 'react';
 
-import { AlertList, RouteCard } from '@/components/ScoreDisplay';
+import RouteComparisonChart from '@/components/RouteComparisonChart';
+import { RouteCard } from '@/components/ScoreDisplay';
 import { ApiError, fetchCountyBoundaries, fetchHeleneCaseStudy } from '@/services/api';
 import type { CountyBoundaries } from '@/types/geography';
 import type { ScoreResponse } from '@/types/score';
@@ -114,11 +115,22 @@ export default function HeleneCaseStudyPage() {
             <h3 id="helene-comparison-heading" className="section-title" style={{ marginTop: 0 }}>
               Comparison
             </h3>
+            <RouteComparisonChart
+              routes={state.score.routes}
+              comparison={state.score.comparison}
+              labels={Object.fromEntries(
+                state.score.routes.map((route, index) => [route.route_id, `Route ${index + 1}`]),
+              )}
+            />
             <p>{state.score.comparison.message}</p>
             {state.score.comparison.severe_advice && <p>{state.score.comparison.severe_advice}</p>}
           </section>
 
-          <AlertList alerts={state.score.alerts} />
+          {/* Each route above already shows its own grouped alert summary (AlertSummary),
+              positioned above its map and advisory, satisfying the "alerts above advisory"
+              rule per-route. A combined page-level flat list here would repeat every one
+              of them a second time as a single wall of text -- the exact problem this
+              redesign exists to fix -- so it is deliberately not duplicated here. */}
 
           {state.score.limitations.length > 0 && (
             <section aria-labelledby="helene-limits-heading" className="card">

@@ -556,6 +556,12 @@ h4.subsection-title {
   cursor: pointer;
 }
 
+/* ---- Route comparison bar chart (recharts, RouteComparisonChart) ---- */
+
+.comparison-chart {
+  margin: var(--space-2) 0 var(--space-3);
+}
+
 /* ---- Tables ---- */
 
 table.timeline {

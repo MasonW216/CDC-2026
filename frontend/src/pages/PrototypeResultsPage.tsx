@@ -17,6 +17,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import RouteComparisonChart from '@/components/RouteComparisonChart';
 import { RouteCard } from '@/components/ScoreDisplay';
 import { fetchCountyBoundaries } from '@/services/api';
 import type { CountyBoundaries } from '@/types/geography';
@@ -72,6 +73,9 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
   }
 
   const { comparison, coverage } = score;
+  const routeLabels = Object.fromEntries(
+    score.routes.map((route, index) => [route.route_id, `Route ${index + 1}`]),
+  );
 
   return (
     <section aria-labelledby="results-heading">
@@ -105,6 +109,7 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
         <h3 id="comparison-heading" className="section-title" style={{ marginTop: 0 }}>
           Comparison
         </h3>
+        <RouteComparisonChart routes={score.routes} comparison={comparison} labels={routeLabels} />
         <p>{comparison.message}</p>
         {comparison.severe_advice && <p>{comparison.severe_advice}</p>}
       </section>

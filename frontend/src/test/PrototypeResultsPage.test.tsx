@@ -39,8 +39,8 @@ const request = {
   destination: { label: 'Charlotte, NC', lat: 35.2271, lon: -80.8431 },
 };
 
-function renderAtResults(state: unknown) {
-  return render(
+async function renderAtResults(state: unknown) {
+  const result = render(
     <MemoryRouter initialEntries={[{ pathname: '/results', state }]}>
       <Routes>
         <Route path="/results" element={<PrototypeResultsPage />} />
@@ -48,25 +48,29 @@ function renderAtResults(state: unknown) {
       </Routes>
     </MemoryRouter>,
   );
+  // Flush the county-boundaries fetch (a mocked resolved promise) so its state update
+  // happens inside act(), not after the test's assertions have already run.
+  await act(async () => {});
+  return result;
 }
 
 describe('PrototypeResultsPage', () => {
-  it('shows a plan-a-trip message when there is no navigation state', () => {
-    renderAtResults(null);
+  it('shows a plan-a-trip message when there is no navigation state', async () => {
+    await renderAtResults(null);
     expect(screen.getByText(/no trip to show yet/i)).toBeTruthy();
     expect(screen.getByRole('link', { name: /plan a trip/i })).toBeTruthy();
   });
 
-  it('labels the indicator as a prototype, never as a safety guarantee', () => {
-    renderAtResults({ score, request });
+  it('labels the indicator as a prototype, never as a safety guarantee', async () => {
+    await renderAtResults({ score, request });
     expect(screen.getAllByText(/prototype hazard indicator/i).length).toBeGreaterThan(0);
     expect(screen.queryByText(/safe route/i)).toBeNull();
     expect(screen.queryByText(/guaranteed safe/i)).toBeNull();
     expect(screen.queryByText(/probability of surviving/i)).toBeNull();
   });
 
-  it('shows the origin and destination from the request, not the score response', () => {
-    renderAtResults({ score, request });
+  it('shows the origin and destination from the request, not the score response', async () => {
+    await renderAtResults({ score, request });
     expect(
       screen.getByRole('heading', {
         level: 2,
@@ -75,8 +79,8 @@ describe('PrototypeResultsPage', () => {
     ).toBeTruthy();
   });
 
-  it('renders one route card per route, each with a band-labeled index', () => {
-    renderAtResults({ score, request });
+  it('renders one route card per route, each with a band-labeled index', async () => {
+    await renderAtResults({ score, request });
     score.routes.forEach((_route, index) => {
       expect(
         screen.getByRole('heading', { level: 3, name: new RegExp(`Route ${index + 1}:`) }),
@@ -89,15 +93,15 @@ describe('PrototypeResultsPage', () => {
     }
   });
 
-  it('shows the comparison message and, when present, severe advice', () => {
-    renderAtResults({ score, request });
+  it('shows the comparison message and, when present, severe advice', async () => {
+    await renderAtResults({ score, request });
     expect(screen.getByText(score.comparison.message)).toBeTruthy();
     if (score.comparison.severe_advice) {
       expect(screen.getByText(score.comparison.severe_advice)).toBeTruthy();
     }
   });
 
-  it('never claims a lower-concern route on a tie', () => {
+  it('never claims a lower-concern route on a tie', async () => {
     const tied: ScoreResponse = {
       ...score,
       comparison: {
@@ -110,12 +114,12 @@ describe('PrototypeResultsPage', () => {
         severe_advice: null,
       },
     };
-    renderAtResults({ score: tied, request });
+    await renderAtResults({ score: tied, request });
     expect(document.body.textContent?.toLowerCase()).not.toContain('safer');
   });
 
-  it('shows known limitations when the response carries any', () => {
-    renderAtResults({ score, request });
+  it('shows known limitations when the response carries any', async () => {
+    await renderAtResults({ score, request });
     if (score.limitations.length > 0) {
       expect(screen.getByText(/known limits/i)).toBeTruthy();
       expect(screen.getByText(score.limitations[0]!)).toBeTruthy();
