@@ -70,7 +70,11 @@ def _alert(row: Mapping[str, str]) -> AlertInput:
 def _trailing(
     mm: Sequence[float | None], times: Sequence[str], end: datetime, hours: int
 ) -> float | None:
-    """Sum of hourly values ending at `end` back `hours` hours; None if any is missing."""
+    """Sum of hourly values ending at `end` back `hours` hours; None if any is missing.
+
+    `math.fsum` is exactly rounded, so Python 3.11 and 3.12 agree (3.12's built-in `sum`
+    compensates and 3.11's does not); rounding to 0.01 mm removes the residue.
+    """
     wanted = [(end - timedelta(hours=k)).strftime("%Y-%m-%dT%H:%M") for k in range(hours)]
     index = {t: i for i, t in enumerate(times)}
     if any(t not in index for t in wanted):
@@ -78,9 +82,6 @@ def _trailing(
     values = [mm[index[t]] for t in wanted]
     if any(v is None for v in values):
         return None
-    # math.fsum is exact regardless of Python version; plain sum() switched to
-    # compensated summation in 3.12, so the same inputs summed on 3.11 vs 3.12
-    # land on different adjacent binary floats (108.2 vs 108.19999999999995).
     return round(math.fsum(v for v in values if v is not None), 2)
 
 

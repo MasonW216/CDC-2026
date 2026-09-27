@@ -153,3 +153,29 @@ def test_frontend_fixture_is_a_copy_of_the_artifact():
     artifact = root / "artifacts" / "demo" / "prototype_result.json"
     fixture = root / "frontend" / "src" / "fixtures" / "prototypeResult.json"
     assert fixture.read_bytes() == artifact.read_bytes()
+
+
+def test_results_page_renders_with_required_elements_and_no_forbidden_claims():
+    import importlib.util
+
+    root = Path(__file__).resolve().parents[2]
+    spec = importlib.util.spec_from_file_location(
+        "render_results", root / "scripts/render_results.py"
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    page = module.render(json.loads((root / "artifacts/demo/prototype_result.json").read_text()))
+    lowered = page.lower()
+    for required in [
+        "prototype hazard indicator",
+        "official nws flood products",
+        "highest-concern",
+        "advisory",
+        "replay of a past storm",
+        "not a probability",
+    ]:
+        assert required in lowered
+    for forbidden in ["safe route", "safest", "guaranteed safe", "zero risk", "flood probability"]:
+        assert forbidden not in lowered
+    assert lowered.index("official nws flood products") < lowered.index("advisory.")
