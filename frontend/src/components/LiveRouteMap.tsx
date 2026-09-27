@@ -52,6 +52,9 @@ export interface RouteRender {
   highlight?: { segmentKm: number[]; index: number; color: string } | null;
 }
 
+/** Back-compat name for callers with no per-segment highlight (e.g. LiveRoutePage). */
+export type ColoredRoute = RouteRender;
+
 interface LiveRouteMapProps {
   origin: Location;
   destination: Location;
