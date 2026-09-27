@@ -82,6 +82,21 @@ are in [`tests/scoring/test_prototype_real_data.py`](../tests/scoring/test_proto
 | Add a pre-departure test flash flood warning to Catawba `37035` | **PASS** | Both Catawba stretches rise from High (level 2) to Severe (level 3); no level falls. The added warning is a synthetic test perturbation, not a real archived warning. |
 | Run `scripts/run_prototype.py` twice with socket connections blocked | **PASS** | The two output files are byte-identical. This proves deterministic offline replay on this checkout, not that the full browser workflow works offline. |
 
+After Jeffrey's `math.fsum` fix reached `Mason`, I reran the **exact** script
+twice with socket connections denied, writing to
+`artifacts/demo/prototype_result.json` both times. On local Python 3.11.9,
+each run produced SHA-256
+`5ed8dba762744bd63453528ca735b658120327316c1f4021bf7d6df01a627bbc`:
+**byte-identical**. The frontend fixture remains a byte copy. No Codespace was
+available in this environment, so a fresh Codespace run is still outstanding;
+this check also does not prove Python 3.12 behavior. Physical Wi-Fi was not
+switched off because the socket block enforced the no-network condition inside
+the process without disrupting the shared machine.
+
+Repository checks on Windows/Python 3.11.9: **232 passed, 2 optional network
+tests skipped**, one dependency deprecation warning; Ruff format/lint and Mypy
+passed. The React build and full browser workflow were not run on this machine.
+
 ## Claim audit and disposition
 
 - The checked-in result previously called `route_0` a
