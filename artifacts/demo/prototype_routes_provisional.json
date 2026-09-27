@@ -1,0 +1,136 @@
+{
+ "purpose": "Provisional route fixture for the MVP indicator. Jeffrey's frozen route fixture replaces it.",
+ "scenario": "helene_asheville_charlotte",
+ "origin": {
+  "label": "Asheville, NC",
+  "lat": 35.5951,
+  "lon": -82.5515
+ },
+ "destination": {
+  "label": "Charlotte, NC",
+  "lat": 35.2271,
+  "lon": -80.8431
+ },
+ "departure_time": "2024-09-27T12:00:00-04:00",
+ "departure_utc": "2024-09-27T16:00:00+00:00",
+ "provenance": "OSRM public demo server via stormroute.routing.client; counties from data/sample/nc_counties_sample.geojson (simplified boundaries, about 1 km coarse); stretches from stormroute.routing.sampling and collapse_intervals",
+ "routes": {
+  "route_0": {
+   "duration_minutes": 154.3,
+   "distance_km": 198.6,
+   "stretches": [
+    {
+     "county_fips": "37021",
+     "county_name": "Buncombe",
+     "arrival_utc": "2024-09-27T16:00:00+00:00",
+     "minutes": 19.7,
+     "km": 23.7
+    },
+    {
+     "county_fips": "37089",
+     "county_name": "Henderson",
+     "arrival_utc": "2024-09-27T16:19:39.073247919+00:00",
+     "minutes": 20.8,
+     "km": 27.6
+    },
+    {
+     "county_fips": "37149",
+     "county_name": "Polk",
+     "arrival_utc": "2024-09-27T16:40:26.399099059+00:00",
+     "minutes": 23.2,
+     "km": 32.7
+    },
+    {
+     "county_fips": "37161",
+     "county_name": "Rutherford",
+     "arrival_utc": "2024-09-27T17:03:36.023218536+00:00",
+     "minutes": 18.3,
+     "km": 26.9
+    },
+    {
+     "county_fips": "37045",
+     "county_name": "Cleveland",
+     "arrival_utc": "2024-09-27T17:21:52.968230580+00:00",
+     "minutes": 33.0,
+     "km": 39.7
+    },
+    {
+     "county_fips": "37071",
+     "county_name": "Gaston",
+     "arrival_utc": "2024-09-27T17:54:55.608610825+00:00",
+     "minutes": 5.1,
+     "km": 7.0
+    },
+    {
+     "county_fips": "37071",
+     "county_name": "Gaston",
+     "arrival_utc": "2024-09-27T18:00:00+00:00",
+     "minutes": 18.0,
+     "km": 23.7
+    },
+    {
+     "county_fips": "37119",
+     "county_name": "Mecklenburg",
+     "arrival_utc": "2024-09-27T18:18:02.578407023+00:00",
+     "minutes": 16.2,
+     "km": 17.4
+    }
+   ]
+  },
+  "route_1": {
+   "duration_minutes": 167.3,
+   "distance_km": 211.2,
+   "stretches": [
+    {
+     "county_fips": "37021",
+     "county_name": "Buncombe",
+     "arrival_utc": "2024-09-27T16:00:00+00:00",
+     "minutes": 23.2,
+     "km": 29.6
+    },
+    {
+     "county_fips": "37111",
+     "county_name": "McDowell",
+     "arrival_utc": "2024-09-27T16:23:14.870357633+00:00",
+     "minutes": 29.9,
+     "km": 41.9
+    },
+    {
+     "county_fips": "37023",
+     "county_name": "Burke",
+     "arrival_utc": "2024-09-27T16:53:06.658102128+00:00",
+     "minutes": 30.5,
+     "km": 42.5
+    },
+    {
+     "county_fips": "37035",
+     "county_name": "Catawba",
+     "arrival_utc": "2024-09-27T17:23:38.406522921+00:00",
+     "minutes": 36.4,
+     "km": 42.6
+    },
+    {
+     "county_fips": "37035",
+     "county_name": "Catawba",
+     "arrival_utc": "2024-09-27T18:00:00+00:00",
+     "minutes": 0.1,
+     "km": 0.2
+    },
+    {
+     "county_fips": "37109",
+     "county_name": "Lincoln",
+     "arrival_utc": "2024-09-27T18:00:07.755232355+00:00",
+     "minutes": 16.6,
+     "km": 19.8
+    },
+    {
+     "county_fips": "37119",
+     "county_name": "Mecklenburg",
+     "arrival_utc": "2024-09-27T18:16:46.173378234+00:00",
+     "minutes": 30.5,
+     "km": 34.6
+    }
+   ]
+  }
+ }
+}
