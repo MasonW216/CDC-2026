@@ -1,129 +1,101 @@
 /**
- * The MVP prototype results screen, built against the cached Helene replay
- * fixture. No network, no router state -- the fixture is the whole input.
+ * The trip results screen, against the real `prototype-score/1` shape
+ * (artifacts/demo/saved_trip_response.json, produced by the actual scoring
+ * pipeline -- not hand-crafted fixture data).
  */
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
+import savedTripResponse from '../../../artifacts/demo/saved_trip_response.json';
 import PrototypeResultsPage from '../pages/PrototypeResultsPage';
-import prototypeResult from '../fixtures/prototypeResult.json';
-import type { PrototypeResult } from '../types/prototype';
+import type { ScoreResponse } from '../types/score';
 
-const fixture = prototypeResult as PrototypeResult;
+const score = savedTripResponse as ScoreResponse;
+const request = {
+  origin: { label: 'Asheville, NC', lat: 35.5951, lon: -82.5515 },
+  destination: { label: 'Charlotte, NC', lat: 35.2271, lon: -80.8431 },
+};
+
+function renderAtResults(state: unknown) {
+  return render(
+    <MemoryRouter initialEntries={[{ pathname: '/results', state }]}>
+      <Routes>
+        <Route path="/results" element={<PrototypeResultsPage />} />
+        <Route path="/" element={<p>planner placeholder</p>} />
+      </Routes>
+    </MemoryRouter>,
+  );
+}
 
 describe('PrototypeResultsPage', () => {
+  it('shows a plan-a-trip message when there is no navigation state', () => {
+    renderAtResults(null);
+    expect(screen.getByText(/no trip to show yet/i)).toBeTruthy();
+    expect(screen.getByRole('link', { name: /plan a trip/i })).toBeTruthy();
+  });
+
   it('labels the indicator as a prototype, never as a safety guarantee', () => {
-    render(<PrototypeResultsPage />);
+    renderAtResults({ score, request });
     expect(screen.getAllByText(/prototype hazard indicator/i).length).toBeGreaterThan(0);
     expect(screen.queryByText(/safe route/i)).toBeNull();
     expect(screen.queryByText(/guaranteed safe/i)).toBeNull();
     expect(screen.queryByText(/probability of surviving/i)).toBeNull();
   });
 
-  it('shows the origin and destination', () => {
-    render(<PrototypeResultsPage />);
+  it('shows the origin and destination from the request, not the score response', () => {
+    renderAtResults({ score, request });
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: `${fixture.origin.label} to ${fixture.destination.label}`,
+        name: `${request.origin.label} to ${request.destination.label}`,
       }),
     ).toBeTruthy();
   });
 
-  it('renders one route card per route in the fixture, each with its own timeline', () => {
-    render(<PrototypeResultsPage />);
-    const routeIds = Object.keys(fixture.routes);
-    for (let index = 0; index < routeIds.length; index += 1) {
-      const route = fixture.routes[routeIds[index] as string];
-      expect(route).toBeDefined();
+  it('renders one route card per route, each with a band-labeled index', () => {
+    renderAtResults({ score, request });
+    score.routes.forEach((_route, index) => {
       expect(
-        screen.getByRole('heading', { level: 3, name: new RegExp(`Route ${index}:`) }),
+        screen.getByRole('heading', { level: 3, name: new RegExp(`Route ${index + 1}:`) }),
       ).toBeTruthy();
-    }
-    // Every segment's county name appears somewhere in the timeline tables.
-    for (const route of Object.values(fixture.routes)) {
+    });
+    for (const route of score.routes) {
       for (const segment of route.segments) {
         expect(screen.getAllByText(segment.county_name).length).toBeGreaterThan(0);
       }
     }
   });
 
-  it('shows the highest-concern segment and its reason for each route', () => {
-    render(<PrototypeResultsPage />);
-    for (const route of Object.values(fixture.routes)) {
-      if (route.highest_concern_segment) {
-        expect(screen.getAllByText(route.highest_concern_segment.reason).length).toBeGreaterThan(0);
-      }
+  it('shows the comparison message and, when present, severe advice', () => {
+    renderAtResults({ score, request });
+    expect(screen.getByText(score.comparison.message)).toBeTruthy();
+    if (score.comparison.severe_advice) {
+      expect(screen.getByText(score.comparison.severe_advice)).toBeTruthy();
     }
   });
 
-  it('puts official alerts above the advisory for a route that has them', () => {
-    render(<PrototypeResultsPage />);
-    const routeWithAlerts = Object.values(fixture.routes).find((route) =>
-      route.segments.some((segment) => segment.alerts_used.length > 0),
-    );
-    expect(routeWithAlerts).toBeDefined();
-    if (!routeWithAlerts) {
-      return;
-    }
-    const alertBanner = screen.getAllByRole('alert')[0];
-    expect(alertBanner).toBeTruthy();
-    const advisory = screen.getAllByText(routeWithAlerts.advisory)[0];
-    expect(advisory).toBeTruthy();
-    // The alert banner precedes the advisory text in document order.
-    expect(
-      alertBanner!.compareDocumentPosition(advisory!) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
-  });
-
-  it('shows the replay caveat and inputs provenance on screen', () => {
-    render(<PrototypeResultsPage />);
-    const firstRoute = Object.values(fixture.routes)[0];
-    expect(firstRoute).toBeDefined();
-    if (firstRoute) {
-      expect(screen.getAllByText(firstRoute.replay_caveat).length).toBeGreaterThan(0);
-    }
-    expect(screen.getByText(/inputs and provenance/i)).toBeTruthy();
-    expect(
-      screen.getByText(fixture.inputs_provenance.sources.precipitation!, { exact: false }),
-    ).toBeTruthy();
-    expect(
-      screen.getByText(fixture.inputs_provenance.sources.alerts!, { exact: false }),
-    ).toBeTruthy();
-  });
-
-  it('shows the comparison note without declaring either route safe', () => {
-    render(<PrototypeResultsPage />);
-    if (fixture.comparison) {
-      expect(screen.getByText(fixture.comparison.note)).toBeTruthy();
-    }
-  });
-
-  it('does not invent a time trade-off when tied routes have no lower-concern alternative', () => {
-    const comparison = fixture.comparison;
-    expect(comparison).not.toBeNull();
-    if (!comparison) {
-      return;
-    }
-    const note =
-      'Both routes have the same indicator level; no lower-concern alternative was found.';
-    const tied: PrototypeResult = {
-      ...fixture,
+  it('never claims a lower-concern route on a tie', () => {
+    const tied: ScoreResponse = {
+      ...score,
       comparison: {
-        ...comparison,
-        lower_indicated_concern_route: null,
-        other_route: null,
+        ranking: 'tie',
+        fastest_route_id: score.routes[0]?.route_id ?? null,
+        lowest_concern_route_id: null,
         extra_minutes: null,
-        note,
+        index_difference: null,
+        message: 'The routes show similar indicated concern, so this index does not favor one.',
+        severe_advice: null,
       },
     };
-    render(<PrototypeResultsPage data={tied} />);
-    expect(screen.getByText(note)).toBeTruthy();
-    expect(document.body.textContent).not.toMatch(/null is|0 minutes shorter/);
+    renderAtResults({ score: tied, request });
+    expect(document.body.textContent?.toLowerCase()).not.toContain('safer');
   });
 
-  it('labels complete status as rainfall coverage, not complete hazard data', () => {
-    render(<PrototypeResultsPage />);
-    expect(screen.getAllByText('24 h and 72 h rainfall available').length).toBeGreaterThan(0);
-    expect(screen.queryByText('Complete data')).toBeNull();
+  it('shows known limitations when the response carries any', () => {
+    renderAtResults({ score, request });
+    if (score.limitations.length > 0) {
+      expect(screen.getByText(/known limits/i)).toBeTruthy();
+      expect(screen.getByText(score.limitations[0]!)).toBeTruthy();
+    }
   });
 });

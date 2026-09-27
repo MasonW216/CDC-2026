@@ -24,10 +24,12 @@ describe('App shell', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'Plan a trip' })).toBeTruthy();
   });
 
-  it('renders the MVP prototype results screen at /results, not a placeholder', () => {
+  it('renders the results screen at /results, not a placeholder', () => {
     renderAt('/results');
     expect(screen.queryByText(/isn't built yet/i)).toBeNull();
-    expect(screen.getByRole('heading', { level: 2, name: /Asheville.*Charlotte/i })).toBeTruthy();
+    // A direct visit carries no navigation state, so this is the "plan a
+    // trip first" message, not a scored result -- see PrototypeResultsPage.
+    expect(screen.getByText(/no trip to show yet/i)).toBeTruthy();
   });
 
   it('shows a placeholder for an unknown path', () => {

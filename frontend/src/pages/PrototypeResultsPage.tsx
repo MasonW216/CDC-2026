@@ -1,101 +1,103 @@
 /**
- * MVP demo results screen: the prototype hazard indicator, not the production
- * Weather Safety Score.
+ * Trip results screen: the prototype hazard indicator, live or replayed.
  *
- * Reads the cached Helene replay straight from `fixtures/prototypeResult.json`
- * (a byte copy of `artifacts/demo/prototype_result.json`, produced offline by
- * `scripts/run_prototype.py`). No network call, no backend dependency, so the
- * demo survives a wifi-off run.
+ * Reads `{ score, request }` from router navigation state (PlannerPage posts
+ * to POST /api/v1/trips/score, then navigates here). `request` supplies the
+ * origin/destination labels for the heading -- the score response itself
+ * carries no place names, only county-level data. A direct visit with no
+ * state (a refresh, a bookmark) shows a plain "plan a trip first" message
+ * instead of crashing.
  *
- * This is a stand-in for the real `/results` page (see `ResultsPage.tsx`,
- * milestone 7, the 0-100 Weather Safety Score). It is wired at the same route
- * only until that page exists; the two contracts and components are kept
- * separate (`types/prototype.ts` vs `types/trip.ts`) so replacing this one
- * later does not touch production code.
+ * Renders the `prototype-score/1` contract (types/score.ts), not the
+ * milestone-7 production Weather Safety Score (see ResultsPage.tsx).
  *
- * Layout rule carried over from the real page: official NWS alerts render
- * above the advisory, never below or beside it.
+ * Layout rule: official NWS alerts render above the advisory, never below or
+ * beside it.
  */
-import prototypeResult from '@/fixtures/prototypeResult.json';
-import type { ConcernLevel, PrototypeResult, PrototypeRoute } from '@/types/prototype';
+import { Link, useLocation } from 'react-router-dom';
 
-const result = prototypeResult as PrototypeResult;
+import type { AlertUse, RouteScore, ScoreResponse } from '@/types/score';
+import type { TripRequest } from '@/types/trip';
 
-const DATA_STATUS_LABEL: Record<string, string> = {
-  complete: '24 h and 72 h rainfall available',
-  partial_weather: 'Incomplete rainfall',
-  missing_weather: 'No rainfall available',
+const BAND_CLASS: Record<string, string> = {
+  'Lower concern': 'level-badge--0',
+  'Elevated concern': 'level-badge--1',
+  'High concern': 'level-badge--2',
+  'Severe concern': 'level-badge--3',
+  'Not assessed': 'level-badge--none',
 };
 
-function routeLabel(id: string): string {
-  const match = /^route_(\d+)$/.exec(id);
-  return match ? `Route ${match[1]}` : id;
+/** Color is always paired with the text label (`band`), never used alone. */
+function LevelBadge({ band, index }: { band: string; index: number | null }) {
+  return (
+    <span className={`level-badge ${BAND_CLASS[band] ?? 'level-badge--none'}`}>
+      {band}
+      {index !== null ? ` (${Math.round(index)}/100)` : ''}
+    </span>
+  );
 }
 
-/** Color is always paired with the text label (`label`), never used alone. */
-function LevelBadge({ level, label }: { level: ConcernLevel | null; label: string }) {
-  return <span className={`level-badge level-badge--${level ?? 'none'}`}>{label}</span>;
-}
-
-function formatInstant(iso: string, timeZone: string): string {
+function formatInstant(iso: string): string {
   return `${new Intl.DateTimeFormat('en-US', {
-    timeZone,
+    timeZone: 'UTC',
     dateStyle: 'medium',
     timeStyle: 'short',
-  }).format(new Date(iso))} ${timeZone === 'UTC' ? 'UTC' : 'Eastern'}`;
+  }).format(new Date(iso))} UTC`;
 }
 
-function routeAlerts(route: PrototypeRoute): string[] {
-  const seen = new Set<string>();
-  for (const segment of route.segments) {
-    for (const alert of segment.alerts_used) {
-      seen.add(alert);
-    }
+function AlertList({ alerts }: { alerts: AlertUse[] }) {
+  if (alerts.length === 0) {
+    return null;
   }
-  return Array.from(seen);
+  return (
+    <div role="alert" className="alert-banner">
+      <h4>Official NWS flood products</h4>
+      <ul>
+        {alerts.map((alert) => (
+          <li key={alert.id}>
+            {alert.event}
+            {alert.headline ? `: ${alert.headline}` : ''}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-function RouteCard({ label, route }: { label: string; route: PrototypeRoute }) {
-  const alerts = routeAlerts(route);
+function RouteCard({ label, route }: { label: string; route: RouteScore }) {
   return (
     <article className="card" aria-labelledby={`route-heading-${label}`}>
       <h3 id={`route-heading-${label}`} className="subsection-title" style={{ marginTop: 0 }}>
-        {label}: <LevelBadge level={route.trip_level} label={route.trip_label} />
+        {label}: <LevelBadge band={route.band} index={route.index} />
       </h3>
       <p className="note">
-        {route.distance_km} km &middot; {Math.round(route.duration_minutes)} min &middot; departure
-        decision at {formatInstant(route.decision_time_utc, 'UTC')}
+        {route.distance_km} km &middot; {Math.round(route.duration_minutes)} min
+        {route.status !== 'assessed' ? ` · ${route.status}` : ''}
+        {route.is_lower_bound ? ' · index is a lower bound (partial data)' : ''}
       </p>
 
-      {alerts.length > 0 && (
-        <div
-          role="alert"
-          className="alert-banner"
-          aria-label={`County-coded NWS flood products for ${label}`}
-        >
-          <h4>County-coded NWS flood products active at a displayed stretch's arrival</h4>
-          <ul>
-            {alerts.map((alert) => (
-              <li key={alert}>{alert}</li>
-            ))}
-          </ul>
-        </div>
+      <AlertList alerts={route.alerts} />
+
+      {route.reasons.length > 0 && (
+        <ul>
+          {route.reasons.map((reason) => (
+            <li key={reason}>{reason}</li>
+          ))}
+        </ul>
       )}
 
-      <p>{route.advisory}</p>
-
       {route.highest_concern_segment && (
-        <section aria-label={`First stretch at the highest concern level for ${label}`}>
+        <section aria-label={`Highest-concern segment for ${label}`}>
           <h4 className="subsection-title">
-            First stretch at highest concern level: {route.highest_concern_segment.county_name} (
+            Highest-concern segment: {route.highest_concern_segment.county_name} (
             <LevelBadge
-              level={route.highest_concern_segment.level}
-              label={route.highest_concern_segment.label}
+              band={route.highest_concern_segment.band}
+              index={route.highest_concern_segment.index}
             />
             )
           </h4>
           <p>{route.highest_concern_segment.reason}</p>
-          <p>Arrival: {formatInstant(route.highest_concern_segment.arrival_utc, 'UTC')}</p>
+          <p>Arrival: {formatInstant(route.highest_concern_segment.arrival_utc)}</p>
         </section>
       )}
 
@@ -116,71 +118,103 @@ function RouteCard({ label, route }: { label: string; route: PrototypeRoute }) {
             <th scope="col">County</th>
             <th scope="col">Arrival (UTC)</th>
             <th scope="col">Prototype indicator</th>
-            <th scope="col">Rainfall coverage</th>
+            <th scope="col">24 h rainfall</th>
           </tr>
         </thead>
         <tbody>
           {route.segments.map((segment) => (
             <tr key={`${segment.county_fips}-${segment.arrival_utc}`}>
               <td>{segment.county_name}</td>
-              <td>{formatInstant(segment.arrival_utc, 'UTC')}</td>
+              <td>{formatInstant(segment.arrival_utc)}</td>
               <td>
-                <LevelBadge level={segment.level} label={segment.label} />
+                <LevelBadge band={segment.band} index={segment.index} />
               </td>
-              <td>{DATA_STATUS_LABEL[segment.data_status] ?? segment.data_status}</td>
+              <td>
+                {segment.rain_24h_mm !== null
+                  ? `${Math.round(segment.rain_24h_mm)} mm`
+                  : 'not available'}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {route.unassessed_segments.length > 0 && (
-        <p role="note" className="note">
-          Not assessed: {route.unassessed_segments.join(', ')}
-        </p>
-      )}
-
-      <p role="note" className="note">
-        {route.replay_caveat}
-      </p>
     </article>
   );
 }
 
-export default function PrototypeResultsPage({
-  data = result,
-}: {
-  data?: PrototypeResult;
-} = {}) {
-  const routeIds = Object.keys(data.routes);
-  const comparison = data.comparison;
+function NoTripYet() {
+  return (
+    <section aria-labelledby="results-heading">
+      <h2 id="results-heading" className="page-title">
+        No trip to show yet
+      </h2>
+      <p className="note">
+        Results only render right after submitting a trip on the planner -- a page refresh or a
+        direct link loses that. <Link to="/">Plan a trip</Link> to see a result here.
+      </p>
+    </section>
+  );
+}
+
+interface PrototypeResultsPageProps {
+  score?: ScoreResponse;
+  request?: Pick<TripRequest, 'origin' | 'destination'>;
+}
+
+export default function PrototypeResultsPage(props: PrototypeResultsPageProps = {}) {
+  const location = useLocation();
+  const state = location.state as {
+    score?: ScoreResponse;
+    request?: Pick<TripRequest, 'origin' | 'destination'>;
+  } | null;
+  const score = props.score ?? state?.score;
+  const request = props.request ?? state?.request;
+
+  if (!score || !request) {
+    return <NoTripYet />;
+  }
+
+  const { comparison, coverage } = score;
 
   return (
     <section aria-labelledby="results-heading">
       <h2 id="results-heading" className="page-title">
-        {data.origin.label} to {data.destination.label}
+        {request.origin.label} to {request.destination.label}
       </h2>
       <p role="note" className="note">
-        Prototype hazard indicator: a rule over cached historical rainfall and county-coded NWS
-        flood products. It is not a live forecast, trained model, probability, or validated score.
+        Prototype hazard indicator: a team-defined 0-100 comparison index over rainfall and NWS
+        flood products, based on available weather data. It is not a probability, a trained model,
+        or a validated score.
+        {score.mode === 'cached'
+          ? ' This result replays a saved trip; it is not this request scored live.'
+          : ''}
       </p>
-      <p className="note">Departing {formatInstant(data.departure_time, 'America/New_York')}</p>
+      <p className="note">Departing {formatInstant(score.departure_utc)}</p>
 
       <div className="card-grid" style={{ marginTop: 'var(--space-4)' }}>
-        {routeIds.map((id) => {
-          const route = data.routes[id];
-          if (!route) {
-            return null;
-          }
-          return <RouteCard key={id} label={routeLabel(id)} route={route} />;
-        })}
+        {score.routes.map((route, index) => (
+          <RouteCard key={route.route_id} label={`Route ${index + 1}`} route={route} />
+        ))}
       </div>
 
-      {comparison && (
-        <section aria-labelledby="comparison-heading" className="card">
-          <h3 id="comparison-heading" className="section-title" style={{ marginTop: 0 }}>
-            Comparison
+      <section aria-labelledby="comparison-heading" className="card">
+        <h3 id="comparison-heading" className="section-title" style={{ marginTop: 0 }}>
+          Comparison
+        </h3>
+        <p>{comparison.message}</p>
+        {comparison.severe_advice && <p>{comparison.severe_advice}</p>}
+      </section>
+
+      {score.limitations.length > 0 && (
+        <section aria-labelledby="limitations-heading" className="card">
+          <h3 id="limitations-heading" className="section-title" style={{ marginTop: 0 }}>
+            Known limits
           </h3>
-          <p>{comparison.note}</p>
+          <ul className="note">
+            {score.limitations.map((limitation) => (
+              <li key={limitation}>{limitation}</li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -189,15 +223,23 @@ export default function PrototypeResultsPage({
           Inputs and provenance
         </h3>
         <ul className="note">
-          <li>Precipitation: {data.inputs_provenance.sources.precipitation}</li>
-          <li>Alerts: {data.inputs_provenance.sources.alerts}</li>
+          <li>
+            Forecast: {coverage.forecast.source}
+            {coverage.forecast.from_cache ? ' (from cache)' : ''}
+            {coverage.forecast.error ? ` — ${coverage.forecast.error}` : ''}
+          </li>
+          <li>
+            Alerts: {coverage.alerts.source}
+            {coverage.alerts.from_cache ? ' (from cache)' : ''}
+            {!coverage.alerts.ok && coverage.alerts.error ? ` — ${coverage.alerts.error}` : ''}
+          </li>
         </ul>
-        <p className="note">Retrieved {data.inputs_provenance.retrieved_utc}.</p>
-        <p className="note">
-          {data.inputs_provenance.zone_coded_alert_rows_excluded} zone-coded alert rows were not
-          mapped to a county and are excluded from this replay.
-        </p>
-        <p className="note">{data.route_fixture_provenance}</p>
+        <p className="note">Requested {formatInstant(score.requested_at_utc)}.</p>
+        {coverage.forecast.missing_counties.length > 0 && (
+          <p className="note">
+            No usable forecast for: {coverage.forecast.missing_counties.join(', ')}.
+          </p>
+        )}
       </section>
     </section>
   );

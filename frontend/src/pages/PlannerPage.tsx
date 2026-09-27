@@ -4,11 +4,18 @@
  * Page chrome (heading, safety disclaimer, demo-scenario shortcut) around
  * TripForm, which owns origin/destination search and departure-time input and
  * validation. The disclaimer is visible before the user submits, not after.
+ *
+ * Submits to POST /api/v1/trips/score. The Hurricane Helene demo button
+ * always submits `mode: 'cached_replay'` (a saved, offline-safe response, no
+ * live network call); any other trip submits `mode: 'live'` -- real OSRM,
+ * Open-Meteo, and NWS calls, per the live routing/scoring path. Both render
+ * through the same PrototypeResultsPage, using the same `score.ts` contract.
  */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import TripForm from '@/components/TripForm';
+import { ApiError, scoreTrip } from '@/services/api';
 import type { Location, TripRequest } from '@/types/trip';
 
 // Mirrors configs/demo.yaml's one non-placeholder scenario. Keep in sync with
@@ -31,14 +38,25 @@ export default function PlannerPage() {
   // controlled just for the one preset button.
   const [demoKey, setDemoKey] = useState(0);
   const [demo, setDemo] = useState<typeof DEMO_SCENARIO | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function loadDemoScenario() {
     setDemo(DEMO_SCENARIO);
     setDemoKey((key) => key + 1);
   }
 
-  function handleSubmit(request: TripRequest) {
-    navigate('/results', { state: { request } });
+  async function handleSubmit(request: TripRequest) {
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const score = await scoreTrip({ ...request, mode: demo ? 'cached_replay' : 'live' });
+      navigate('/results', { state: { score, request } });
+    } catch (error) {
+      setSubmitError(error instanceof ApiError ? error.message : 'Could not score this trip.');
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -71,6 +89,13 @@ export default function PlannerPage() {
           initialDestination={demo?.destination ?? null}
           initialDepartureLocal={demo?.departureLocal ?? ''}
         />
+
+        {submitting && (
+          <p role="status" className="note">
+            Scoring this trip&hellip;
+          </p>
+        )}
+        {submitError && <p role="alert">{submitError}</p>}
       </div>
     </section>
   );

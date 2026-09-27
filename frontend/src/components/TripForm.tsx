@@ -65,7 +65,9 @@ export default function TripForm({
     if (Object.keys(nextErrors).length > 0 || !origin || !destination || !departureIso) {
       return;
     }
-    onSubmit({ origin, destination, departure_time: departureIso, mode: 'cached_replay' });
+    // `mode` is the caller's call: PlannerPage picks live vs. cached_replay,
+    // LiveRoutePage ignores it entirely.
+    onSubmit({ origin, destination, departure_time: departureIso });
   }
 
   return (
