@@ -983,51 +983,6 @@ table.timeline tr:last-child td {
   gap: var(--space-3);
 }
 
-.header-search {
-  width: 240px;
-}
-
-.header-search .field {
-  margin: 0;
-}
-
-.header-search .field label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-/* Magnifier glyph is an inline SVG data URI (no icon library, works offline). */
-.header-search .field input {
-  padding: var(--space-2) var(--space-4) var(--space-2) 38px;
-  font-size: 0.88rem;
-  font-weight: 500;
-  border-radius: 999px;
-  border: 1px solid #2c3646;
-  background: #1c2532
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239aa4b5' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E")
-    no-repeat 14px center;
-  color: #fff;
-}
-
-.header-search .field input::placeholder {
-  color: #9aa4b5;
-}
-
-.header-search .field input:focus {
-  background: #fff;
-  color: #10161f;
-  border-color: #fff;
-  outline: none;
-}
-
-.header-search .field__status {
-  display: none;
-}
-
 .theme-toggle {
   flex: none;
   display: inline-flex;
@@ -1077,6 +1032,16 @@ table.timeline tr:last-child td {
   flex-direction: column;
   min-height: 0;
   overflow-y: auto;
+}
+
+/* A reading-width page with real side gutters, for every text/content page
+   that isn't the planner's own full-bleed sidebar+map layout (which sets its
+   own spacing via .pivot-sidebar/.pivot-map-area). Without this, text in
+   .pivot-main -- which carries no padding of its own -- ran edge to edge. */
+.content-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-5) var(--space-6);
 }
 
 .pivot-layout {
@@ -1385,6 +1350,39 @@ table.timeline tr:last-child td {
    table instead of making a reader find it in a list of eight rows. */
 .spotlight-card {
   border-left: 4px solid var(--level-3-fg);
+}
+
+.card-map-wrap {
+  margin: var(--space-4) 0;
+}
+
+.case-map {
+  height: 380px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.case-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: var(--color-bg);
+}
+
+/* Leaflet's default tooltip chrome, retinted to the app's tokens instead of
+   its own default white-on-white so it reads in dark mode too. */
+.leaflet-tooltip {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  padding: var(--space-2) var(--space-3);
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: var(--color-border);
 }
 
 /* A horizontal rail of every county stretch, ordered by arrival -- click one

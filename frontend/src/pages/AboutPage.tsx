@@ -15,7 +15,7 @@ const NOT_INTENDED_FOR: string[] = [
 
 export default function AboutPage() {
   return (
-    <section aria-labelledby="about-heading">
+    <section aria-labelledby="about-heading" className="content-page">
       <h2 id="about-heading" className="page-title">
         About PIVOT
       </h2>

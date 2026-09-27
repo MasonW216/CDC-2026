@@ -23,7 +23,7 @@ import { formatInstant } from '@/utils/scoreDisplay';
 
 function NoTripYet() {
   return (
-    <section aria-labelledby="results-heading">
+    <section aria-labelledby="results-heading" className="content-page">
       <h2 id="results-heading" className="page-title">
         No trip to show yet
       </h2>
@@ -56,7 +56,7 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
   const { comparison, coverage } = score;
 
   return (
-    <section aria-labelledby="results-heading">
+    <section aria-labelledby="results-heading" className="content-page">
       <h2 id="results-heading" className="page-title">
         {request.origin.label} to {request.destination.label}
       </h2>

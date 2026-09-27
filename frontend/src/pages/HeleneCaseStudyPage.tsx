@@ -18,12 +18,25 @@
  * Shows a clear "historical, not live" banner above everything else on the page, so it
  * can never be mistaken for a scored trip -- see docs/prototype_score_spec.md's
  * "Historical case study" section for why this must stay a separate page.
+ *
+ * The map is county-based, not a colored route line: it loads NC county
+ * boundaries (public/nc_counties.geojson, Census TIGER -- see data_card.md)
+ * once, then colors each county the route passes through by its own concern
+ * level. Route geometry is a second, independent fetch (GET
+ * /api/v1/routing/route against the case study's real origin/destination) --
+ * the score response itself carries no geometry, only county-level data. That
+ * geometry renders today's live roads, not a historical snapshot, so this
+ * page never claims to show which roads were actually closed during Helene --
+ * only which counties the route passes through and each one's modeled
+ * concern. If either fetch fails, the rest of the page still works.
  */
+import type { FeatureCollection } from 'geojson';
 import { useEffect, useMemo, useState } from 'react';
 
 import { AlertList, LevelBadge } from '@/components/ScoreDisplay';
+import HeleneCountyMap from '@/components/HeleneCountyMap';
 import RiskGauge from '@/components/RiskGauge';
-import { ApiError, fetchHeleneCaseStudy } from '@/services/api';
+import { ApiError, fetchHeleneCaseStudy, fetchRoute } from '@/services/api';
 import type { RouteScore, ScoreResponse, SegmentScore } from '@/types/score';
 import { BAND_LEVEL, formatInstant } from '@/utils/scoreDisplay';
 
@@ -44,10 +57,28 @@ function segmentIndexOf(route: RouteScore, segment: SegmentScore | null): number
 
 const FACTOR_ICON: Record<'rain' | 'alert', string> = { rain: '☔', alert: '⚠' };
 
+/**
+ * Runs a best-effort, secondary fetch for the map (county shapes, route
+ * geometry) without letting it affect the page's main data path -- a promise
+ * rejection is ignored, and so is a synchronous throw from calling `start`
+ * itself (e.g. a network client that throws immediately instead of
+ * rejecting), which a bare `.catch()` on the resulting promise would not
+ * catch.
+ */
+function loadBestEffort(start: () => Promise<void>): void {
+  try {
+    start().catch(() => undefined);
+  } catch {
+    // Best effort only: the map degrades gracefully without this data.
+  }
+}
+
 export default function HeleneCaseStudyPage() {
   const [state, setState] = useState<LoadState>({ kind: 'loading' });
   const [activeRouteId, setActiveRouteId] = useState<string | null>(null);
   const [activeSegment, setActiveSegment] = useState<number>(0);
+  const [counties, setCounties] = useState<FeatureCollection | null>(null);
+  const [routePath, setRoutePath] = useState<[number, number][] | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -56,6 +87,32 @@ export default function HeleneCaseStudyPage() {
         if (cancelled) return;
         setState({ kind: 'ready', score });
         setActiveRouteId(score.routes[0]?.route_id ?? null);
+
+        // Two independent, best-effort fetches for the map: county shapes
+        // (a static asset) and today's live road geometry for the case
+        // study's real origin/destination. Neither blocks the rest of the
+        // page, and either can fail without breaking it.
+        loadBestEffort(() =>
+          fetch('/nc_counties.geojson')
+            .then((res) => res.json())
+            .then((geo: FeatureCollection) => {
+              if (!cancelled) setCounties(geo);
+            }),
+        );
+
+        const origin = score.case_study?.origin;
+        const destination = score.case_study?.destination;
+        if (origin && destination) {
+          loadBestEffort(() =>
+            fetchRoute(origin, destination).then((routeResponse) => {
+              if (cancelled) return;
+              const first = routeResponse.routes[0];
+              if (first) {
+                setRoutePath(first.coordinates.map(([lon, lat]) => [lat, lon]));
+              }
+            }),
+          );
+        }
       })
       .catch((error: unknown) => {
         if (cancelled) return;
@@ -82,7 +139,7 @@ export default function HeleneCaseStudyPage() {
   const activeSegmentData = activeRoute?.segments[activeSegment] ?? null;
 
   return (
-    <section aria-labelledby="helene-heading">
+    <section aria-labelledby="helene-heading" className="content-page">
       <h2 id="helene-heading" className="page-title">
         Case study: Hurricane Helene
       </h2>
@@ -158,6 +215,29 @@ export default function HeleneCaseStudyPage() {
               This index is a lower bound: some inputs for this route are missing, so the true
               concern could be higher.
             </p>
+          )}
+
+          {counties && state.score.case_study && (
+            <div className="card-map-wrap">
+              <div className="card map-card case-map">
+                <HeleneCountyMap
+                  counties={counties}
+                  origin={state.score.case_study.origin}
+                  destination={state.score.case_study.destination}
+                  path={routePath ?? undefined}
+                  route={activeRoute}
+                  activeIndex={activeSegment}
+                  onSelect={setActiveSegment}
+                />
+              </div>
+              <p className="note" style={{ marginTop: 'var(--space-2)' }}>
+                Counties this route passes through, colored by concern:{' '}
+                <span className="level-badge level-badge--1">Elevated</span>{' '}
+                <span className="level-badge level-badge--2">High</span>{' '}
+                <span className="level-badge level-badge--3">Severe</span>. Hover a county for
+                details, or click one to inspect it below.
+              </p>
+            </div>
           )}
 
           {activeRoute.highest_concern_segment && (

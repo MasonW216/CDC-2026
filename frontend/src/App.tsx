@@ -18,18 +18,16 @@
  *                  the not-yet-built production Weather Safety Score)
  *    /about        AboutPage         (what the project is, team roles, data sources)
  *
- * The header owns branding, primary nav, a place search (jumps to the
- * planner with a place pre-filled -- hidden on the planner itself, since its
- * sidebar already has an Origin field), and the light/dark toggle. The full
- * standing safety disclaimer lives on the planner page itself (its own
- * acceptance criterion); this header only names the product.
+ * The header owns branding, primary nav, and the light/dark toggle -- no
+ * place search here any more (it duplicated the planner's own Origin field
+ * and did nothing useful anywhere else; removed rather than left half-useful).
+ * The full standing safety disclaimer lives on the planner page itself (its
+ * own acceptance criterion); this header only names the product.
  */
-import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
-import HeaderSearchBar from './components/HeaderSearchBar';
 import PivotLogo from './components/PivotLogo';
 import ThemeToggle from './components/ThemeToggle';
-import { HeaderSearchProvider } from './contexts/HeaderSearchContext';
 import AboutPage from './pages/AboutPage';
 import HeleneCaseStudyPage from './pages/HeleneCaseStudyPage';
 import LiveRoutePage from './pages/LiveRoutePage';
@@ -50,8 +48,6 @@ function navLinkClass({ isActive }: { isActive: boolean }): string {
 }
 
 function Header() {
-  const location = useLocation();
-  const onPlanner = location.pathname === '/';
   return (
     <header className="pivot-header">
       <NavLink to="/" className="pivot-header__brand" aria-label="PIVOT, home">
@@ -72,10 +68,6 @@ function Header() {
         </NavLink>
       </nav>
       <div className="pivot-header__actions">
-        {/* Redundant on the planner itself: its sidebar already has an Origin
-            field. Shown everywhere else, where it now jumps to the planner
-            with a place pre-filled instead of doing nothing. */}
-        {!onPlanner && <HeaderSearchBar />}
         <ThemeToggle />
       </div>
     </header>
@@ -84,7 +76,7 @@ function Header() {
 
 export default function App() {
   return (
-    <HeaderSearchProvider>
+    <>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -107,6 +99,6 @@ export default function App() {
           </p>
         </footer>
       </div>
-    </HeaderSearchProvider>
+    </>
   );
 }

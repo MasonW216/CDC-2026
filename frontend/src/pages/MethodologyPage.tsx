@@ -44,7 +44,7 @@ const LIMITATIONS: string[] = [
 
 export default function MethodologyPage() {
   return (
-    <section aria-labelledby="methodology-heading">
+    <section aria-labelledby="methodology-heading" className="content-page">
       <h2 id="methodology-heading" className="page-title">
         Methodology
       </h2>
