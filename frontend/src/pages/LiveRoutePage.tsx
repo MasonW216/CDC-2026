@@ -129,8 +129,11 @@ export default function LiveRoutePage() {
             <>
               <div className="map-view__overlay ai-badge">
                 <div className="ai-badge__card">
+                  {/* A weather glyph, not "AI": this is a threshold rule, not a
+                      trained model -- see the disclaimer above. Labeling the
+                      orb "AI" would contradict that on the same screen. */}
                   <div className="ai-badge__orb" aria-hidden="true">
-                    AI
+                    ⛈
                   </div>
                   <div className="ai-badge__body">
                     <h4>Prototype hazard scores</h4>

@@ -12,6 +12,13 @@ const KNOWN_PLACES: Record<string, Location> = {
   [CHARLOTTE.label]: CHARLOTTE,
 };
 
+// A datetime-local string a few days out, so this test file keeps working no
+// matter when it's run, without depending on the system clock at write time.
+function futureDatetimeLocal(): string {
+  const future = new Date(Date.now() + 3 * 24 * 3600 * 1000);
+  return future.toISOString().slice(0, 16);
+}
+
 vi.mock('../components/LocationSearch', () => ({
   default: ({
     id,
@@ -59,16 +66,16 @@ describe('TripForm', () => {
     expect(screen.getAllByRole('alert').length).toBeGreaterThanOrEqual(3);
   });
 
-  it('submits a well-formed request', async () => {
+  it('submits a well-formed request with a future departure', async () => {
     const { user, onSubmit } = setup();
     await fillOriginAndDestination(user);
-    await user.type(screen.getByLabelText(/departure date and time/i), '2024-09-27T12:00');
+    await user.type(screen.getByLabelText(/departure date and time/i), futureDatetimeLocal());
     await user.click(screen.getByRole('button', { name: /analyze trip/i }));
-    expect(onSubmit).toHaveBeenCalledWith({
-      origin: ASHEVILLE,
-      destination: CHARLOTTE,
-      departure_time: '2024-09-27T12:00:00-04:00',
-    });
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    const request = onSubmit.mock.calls[0]![0];
+    expect(request.origin).toEqual(ASHEVILLE);
+    expect(request.destination).toEqual(CHARLOTTE);
+    expect(new Date(request.departure_time).getTime()).toBeGreaterThan(Date.now());
   });
 
   it('rejects an invalid departure value inline', async () => {
@@ -81,23 +88,31 @@ describe('TripForm', () => {
     expect(screen.getByRole('alert')).toBeTruthy();
   });
 
-  it('accepts a pre-filled value for a demo scenario', async () => {
+  it('rejects a departure in the past inline, before any submit', async () => {
     const { user, onSubmit } = setup();
-    // TripForm accepts initial values so a "load the demo" action can fill it.
+    await fillOriginAndDestination(user);
+    await user.type(screen.getByLabelText(/departure date and time/i), '2020-01-01T00:00');
+    await user.click(screen.getByRole('button', { name: /analyze trip/i }));
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(screen.getByRole('alert')).toHaveTextContent(/future/i);
+  });
+
+  it('accepts a pre-filled value, e.g. for a caller that seeds the form', async () => {
+    const { user, onSubmit } = setup();
+    const future = futureDatetimeLocal();
     render(
       <TripForm
         onSubmit={onSubmit}
         initialOrigin={ASHEVILLE}
         initialDestination={CHARLOTTE}
-        initialDepartureLocal="2024-09-27T12:00"
+        initialDepartureLocal={future}
       />,
     );
     const buttons = screen.getAllByRole('button', { name: /analyze trip/i });
     await user.click(buttons[buttons.length - 1]!);
-    expect(onSubmit).toHaveBeenCalledWith({
-      origin: ASHEVILLE,
-      destination: CHARLOTTE,
-      departure_time: '2024-09-27T12:00:00-04:00',
-    });
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    const request = onSubmit.mock.calls[0]![0];
+    expect(request.origin).toEqual(ASHEVILLE);
+    expect(request.destination).toEqual(CHARLOTTE);
   });
 });

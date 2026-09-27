@@ -649,9 +649,7 @@ table.timeline tr:last-child td {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-size: 1.4rem;
   color: var(--color-primary-hover);
   background: radial-gradient(
     circle at 35% 30%,

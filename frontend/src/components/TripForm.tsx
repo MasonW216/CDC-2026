@@ -7,11 +7,11 @@
  * always carries real coordinates.
  *
  * Departure time is read as North Carolina wall-clock time and converted to
- * ISO 8601 with the correct offset (utils/departureTime). "Rejects a
- * departure time in the past" -- this component's original contract -- is not
- * enforced: every trip today is the Helene replay, a real 2024 storm, so a
- * past departure is correct, not an error. That check belongs once a live
- * (non-replay) mode exists to plan a trip that hasn't happened yet.
+ * ISO 8601 with the correct offset (utils/departureTime). Rejects a departure
+ * time in the past client-side, mirroring POST /api/v1/trips/score's own 422
+ * rule, so the error shows before a network round trip. (The Hurricane
+ * Helene demo replay bypasses this component entirely -- see PlannerPage --
+ * so its real 2024 departure is never run through this check.)
  *
  * Does not navigate or call the API itself; the caller supplies `onSubmit`.
  */
@@ -56,6 +56,10 @@ export default function TripForm({
     } else {
       try {
         departureIso = toEasternIso(departureLocal);
+        if (new Date(departureIso).getTime() <= Date.now()) {
+          nextErrors.departure = 'Departure must be in the future.';
+          departureIso = null;
+        }
       } catch {
         nextErrors.departure = 'That departure date and time is not valid.';
       }
@@ -65,8 +69,6 @@ export default function TripForm({
     if (Object.keys(nextErrors).length > 0 || !origin || !destination || !departureIso) {
       return;
     }
-    // `mode` is the caller's call: PlannerPage picks live vs. cached_replay,
-    // LiveRoutePage ignores it entirely.
     onSubmit({ origin, destination, departure_time: departureIso });
   }
 
