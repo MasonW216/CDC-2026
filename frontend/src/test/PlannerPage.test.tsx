@@ -61,7 +61,7 @@ describe('PlannerPage', () => {
   it('the demo button scores the hardcoded scenario directly, without touching the form', async () => {
     const user = userEvent.setup();
     renderPlanner();
-    await user.click(screen.getByRole('button', { name: /load the hurricane helene replay/i }));
+    await user.click(screen.getByRole('button', { name: /load saved demo trip/i }));
     expect(await screen.findByText('results placeholder')).toBeTruthy();
     // The form was never filled -- the demo path never reads or writes it.
     // scoreTrip's own call args (below) are the real proof it used the
@@ -92,7 +92,7 @@ describe('PlannerPage', () => {
     scoreTrip.mockRejectedValueOnce(new api.ApiError('No saved demo trip is cached yet.', 503));
     const user = userEvent.setup();
     renderPlanner();
-    await user.click(screen.getByRole('button', { name: /load the hurricane helene replay/i }));
+    await user.click(screen.getByRole('button', { name: /load saved demo trip/i }));
     expect(await screen.findByRole('alert')).toHaveTextContent(/no saved demo trip/i);
     expect(screen.queryByText('results placeholder')).toBeNull();
   });
@@ -102,7 +102,7 @@ describe('PlannerPage', () => {
     scoreTrip.mockReturnValueOnce(new Promise((r) => (resolve = r)));
     const user = userEvent.setup();
     renderPlanner();
-    const demoButton = screen.getByRole('button', { name: /load the hurricane helene replay/i });
+    const demoButton = screen.getByRole('button', { name: /load saved demo trip/i });
     await user.click(demoButton);
     expect(demoButton).toBeDisabled();
     resolve(score);
@@ -112,7 +112,7 @@ describe('PlannerPage', () => {
   it('the demo button is reachable and activatable from the keyboard', async () => {
     const user = userEvent.setup();
     renderPlanner();
-    const demoButton = screen.getByRole('button', { name: /load the hurricane helene replay/i });
+    const demoButton = screen.getByRole('button', { name: /load saved demo trip/i });
     demoButton.focus();
     await user.keyboard('{Enter}');
     expect(await screen.findByText('results placeholder')).toBeTruthy();

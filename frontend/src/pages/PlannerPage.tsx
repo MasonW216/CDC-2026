@@ -6,26 +6,37 @@
  * validation, and always submits `mode: 'live'`. The disclaimer is visible
  * before the user submits, not after.
  *
- * Submits to POST /api/v1/trips/score. The Hurricane Helene demo button
- * scores the hardcoded DEMO_SCENARIO directly, bypassing TripForm entirely --
- * it never fills the form or reads its state. That is deliberate: an earlier
- * version filled the form and inferred the mode from "was demo loaded",
- * which broke the moment someone loaded the demo and then edited a field
- * (still cached_replay, but scoring whatever they'd typed). Two independent
- * paths with no shared state cannot have that bug. Both render through the
- * same PrototypeResultsPage, using the same `score.ts` contract.
+ * Submits to POST /api/v1/trips/score. The "Load saved demo trip" button scores the
+ * hardcoded DEMO_SCENARIO directly with `mode: 'cached_replay'` (the brief's offline
+ * fallback: a real contemporary trip, saved so the demo survives a dead network), bypassing
+ * TripForm entirely -- it never fills the form or reads its state. That is deliberate: an
+ * earlier version filled the form and inferred the mode from "was demo loaded", which broke
+ * the moment someone loaded the demo and then edited a field (still cached_replay, but
+ * scoring whatever they'd typed). Two independent paths with no shared state cannot have
+ * that bug. Both render through the same PrototypeResultsPage, using the same `score.ts`
+ * contract.
+ *
+ * This button used to be labeled "Load the Hurricane Helene replay" and claimed to replay
+ * Helene -- it never did; `cached_replay` has always served a saved *contemporary* trip
+ * (real, but dry: NC had no active weather that night). That mismatch is fixed here by
+ * relabeling honestly and linking to the real, dedicated Helene case study page
+ * (`/case-studies/helene`, `GET /api/v1/demo/helene`) instead of pretending this button
+ * shows it. See docs/prototype_score_spec.md's "Historical case study" section for why
+ * historical reanalysis must stay off this page's live/cached path entirely.
  */
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import TripForm from '@/components/TripForm';
 import { ApiError, scoreTrip } from '@/services/api';
 import { toEasternIso } from '@/utils/departureTime';
 import type { Location, TripRequest } from '@/types/trip';
 
-// Mirrors configs/demo.yaml's one non-placeholder scenario. Keep in sync with
-// that file; a mismatch here only affects the demo button, but should not be
-// allowed to drift indefinitely.
+// A real trip saved by scripts/save_live_trip.py (artifacts/demo/saved_trip_request.json).
+// These values are display-only for this button: `mode: 'cached_replay'` makes the
+// backend ignore whatever origin/destination/departure is submitted and replay that saved
+// trip instead, so keep these in sync with the saved fixture's own origin/destination or
+// the heading on the results page will say the wrong place names.
 const DEMO_SCENARIO: { origin: Location; destination: Location; departureLocal: string } = {
   origin: { label: 'Asheville, NC', lat: 35.5951, lon: -82.5515 },
   destination: { label: 'Charlotte, NC', lat: 35.2271, lon: -80.8431 },
@@ -55,7 +66,7 @@ export default function PlannerPage() {
     }
   }
 
-  function runDemoReplay() {
+  function runSavedDemoTrip() {
     void score({
       origin: DEMO_SCENARIO.origin,
       destination: DEMO_SCENARIO.destination,
@@ -76,21 +87,27 @@ export default function PlannerPage() {
       <p role="note" className="note">
         StormRoute compares the modeled weather-hazard exposure of routes and departure times based
         on available weather data. It is a comparative decision index, not a guarantee of safety,
-        and it never overrides an official National Weather Service warning. This demo replays
-        archived Hurricane Helene conditions with a prototype hazard indicator, not a live forecast.
-        For current conditions and official warnings, visit weather.gov.
+        and it never overrides an official National Weather Service warning. Submitting a trip below
+        scores it live, using the real current forecast and official alerts. For current conditions
+        and official warnings, visit weather.gov.
       </p>
 
       <div className="card" style={{ marginTop: 'var(--space-4)' }}>
         <button
           type="button"
-          onClick={runDemoReplay}
+          onClick={runSavedDemoTrip}
           disabled={submitting}
           className="btn"
-          style={{ marginBottom: 'var(--space-4)' }}
+          style={{ marginBottom: 'var(--space-2)' }}
         >
-          Load the Hurricane Helene replay
+          Load saved demo trip (offline fallback)
         </button>
+        <p className="note" style={{ marginTop: 0, marginBottom: 'var(--space-4)' }}>
+          A real trip saved earlier tonight, replayed with no network call, for when the room's
+          Wi-Fi drops. Looking for a severe-weather example instead? See the{' '}
+          <Link to="/case-studies/helene">Hurricane Helene case study</Link>, a real severe event,
+          scored by this same rule.
+        </p>
 
         <TripForm onSubmit={handleFormSubmit} />
 
