@@ -2,8 +2,108 @@
  * Origin, destination, and departure-time input.
  *
  * Fully keyboard navigable, with labeled inputs, inline validation, and errors
- * announced to assistive technology. Rejects a departure time in the past and
- * explains what it expects instead of silently refusing.
+ * announced to assistive technology (role="alert"). Origin and destination are
+ * resolved places (LocationSearch), not raw text, so the request this builds
+ * always carries real coordinates.
  *
- * TODO(milestone-7): implement. See docs/build_guide.md.
+ * Departure time is read as North Carolina wall-clock time and converted to
+ * ISO 8601 with the correct offset (utils/departureTime). "Rejects a
+ * departure time in the past" -- this component's original contract -- is not
+ * enforced: every trip today is the Helene replay, a real 2024 storm, so a
+ * past departure is correct, not an error. That check belongs once a live
+ * (non-replay) mode exists to plan a trip that hasn't happened yet.
+ *
+ * Does not navigate or call the API itself; the caller supplies `onSubmit`.
  */
+import { useId, useState } from 'react';
+
+import type { Location, TripRequest } from '@/types/trip';
+import { toEasternIso } from '@/utils/departureTime';
+import LocationSearch from './LocationSearch';
+
+type Errors = Partial<Record<'origin' | 'destination' | 'departure', string>>;
+
+interface TripFormProps {
+  onSubmit: (request: TripRequest) => void;
+  initialOrigin?: Location | null;
+  initialDestination?: Location | null;
+  initialDepartureLocal?: string;
+}
+
+export default function TripForm({
+  onSubmit,
+  initialOrigin = null,
+  initialDestination = null,
+  initialDepartureLocal = '',
+}: TripFormProps) {
+  const departureId = useId();
+  const departureErrorId = `${departureId}-error`;
+
+  const [origin, setOrigin] = useState<Location | null>(initialOrigin);
+  const [destination, setDestination] = useState<Location | null>(initialDestination);
+  const [departureLocal, setDepartureLocal] = useState(initialDepartureLocal);
+  const [errors, setErrors] = useState<Errors>({});
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const nextErrors: Errors = {};
+    if (!origin) nextErrors.origin = 'Search for and select a starting point.';
+    if (!destination) nextErrors.destination = 'Search for and select a destination.';
+
+    let departureIso: string | null = null;
+    if (!departureLocal) {
+      nextErrors.departure = 'Choose a departure date and time.';
+    } else {
+      try {
+        departureIso = toEasternIso(departureLocal);
+      } catch {
+        nextErrors.departure = 'That departure date and time is not valid.';
+      }
+    }
+
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0 || !origin || !destination || !departureIso) {
+      return;
+    }
+    onSubmit({ origin, destination, departure_time: departureIso, mode: 'cached_replay' });
+  }
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <LocationSearch
+        id="origin"
+        label="Origin"
+        value={origin}
+        onChange={setOrigin}
+        error={errors.origin}
+        allowCurrentLocation
+      />
+      <LocationSearch
+        id="destination"
+        label="Destination"
+        value={destination}
+        onChange={setDestination}
+        error={errors.destination}
+      />
+
+      <div>
+        <label htmlFor={departureId}>Departure date and time (Eastern)</label>
+        <input
+          id={departureId}
+          type="datetime-local"
+          value={departureLocal}
+          onChange={(event) => setDepartureLocal(event.target.value)}
+          aria-invalid={Boolean(errors.departure)}
+          aria-describedby={errors.departure ? departureErrorId : undefined}
+        />
+        {errors.departure ? (
+          <p id={departureErrorId} role="alert">
+            {errors.departure}
+          </p>
+        ) : null}
+      </div>
+
+      <button type="submit">Analyze trip</button>
+    </form>
+  );
+}
