@@ -83,6 +83,19 @@ compares:
 Units: mm, °C, m/s, m³/m³. Times are UTC. At 25 KB it is the largest CSV fixture;
 anything shorter than 48 hours cannot exercise the 24-hour rolling features.
 
+## `nc_counties_2024.geojson`
+
+Real Census TIGER/Line 2024 boundaries for all 100 NC counties, simplified at
+1,000 meters in EPSG:5070 and stored in EPSG:4326 for offline EDA display.
+Unlike the event fixtures, these county identities and boundaries are derived
+from real public source data. The adjacent JSON records the source URL,
+retrieval timestamp, archive checksum, derivation, and fixture checksum.
+`ALAND` preserves Census land area; never measure area from simplified geometry.
+This map is not suitable for precise spatial joins or routing.
+
+Rebuild with `uv run python scripts/download_boundaries.py --write-sample`.
+Synthetic event counts plotted on this real map remain synthetic.
+
 ## `nc_counties_sample.geojson`
 
 All 100 North Carolina counties from the 2024 Census TIGER/Line file, run

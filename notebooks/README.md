@@ -11,6 +11,17 @@ states the question before every analytical section and the conclusion after it.
 
 ## Running
 
+Cameron's [independent climatology review](independent_climatology_review.ipynb)
+is a separate sample-only arithmetic cross-check, not a model implementation.
+It uses the prepared county-window fixture, counts training positives and
+denominators independently, and checks that held-out labels cannot affect them.
+Mason reviews the results. Full-data verification awaits his prepared table;
+this notebook does not choose smoothing or approve the EDA gate.
+
+```bash
+uv run jupyter nbconvert --to notebook --execute notebooks/independent_climatology_review.ipynb --output-dir outputs/executed
+```
+
 ```bash
 make eda                                   # 01, full data, in place
 STORMROUTE_DATA_MODE=sample make eda       # 01, tracked fixtures only — what CI runs

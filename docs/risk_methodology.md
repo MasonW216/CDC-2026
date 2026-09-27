@@ -17,8 +17,8 @@ not know whether a specific road is flooded. The top band is never called "safe"
 
 ## From probabilities to a score
 
-The model provides a calibrated probability `p_i` that a qualifying flood event is
-reported in a given county during a given six-hour window. A route passes through
+The planned model estimates a calibrated probability `p_i` that a qualifying flood
+event is reported as beginning in a county during a six-hour window. A route passes through
 a sequence of such (county, window) intervals.
 
 For each **unique** interval `i` on the route:
@@ -35,7 +35,7 @@ safety_score = round(100 × (1 - R_trip))
 
 Probabilities do not add; hazards do. Converting each window's probability into a
 hazard rate lets exposure accumulate linearly with time spent in it. Two things
-follow, and both are tested:
+follow as mathematical design requirements; implementation tests remain pending:
 
 - **Splitting invariance.** Spending three hours in one window gives the same
   score whether it is represented as one three-hour piece or six thirty-minute
@@ -88,9 +88,13 @@ Candidates: the requested trip on 2–3 alternative routes, and departures at +2
    trip and follow official National Weather Service guidance and road closures."*
 7. Recommendations never override a road closure, evacuation order, or warning.
 
-The full candidate table is retained so a reviewer can reconstruct any choice.
+The implementation must retain the full candidate table so a reviewer can
+reconstruct any choice; this behavior has not yet been verified.
 
 ## Invariants (tests)
+
+The files below currently contain test specifications, not implemented checks.
+This table defines required evidence; it is not a passing-test report.
 
 | Invariant | Test |
 |---|---|

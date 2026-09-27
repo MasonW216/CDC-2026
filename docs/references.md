@@ -1,6 +1,6 @@
 # References
 
-> Maintained by the Econ/Stats major. Every source cited anywhere in the project
+> Maintained by Cameron (Econ/Stats). Every source cited anywhere in the project
 > appears here. Access dates are filled when data is actually retrieved.
 
 ## Data
@@ -11,7 +11,10 @@
    Copernicus Climate Change Service (C3S) Climate Data Store.
    https://doi.org/10.24381/cds.e2161bac — Accessed _TBD_.
 3. U.S. Census Bureau. *2024 TIGER/Line Shapefiles: Counties.*
-   https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html — Accessed _TBD_.
+   https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html
+   — County archive retrieved 2026-09-26; exact filename and checksum are recorded
+   in [the manifest](../data/data_manifest.yaml). The simplified display derivative
+   has [separate provenance](../data/sample/nc_counties_2024.json).
 4. National Weather Service. *API Web Service.*
    https://www.weather.gov/documentation/services-web-api — Accessed _TBD_.
 5. OpenStreetMap contributors. Route data © OpenStreetMap contributors,

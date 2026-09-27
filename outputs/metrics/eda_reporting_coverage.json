@@ -1,0 +1,702 @@
+{
+  "data_mode": "full",
+  "population": "Unique cleaned NC qualifying events with UTC beginnings in configured period",
+  "source_files": [
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz"
+  ],
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "git_commit": "595f4d7",
+  "source_coverage_basis": "Annual filenames; monthly reporting completeness unverified",
+  "source_years": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "missing_source_years": [],
+  "calendar_months": 120,
+  "zero_report_months": 35,
+  "zero_report_runs": [
+    {
+      "start_month_utc": "2015-01",
+      "end_month_utc": "2015-03",
+      "months": 3
+    },
+    {
+      "start_month_utc": "2016-01",
+      "end_month_utc": "2016-01",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2016-03",
+      "end_month_utc": "2016-04",
+      "months": 2
+    },
+    {
+      "start_month_utc": "2016-11",
+      "end_month_utc": "2017-02",
+      "months": 4
+    },
+    {
+      "start_month_utc": "2017-11",
+      "end_month_utc": "2017-12",
+      "months": 2
+    },
+    {
+      "start_month_utc": "2018-03",
+      "end_month_utc": "2018-03",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2019-01",
+      "end_month_utc": "2019-01",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2019-03",
+      "end_month_utc": "2019-03",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2019-05",
+      "end_month_utc": "2019-05",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2019-10",
+      "end_month_utc": "2019-12",
+      "months": 3
+    },
+    {
+      "start_month_utc": "2020-03",
+      "end_month_utc": "2020-03",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2020-12",
+      "end_month_utc": "2021-02",
+      "months": 3
+    },
+    {
+      "start_month_utc": "2021-11",
+      "end_month_utc": "2021-12",
+      "months": 2
+    },
+    {
+      "start_month_utc": "2022-02",
+      "end_month_utc": "2022-02",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2022-04",
+      "end_month_utc": "2022-04",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2022-12",
+      "end_month_utc": "2023-02",
+      "months": 3
+    },
+    {
+      "start_month_utc": "2023-11",
+      "end_month_utc": "2023-11",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2024-02",
+      "end_month_utc": "2024-03",
+      "months": 2
+    },
+    {
+      "start_month_utc": "2024-06",
+      "end_month_utc": "2024-06",
+      "months": 1
+    },
+    {
+      "start_month_utc": "2024-11",
+      "end_month_utc": "2024-11",
+      "months": 1
+    }
+  ],
+  "monthly_counts": [
+    {
+      "month_utc": "2015-01",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2015-02",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2015-03",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2015-04",
+      "event_count": 13
+    },
+    {
+      "month_utc": "2015-05",
+      "event_count": 2
+    },
+    {
+      "month_utc": "2015-06",
+      "event_count": 13
+    },
+    {
+      "month_utc": "2015-07",
+      "event_count": 15
+    },
+    {
+      "month_utc": "2015-08",
+      "event_count": 12
+    },
+    {
+      "month_utc": "2015-09",
+      "event_count": 11
+    },
+    {
+      "month_utc": "2015-10",
+      "event_count": 66
+    },
+    {
+      "month_utc": "2015-11",
+      "event_count": 16
+    },
+    {
+      "month_utc": "2015-12",
+      "event_count": 50
+    },
+    {
+      "month_utc": "2016-01",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2016-02",
+      "event_count": 20
+    },
+    {
+      "month_utc": "2016-03",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2016-04",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2016-05",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2016-06",
+      "event_count": 7
+    },
+    {
+      "month_utc": "2016-07",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2016-08",
+      "event_count": 18
+    },
+    {
+      "month_utc": "2016-09",
+      "event_count": 49
+    },
+    {
+      "month_utc": "2016-10",
+      "event_count": 140
+    },
+    {
+      "month_utc": "2016-11",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2016-12",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2017-01",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2017-02",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2017-03",
+      "event_count": 2
+    },
+    {
+      "month_utc": "2017-04",
+      "event_count": 40
+    },
+    {
+      "month_utc": "2017-05",
+      "event_count": 5
+    },
+    {
+      "month_utc": "2017-06",
+      "event_count": 10
+    },
+    {
+      "month_utc": "2017-07",
+      "event_count": 13
+    },
+    {
+      "month_utc": "2017-08",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2017-09",
+      "event_count": 13
+    },
+    {
+      "month_utc": "2017-10",
+      "event_count": 16
+    },
+    {
+      "month_utc": "2017-11",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2017-12",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2018-01",
+      "event_count": 2
+    },
+    {
+      "month_utc": "2018-02",
+      "event_count": 2
+    },
+    {
+      "month_utc": "2018-03",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2018-04",
+      "event_count": 9
+    },
+    {
+      "month_utc": "2018-05",
+      "event_count": 59
+    },
+    {
+      "month_utc": "2018-06",
+      "event_count": 1
+    },
+    {
+      "month_utc": "2018-07",
+      "event_count": 38
+    },
+    {
+      "month_utc": "2018-08",
+      "event_count": 42
+    },
+    {
+      "month_utc": "2018-09",
+      "event_count": 144
+    },
+    {
+      "month_utc": "2018-10",
+      "event_count": 40
+    },
+    {
+      "month_utc": "2018-11",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2018-12",
+      "event_count": 17
+    },
+    {
+      "month_utc": "2019-01",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2019-02",
+      "event_count": 6
+    },
+    {
+      "month_utc": "2019-03",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2019-04",
+      "event_count": 20
+    },
+    {
+      "month_utc": "2019-05",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2019-06",
+      "event_count": 45
+    },
+    {
+      "month_utc": "2019-07",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2019-08",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2019-09",
+      "event_count": 27
+    },
+    {
+      "month_utc": "2019-10",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2019-11",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2019-12",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2020-01",
+      "event_count": 5
+    },
+    {
+      "month_utc": "2020-02",
+      "event_count": 55
+    },
+    {
+      "month_utc": "2020-03",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2020-04",
+      "event_count": 21
+    },
+    {
+      "month_utc": "2020-05",
+      "event_count": 33
+    },
+    {
+      "month_utc": "2020-06",
+      "event_count": 50
+    },
+    {
+      "month_utc": "2020-07",
+      "event_count": 4
+    },
+    {
+      "month_utc": "2020-08",
+      "event_count": 62
+    },
+    {
+      "month_utc": "2020-09",
+      "event_count": 20
+    },
+    {
+      "month_utc": "2020-10",
+      "event_count": 29
+    },
+    {
+      "month_utc": "2020-11",
+      "event_count": 120
+    },
+    {
+      "month_utc": "2020-12",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2021-01",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2021-02",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2021-03",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2021-04",
+      "event_count": 4
+    },
+    {
+      "month_utc": "2021-05",
+      "event_count": 1
+    },
+    {
+      "month_utc": "2021-06",
+      "event_count": 9
+    },
+    {
+      "month_utc": "2021-07",
+      "event_count": 20
+    },
+    {
+      "month_utc": "2021-08",
+      "event_count": 36
+    },
+    {
+      "month_utc": "2021-09",
+      "event_count": 18
+    },
+    {
+      "month_utc": "2021-10",
+      "event_count": 15
+    },
+    {
+      "month_utc": "2021-11",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2021-12",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2022-01",
+      "event_count": 9
+    },
+    {
+      "month_utc": "2022-02",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2022-03",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2022-04",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2022-05",
+      "event_count": 12
+    },
+    {
+      "month_utc": "2022-06",
+      "event_count": 1
+    },
+    {
+      "month_utc": "2022-07",
+      "event_count": 40
+    },
+    {
+      "month_utc": "2022-08",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2022-09",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2022-10",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2022-11",
+      "event_count": 15
+    },
+    {
+      "month_utc": "2022-12",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2023-01",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2023-02",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2023-03",
+      "event_count": 1
+    },
+    {
+      "month_utc": "2023-04",
+      "event_count": 6
+    },
+    {
+      "month_utc": "2023-05",
+      "event_count": 7
+    },
+    {
+      "month_utc": "2023-06",
+      "event_count": 18
+    },
+    {
+      "month_utc": "2023-07",
+      "event_count": 32
+    },
+    {
+      "month_utc": "2023-08",
+      "event_count": 44
+    },
+    {
+      "month_utc": "2023-09",
+      "event_count": 31
+    },
+    {
+      "month_utc": "2023-10",
+      "event_count": 1
+    },
+    {
+      "month_utc": "2023-11",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2023-12",
+      "event_count": 15
+    },
+    {
+      "month_utc": "2024-01",
+      "event_count": 61
+    },
+    {
+      "month_utc": "2024-02",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2024-03",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2024-04",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2024-05",
+      "event_count": 8
+    },
+    {
+      "month_utc": "2024-06",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2024-07",
+      "event_count": 59
+    },
+    {
+      "month_utc": "2024-08",
+      "event_count": 152
+    },
+    {
+      "month_utc": "2024-09",
+      "event_count": 149
+    },
+    {
+      "month_utc": "2024-10",
+      "event_count": 3
+    },
+    {
+      "month_utc": "2024-11",
+      "event_count": 0
+    },
+    {
+      "month_utc": "2024-12",
+      "event_count": 5
+    }
+  ],
+  "annual_changes": [
+    {
+      "year": 2015,
+      "event_count": 198,
+      "previous_event_count": null,
+      "count_change": null,
+      "percent_change": null
+    },
+    {
+      "year": 2016,
+      "event_count": 245,
+      "previous_event_count": 198.0,
+      "count_change": 47.0,
+      "percent_change": 23.7373737374
+    },
+    {
+      "year": 2017,
+      "event_count": 107,
+      "previous_event_count": 245.0,
+      "count_change": -138.0,
+      "percent_change": -56.3265306122
+    },
+    {
+      "year": 2018,
+      "event_count": 362,
+      "previous_event_count": 107.0,
+      "count_change": 255.0,
+      "percent_change": 238.3177570093
+    },
+    {
+      "year": 2019,
+      "event_count": 114,
+      "previous_event_count": 362.0,
+      "count_change": -248.0,
+      "percent_change": -68.5082872928
+    },
+    {
+      "year": 2020,
+      "event_count": 399,
+      "previous_event_count": 114.0,
+      "count_change": 285.0,
+      "percent_change": 250.0
+    },
+    {
+      "year": 2021,
+      "event_count": 111,
+      "previous_event_count": 399.0,
+      "count_change": -288.0,
+      "percent_change": -72.1804511278
+    },
+    {
+      "year": 2022,
+      "event_count": 89,
+      "previous_event_count": 111.0,
+      "count_change": -22.0,
+      "percent_change": -19.8198198198
+    },
+    {
+      "year": 2023,
+      "event_count": 155,
+      "previous_event_count": 89.0,
+      "count_change": 66.0,
+      "percent_change": 74.1573033708
+    },
+    {
+      "year": 2024,
+      "event_count": 440,
+      "previous_event_count": 155.0,
+      "count_change": 285.0,
+      "percent_change": 183.8709677419
+    }
+  ],
+  "interpretation": "Review candidates only; reporting failures not established"
+}

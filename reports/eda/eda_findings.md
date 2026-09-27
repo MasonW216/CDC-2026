@@ -1,8 +1,8 @@
 # EDA Findings — North Carolina Flood-Event Target
 
-> **Status: draft for the Milestone 2 gate.** Sections owned by Mason (1–5, 9–12) are
-> complete. Sections 3 (missingness) and 6–8 belong to the Econ/Stats major, and the gate
-> decision is pending. Every number here comes from a full-data run of
+> **Status: draft for the Milestone 2 gate.** All notebook sections are now implemented:
+> Mason's (1–5, 9–12) and Cameron's (3's missingness block and 6–8). Cameron's sections still
+> need a second person's review, and the gate decision is pending. Every number here comes from a full-data run of
 > [`01_storm_events_eda.ipynb`](../../notebooks/01_storm_events_eda.ipynb). If a number here
 > and the notebook ever disagree, the notebook is right and this file is stale.
 
@@ -56,7 +56,7 @@ sections are complete.
 | Weather coverage by county and year | reported | 3 representative points, 10 years, 100% (`era5_seamless`); all 100 counties in Milestone 3 | ◐ |
 | Positive rate by year, month, county, event type | reported | By split, month, and county (section 9); by type below | ☑ |
 | Damage strings parsed with unit tests | covered | `tests/data/test_noaa.py` | ☑ |
-| Field missingness | reported | **Pending (Econ/Stats, section 3)** | ☐ |
+| Field missingness | reported | Delivered (Cameron, notebook section 3); awaiting second-person review | ◐ |
 
 ---
 
@@ -89,10 +89,13 @@ Positive windows by year: 2015 141 · 2016 167 · 2017 71 · 2018 295 · 2019 85
 | [`eda_event_type_counts.png`](../../outputs/figures/eda_event_type_counts.png) | Mason | ☑ |
 | [`eda_class_imbalance.png`](../../outputs/figures/eda_class_imbalance.png) | Mason | ☑ |
 | [`eda_precipitation_event_comparison.png`](../../outputs/figures/eda_precipitation_event_comparison.png) | Mason | ☑ |
-| `eda_events_by_year.png` | Econ/Stats | ☐ |
-| `eda_monthly_seasonality.png` | Econ/Stats | ☐ |
-| `eda_county_choropleth.png` | Econ/Stats (needs issue #3) | ☐ |
-| `eda_missingness.png` | Econ/Stats | ☐ |
+| [`eda_events_by_year.png`](../../outputs/figures/eda_events_by_year.png) | Cameron | ☑ |
+| [`eda_monthly_seasonality.png`](../../outputs/figures/eda_monthly_seasonality.png) | Cameron | ☑ |
+| [`eda_county_choropleth.png`](../../outputs/figures/eda_county_choropleth.png) | Cameron | ☑ |
+| [`eda_missingness.png`](../../outputs/figures/eda_missingness.png) | Cameron | ☑ |
+
+Cameron also produced extra figures (durations, reporting coverage, Helene comparison, reported
+impacts, and a one-year label check, `eda_class_imbalance_2020.png`); see their reviews in this folder.
 
 ---
 
@@ -124,8 +127,8 @@ Positive windows by year: 2015 141 · 2016 167 · 2017 71 · 2018 295 · 2019 85
 | Social Vulnerability Index | Known before departure | Reject by policy |
 
 The remaining risk is **train-serve skew**, not leakage. Features come from reanalysis, which
-a live deployment would not have, so evaluated performance is an upper bound
-([ADR 0003](../../docs/adr/0003-reanalysis-live-forecast-boundary.md)).
+a live deployment would not have, so retrospective results cannot establish live forecast
+accuracy ([ADR 0003](../../docs/adr/0003-reanalysis-live-forecast-boundary.md)).
 
 ---
 
@@ -149,11 +152,14 @@ a live deployment would not have, so evaluated performance is an upper bound
 5. **Weather checked at 3 points, and a point is not a county.** The EDA used city
    coordinates. ADR 0005 uses one ERA5-Land cell per county, which under-represents large or
    mountainous counties; its own consequences section says so.
-6. **Terrain features unchecked** until the boundaries and elevation data exist.
+6. **Terrain features unchecked.** County boundaries have landed, but no elevation data
+   (USGS 3DEP) has been retrieved yet.
 7. **UTC year boundary.** Events from the evening of 31 December 2014, in the 2014 file (not
    downloaded), would begin on 1 January 2015 in UTC. The effect is a few hours of data.
-8. **Pending descriptive sections** (3 missingness, 6–8) could still surface a reporting
-   break that affects the splits.
+8. **Cameron's sections need a second reader.** Sections 3 (missingness) and 6–8 are in, but
+   nobody besides their author has checked their interpretations for a reporting break that
+   would affect the splits. Cameron's independent event counts and 2020 label check do match
+   this report exactly (2,220 events; 262 positive windows from 399 events in 2020).
 
 ---
 
