@@ -223,12 +223,16 @@ handle in the `reviewer` column before this item is ticked.
   county. Two fall just outside: 663509 by 440 m (in Nash, reported Edgecombe) and 787208 by
   2.7 km (in Duplin, reported Wayne). The pipeline uses `CZ_FIPS`, which NOAA records as
   the county-coded authority, so labels are unaffected.
-- **Hand-off finding.** 663370 and 663509 begin exactly one minute after a Flash Flood entry
-  in the same county ends, and 86 of 535 Flood events (16%) do. Their onset is a
-  bookkeeping change, not a new flood. Under the onset rule, 62 positive windows (4.1% of
-  1,499) exist only because of such a hand-off; 21 of them are in the 2024 test year. This
-  does not change the gate decision: ADR 0001 fixes the label. Milestone 4 should report
-  metrics with and without these windows.
+- **Timestamp-adjacent records.** The [reproducible sensitivity table](../../outputs/metrics/eda_handoff_sensitivity.json)
+  uses the section 9 notebook rule: a Flood report starts in the same minute or the next
+  minute after a Flash Flood report ends in the same county. This flags 86 of 535 Flood
+  IDs (77 in the same minute and 9 in the next); 85 share at least one episode ID with a
+  matching Flash Flood report. If these 86 reports are removed *only for comparison*,
+  62 of 1,499 positive county-windows disappear, including 21 in 2024. The two spot-check
+  candidates 663370 and 663509 are next-minute examples. Timestamp adjacency suggests
+  possible bookkeeping hand-offs but does not prove continuity of a physical flood.
+  The canonical ADR 0001 onset label stays unchanged; any later sensitivity analysis
+  must be specified before model results are inspected.
 
 ---
 
