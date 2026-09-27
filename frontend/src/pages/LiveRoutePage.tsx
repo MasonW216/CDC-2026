@@ -64,28 +64,38 @@ export default function LiveRoutePage() {
 
   return (
     <section aria-labelledby="live-route-heading">
-      <h2 id="live-route-heading">Live route preview</h2>
-      <p role="note">
+      <h2 id="live-route-heading" className="page-title">
+        Live route preview
+      </h2>
+      <p role="note" className="note">
         This shows an actual driving route between any two points. It carries no weather-hazard
         assessment of any kind -- for that, see the Hurricane Helene replay on the planner page. It
         calls the public OSRM demo server directly and may be slow, rate-limited, or unavailable; it
         is a development preview, not the staged demo.
       </p>
 
-      <TripForm onSubmit={handleSubmit} />
+      <div className="card" style={{ marginTop: 'var(--space-4)' }}>
+        <TripForm onSubmit={handleSubmit} />
+      </div>
 
-      {status.kind === 'loading' && <p role="status">Fetching the route&hellip;</p>}
+      {status.kind === 'loading' && (
+        <p role="status" className="note">
+          Fetching the route&hellip;
+        </p>
+      )}
       {status.kind === 'error' && <p role="alert">{status.message}</p>}
       {status.kind === 'success' && (
-        <div>
-          <p>
+        <div className="card">
+          <p style={{ fontWeight: 600, marginTop: 0 }}>
             {Math.round(status.distanceKm)} km &middot; {Math.round(status.durationMinutes)} min
           </p>
-          <LiveRouteMap
-            origin={status.origin}
-            destination={status.destination}
-            path={status.path}
-          />
+          <div className="map-card">
+            <LiveRouteMap
+              origin={status.origin}
+              destination={status.destination}
+              path={status.path}
+            />
+          </div>
         </div>
       )}
     </section>

@@ -143,7 +143,7 @@ export default function LocationSearch({
   const showNoMatches = results !== null && results.length === 0 && !searchError;
 
   return (
-    <div>
+    <div className="field">
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
@@ -155,19 +155,25 @@ export default function LocationSearch({
         aria-describedby={[error ? errorId : null, statusId].filter(Boolean).join(' ')}
       />
       {allowCurrentLocation ? (
-        <button type="button" onClick={useMyLocation} disabled={status === 'locating'}>
+        <button
+          type="button"
+          onClick={useMyLocation}
+          disabled={status === 'locating'}
+          className="btn"
+          style={{ marginTop: 'var(--space-1)' }}
+        >
           {status === 'locating' ? 'Locating…' : 'Use my location'}
         </button>
       ) : null}
 
-      <p id={statusId} aria-live="polite">
+      <p id={statusId} aria-live="polite" className="field__status">
         {status === 'searching' ? 'Searching…' : null}
         {showNoMatches ? 'No matches found.' : null}
       </p>
       {searchError ? <p role="alert">{searchError}</p> : null}
       {locationError ? <p role="alert">{locationError}</p> : null}
       {showResults ? (
-        <ul id={resultsId}>
+        <ul id={resultsId} className="field__results">
           {results.map((result) => (
             <li key={`${result.lat},${result.lon}`}>
               <button type="button" onClick={() => pick(result)}>

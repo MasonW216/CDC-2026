@@ -24,36 +24,57 @@ import PrototypeResultsPage from './pages/PrototypeResultsPage';
 
 function ComingSoon({ page }: { page: string }) {
   return (
-    <p>
+    <p className="note">
       The {page} isn't built yet. For current conditions and official warnings, visit weather.gov.
     </p>
   );
 }
 
+function navLinkClass({ isActive }: { isActive: boolean }): string {
+  return isActive ? 'active' : '';
+}
+
 export default function App() {
   return (
-    <>
-      <a href="#main-content">Skip to main content</a>
-      <header>
-        <h1>StormRoute</h1>
-        <nav aria-label="Primary">
-          <NavLink to="/">Plan a trip</NavLink>
-          <NavLink to="/route">Live route (dev)</NavLink>
-          <NavLink to="/methodology">Methodology</NavLink>
-        </nav>
-      </header>
-      <main id="main-content">
-        <Routes>
-          <Route path="/" element={<PlannerPage />} />
-          <Route path="/results" element={<PrototypeResultsPage />} />
-          <Route path="/route" element={<LiveRoutePage />} />
-          <Route path="/methodology" element={<ComingSoon page="methodology page" />} />
-          <Route path="*" element={<ComingSoon page="page" />} />
-        </Routes>
-      </main>
-      <footer>
-        <p>Map and road data &copy; OpenStreetMap contributors. Storm event data from NOAA.</p>
-      </footer>
-    </>
+    <div className="app-shell">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <div className="app-card">
+        <header className="topbar">
+          <div className="topbar__brand">
+            <span className="topbar__brand-icon" aria-hidden="true">
+              ⛈
+            </span>
+            <h1 style={{ margin: 0, fontSize: '1.05rem' }}>StormRoute</h1>
+          </div>
+          <nav aria-label="Primary" className="topbar__nav">
+            <NavLink to="/" className={navLinkClass} end>
+              Plan a trip
+            </NavLink>
+            <NavLink to="/route" className={navLinkClass}>
+              Live route (dev)
+            </NavLink>
+            <NavLink to="/methodology" className={navLinkClass}>
+              Methodology
+            </NavLink>
+          </nav>
+        </header>
+        <main id="main-content" className="main-content">
+          <Routes>
+            <Route path="/" element={<PlannerPage />} />
+            <Route path="/results" element={<PrototypeResultsPage />} />
+            <Route path="/route" element={<LiveRoutePage />} />
+            <Route path="/methodology" element={<ComingSoon page="methodology page" />} />
+            <Route path="*" element={<ComingSoon page="page" />} />
+          </Routes>
+        </main>
+        <footer className="app-footer">
+          <p style={{ margin: 0 }}>
+            Map and road data &copy; OpenStreetMap contributors. Storm event data from NOAA.
+          </p>
+        </footer>
+      </div>
+    </div>
   );
 }

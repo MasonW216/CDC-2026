@@ -86,7 +86,7 @@ export default function TripForm({
         error={errors.destination}
       />
 
-      <div>
+      <div className="field">
         <label htmlFor={departureId}>Departure date and time (Eastern)</label>
         <input
           id={departureId}
@@ -103,7 +103,9 @@ export default function TripForm({
         ) : null}
       </div>
 
-      <button type="submit">Analyze trip</button>
+      <button type="submit" className="btn btn-primary">
+        Analyze trip
+      </button>
     </form>
   );
 }

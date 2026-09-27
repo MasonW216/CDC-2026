@@ -11,7 +11,7 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { useEffect } from 'react';
-import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, Marker, Polyline, TileLayer, useMap, ZoomControl } from 'react-leaflet';
 
 import type { Location } from '@/types/trip';
 
@@ -44,15 +44,25 @@ function FitToPath({ path }: { path: [number, number][] }) {
 export default function LiveRouteMap({ origin, destination, path }: LiveRouteMapProps) {
   const center: [number, number] = path[0] ?? [origin.lat, origin.lon];
   return (
-    <MapContainer center={center} zoom={8} style={{ height: '400px', width: '100%' }}>
+    <MapContainer
+      center={center}
+      zoom={8}
+      zoomControl={false}
+      style={{ height: '420px', width: '100%' }}
+    >
+      {/* CARTO's Positron: a muted, low-contrast basemap built on OSM data, so
+          route lines and markers stay the focus. Requires OSM + CARTO credit. */}
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        subdomains="abcd"
+        maxZoom={19}
       />
       <Marker position={[origin.lat, origin.lon]} icon={defaultIcon} />
       <Marker position={[destination.lat, destination.lon]} icon={defaultIcon} />
-      <Polyline positions={path} pathOptions={{ color: '#1a56db', weight: 5 }} />
+      <Polyline positions={path} pathOptions={{ color: '#0f766e', weight: 5 }} />
       <FitToPath path={path} />
+      <ZoomControl position="bottomright" />
     </MapContainer>
   );
 }

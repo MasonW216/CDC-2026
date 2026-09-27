@@ -43,8 +43,10 @@ export default function PlannerPage() {
 
   return (
     <section aria-labelledby="planner-heading">
-      <h2 id="planner-heading">Plan a trip</h2>
-      <p role="note">
+      <h2 id="planner-heading" className="page-title">
+        Plan a trip
+      </h2>
+      <p role="note" className="note">
         StormRoute compares the modeled weather-hazard exposure of routes and departure times based
         on available weather data. It is a comparative decision index, not a guarantee of safety,
         and it never overrides an official National Weather Service warning. This demo replays
@@ -52,17 +54,24 @@ export default function PlannerPage() {
         For current conditions and official warnings, visit weather.gov.
       </p>
 
-      <button type="button" onClick={loadDemoScenario}>
-        Load the Hurricane Helene replay
-      </button>
+      <div className="card" style={{ marginTop: 'var(--space-4)' }}>
+        <button
+          type="button"
+          onClick={loadDemoScenario}
+          className="btn"
+          style={{ marginBottom: 'var(--space-4)' }}
+        >
+          Load the Hurricane Helene replay
+        </button>
 
-      <TripForm
-        key={demoKey}
-        onSubmit={handleSubmit}
-        initialOrigin={demo?.origin ?? null}
-        initialDestination={demo?.destination ?? null}
-        initialDepartureLocal={demo?.departureLocal ?? ''}
-      />
+        <TripForm
+          key={demoKey}
+          onSubmit={handleSubmit}
+          initialOrigin={demo?.origin ?? null}
+          initialDestination={demo?.destination ?? null}
+          initialDepartureLocal={demo?.departureLocal ?? ''}
+        />
+      </div>
     </section>
   );
 }
