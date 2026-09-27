@@ -6,6 +6,11 @@ forecast or a verified road-safety recommendation. The result JSON and self-cont
 HTML fallback are reproducible; the React results screen and final rendered slide
 deck are not yet available for sign-off.
 
+**Verifier disposition:** use the static HTML only as a clearly labeled
+historical-rule demonstration. Do not present either route as a lower-hazard
+alternative or claim a live planner until the availability, route geometry, and
+React integration gaps below are resolved.
+
 ## Inputs and route sequence
 
 Departure is **27 September 2024, 12:00 EDT = 16:00 UTC**. Rainfall values are
@@ -118,13 +123,25 @@ passed. The React build and full browser workflow were not run on this machine.
   county-coded alerts above each advisory. “Rainfall status: complete” means
   both rainfall totals exist, not that alert coverage or road conditions are
   complete. The two explicit negative cautions using “safe” are appropriate;
-  neither labels a route safe. The page is static and was checked from source
-  and generated text; a browser visual and keyboard check remain pending.
+  neither labels a route safe. The page was checked against its rendered text
+  and visually in headless Chrome (1100-pixel desktop viewport); the county
+  order, alert-above-advisory layout, and caveats are visible. A keyboard and
+  presenting-laptop browser check remain pending.
 - The Markdown slide outline is present, but no rendered deck exists in the
-  repository. The React `/results` route still displays “isn't built yet” and
-  `demoScore.json` is a placeholder. The backend score endpoint is also a stub.
-  The complete browser click path **cannot be approved** until Jeffrey's UI and
-  frozen route fixture land and are checked against this JSON.
+  repository. The React results screen exists on Jeffrey's branch but had not
+  reached `Mason` at this check. Its comparison code still assumes non-null
+  route IDs and `extra_minutes`; after the corrected tie result lands, it would
+  show “null is 0 minutes shorter than null.” This is a blocking integration
+  fix. The screen also calls rainfall-only `complete` status “Complete data,”
+  and says “based on available weather data” without saying the rain is
+  retrospective. Label those “Rainfall totals available” and “cached historical
+  rainfall,” qualify the alert list as retained county-coded products, and use
+  the same Route 0/Route 1 identifiers as the fallback page. These are findings
+  from code review, not a run of the React screen.
+- The React `demoScore.json` remains a placeholder and the backend score
+  endpoint a stub. The complete browser click path **cannot be approved** until
+  Jeffrey's screen and frozen route fixture reach `Mason`, the tie bug is fixed,
+  and the actual workflow is exercised offline.
 - The MVP may be presented as an **illustrative offline historical replay** of
   a rule. It must not be called a safe route, flood probability, AI prediction,
   validated score, measured performance, or a lower-hazard route comparison.
