@@ -7,11 +7,11 @@
  * always carries real coordinates.
  *
  * Departure time is read as North Carolina wall-clock time and converted to
- * ISO 8601 with the correct offset (utils/departureTime). "Rejects a
- * departure time in the past" -- this component's original contract -- is not
- * enforced: every trip today is the Helene replay, a real 2024 storm, so a
- * past departure is correct, not an error. That check belongs once a live
- * (non-replay) mode exists to plan a trip that hasn't happened yet.
+ * ISO 8601 with the correct offset (utils/departureTime). Rejects a departure
+ * time in the past client-side, mirroring POST /api/v1/trips/score's own 422
+ * rule, so the error shows before a network round trip. (The Hurricane
+ * Helene demo replay bypasses this component entirely -- see PlannerPage --
+ * so its real 2024 departure is never run through this check.)
  *
  * Does not navigate or call the API itself; the caller supplies `onSubmit`.
  */
@@ -56,6 +56,10 @@ export default function TripForm({
     } else {
       try {
         departureIso = toEasternIso(departureLocal);
+        if (new Date(departureIso).getTime() <= Date.now()) {
+          nextErrors.departure = 'Departure must be in the future.';
+          departureIso = null;
+        }
       } catch {
         nextErrors.departure = 'That departure date and time is not valid.';
       }
@@ -65,7 +69,7 @@ export default function TripForm({
     if (Object.keys(nextErrors).length > 0 || !origin || !destination || !departureIso) {
       return;
     }
-    onSubmit({ origin, destination, departure_time: departureIso, mode: 'cached_replay' });
+    onSubmit({ origin, destination, departure_time: departureIso });
   }
 
   return (
@@ -86,7 +90,7 @@ export default function TripForm({
         error={errors.destination}
       />
 
-      <div>
+      <div className="field">
         <label htmlFor={departureId}>Departure date and time (Eastern)</label>
         <input
           id={departureId}
@@ -103,7 +107,9 @@ export default function TripForm({
         ) : null}
       </div>
 
-      <button type="submit">Analyze trip</button>
+      <button type="submit" className="btn btn-primary">
+        Analyze trip
+      </button>
     </form>
   );
 }

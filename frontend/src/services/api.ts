@@ -4,13 +4,12 @@
  * Wraps fetch against VITE_API_BASE_URL with explicit timeouts and typed errors.
  *
  * Implemented so far: geocoding (place search and reverse lookup for the
- * planner page) and the live routing preview. The score endpoint's loading /
- * empty / success / partial-data / failure states apply once #18 exists;
- * TODO below.
+ * planner page), the live routing preview, and trip scoring.
  */
 
 import type { RouteResponse } from '@/types/route';
-import type { Location } from '@/types/trip';
+import type { ScoreResponse } from '@/types/score';
+import type { Location, TripRequest } from '@/types/trip';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 const TIMEOUT_MS = 8000;
@@ -58,6 +57,36 @@ async function get<T>(path: string, params: Record<string, string>): Promise<T> 
   return body as T;
 }
 
+async function post<T>(path: string, body: unknown, timeoutMs: number): Promise<T> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+  } catch (error) {
+    throw new ApiError(
+      error instanceof Error ? error.message : 'Could not reach the StormRoute API.',
+      null,
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
+  const responseBody: unknown = await response.json().catch(() => null);
+  if (!response.ok) {
+    const detail =
+      responseBody && typeof responseBody === 'object' && 'detail' in responseBody
+        ? String(responseBody.detail)
+        : response.statusText;
+    throw new ApiError(detail, response.status);
+  }
+  return responseBody as T;
+}
+
 /** Forward geocode: a typed place name to candidate locations. Empty array on no match. */
 export function geocodeSearch(text: string): Promise<GeocodeResult[]> {
   return get<{ results: GeocodeResult[] }>('/api/v1/geocode/search', { text }).then(
@@ -89,5 +118,13 @@ export function fetchRoute(origin: Location, destination: Location): Promise<Rou
   });
 }
 
-// TODO(milestone-6/7): scoreTrip(request: TripRequest): Promise<ScoreResponse>,
-// once backend/src/stormroute_api/schemas.py defines the response shape.
+/**
+ * Score a trip (POST /api/v1/trips/score): the prototype hazard indicator,
+ * live or replayed. See types/score.ts for the `prototype-score/1` contract.
+ *
+ * `mode: 'live'` chains real OSRM + Open-Meteo + NWS calls, so this gets a
+ * longer timeout than a single geocode/routing request.
+ */
+export function scoreTrip(request: TripRequest): Promise<ScoreResponse> {
+  return post<ScoreResponse>('/api/v1/trips/score', request, 20000);
+}
