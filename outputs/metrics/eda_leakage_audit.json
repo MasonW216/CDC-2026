@@ -1,0 +1,213 @@
+{
+  "data_mode": "full",
+  "status": "Design audit only; feature availability and pipeline leakage tests pending",
+  "git_commit": "6243c03",
+  "model_config_sha256": "38d13dfaa5421d6b1c6b8491ae56aa6db3da6180ed57fb09dfe6db6aa5e74b73",
+  "data_config_sha256": "a4cbf9a53bef93349019675d903c1614d465cc9206582e49be4189cda4e934ab",
+  "review": [
+    {
+      "feature": "max_precip_intensity",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "precip_1h",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "precip_24h",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "precip_3h",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "precip_6h",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "precip_72h",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "soil_moisture_deep",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "soil_moisture_shallow",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "temperature",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "wind_gust",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "wind_speed",
+      "group": "weather",
+      "timing": "Contemporaneous valid time; reanalysis published retrospectively",
+      "decision": "Conditional: historical experiment only; live availability unverified",
+      "required_evidence": "Verify units and availability; trailing windows only; record valid and issue times"
+    },
+    {
+      "feature": "elevation_mean",
+      "group": "static",
+      "timing": "Known before departure if source vintage was available",
+      "decision": "Conditional: verify static source vintage and county aggregation",
+      "required_evidence": "Versioned source, retrieval record, aggregation QA; no outcome-derived terrain"
+    },
+    {
+      "feature": "slope_mean",
+      "group": "static",
+      "timing": "Known before departure if source vintage was available",
+      "decision": "Conditional: verify static source vintage and county aggregation",
+      "required_evidence": "Versioned source, retrieval record, aggregation QA; no outcome-derived terrain"
+    },
+    {
+      "feature": "month_cos",
+      "group": "temporal",
+      "timing": "Known before departure",
+      "decision": "Eligible by definition; implementation unverified",
+      "required_evidence": "Compute only from target window calendar; confirm consistent UTC convention"
+    },
+    {
+      "feature": "month_sin",
+      "group": "temporal",
+      "timing": "Known before departure",
+      "decision": "Eligible by definition; implementation unverified",
+      "required_evidence": "Compute only from target window calendar; confirm consistent UTC convention"
+    },
+    {
+      "feature": "historical_event_rate",
+      "group": "optional",
+      "timing": "Known only after historical reports become available",
+      "decision": "Conditional: past-only training estimates; frozen for later splits",
+      "required_evidence": "Past-only training; train-only smoothing; check publication lag and bias"
+    },
+    {
+      "feature": "injuries",
+      "group": "excluded",
+      "timing": "Known only after event or post-event curation",
+      "decision": "Reject as predictor",
+      "required_evidence": "outcome known only after the event"
+    },
+    {
+      "feature": "deaths",
+      "group": "excluded",
+      "timing": "Known only after event or post-event curation",
+      "decision": "Reject as predictor",
+      "required_evidence": "outcome known only after the event"
+    },
+    {
+      "feature": "property_damage_usd",
+      "group": "excluded",
+      "timing": "Known only after event or post-event curation",
+      "decision": "Reject as predictor",
+      "required_evidence": "outcome known only after the event"
+    },
+    {
+      "feature": "event_narrative",
+      "group": "excluded",
+      "timing": "Known only after event or post-event curation",
+      "decision": "Reject as predictor",
+      "required_evidence": "written after the event"
+    },
+    {
+      "feature": "end_utc",
+      "group": "excluded",
+      "timing": "Known only after event or post-event curation",
+      "decision": "Reject as predictor",
+      "required_evidence": "not known at departure"
+    },
+    {
+      "feature": "episode_id",
+      "group": "excluded",
+      "timing": "Known only after event or post-event curation",
+      "decision": "Reject as predictor",
+      "required_evidence": "assigned during post-event curation"
+    },
+    {
+      "feature": "episode_narrative",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Post-event narrative; metadata/context only"
+    },
+    {
+      "feature": "event_id",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Source identifier; provenance only, not a predictor"
+    },
+    {
+      "feature": "begin_utc",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Actual event onset; label construction only, not a known future event time"
+    },
+    {
+      "feature": "label_flood_event",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Target only; never a predictor"
+    },
+    {
+      "feature": "future_weather_aggregate",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Reject future observations; check forecast issue times"
+    },
+    {
+      "feature": "future_event_rate",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Reject future or held-out labels in historical rates"
+    },
+    {
+      "feature": "social_vulnerability",
+      "group": "additional restriction",
+      "timing": "Future/post-event or restricted use",
+      "decision": "Reject as predictor",
+      "required_evidence": "Evaluation/context only; never an individual trip-score input"
+    }
+  ],
+  "live_limitation": "Reanalysis results do not establish live forecast accuracy"
+}
