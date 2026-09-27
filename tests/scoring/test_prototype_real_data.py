@@ -1,11 +1,19 @@
 """MVP gate checks using the frozen Helene inputs and route fixture."""
 
+import importlib.util
 import json
 import socket
 import sys
 from pathlib import Path
 
-from scripts.run_prototype import main, run
+REPO_ROOT = Path(__file__).resolve().parents[2]
+_spec = importlib.util.spec_from_file_location(
+    "run_prototype", REPO_ROOT / "scripts/run_prototype.py"
+)
+assert _spec and _spec.loader
+run_prototype = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(run_prototype)
+main, run = run_prototype.main, run_prototype.run
 
 DEMO = Path(__file__).resolve().parents[2] / "artifacts" / "demo"
 ROUTES = DEMO / "prototype_routes_provisional.json"
