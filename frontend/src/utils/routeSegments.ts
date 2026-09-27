@@ -62,6 +62,46 @@ function pointAtDistance(
   return path[path.length - 1]!;
 }
 
+export interface SegmentSlice {
+  index: number;
+  path: [number, number][];
+}
+
+/**
+ * Like `splitRouteAtSegment`, but cuts the whole route into one polyline per
+ * segment instead of pulling out a single stretch -- for coloring every
+ * county along a route by its own concern level, not just the worst one.
+ */
+export function splitRouteIntoSegments(
+  path: [number, number][],
+  segmentKm: number[],
+): SegmentSlice[] {
+  if (path.length < 2 || segmentKm.length === 0) return [];
+  const totalSegmentKm = segmentKm.reduce((sum, km) => sum + km, 0);
+  const cumulative = cumulativeDistances(path);
+  const pathTotalKm = cumulative[cumulative.length - 1]!;
+  if (totalSegmentKm <= 0 || pathTotalKm <= 0) return [];
+  const scale = pathTotalKm / totalSegmentKm;
+
+  const boundaries: number[] = [0];
+  let running = 0;
+  for (const km of segmentKm) {
+    running += km * scale;
+    boundaries.push(running);
+  }
+
+  return segmentKm.map((_km, i) => {
+    const startKm = boundaries[i]!;
+    const endKm = boundaries[i + 1]!;
+    const startPoint = pointAtDistance(path, cumulative, startKm);
+    const endPoint = pointAtDistance(path, cumulative, endKm);
+    const middlePoints = path.filter(
+      (_point, idx) => cumulative[idx]! > startKm && cumulative[idx]! < endKm,
+    );
+    return { index: i, path: [startPoint, ...middlePoints, endPoint] };
+  });
+}
+
 export interface SplitRoute {
   before: [number, number][];
   highlighted: [number, number][];

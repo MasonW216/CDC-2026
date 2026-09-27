@@ -12,7 +12,6 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 
 import savedTripResponse from '../../../artifacts/demo/saved_trip_response.json';
-import { HeaderSearchProvider } from '../contexts/HeaderSearchContext';
 import PlannerPage from '../pages/PlannerPage';
 import * as api from '../services/api';
 import type { ScoreResponse } from '../types/score';
@@ -45,11 +44,7 @@ const ROUTE_RESPONSE = {
 };
 
 function renderPlanner() {
-  return render(
-    <HeaderSearchProvider>
-      <PlannerPage />
-    </HeaderSearchProvider>,
-  );
+  return render(<PlannerPage />);
 }
 
 describe('PlannerPage', () => {

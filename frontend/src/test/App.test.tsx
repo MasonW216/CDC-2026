@@ -1,6 +1,6 @@
 /**
- * App shell: branding, routing to the planner page, and a placeholder for
- * pages that don't exist yet (methodology, about).
+ * App shell: branding, routing to the planner, methodology, and about pages,
+ * and a placeholder for any unknown path.
  */
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
@@ -25,14 +25,14 @@ describe('App shell', () => {
     expect(screen.getByLabelText('Origin')).toBeTruthy();
   });
 
-  it('shows a placeholder for the methodology page', () => {
+  it('renders the methodology page', () => {
     renderAt('/methodology');
-    expect(screen.getByText(/isn't built yet/i)).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Methodology' })).toBeTruthy();
   });
 
-  it('shows a placeholder for the about page', () => {
+  it('renders the about page', () => {
     renderAt('/about');
-    expect(screen.getByText(/isn't built yet/i)).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /about pivot/i })).toBeTruthy();
   });
 
   it('shows a placeholder for an unknown path', () => {

@@ -14,8 +14,7 @@
  * so its real 2024 departure is never run through this check.)
  *
  * `initialOrigin` is re-applied whenever it changes, not just on mount, so a
- * caller (the header search bar, via context) can set the origin after the
- * form is already showing.
+ * caller can set the origin after the form is already showing.
  *
  * Does not navigate or call the API itself; the caller supplies `onSubmit`.
  */

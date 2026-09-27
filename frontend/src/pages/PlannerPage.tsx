@@ -28,7 +28,6 @@ import { useMemo, useState } from 'react';
 import LiveRouteMap, { type RouteRender } from '@/components/LiveRouteMap';
 import RiskGauge from '@/components/RiskGauge';
 import TripForm from '@/components/TripForm';
-import { useHeaderSearch } from '@/contexts/HeaderSearchContext';
 import { ApiError, fetchRoute, scoreTrip } from '@/services/api';
 import type { RouteScore, ScoreResponse } from '@/types/score';
 import type { Location, TripRequest } from '@/types/trip';
@@ -72,7 +71,6 @@ function formatInstant(iso: string): string {
 }
 
 export default function PlannerPage() {
-  const { searchedLocation } = useHeaderSearch();
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
 
   async function score(request: TripRequest) {
@@ -208,7 +206,7 @@ export default function PlannerPage() {
           example instead of calling live weather. For a real historical storm, see the Helene case
           study.
         </p>
-        <TripForm onSubmit={handleFormSubmit} initialOrigin={searchedLocation} />
+        <TripForm onSubmit={handleFormSubmit} />
         <button
           type="button"
           onClick={runSavedTripReplay}

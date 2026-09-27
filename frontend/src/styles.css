@@ -1,9 +1,12 @@
 /**
  * Global styles and the design tokens the whole app shares.
  *
- * Brand: PIVOT. Chrome (buttons, nav, focus, links) is Uber-inspired --
- * near-black primary, white surfaces, bold high-contrast type, minimal color
- * outside of it. Two hard constraints unrelated to the brand refresh, and not
+ * Brand: PIVOT. Chrome (buttons, nav, focus, header) uses a slate-storm
+ * near-black (--color-ink, blue-hued rather than flat black) so it reads as
+ * "weather product," not as a rideshare app's black/white pill UI. Space
+ * Grotesk carries the score numeral and headings -- the one place the page
+ * gets to look distinctive -- while Public Sans carries body/form text.
+ * Two hard constraints unrelated to the brand refresh, and not
  * to be touched by it:
  *
  *   * risk is never encoded by color alone -- every risk level also carries a
@@ -21,21 +24,31 @@
  */
 
 :root {
-  --color-bg: #f6f6f7;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:
+    'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Slate-storm ink: a near-black with a cool blue hue, not flat black --
+     the header/chrome color that reads as "weather," not as rideshare UI. */
+  --color-ink: #10161f;
+  --color-ink-soft: #1c2532;
+  --color-ink-border: #2c3646;
+
+  --color-bg: #f5f6f8;
   --color-surface: #ffffff;
-  --color-border: #e5e5e5;
-  --color-border-strong: #cccccc;
-  --color-text: #000000;
-  --color-text-muted: #545454;
-  --color-text-faint: #8e8e8e;
+  --color-border: #e2e4e9;
+  --color-border-strong: #c7cbd4;
+  --color-text: #10161f;
+  --color-text-muted: #545c68;
+  --color-text-faint: #8b909b;
 
-  --color-primary: #000000;
-  --color-primary-hover: #276ef1;
+  --color-primary: var(--color-ink);
+  --color-primary-hover: #2f6fed;
   --color-primary-contrast: #ffffff;
-  --color-primary-soft: #f0f0f0;
+  --color-primary-soft: #eef0f4;
 
-  --color-map-control: #000000;
-  --color-map-control-hover: #2b2b2b;
+  --color-map-control: var(--color-ink);
+  --color-map-control-hover: var(--color-ink-soft);
 
   /* Concern levels: color is always paired with the text label, never alone.
      Product-safety semantics -- see file header. Do not recolor for brand. */
@@ -78,10 +91,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-bg: #000000;
-    --color-surface: #141414;
-    --color-border: #2b2b2b;
-    --color-border-strong: #3d3d3d;
+    --color-bg: #0a0e15;
+    --color-surface: #151b25;
+    --color-border: #262f3d;
+    --color-border-strong: #384258;
     --color-text: #ffffff;
     --color-text-muted: #a6a6a6;
     --color-text-faint: #737373;
@@ -109,10 +122,10 @@
 }
 
 :root[data-theme='dark'] {
-  --color-bg: #000000;
-  --color-surface: #141414;
-  --color-border: #2b2b2b;
-  --color-border-strong: #3d3d3d;
+  --color-bg: #0a0e15;
+  --color-surface: #151b25;
+  --color-border: #262f3d;
+  --color-border-strong: #384258;
   --color-text: #ffffff;
   --color-text-muted: #a6a6a6;
   --color-text-faint: #737373;
@@ -152,14 +165,7 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -280,13 +286,16 @@ a {
   font-size: 0.8rem;
 }
 
-/* ---- Typography: bold, tight display type; uppercase micro-labels ---- */
+/* ---- Typography: Space Grotesk for display/headings, uppercase reserved
+   for .section-title alone (it marks a metadata grouping -- reasons, alerts,
+   timeline -- not just "a label"). Everything else is sentence case. ---- */
 
 h2.page-title {
   margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
   font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1.15;
 }
 
@@ -301,9 +310,10 @@ h3.section-title {
 
 h4.subsection-title {
   margin: var(--space-4) 0 var(--space-2);
+  font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
 }
 
 .note {
@@ -386,10 +396,8 @@ h4.subsection-title {
 
 .field label {
   display: block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--color-text-muted);
   margin-bottom: var(--space-2);
 }
@@ -554,10 +562,9 @@ h4.subsection-title {
 
 .alert-banner h4 {
   margin: 0 0 var(--space-1);
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .alert-banner ul {
@@ -638,9 +645,7 @@ table.timeline th {
   text-align: left;
   color: var(--color-text-muted);
   font-weight: 700;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.8rem;
   padding: var(--space-2) var(--space-3);
   border-bottom: 2px solid var(--color-text);
 }
@@ -835,9 +840,7 @@ table.timeline tr:last-child td {
 }
 
 .search-bar .field label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font-size: 0.78rem;
 }
 
 .search-bar input[type='datetime-local'] {
@@ -851,39 +854,40 @@ table.timeline tr:last-child td {
   max-width: 300px;
 }
 
+/* Reads as a data annotation clipped to the map, not a chat/assistant
+   bubble: a flat left rule (same device as .alert-banner) instead of a
+   rounded orb avatar, since this card is a readout, not a persona. */
 .ai-badge__card {
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   padding: var(--space-3) var(--space-4);
 }
 
-/* Solid disc in the primary color (black; white in dark mode). The old teal
-   gradient predated the black/white rebrand. */
 .ai-badge__orb {
   flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  color: var(--color-surface);
+  font-size: 1rem;
+  color: var(--color-primary-contrast);
   background: var(--color-primary);
 }
 
 .ai-badge__body h4 {
   margin: 0 0 var(--space-1);
-  font-size: 0.72rem;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 .ai-badge__route-line {
@@ -891,7 +895,7 @@ table.timeline tr:last-child td {
   align-items: center;
   gap: var(--space-2);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 600;
   margin: 3px 0;
 }
 
@@ -996,8 +1000,8 @@ table.timeline tr:last-child td {
   height: 100vh;
 }
 
-/* The header is black in both themes (like the rider app), so its colors are
-   literal black/white rather than theme tokens. */
+/* The header stays the slate-storm ink in both themes (never flips to
+   white surfaces), so its colors are literal rather than theme tokens. */
 .pivot-header {
   position: relative;
   z-index: 1000; /* above Leaflet panes and controls */
@@ -1006,9 +1010,9 @@ table.timeline tr:last-child td {
   gap: var(--space-5);
   height: 64px;
   padding: 0 var(--space-5);
-  background: #000;
+  background: #10161f;
   color: #fff;
-  border-bottom: 1px solid #1f1f1f;
+  border-bottom: 1px solid #232c3a;
 }
 
 .pivot-header__brand {
@@ -1035,9 +1039,10 @@ table.timeline tr:last-child td {
 }
 
 .pivot-logo__word {
+  font-family: var(--font-display);
   font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--color-text);
 }
 
@@ -1053,7 +1058,7 @@ table.timeline tr:last-child td {
 }
 
 .pivot-header__nav a {
-  color: #bdbdbd;
+  color: #9aa4b5;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
@@ -1066,11 +1071,11 @@ table.timeline tr:last-child td {
 
 .pivot-header__nav a:hover {
   color: #fff;
-  background: #1f1f1f;
+  background: #232c3a;
 }
 
 .pivot-header__nav a.active {
-  color: #000;
+  color: #10161f;
   background: #fff;
 }
 
@@ -1086,51 +1091,6 @@ table.timeline tr:last-child td {
   gap: var(--space-3);
 }
 
-.header-search {
-  width: 240px;
-}
-
-.header-search .field {
-  margin: 0;
-}
-
-.header-search .field label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-/* Magnifier glyph is an inline SVG data URI (no icon library, works offline). */
-.header-search .field input {
-  padding: var(--space-2) var(--space-4) var(--space-2) 38px;
-  font-size: 0.88rem;
-  font-weight: 500;
-  border-radius: 999px;
-  border: 1px solid #3a3a3a;
-  background: #1f1f1f
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23bdbdbd' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E")
-    no-repeat 14px center;
-  color: #fff;
-}
-
-.header-search .field input::placeholder {
-  color: #9e9e9e;
-}
-
-.header-search .field input:focus {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
-  outline: none;
-}
-
-.header-search .field__status {
-  display: none;
-}
-
 .theme-toggle {
   flex: none;
   display: inline-flex;
@@ -1139,8 +1099,8 @@ table.timeline tr:last-child td {
   width: 60px;
   height: 32px;
   border-radius: 999px;
-  border: 1px solid #3a3a3a;
-  background: #1f1f1f;
+  border: 1px solid #2c3646;
+  background: #1c2532;
   padding: 0 7px;
   cursor: pointer;
   position: relative;
@@ -1155,7 +1115,7 @@ table.timeline tr:last-child td {
   font-size: 0.72rem;
   line-height: 1;
   z-index: 1;
-  color: #9e9e9e;
+  color: #9aa4b5;
 }
 
 .theme-toggle__thumb {
@@ -1180,6 +1140,16 @@ table.timeline tr:last-child td {
   flex-direction: column;
   min-height: 0;
   overflow-y: auto;
+}
+
+/* A reading-width page with real side gutters, for every text/content page
+   that isn't the planner's own full-bleed sidebar+map layout (which sets its
+   own spacing via .pivot-sidebar/.pivot-map-area). Without this, text in
+   .pivot-main -- which carries no padding of its own -- ran edge to edge. */
+.content-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-5) var(--space-6);
 }
 
 .pivot-layout {
@@ -1297,10 +1267,11 @@ table.timeline tr:last-child td {
 }
 
 .risk-gauge__value {
+  font-family: var(--font-display);
   font-size: 3.4rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   color: var(--color-text);
 }
@@ -1412,4 +1383,202 @@ table.timeline tr:last-child td {
   border: 3px solid #fff;
   box-sizing: border-box;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* ---- Case study: headline first, then a route switcher and a clickable
+   county rail, instead of every route's full timeline open at once. ---- */
+
+.case-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  padding: var(--space-5) 0;
+}
+
+.case-hero__gauge {
+  flex: none;
+}
+
+.case-hero__text {
+  flex: 1 1 320px;
+  min-width: 240px;
+}
+
+.case-hero__headline {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.case-tabs {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+}
+
+.case-tabs button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 1.5px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.case-tabs button[aria-selected='true'] {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.case-tabs button[aria-selected='true'] .level-badge {
+  background: rgba(255, 255, 255, 0.16);
+  color: inherit;
+}
+
+.case-tabs button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Spotlight: the one segment the story is actually about, pulled out of the
+   table instead of making a reader find it in a list of eight rows. */
+.spotlight-card {
+  border-left: 4px solid var(--level-3-fg);
+}
+
+.card-map-wrap {
+  margin: var(--space-4) 0;
+}
+
+.case-map {
+  height: 380px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.case-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: var(--color-bg);
+}
+
+/* Leaflet's default tooltip chrome, retinted to the app's tokens instead of
+   its own default white-on-white so it reads in dark mode too. */
+.leaflet-tooltip {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  padding: var(--space-2) var(--space-3);
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: var(--color-border);
+}
+
+/* A horizontal rail of every county stretch, ordered by arrival -- click one
+   to see it below, so the page shows one segment's detail at a time instead
+   of an always-open table. Same circle/line vocabulary as .route-inputs,
+   rotated to run left-to-right. */
+.segment-rail {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: var(--space-4) var(--space-1);
+  margin: var(--space-3) 0;
+}
+
+.segment-rail__step {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+.segment-rail__step:not(:first-child)::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--color-border-strong);
+  flex: none;
+}
+
+.segment-rail__dot {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2.5px solid var(--color-surface);
+  outline: 1.5px solid var(--color-border-strong);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segment-rail__dot[aria-current='true'] {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.segment-rail__dot:focus-visible {
+  outline: 3px solid var(--color-primary-hover);
+  outline-offset: 2px;
+}
+
+.segment-detail {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.segment-detail h4 {
+  margin: 0;
+}
+
+.factor-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+}
+
+.factor-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.85rem;
+  font-weight: 500;
+  max-width: 260px;
+}
+
+.factor-chip__icon {
+  flex: none;
 }
