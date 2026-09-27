@@ -106,7 +106,8 @@ Positive windows by year: 2015 141 · 2016 167 · 2017 71 · 2018 295 · 2019 85
 | Years and splits | Train 2015–21 · select 2022 · calibrate 2023 · test 2024 | Every split has positives; selection is thin (53) |
 | Features accepted | 15 configured, plus `historical_event_rate` conditional | Leakage audit, section 11 |
 | Features rejected | 10 candidate groups | See the leakage audit below |
-| Weather source | ERA5-Land from the Copernicus Climate Data Store; gusts from ERA5 single levels (decided 2026-09-26) | Via Open-Meteo, ERA5-Land lacks precipitation and wind, and `era5_seamless` would supply them from ERA5 (~28 km). Fetching directly keeps rainfall on the ~9 km grid, which matters most in the mountains. ERA5-Land has no gust variable. Needs a Copernicus account and API key |
+| Weather source | ERA5-Land from the Copernicus Climate Data Store; gusts from ERA5 (decided 2026-09-26) | Via Open-Meteo, ERA5-Land lacks precipitation and wind, and `era5_seamless` would supply them from ERA5 (~28 km). Fetching directly keeps rainfall on the ~9 km grid, which matters most in the mountains. ERA5-Land has no gust variable. **Retrieval method** (CDS point time series at each county's internal point) is [ADR 0005](../../docs/adr/0005-weather-provider-era5-land-timeseries-asos.md), proposed and awaiting approval |
+| Hazard scope | Flooding only for this gate | Phase 1 of [ADR 0004](../../docs/adr/0004-multi-hazard-scope.md): winter and wind/severe are not modeled until the flood model passes Milestone 4 |
 
 ## Leakage audit
 
@@ -136,16 +137,18 @@ a live deployment would not have, so evaluated performance is an upper bound
    compliance, and none shows clock time entered as the start. The spot check of
    [`spot_check_candidates.csv`](spot_check_candidates.csv) verifies it for the 1,813
    daylight-saving-month events (81.7%).
-2. **Copernicus access.** Milestone 3 needs a Copernicus account and API key, and the Climate
-   Data Store queues requests, so start the download early.
+2. **Weather retrieval not yet reproducible in the repo.** ADR 0005 awaits approval, and its
+   county time series were retrieved by a prototype outside the repo. Milestone 3 must port
+   that into `scripts/fetch_weather.py` so `make download` reproduces it.
 3. **Thin, storm-driven splits.** Selection has 53 positives, and single storms dominate
    2018, 2020, and 2024. Model selection on 2022 will be noisy, so Milestone 4 must report
    grouped bootstrap intervals.
 4. **Reporting bias.** Urban Wake County has the most positive windows (76); remote,
    mountainous Graham County has none in ten years. A negative label means *no report*, not
    *no hazard*. The Econ/Stats geography section should examine this.
-5. **Weather checked at 3 points.** These are city coordinates, not county centroids. All 100
-   counties come in Milestone 3, after the boundaries land (issue #3).
+5. **Weather checked at 3 points, and a point is not a county.** The EDA used city
+   coordinates. ADR 0005 uses one ERA5-Land cell per county, which under-represents large or
+   mountainous counties; its own consequences section says so.
 6. **Terrain features unchecked** until the boundaries and elevation data exist.
 7. **UTC year boundary.** Events from the evening of 31 December 2014, in the 2014 file (not
    downloaded), would begin on 1 January 2015 in UTC. The effect is a few hours of data.
