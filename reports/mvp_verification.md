@@ -2,15 +2,18 @@
 
 Checked 27 September 2026 against the cached Helene inputs and provisional routes
 on `Mason`. This is an **offline historical replay**, not an as-of-departure
-forecast or a verified road-safety recommendation. The result JSON is reproducible;
-the rendered results page and final slide deck are not yet available for sign-off.
+forecast or a verified road-safety recommendation. The result JSON and self-contained
+HTML fallback are reproducible; the React results screen and final rendered slide
+deck are not yet available for sign-off.
 
 ## Inputs and route sequence
 
 Departure is **27 September 2024, 12:00 EDT = 16:00 UTC**. Rainfall values are
 **millimeters per hour ending at the stated UTC hour**. The input has 100 county
 point series × 144 hourly timestamps (23 September 00:00 through 28 September
-23:00 UTC), with no missing or negative values. All 15 route stretches have a
+23:00 UTC), with no missing or negative values. The cached input's embedded
+SHA-256 matches its compact JSON payload when the hash field is excluded.
+All 15 route stretches have a
 matching FIPS/name and nondecreasing arrival times. Repeated counties reflect a
 new six-hour arrival window, not a second county crossing.
 
@@ -91,13 +94,22 @@ are in [`tests/scoring/test_prototype_real_data.py`](../tests/scoring/test_proto
   retrospective input caveat. It agrees with the result JSON. The planner's
   visible disclaimer now calls this a historical replay. The future-model
   [`presentation_outline.md`](../docs/presentation_outline.md) is marked as
-  unsuitable for this MVP, and [slide-ready limitations and next steps](../docs/mvp_gate_slides.md)
-  are provided.
-- There is no actual slide deck in the repository to review. The current
-  `/results` route displays “isn't built yet”; `demoScore.json` is an empty
-  placeholder. The backend score endpoint is also a stub. A screen-level claim,
-  official-alert placement, or complete offline click path **cannot be approved**
-  until Jeffrey's UI and route fixture land and are checked against this JSON.
+  unsuitable for this MVP. All five sections of the
+  [MVP slide outline](../docs/mvp_slides.md) were checked. Slide 4 contains the
+  limitations; slide 5 states the next-step plan and the small 2022/2023 counts.
+- The generated [HTML results page](../artifacts/demo/results.html) agrees with
+  the cached JSON on route levels, durations, county order, first tied top-level
+  stretch, rainfall reasons, alert list, and provenance. It puts the retained
+  county-coded alerts above each advisory. “Rainfall status: complete” means
+  both rainfall totals exist, not that alert coverage or road conditions are
+  complete. The two explicit negative cautions using “safe” are appropriate;
+  neither labels a route safe. The page is static and was checked from source
+  and generated text; a browser visual and keyboard check remain pending.
+- The Markdown slide outline is present, but no rendered deck exists in the
+  repository. The React `/results` route still displays “isn't built yet” and
+  `demoScore.json` is a placeholder. The backend score endpoint is also a stub.
+  The complete browser click path **cannot be approved** until Jeffrey's UI and
+  frozen route fixture land and are checked against this JSON.
 - The MVP may be presented as an **illustrative offline historical replay** of
   a rule. It must not be called a safe route, flood probability, AI prediction,
   validated score, measured performance, or a lower-hazard route comparison.

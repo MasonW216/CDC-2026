@@ -87,7 +87,7 @@ ADVISORY: dict[int, str] = {
         "or a different route, and check DriveNC road closures before leaving."
     ),
     3: (
-        "Official flood warnings or extreme rainfall on part of this route. Consider "
+        "The prototype indicates severe flood-related concern on part of this route. Consider "
         "delaying or reducing travel through the affected counties, and follow official "
         "guidance and road closures."
     ),
@@ -95,7 +95,8 @@ ADVISORY: dict[int, str] = {
 
 REPLAY_CAVEAT = (
     "Replay of a past storm using reanalysis rainfall and archived alerts. A traveler "
-    "would not have had this rainfall at departure time. Alerts use their original "
+    "would not have had this rainfall at departure time; later stretches use rainfall "
+    "after departure. Alerts use their original "
     "expiry, so a warning extended before departure counts as expired. Prototype rule, "
     "not a calibrated probability or a validated score."
 )
@@ -183,8 +184,9 @@ def assess_segment(segment: SegmentInput, decision_utc: datetime) -> SegmentAsse
     if rain_levels:
         sources.append("ERA5 reanalysis rainfall (Open-Meteo)")
         parts.append(
-            f"rainfall {_fmt(segment.precip_24h_mm)} mm in the prior 24 h and "
-            f"{_fmt(segment.precip_72h_mm)} mm in the prior 72 h"
+            f"24 h rain {_fmt(segment.precip_24h_mm)} mm and 72 h rain "
+            f"{_fmt(segment.precip_72h_mm)} mm, both ending "
+            f"{segment.window_start_utc:%Y-%m-%d %H:%M UTC}"
         )
     if used:
         sources.append("NWS flood products (IEM archive)")

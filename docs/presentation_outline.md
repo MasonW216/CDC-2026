@@ -2,7 +2,7 @@
 
 > This is the planned post-evaluation presentation, not the September 2026 MVP
 > replay. Do not present its model, calibration, score, or performance sections
-> as completed work. Use [the MVP limitations and next-step slides](mvp_gate_slides.md)
+> as completed work. Use [the MVP slide outline](mvp_slides.md)
 > for the current demo.
 
 > **Owner:** Mason · **Rehearsals required:** at least three, timed.

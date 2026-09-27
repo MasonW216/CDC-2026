@@ -20,7 +20,7 @@
  "output": {
   "level": 3,
   "label": "Severe concern",
-  "reason": "Rainfall 233 mm in the prior 24 h and 326 mm in the prior 72 h; active flash flood warning, flood warning.",
+  "reason": "24 h rain 233 mm and 72 h rain 326 mm, both ending 2024-09-27 12:00 UTC; active flash flood warning, flood warning.",
   "sources": [
    "ERA5 reanalysis rainfall (Open-Meteo)",
    "NWS flood products (IEM archive)"

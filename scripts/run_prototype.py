@@ -65,7 +65,7 @@ def run(routes_path: Path, inputs_path: Path) -> dict[str, Any]:
             else round(results[best]["duration_minutes"] - results[other]["duration_minutes"], 1),
             "note": (
                 "Both routes have the same indicator level; no lower-concern alternative "
-                "was found. Neither route is known to be safe."
+                "was found. This indicator does not establish that either route is safe."
                 if same_level
                 else "Both routes were scored by the same rule on the same cached inputs. "
                 "This compares indicator levels; it does not say either route is safe."
