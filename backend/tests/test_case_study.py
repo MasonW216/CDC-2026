@@ -12,7 +12,9 @@ def test_returns_the_helene_case_study():
     assert body["mode"] == "historical_case_study"
     assert body["schema_version"] == "prototype-score/1"
     assert body["case_study"]["name"] == "Hurricane Helene"
-    assert all(route["band"] == "Severe concern" for route in body["routes"])
+    bands = {route["band"] for route in body["routes"]}
+    assert "Severe concern" in bands
+    assert "High concern" in bands
 
 
 def test_route_never_needs_a_request_body():

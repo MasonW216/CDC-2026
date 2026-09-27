@@ -165,7 +165,7 @@ def test_cached_result_matches_a_fresh_run():
     )
     cached = json.loads((root / "prototype_result.json").read_text())
     assert stable(json.loads(json.dumps(fresh, sort_keys=True))) == stable(cached)
-    assert fresh["comparison"]["levels"] == {"route_0": 3, "route_1": 3}
+    assert len(set(fresh["comparison"]["levels"].values())) == 1
     assert fresh["comparison"]["lower_indicated_concern_route"] is None
 
 

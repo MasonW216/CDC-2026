@@ -58,7 +58,7 @@ function Header() {
           Plan a trip
         </NavLink>
         <NavLink to="/case-studies/helene" className={navLinkClass}>
-          Helene case study
+          Disaster demo
         </NavLink>
         <NavLink to="/methodology" className={navLinkClass}>
           Methodology

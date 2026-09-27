@@ -146,6 +146,17 @@ export interface Coverage {
   geography: { supported: boolean; message: string | null };
 }
 
+/**
+ * One county's own indicator at the case study's departure moment, independent of
+ * whether either route actually passes through it -- real statewide context for the
+ * map, not a second scoring rule. See `CaseStudyInfo.county_risk`.
+ */
+export interface CountyRiskEntry {
+  county_name: string;
+  index: number | null;
+  band: Band | 'Not assessed';
+}
+
 /** Present only when `mode === 'historical_case_study'` (GET /api/v1/demo/helene). */
 export interface CaseStudyInfo {
   name: string;
@@ -153,6 +164,13 @@ export interface CaseStudyInfo {
   note: string;
   origin: { label: string; lat: number; lon: number };
   destination: { label: string; lat: number; lon: number };
+  /**
+   * Every NC county's own indicator at the case study's departure instant, keyed by
+   * county FIPS -- all 100 counties, not just the ones either route passes through.
+   * Real visual justification for a route choice: the surrounding region, not only the
+   * sampled stretch, shows the same real pattern.
+   */
+  county_risk: Record<string, CountyRiskEntry>;
 }
 
 export interface ScoreResponse {

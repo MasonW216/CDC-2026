@@ -203,8 +203,8 @@ export default function PlannerPage() {
           based on available weather data. It is a comparative decision index, not a guarantee of
           safety, and it never overrides an official National Weather Service warning. Type a real,
           future trip below to score it live; the saved-trip button replays a cached, offline
-          example instead of calling live weather. For a real historical storm, see the Helene case
-          study.
+          example instead of calling live weather. For a real historical storm, see the Hurricane
+          Helene disaster demo.
         </p>
         <TripForm onSubmit={handleFormSubmit} />
         <button

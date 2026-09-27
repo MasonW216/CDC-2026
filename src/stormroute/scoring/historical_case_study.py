@@ -11,12 +11,15 @@ forecast and must not be fed into the live trip flow." `stormroute.scoring.trip.
 never imports this module and never touches these files; the reverse dependency (this module
 uses `trip.build_response`) is the only connection, and it flows one way.
 
-Inputs, both retrieved 2026-09-26, cached in the repo (no network here):
-  - `artifacts/demo/prototype_inputs_helene.json`: hourly rainfall per county (Open-Meteo
-    `era5_seamless` archive) and archived county-coded NWS flood products (IEM VTEC archive),
-    2024-09-23 through 2024-09-28.
-  - `artifacts/demo/prototype_routes_provisional.json`: Asheville-to-Charlotte county stretches
-    for two real OSRM routes, sampled 2026-09-26.
+Inputs, cached in the repo (no network here):
+  - `artifacts/demo/prototype_inputs_helene.json`: hourly rainfall for all 100 NC counties
+    (Open-Meteo `era5_seamless` archive) and archived county-coded NWS flood products (IEM
+    VTEC archive), 2024-09-23 through 2024-09-28. Retrieved 2026-09-26.
+  - `artifacts/demo/prototype_routes_provisional.json`: Charlotte-to-Wilkesboro county
+    stretches for two real OSRM routes, sampled 2026-09-27. Chosen over the original
+    Asheville-Charlotte pair because that pair's shared origin county (Buncombe) was itself
+    catastrophically hit, pinning both routes to Severe regardless of path; this pair's two
+    real alternates genuinely differ (see the fixture's own `"provenance"` field).
 """
 
 from __future__ import annotations
@@ -27,6 +30,8 @@ from pathlib import Path
 from typing import Any
 
 from stormroute.config import REPO_ROOT
+from stormroute.data.geography import load_sample_counties
+from stormroute.scoring.concern import Stretch, score_segment
 from stormroute.scoring.live_forecast import ALERT_FLOORS, Alert, AlertData, ForecastData
 from stormroute.scoring.trip import build_response, geometry_from_fixture, routes_from_fixture
 
@@ -120,8 +125,36 @@ def historical_alerts() -> AlertData:
     )
 
 
+def statewide_county_risk(
+    departure: datetime, forecast: ForecastData, alerts: AlertData
+) -> dict[str, dict[str, Any]]:
+    """Every NC county's own indicator at the case study's departure moment.
+
+    Not just the two sampled routes' counties -- real visual justification for why one
+    route was lower-concern than the other: the surrounding area, not only the route
+    corridor, shows the same real pattern. Same `score_segment` rule as a route stretch,
+    applied to a zero-length stretch centered on each county's own representative point at
+    the exact departure instant; this never feeds into a route's own index (it is not a
+    stretch of any route), it is purely descriptive statewide context for a map.
+    """
+    counties = load_sample_counties()
+    risk: dict[str, dict[str, Any]] = {}
+    for row in counties.itertuples():
+        fips = str(row.county_fips)
+        name = str(row.name)
+        segment = score_segment(
+            Stretch(fips, name, departure, 0.0, 0.0), forecast, alerts, departure
+        )
+        risk[fips] = {
+            "county_name": name,
+            "index": segment["index"],
+            "band": segment["band"],
+        }
+    return risk
+
+
 def helene_case_study() -> dict[str, Any]:
-    """The full `prototype-score/1` response for the Helene Asheville-Charlotte replay.
+    """The full `prototype-score/1` response for the Helene case-study replay.
 
     Deterministic: every call with the same files on disk returns byte-identical output,
     the same guarantee the live tests hold `score_route`/`compare` to.
@@ -150,5 +183,6 @@ def helene_case_study() -> dict[str, Any]:
         ),
         "origin": fixture["origin"],
         "destination": fixture["destination"],
+        "county_risk": statewide_county_risk(departure, forecast, alerts),
     }
     return response

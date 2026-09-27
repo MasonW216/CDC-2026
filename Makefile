@@ -66,7 +66,13 @@ evaluate: ## Evaluate and export final metrics and figures (Milestone 4)
 	$(call not_yet,make evaluate,Milestone 4)
 
 api: ## Start FastAPI on port 8000 (Milestone 6)
-	$(UV) run uvicorn stormroute_api.main:app --app-dir backend/src \
+	# PYTHONPATH=src is required here, not optional: uv's own editable-install
+	# marker for the `stormroute` package (.venv/lib/*/site-packages/_editable_impl_*.pth)
+	# gets the macOS filesystem-hidden flag set on it by `uv run` itself on every
+	# invocation, and Python 3.12's site.py silently skips filesystem-hidden .pth
+	# files -- so `stormroute` silently drops off the import path unless PYTHONPATH
+	# says so directly. Confirmed 2026-09-27; see git history for the debugging trail.
+	PYTHONPATH=src $(UV) run uvicorn stormroute_api.main:app --app-dir backend/src \
 		--reload --reload-dir backend/src --host 0.0.0.0 --port 8000
 
 web: ## Start Vite on port 5173 (Milestone 7)

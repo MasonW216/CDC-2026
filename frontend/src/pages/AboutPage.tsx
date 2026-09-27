@@ -37,7 +37,7 @@ export default function AboutPage() {
         It is a decision-support prototype, not an authority. Official National Weather Service
         alerts are always shown above the model&rsquo;s own read, and can only raise a route&rsquo;s
         concern &mdash; never lower it. See <a href="/methodology">methodology</a> for exactly how
-        the index is built, or the <a href="/case-studies/helene">Hurricane Helene case study</a>{' '}
+        the index is built, or the <a href="/case-studies/helene">Hurricane Helene disaster demo</a>{' '}
         for what it reports on a real, severe storm.
       </p>
 
@@ -81,7 +81,7 @@ export default function AboutPage() {
       <p className="note">
         NOAA Storm Events for historical calibration, Open-Meteo for forecast rainfall, National
         Weather Service active alerts, US Census TIGER/Line county boundaries, and OpenStreetMap
-        road geometry via OSRM. The <a href="/case-studies/helene">Helene case study</a> instead
+        road geometry via OSRM. The <a href="/case-studies/helene">Helene disaster demo</a> instead
         uses ERA5 reanalysis rainfall and archived NWS alerts, clearly separated from any live
         result.
       </p>

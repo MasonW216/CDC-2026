@@ -1,5 +1,5 @@
 /**
- * Hurricane Helene case study: a standalone historical demo, not a trip result.
+ * Hurricane Helene disaster demo: a standalone historical replay, not a trip result.
  *
  * Fetches GET /api/v1/demo/helene on mount -- never posts anything, never reachable from
  * the planner. Renders the same `prototype-score/1` atoms as the live results page
@@ -7,28 +7,29 @@
  * identical whether it came from a live trip or from here: one visual language, one
  * prototype-score/1 contract, two different `mode` values.
  *
- * Layout is a headline-first, click-to-reveal story instead of every route's full
- * timeline sitting open at once (the earlier version stacked N full RouteCards,
- * each with an 8-row table, always expanded -- a lot to read before finding the one
- * fact that mattered). Here: one headline number, a route switcher, a spotlight on
- * the segment that actually drove the index, and a clickable rail of every county
- * stretch that reveals one at a time. The full table is still there for a reader who
- * wants every row, tucked behind <details> rather than forced onto everyone.
+ * Compact by design: one hero row (gauge, headline, route toggle) instead of the
+ * headline, then a separate route-tab row, then a separate spotlight card the earlier
+ * version stacked; a selected segment's own detail panel already covers what a
+ * "spotlight" card would have repeated. The full per-county table, limits, and
+ * provenance are still all there for a reader who wants them, tucked behind <details>
+ * rather than forced onto everyone.
  *
- * Shows a clear "historical, not live" banner above everything else on the page, so it
+ * Shows a clear "historical, not live" note above everything else on the page, so it
  * can never be mistaken for a scored trip -- see docs/prototype_score_spec.md's
  * "Historical case study" section for why this must stay a separate page.
  *
- * The map is county-based, not a colored route line: it loads NC county
- * boundaries (public/nc_counties.geojson, Census TIGER -- see data_card.md)
- * once, then colors each county the route passes through by its own concern
- * level. Route geometry is a second, independent fetch (GET
- * /api/v1/routing/route against the case study's real origin/destination) --
- * the score response itself carries no geometry, only county-level data. That
- * geometry renders today's live roads, not a historical snapshot, so this
- * page never claims to show which roads were actually closed during Helene --
- * only which counties the route passes through and each one's modeled
- * concern. If either fetch fails, the rest of the page still works.
+ * The map is county-based, not a colored route line, and now shows two real, distinct
+ * layers: every NC county's own indicator at the departure instant (`county_risk`,
+ * faint, statewide context), and the active route's own segments drawn boldly on top
+ * (their own arrival-time scores). That statewide layer is the actual visual
+ * justification for the route choice -- the whole surrounding region, not just the
+ * sampled stretch, shows the same real pattern. Route geometry is a second, independent
+ * fetch (GET /api/v1/routing/route against the case study's real origin/destination) --
+ * the score response itself carries no geometry, only county-level data. That geometry
+ * renders today's live roads, not a historical snapshot, so this page never claims to
+ * show which roads were actually closed during Helene -- only which counties the route
+ * passes through and each one's modeled concern. If either fetch fails, the rest of the
+ * page still works.
  */
 import type { FeatureCollection } from 'geojson';
 import { useEffect, useMemo, useState } from 'react';
@@ -145,24 +146,18 @@ export default function HeleneCaseStudyPage() {
   return (
     <section aria-labelledby="helene-heading" className="content-page">
       <h2 id="helene-heading" className="page-title">
-        Case study: Hurricane Helene
+        Disaster demo: Hurricane Helene
       </h2>
-
-      <div role="note" className="card">
-        <p style={{ margin: 0, fontWeight: 600 }}>
-          This is a historical replay, not a live trip result.
-        </p>
-        <p className="note" style={{ marginBottom: 0 }}>
-          What the prototype hazard indicator would have reported during Hurricane Helene
-          (23&ndash;28 September 2024), scored by the same rule as a live trip -- but fed rainfall
-          reconstructed after the fact, which a traveler would not have had at departure. Plan a
-          real trip on the <a href="/">planner page</a> instead.
-        </p>
-      </div>
+      <p role="note" className="note" style={{ marginTop: 0 }}>
+        Historical replay, not a live trip result. What the prototype hazard indicator would have
+        reported during Hurricane Helene (23&ndash;28 September 2024), scored by the same rule as a
+        live trip but fed rainfall reconstructed after the fact -- a traveler would not have had it
+        at departure. Plan a real trip on the <a href="/">planner page</a> instead.
+      </p>
 
       {state.kind === 'loading' && (
         <p role="status" className="note">
-          Loading the case study&hellip;
+          Loading the disaster demo&hellip;
         </p>
       )}
 
@@ -174,7 +169,7 @@ export default function HeleneCaseStudyPage() {
 
       {state.kind === 'ready' && activeRoute && (
         <>
-          <p className="note">
+          <p className="note" style={{ marginBottom: 0 }}>
             {state.score.case_study?.origin.label} to {state.score.case_study?.destination.label},
             departing {formatInstant(state.score.departure_utc)}. {state.score.case_study?.note}
           </p>
@@ -192,34 +187,29 @@ export default function HeleneCaseStudyPage() {
                   {state.score.comparison.severe_advice}
                 </p>
               )}
+              <div className="case-tabs" role="tablist" aria-label="Choose a route to inspect">
+                {state.score.routes.map((route, index) => (
+                  <button
+                    key={route.route_id}
+                    type="button"
+                    role="tab"
+                    aria-selected={route.route_id === activeRoute.route_id}
+                    onClick={() => selectRoute(route)}
+                  >
+                    {`Route ${index + 1}: `}
+                    <LevelBadge band={route.band} index={route.index} />
+                  </button>
+                ))}
+              </div>
+              <p className="note" style={{ margin: 0 }}>
+                {activeRoute.distance_km} km &middot; {Math.round(activeRoute.duration_minutes)} min
+                {activeRoute.status !== 'assessed' ? ` · ${activeRoute.status}` : ''}
+                {activeRoute.is_lower_bound
+                  ? ' · lower bound: some inputs are missing, true concern could be higher'
+                  : ''}
+              </p>
             </div>
           </div>
-
-          <div className="case-tabs" role="tablist" aria-label="Choose a route to inspect">
-            {state.score.routes.map((route, index) => (
-              <button
-                key={route.route_id}
-                type="button"
-                role="tab"
-                aria-selected={route.route_id === activeRoute.route_id}
-                onClick={() => selectRoute(route)}
-              >
-                {`Route ${index + 1}: `}
-                <LevelBadge band={route.band} index={route.index} />
-              </button>
-            ))}
-          </div>
-
-          <p className="note">
-            {activeRoute.distance_km} km &middot; {Math.round(activeRoute.duration_minutes)} min
-            {activeRoute.status !== 'assessed' ? ` · ${activeRoute.status}` : ''}
-          </p>
-          {activeRoute.is_lower_bound && (
-            <p role="note" className="note">
-              This index is a lower bound: some inputs for this route are missing, so the true
-              concern could be higher.
-            </p>
-          )}
 
           {counties && state.score.case_study && (
             <div className="card-map-wrap">
@@ -232,27 +222,17 @@ export default function HeleneCaseStudyPage() {
                   route={activeRoute}
                   activeIndex={activeSegment}
                   onSelect={setActiveSegment}
+                  countyRisk={state.score.case_study.county_risk}
                 />
               </div>
               <p className="note" style={{ marginTop: 'var(--space-2)' }}>
-                Counties this route passes through, colored by concern:{' '}
+                Bold: counties this route passes through. Faint: every other county&rsquo;s own real
+                indicator at departure time -- the surrounding pattern behind the route choice, not
+                just the sampled stretch.{' '}
                 <span className="level-badge level-badge--1">Elevated</span>{' '}
                 <span className="level-badge level-badge--2">High</span>{' '}
-                <span className="level-badge level-badge--3">Severe</span>. Hover a county for
-                details, or click one to inspect it below.
-              </p>
-            </div>
-          )}
-
-          {activeRoute.highest_concern_segment && (
-            <div className="card spotlight-card">
-              <h3 className="section-title" style={{ marginTop: 0 }}>
-                What drove this route&rsquo;s score
-              </h3>
-              <p style={{ marginTop: 0 }}>
-                <strong>{activeRoute.highest_concern_segment.county_name}</strong>, arriving{' '}
-                {formatInstant(activeRoute.highest_concern_segment.arrival_utc)}:{' '}
-                {activeRoute.highest_concern_segment.reason}
+                <span className="level-badge level-badge--3">Severe</span>. Hover any county for
+                detail, or click a route county to inspect it below.
               </p>
             </div>
           )}

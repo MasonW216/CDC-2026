@@ -25,23 +25,34 @@ def _input_copy(tmp_path: Path, name: str) -> tuple[dict, Path]:
     return source, tmp_path / name
 
 
+def _segments_for_county(result: dict, county_fips: str) -> list[dict]:
+    """Every segment for `county_fips`, across whichever route(s) of the fixture cross it."""
+    return [
+        seg
+        for trip in result["routes"].values()
+        for seg in trip["segments"]
+        if seg["county_fips"] == county_fips
+    ]
+
+
 def test_real_county_with_missing_rain_is_not_assessed(tmp_path: Path) -> None:
     inputs, path = _input_copy(tmp_path, "missing.json")
     del inputs["precipitation"]["mm"]["37109"]  # Lincoln: no active alert
     path.write_text(json.dumps(inputs), encoding="utf-8")
 
-    trip = run(ROUTES, path)["routes"]["route_1"]
-    lincoln = next(s for s in trip["segments"] if s["county_fips"] == "37109")
+    result = run(ROUTES, path)
+    lincoln = _segments_for_county(result, "37109")[0]
     assert lincoln["label"] == "Not assessed"
     assert lincoln["level"] is None
     assert lincoln["data_status"] == "missing_weather"
+    trip = next(t for t in result["routes"].values() if "37109" in t["unassessed_segments"])
     assert "37109" in trip["unassessed_segments"]
 
 
 def test_warning_added_to_real_lower_rain_stretch_never_lowers_level(tmp_path: Path) -> None:
-    original = run(ROUTES, INPUTS)["routes"]["route_1"]
+    original = run(ROUTES, INPUTS)
     inputs, path = _input_copy(tmp_path, "warning.json")
-    # Synthetic perturbation: the two Catawba stretches otherwise use real data.
+    # Synthetic perturbation: the real Catawba stretch(es) otherwise use real data.
     inputs["alerts"]["rows"].append(
         {
             "wfo": "TST",
@@ -50,19 +61,19 @@ def test_warning_added_to_real_lower_rain_stretch_never_lowers_level(tmp_path: P
             "eventid": "999",
             "status": "NEW",
             "ugc": "NCC035",
-            "utc_issue": "2024-09-27 15:00",
-            "utc_prodissue": "2024-09-27 15:00",
-            "utc_init_expire": "202409272300",
-            "utc_expire": "2024-09-27 23:00",
+            "utc_issue": "2024-09-26 08:00",
+            "utc_prodissue": "2024-09-26 08:00",
+            "utc_init_expire": "202409261800",
+            "utc_expire": "2024-09-26 18:00",
         }
     )
     path.write_text(json.dumps(inputs), encoding="utf-8")
-    changed = run(ROUTES, path)["routes"]["route_1"]
-    before = [s["level"] for s in original["segments"] if s["county_fips"] == "37035"]
-    after = [s["level"] for s in changed["segments"] if s["county_fips"] == "37035"]
-    assert before == [2, 2]
-    assert after == [3, 3]
+    changed = run(ROUTES, path)
+    before = [s["level"] for s in _segments_for_county(original, "37035")]
+    after = [s["level"] for s in _segments_for_county(changed, "37035")]
+    assert before and after and len(before) == len(after)
     assert all(a >= b for a, b in zip(after, before, strict=True))
+    assert any(a > b for a, b in zip(after, before, strict=True))
 
 
 def test_script_replay_is_byte_identical_with_network_blocked(tmp_path: Path, monkeypatch) -> None:
