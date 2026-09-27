@@ -136,8 +136,9 @@ passed. The React build and full browser workflow were not run on this machine.
   repository. The React results screen exists on Jeffrey's branch but had not
   reached `Mason` at this check. Its comparison code still assumes non-null
   route IDs and `extra_minutes`; after the corrected tie result lands, it would
-  show “null is 0 minutes shorter than null.” This is a blocking integration
-  fix. The screen also calls rainfall-only `complete` status “Complete data,”
+  show “null is 0 minutes shorter than null.” [PR #25](https://github.com/MasonW216/CDC-2026/pull/25)
+  proposes the integration fix. The screen also calls rainfall-only `complete`
+  status “Complete data,”
   and says “based on available weather data” without saying the rain is
   retrospective. Label those “Rainfall totals available” and “cached historical
   rainfall,” qualify the alert list as retained county-coded products, and use
