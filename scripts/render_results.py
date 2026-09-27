@@ -5,7 +5,7 @@ Reads           : artifacts/demo/prototype_result.json
 Writes          : artifacts/demo/results.html
 
 Insurance for the demo: open the file in any browser. It shows the same contract the
-React screen should: route as a timeline of county stretches, arrival times, the
+React screen should: route as an ordered sequence of county stretches, arrival times, the
 indicator with its source and status, the highest-concern segment, official alerts
 above the advisory, and the replay caveat. Levels are conveyed by text and a pattern
 as well as color.
@@ -78,18 +78,18 @@ def _route(rid: str, route: dict[str, Any]) -> str:
         f"{s['window_start_utc'][11:16]} UTC</span></td>"
         f"<td>{_level(s['label'], s['level'])}</td><td>{escape(s['reason'])}"
         f'<br><span class="mute">Source: {escape(", ".join(s["sources"]) or "none")}. '
-        f"Status: {escape(s['data_status'])}.</span></td></tr>"
+        f"Rainfall status: {escape(s['data_status'])}.</span></td></tr>"
         for s in segments
     )
     alerts = sorted({a for s in segments for a in s["alerts_used"]})
     alert_html = (
-        '<div class="card alerts"><div class="banner">Official NWS flood products in effect '
-        "on this route at arrival</div><ul>"
+        '<div class="card alerts"><div class="banner">Official NWS flood products '
+        "(county-coded in this replay) active at a displayed stretch's arrival</div><ul>"
         + "".join(f"<li>{escape(a)}</li>" for a in alerts)
         + "</ul></div>"
         if alerts
-        else '<div class="card">No official flood products in effect on this route in the '
-        "cached data.</div>"
+        else '<div class="card">No county-coded flood products active for these stretches '
+        "in the cached data.</div>"
     )
     return f"""<section id="{escape(rid)}"><h2>{escape(rid.replace("_", " ").title())}: {route["duration_minutes"]:.0f} min, {route["distance_km"]:.0f} km</h2>
 <div class="card"><p>{escape(route["indicator_name"])}: {_level(route["trip_label"], route["trip_level"])}</p>
@@ -98,7 +98,7 @@ def _route(rid: str, route: dict[str, Any]) -> str:
 <div class="card"><strong>Highest-concern segment:</strong> {escape(worst["county_name"]) if worst else "none"}
 {f"(arrive {_local(worst['arrival_utc'])}): " + escape(worst["reason"]) if worst else ""}</div>
 <div class="card"><strong>Advisory.</strong> {escape(route["advisory"])}</div>
-<details><summary>Every stretch, with source and data status</summary><table><thead><tr>
+<details><summary>Every stretch, with source and rainfall coverage</summary><table><thead><tr>
 <th>County</th><th>Arrival</th><th>Level</th><th>Reason</th></tr></thead><tbody>{rows}</tbody></table></details>
 <p class="mute">{escape(route["replay_caveat"])}</p></section>"""
 
@@ -133,8 +133,8 @@ closures take priority.</div>
 <h2>Where the inputs come from</h2>
 <div class="card mute">Rainfall: {escape(prov["sources"]["precipitation"])}<br>
 Alerts: {escape(prov["sources"]["alerts"])}<br>Retrieved {escape(prov["retrieved_utc"])}.
-{prov["zone_coded_alert_rows_excluded"]} zone-coded alert rows are not mapped to counties, so
-some watches are missing.<br>Route: {escape(result["route_fixture_provenance"])}</div>
+{prov["zone_coded_alert_rows_excluded"]} zone-coded alert rows are not mapped to counties;
+county alert coverage may be incomplete.<br>Route: {escape(result["route_fixture_provenance"])}</div>
 </main></body></html>
 """
 

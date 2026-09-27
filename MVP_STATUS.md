@@ -7,9 +7,9 @@ work). Verified by running it, not by reading it.
 
 | Piece | State |
 |---|---|
-| Routing (OSRM client, route sampling, county join) | Runs. Two real Asheville to Charlotte routes come back and split into county stretches with arrival times. |
+| Routing (OSRM client, route sampling, county join) | Runs. The replay uses two provisional OSRM-derived Asheville-to-Charlotte county-stretch sequences; their original route geometry is not retained in the fixture. |
 | County boundaries | Sample fixture (simplified, about 1 km coarse) runs offline. |
-| EDA notebook and NOAA event ingestion | Runs, 227 tests pass. Not part of the demo path. |
+| EDA notebook and NOAA event ingestion | Runs. The EDA gate remains open; current test evidence is in `reports/mvp_verification.md`. Not part of the demo path. |
 | Prototype hazard indicator (new) | Runs offline. `scripts/run_prototype.py` writes `artifacts/demo/prototype_result.json`, identical on repeat runs. |
 | Cached Helene inputs (new) | `artifacts/demo/prototype_inputs_helene.json`: rainfall for all 100 counties and county-coded NWS flood products. |
 | Backend score endpoint | **Stub.** `routes/score.py` is 12 lines, no scoring. |
@@ -42,9 +42,11 @@ recommendation.
 ## Known limits (say them out loud)
 
 - Replay of a past storm. Rainfall is ERA5 reanalysis, which a traveler would not have had at
-  departure. NWS alerts use their original expiry and only those issued before departure.
+  departure. Stretches entering the 18:00 UTC window use rain through two hours after the
+  16:00 UTC departure. NWS alerts use their original expiry and only those issued before departure.
 - 92 zone-coded alert rows are not mapped to counties, so some watches are missing.
 - One rainfall point per county.
+- No road-closure or road-passability input.
 - Both routes come out "Severe concern" for a 12:00 departure, so the comparison offers no
   better alternative. That is the honest result, not a bug.
 - The route fixture (`prototype_routes_provisional.json`) is mine. Jeffrey's frozen fixture

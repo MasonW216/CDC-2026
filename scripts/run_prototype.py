@@ -6,9 +6,9 @@ Reads           : artifacts/demo/prototype_routes_provisional.json (or --routes)
 Writes          : artifacts/demo/prototype_result.json
 
 No network. The same inputs always produce byte-identical output. The trip level is
-the highest segment level; the route with the lower trip level, or on a tie the
-shorter one, is offered as the alternative, and only if both went through the same
-rule and the same inputs.
+the highest segment level. A route is offered as a lower-concern alternative only
+when its trip level is lower; a shorter route with the same level is not a hazard
+improvement.
 """
 
 from __future__ import annotations
@@ -55,15 +55,19 @@ def run(routes_path: Path, inputs_path: Path) -> dict[str, Any]:
     best, other = ranked[0], ranked[-1]
     comparison = None
     if len(ranked) > 1 and results[best]["trip_level"] is not None:
+        same_level = results[best]["trip_level"] == results[other]["trip_level"]
         comparison = {
-            "lower_indicated_concern_route": best,
-            "other_route": other,
+            "lower_indicated_concern_route": None if same_level else best,
+            "other_route": None if same_level else other,
             "levels": {best: results[best]["trip_level"], other: results[other]["trip_level"]},
-            "extra_minutes": round(
-                results[best]["duration_minutes"] - results[other]["duration_minutes"], 1
-            ),
+            "extra_minutes": None
+            if same_level
+            else round(results[best]["duration_minutes"] - results[other]["duration_minutes"], 1),
             "note": (
-                "Both routes were scored by the same rule on the same cached inputs. "
+                "Both routes have the same indicator level; no lower-concern alternative "
+                "was found. This indicator does not establish that either route is safe."
+                if same_level
+                else "Both routes were scored by the same rule on the same cached inputs. "
                 "This compares indicator levels; it does not say either route is safe."
             ),
         }
