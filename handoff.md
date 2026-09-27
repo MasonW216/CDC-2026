@@ -13,7 +13,7 @@
 7. The header search bar is gone entirely (`components/HeaderSearchBar.tsx` and `contexts/HeaderSearchContext.tsx` were deleted). It duplicated the planner's own Origin field and did nothing on any other page — removed rather than left half-useful.
 8. Content pages (Helene, Methodology, About, Prototype results) now have real side padding via a shared `.content-page` class — `.pivot-main` itself carries no padding, so text was running edge to edge before this.
 
-Latest commit: `6537ce0`, on `Jeffrey` (not yet pushed this session — push before opening/refreshing draft PR #17).
+Latest commit: `bb96db0`, pushed to `origin/Jeffrey`. Draft PR #17 should pick it up and run CI.
 
 ## How to run it
 
@@ -22,7 +22,7 @@ make api                # backend on :8000
 cd frontend && npm run dev   # frontend on :5173, open http://localhost:5173
 ```
 
-`make lint`, backend `uv run pytest -q` (not re-run this session, only frontend touched), and frontend `npm run test -- --run` / `npm run build` all pass clean on this branch as of `6537ce0`.
+`make lint`, backend `uv run pytest -q` (not re-run this session, only frontend touched), and frontend `npm run test -- --run` / `npm run build` all pass clean on this branch as of `bb96db0`.
 
 ## What NOT to touch without flagging it to the team first
 
