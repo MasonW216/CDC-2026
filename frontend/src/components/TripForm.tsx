@@ -13,9 +13,13 @@
  * Helene demo replay bypasses this component entirely -- see PlannerPage --
  * so its real 2024 departure is never run through this check.)
  *
+ * `initialOrigin` is re-applied whenever it changes, not just on mount, so a
+ * caller (the header search bar, via context) can set the origin after the
+ * form is already showing.
+ *
  * Does not navigate or call the API itself; the caller supplies `onSubmit`.
  */
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 import type { Location, TripRequest } from '@/types/trip';
 import { toEasternIso } from '@/utils/departureTime';
@@ -43,6 +47,13 @@ export default function TripForm({
   const [destination, setDestination] = useState<Location | null>(initialDestination);
   const [departureLocal, setDepartureLocal] = useState(initialDepartureLocal);
   const [errors, setErrors] = useState<Errors>({});
+
+  useEffect(() => {
+    if (initialOrigin) setOrigin(initialOrigin);
+    // Only re-run when the caller hands us a new place, e.g. the header
+    // search bar -- not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialOrigin]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -73,24 +84,32 @@ export default function TripForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <LocationSearch
-        id="origin"
-        label="Origin"
-        value={origin}
-        onChange={setOrigin}
-        error={errors.origin}
-        allowCurrentLocation
-      />
-      <LocationSearch
-        id="destination"
-        label="Destination"
-        value={destination}
-        onChange={setDestination}
-        error={errors.destination}
-      />
+    <form onSubmit={handleSubmit} noValidate className="trip-form">
+      <div className="route-inputs">
+        <div className="route-inputs__row">
+          <span className="route-inputs__dot route-inputs__dot--origin" aria-hidden="true" />
+          <LocationSearch
+            id="origin"
+            label="Origin"
+            value={origin}
+            onChange={setOrigin}
+            error={errors.origin}
+            allowCurrentLocation
+          />
+        </div>
+        <div className="route-inputs__row">
+          <span className="route-inputs__dot route-inputs__dot--destination" aria-hidden="true" />
+          <LocationSearch
+            id="destination"
+            label="Destination"
+            value={destination}
+            onChange={setDestination}
+            error={errors.destination}
+          />
+        </div>
+      </div>
 
-      <div className="field">
+      <div className="field departure-field">
         <label htmlFor={departureId}>Departure date and time (Eastern)</label>
         <input
           id={departureId}
@@ -107,7 +126,7 @@ export default function TripForm({
         ) : null}
       </div>
 
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
         Analyze trip
       </button>
     </form>

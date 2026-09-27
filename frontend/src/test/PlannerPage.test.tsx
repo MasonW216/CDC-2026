@@ -4,43 +4,60 @@
  *
  * The demo button and the form are two independent paths to scoreTrip, with
  * no shared state -- see PlannerPage's docstring for why that's deliberate.
- * These tests check that independence directly: the demo button never
- * touches the form, and the form always submits mode: 'live' regardless of
- * whether the demo was ever clicked.
+ * Results render inline (no navigation): this page owns the sidebar and the
+ * map together.
  */
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi } from 'vitest';
 
 import savedTripResponse from '../../../artifacts/demo/saved_trip_response.json';
+import { HeaderSearchProvider } from '../contexts/HeaderSearchContext';
 import PlannerPage from '../pages/PlannerPage';
 import * as api from '../services/api';
 import type { ScoreResponse } from '../types/score';
 
 vi.mock('../services/api', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../services/api')>();
-  return { ...actual, scoreTrip: vi.fn() };
+  return { ...actual, scoreTrip: vi.fn(), fetchRoute: vi.fn() };
 });
+
+// Leaflet needs real layout, which jsdom doesn't do; the map itself is
+// covered by its own rendering, not page-level behavior.
+vi.mock('../components/LiveRouteMap', () => ({
+  default: () => <div data-testid="map" />,
+}));
 
 const score = savedTripResponse as ScoreResponse;
 const scoreTrip = vi.mocked(api.scoreTrip);
+const fetchRoute = vi.mocked(api.fetchRoute);
+
+const ROUTE_RESPONSE = {
+  routes: score.routes.map((r) => ({
+    route_id: r.route_id,
+    coordinates: [
+      [-82.5515, 35.5951],
+      [-80.8431, 35.2271],
+    ] as [number, number][],
+    duration_minutes: r.duration_minutes,
+    distance_km: r.distance_km,
+  })),
+};
 
 function renderPlanner() {
   return render(
-    <MemoryRouter initialEntries={['/']}>
-      <Routes>
-        <Route path="/" element={<PlannerPage />} />
-        <Route path="/results" element={<p>results placeholder</p>} />
-      </Routes>
-    </MemoryRouter>,
+    <HeaderSearchProvider>
+      <PlannerPage />
+    </HeaderSearchProvider>,
   );
 }
 
 describe('PlannerPage', () => {
   beforeEach(() => {
     scoreTrip.mockReset();
+    fetchRoute.mockReset();
     scoreTrip.mockResolvedValue(score);
+    fetchRoute.mockResolvedValue(ROUTE_RESPONSE);
   });
 
   it('shows the safety disclaimer before any submission', () => {
@@ -62,39 +79,45 @@ describe('PlannerPage', () => {
     const user = userEvent.setup();
     renderPlanner();
     await user.click(screen.getByRole('button', { name: /load the hurricane helene replay/i }));
-    expect(await screen.findByText('results placeholder')).toBeTruthy();
-    // The form was never filled -- the demo path never reads or writes it.
-    // scoreTrip's own call args (below) are the real proof it used the
-    // hardcoded scenario rather than whatever the form happened to hold.
+    expect(await screen.findByTestId('map')).toBeTruthy();
     expect(scoreTrip).toHaveBeenCalledTimes(1);
     const request = scoreTrip.mock.calls[0]![0];
     expect(request.mode).toBe('cached_replay');
     expect(request.origin.label).toBe('Asheville, NC');
     expect(request.destination.label).toBe('Charlotte, NC');
+    // The form was never filled -- the demo path never reads or writes it.
+    expect(screen.getByLabelText('Origin')).toHaveValue('');
+  });
+
+  it('shows the prototype hazard index and the real reasons after a successful score', async () => {
+    const user = userEvent.setup();
+    renderPlanner();
+    await user.click(screen.getByRole('button', { name: /load the hurricane helene replay/i }));
+    expect(await screen.findByText(/prototype hazard index/i)).toBeTruthy();
+    const primary = score.routes[0]!;
+    for (const reason of primary.reasons) {
+      expect(screen.getByText(reason)).toBeTruthy();
+    }
   });
 
   it('a manually entered trip always submits mode: live, demo or not', async () => {
     const user = userEvent.setup();
     renderPlanner();
-    // No demo loaded: fill the form directly via the mocked LocationSearch-free
-    // path is not available here, so exercise the demo button off, then edit
-    // the departure only -- mode selection no longer depends on any shared
-    // state, so this exercises TripForm's own hardcoded 'live' regardless.
-    await user.type(screen.getByLabelText('Origin'), 'x');
     // LocationSearch requires a resolved selection; without one the form
     // reports a validation error instead of submitting, which is exactly the
     // behavior under test here: mode is decided before any network call.
+    await user.type(screen.getByLabelText('Origin'), 'x');
     await user.click(screen.getByRole('button', { name: /analyze trip/i }));
     expect(scoreTrip).not.toHaveBeenCalled();
   });
 
-  it('shows an inline error instead of navigating when the demo replay fails', async () => {
+  it('shows an inline error instead of a map when the demo replay fails', async () => {
     scoreTrip.mockRejectedValueOnce(new api.ApiError('No saved demo trip is cached yet.', 503));
     const user = userEvent.setup();
     renderPlanner();
     await user.click(screen.getByRole('button', { name: /load the hurricane helene replay/i }));
     expect(await screen.findByRole('alert')).toHaveTextContent(/no saved demo trip/i);
-    expect(screen.queryByText('results placeholder')).toBeNull();
+    expect(screen.queryByTestId('map')).toBeNull();
   });
 
   it('disables the demo button while a request is in flight', async () => {
@@ -106,7 +129,7 @@ describe('PlannerPage', () => {
     await user.click(demoButton);
     expect(demoButton).toBeDisabled();
     resolve(score);
-    expect(await screen.findByText('results placeholder')).toBeTruthy();
+    expect(await screen.findByTestId('map')).toBeTruthy();
   });
 
   it('the demo button is reachable and activatable from the keyboard', async () => {
@@ -115,6 +138,6 @@ describe('PlannerPage', () => {
     const demoButton = screen.getByRole('button', { name: /load the hurricane helene replay/i });
     demoButton.focus();
     await user.keyboard('{Enter}');
-    expect(await screen.findByText('results placeholder')).toBeTruthy();
+    expect(await screen.findByTestId('map')).toBeTruthy();
   });
 });
