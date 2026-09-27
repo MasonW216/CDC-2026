@@ -1,0 +1,178 @@
+{
+  "data_mode": "full",
+  "git_commit": "c7876bc",
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "method": "Published start text + 5h; integer-hour bins; unique county/window pairs",
+  "scope": "Retained IDs only; not independent validation of source reports or exclusions",
+  "splits": [
+    {
+      "split": "train",
+      "windows": 1022800,
+      "positives": 1096,
+      "negatives": 1021704,
+      "prevalence": 0.0010715682,
+      "reported_episodes": 354,
+      "recall_step": 0.0009124088
+    },
+    {
+      "split": "selection",
+      "windows": 146000,
+      "positives": 53,
+      "negatives": 145947,
+      "prevalence": 0.0003630137,
+      "reported_episodes": 28,
+      "recall_step": 0.0188679245
+    },
+    {
+      "split": "calibration",
+      "windows": 146000,
+      "positives": 78,
+      "negatives": 145922,
+      "prevalence": 0.0005342466,
+      "reported_episodes": 49,
+      "recall_step": 0.0128205128
+    },
+    {
+      "split": "test",
+      "windows": 146400,
+      "positives": 272,
+      "negatives": 146128,
+      "prevalence": 0.0018579235,
+      "reported_episodes": 71,
+      "recall_step": 0.0036764706
+    }
+  ],
+  "annual_episodes": [
+    {
+      "year": 2015,
+      "reports": 198,
+      "positive_windows": 141,
+      "episodes": 54,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "100895",
+      "largest_episode_reports": 41,
+      "largest_episode_report_share": 0.2070707071,
+      "largest_episode_positive_windows": 14,
+      "largest_episode_positive_share": 0.0992907801
+    },
+    {
+      "year": 2016,
+      "reports": 245,
+      "positive_windows": 167,
+      "episodes": 42,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "110904",
+      "largest_episode_reports": 42,
+      "largest_episode_report_share": 0.1714285714,
+      "largest_episode_positive_windows": 14,
+      "largest_episode_positive_share": 0.0838323353
+    },
+    {
+      "year": 2017,
+      "reports": 107,
+      "positive_windows": 71,
+      "episodes": 38,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "114845",
+      "largest_episode_reports": 12,
+      "largest_episode_report_share": 0.1121495327,
+      "largest_episode_positive_windows": 6,
+      "largest_episode_positive_share": 0.0845070423
+    },
+    {
+      "year": 2018,
+      "reports": 362,
+      "positive_windows": 295,
+      "episodes": 79,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "131166",
+      "largest_episode_reports": 46,
+      "largest_episode_report_share": 0.1270718232,
+      "largest_episode_positive_windows": 46,
+      "largest_episode_positive_share": 0.1559322034
+    },
+    {
+      "year": 2019,
+      "reports": 114,
+      "positive_windows": 85,
+      "episodes": 35,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "139648",
+      "largest_episode_reports": 18,
+      "largest_episode_report_share": 0.1578947368,
+      "largest_episode_positive_windows": 16,
+      "largest_episode_positive_share": 0.1882352941
+    },
+    {
+      "year": 2020,
+      "reports": 399,
+      "positive_windows": 262,
+      "episodes": 70,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "154105",
+      "largest_episode_reports": 65,
+      "largest_episode_report_share": 0.1629072682,
+      "largest_episode_positive_windows": 30,
+      "largest_episode_positive_share": 0.1145038168
+    },
+    {
+      "year": 2021,
+      "reports": 111,
+      "positive_windows": 75,
+      "episodes": 36,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "162681",
+      "largest_episode_reports": 15,
+      "largest_episode_report_share": 0.1351351351,
+      "largest_episode_positive_windows": 13,
+      "largest_episode_positive_share": 0.1733333333
+    },
+    {
+      "year": 2022,
+      "reports": 89,
+      "positive_windows": 53,
+      "episodes": 28,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "165130",
+      "largest_episode_reports": 9,
+      "largest_episode_report_share": 0.1011235955,
+      "largest_episode_positive_windows": 3,
+      "largest_episode_positive_share": 0.0566037736
+    },
+    {
+      "year": 2023,
+      "reports": 155,
+      "positive_windows": 78,
+      "episodes": 49,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "185107",
+      "largest_episode_reports": 19,
+      "largest_episode_report_share": 0.1225806452,
+      "largest_episode_positive_windows": 8,
+      "largest_episode_positive_share": 0.1025641026
+    },
+    {
+      "year": 2024,
+      "reports": 440,
+      "positive_windows": 272,
+      "episodes": 71,
+      "missing_episode_reports": 0,
+      "largest_episode_id": "196694",
+      "largest_episode_reports": 56,
+      "largest_episode_report_share": 0.1272727273,
+      "largest_episode_positive_windows": 52,
+      "largest_episode_positive_share": 0.1911764706
+    }
+  ]
+}
