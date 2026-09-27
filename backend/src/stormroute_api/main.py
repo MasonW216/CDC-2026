@@ -25,7 +25,7 @@ from fastapi import FastAPI
 
 from stormroute_api import __version__
 from stormroute_api.config import Settings
-from stormroute_api.routes import geocode, health, routing, score
+from stormroute_api.routes import geocode, health, methodology, routing, score
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -36,11 +36,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(geocode.router)
     app.include_router(routing.router)
     app.include_router(score.router)
+    app.include_router(methodology.router)
     return app
 
 
 app = create_app()
 
-# TODO(milestone-6+): mount /api/v1/scenarios, /api/v1/methodology, CORS
-# allowlist, request-ID logging, and static frontend. See docs/build_guide.md.
-# /api/v1/trips/score is mounted above.
+# TODO(milestone-6+): mount /api/v1/scenarios, CORS allowlist, request-ID
+# logging, and static frontend. See docs/build_guide.md.
+# /api/v1/trips/score and /api/v1/methodology are mounted above.
