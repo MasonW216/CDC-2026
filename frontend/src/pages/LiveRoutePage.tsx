@@ -160,7 +160,7 @@ export default function LiveRoutePage() {
   }
 
   return (
-    <section aria-labelledby="live-route-heading">
+    <section aria-labelledby="live-route-heading" className="map-page-section">
       <h2 id="live-route-heading" className="page-title">
         Live route preview
       </h2>
