@@ -18,18 +18,16 @@
  * can never be mistaken for a scored trip -- see docs/prototype_score_spec.md's
  * "Historical case study" section for why this must stay a separate page.
  *
- * The map is county-based, not a colored route line, and now shows two real, distinct
- * layers: every NC county's own indicator at the departure instant (`county_risk`,
- * faint, statewide context), and the active route's own segments drawn boldly on top
- * (their own arrival-time scores). That statewide layer is the actual visual
- * justification for the route choice -- the whole surrounding region, not just the
- * sampled stretch, shows the same real pattern. Route geometry is a second, independent
- * fetch (GET /api/v1/routing/route against the case study's real origin/destination) --
- * the score response itself carries no geometry, only county-level data. That geometry
- * renders today's live roads, not a historical snapshot, so this page never claims to
- * show which roads were actually closed during Helene -- only which counties the route
- * passes through and each one's modeled concern. If either fetch fails, the rest of the
- * page still works.
+ * The map shows the actual real road path (`RouteScore.geometry`, already in the score
+ * response, the same real OSRM call that produced the route's counties -- no second,
+ * separately-fetched path that could mismatch or go stale when the route toggle
+ * switches), plus two real, distinct county layers: every NC county's own indicator at
+ * the departure instant (`county_risk`, faint, statewide context), and the active
+ * route's own segments drawn boldly on top (their own arrival-time scores). That
+ * statewide layer is the actual visual justification for the route choice -- the whole
+ * surrounding region, not just the sampled stretch, shows the same real pattern. If the
+ * county-shapes fetch fails, the rest of the page (including the real route line) still
+ * works.
  */
 import type { FeatureCollection } from 'geojson';
 import { useEffect, useMemo, useState } from 'react';
@@ -37,7 +35,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { AlertList, LevelBadge } from '@/components/ScoreDisplay';
 import HeleneCountyMap from '@/components/HeleneCountyMap';
 import RiskGauge from '@/components/RiskGauge';
-import { ApiError, fetchHeleneCaseStudy, fetchRoute } from '@/services/api';
+import { ApiError, fetchHeleneCaseStudy } from '@/services/api';
 import type { RouteScore, ScoreResponse, SegmentScore } from '@/types/score';
 import { BAND_LEVEL, formatInstant } from '@/utils/scoreDisplay';
 
@@ -83,7 +81,6 @@ export default function HeleneCaseStudyPage() {
   const [activeRouteId, setActiveRouteId] = useState<string | null>(null);
   const [activeSegment, setActiveSegment] = useState<number>(0);
   const [counties, setCounties] = useState<FeatureCollection | null>(null);
-  const [routePath, setRoutePath] = useState<[number, number][] | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -93,10 +90,13 @@ export default function HeleneCaseStudyPage() {
         setState({ kind: 'ready', score });
         setActiveRouteId(score.routes[0]?.route_id ?? null);
 
-        // Two independent, best-effort fetches for the map: county shapes
-        // (a static asset) and today's live road geometry for the case
-        // study's real origin/destination. Neither blocks the rest of the
-        // page, and either can fail without breaking it.
+        // County shapes: a static asset, best-effort so a fetch failure never
+        // breaks the rest of the page. Each route's own real road geometry is
+        // already in the score response itself (RouteScore.geometry, baked
+        // into the fixture from the same real OSRM call that produced the
+        // route's counties) -- no second, separately-fetched, easily
+        // mismatched path needed, and it updates correctly when the route
+        // toggle switches which route is active.
         loadBestEffort(() =>
           fetch('/nc_counties.geojson')
             .then((res) => res.json())
@@ -104,20 +104,6 @@ export default function HeleneCaseStudyPage() {
               if (!cancelled) setCounties(geo);
             }),
         );
-
-        const origin = score.case_study?.origin;
-        const destination = score.case_study?.destination;
-        if (origin && destination) {
-          loadBestEffort(() =>
-            fetchRoute(origin, destination).then((routeResponse) => {
-              if (cancelled) return;
-              const first = routeResponse.routes[0];
-              if (first) {
-                setRoutePath(first.coordinates.map(([lon, lat]) => [lat, lon]));
-              }
-            }),
-          );
-        }
       })
       .catch((error: unknown) => {
         if (cancelled) return;
@@ -135,6 +121,11 @@ export default function HeleneCaseStudyPage() {
     if (state.kind !== 'ready') return null;
     return state.score.routes.find((r) => r.route_id === activeRouteId) ?? state.score.routes[0];
   }, [state, activeRouteId]);
+
+  const routePath = useMemo<[number, number][] | null>(() => {
+    if (!activeRoute?.geometry) return null;
+    return activeRoute.geometry.map((point) => [point[1] ?? 0, point[0] ?? 0]);
+  }, [activeRoute]);
 
   function selectRoute(route: RouteScore) {
     setActiveRouteId(route.route_id);

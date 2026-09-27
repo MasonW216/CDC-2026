@@ -29,7 +29,7 @@
  */
 import { useState } from 'react';
 
-import LiveRouteMap, { type RouteRender } from '@/components/LiveRouteMap';
+import LiveRouteMap, { type DangerMarker, type RouteRender } from '@/components/LiveRouteMap';
 import TripForm from '@/components/TripForm';
 import { ApiError, fetchRoute, scoreTrip } from '@/services/api';
 import type { RouteScore, ScoreResponse } from '@/types/score';
@@ -58,7 +58,7 @@ type Status =
       destination: Location;
       routes: RouteRender[];
       score: ScoreResponse;
-      dangerMarker: { position: [number, number]; label: string } | null;
+      dangerMarker: DangerMarker | null;
     };
 
 function routeColor(route: RouteScore, comparison: ScoreResponse['comparison']): string {
@@ -91,7 +91,7 @@ export default function LiveRoutePage() {
         scoreTrip({ ...request, mode: 'live' }),
       ]);
       const scoreByRouteId = new Map(score.routes.map((route) => [route.route_id, route]));
-      let dangerMarker: { position: [number, number]; label: string } | null = null;
+      let dangerMarker: DangerMarker | null = null;
       const routes: RouteRender[] = routeResponse.routes.map((candidate) => {
         const matched = scoreByRouteId.get(candidate.route_id);
         // OSRM/GeoJSON gives (lon, lat); Leaflet wants (lat, lon).
@@ -120,11 +120,14 @@ export default function LiveRoutePage() {
               const { highlighted } = splitRouteAtSegment(path, highlight.segmentKm, segIndex);
               const mid = highlighted[Math.floor(highlighted.length / 2)];
               if (mid) {
+                const segment = matched.highest_concern_segment;
                 dangerMarker = {
                   position: mid,
-                  label: `${matched.highest_concern_segment.county_name} · ${formatInstant(
-                    matched.highest_concern_segment.arrival_utc,
-                  )}`,
+                  countyName: segment.county_name,
+                  band: segment.band,
+                  index: segment.index,
+                  arrivalLabel: formatInstant(segment.arrival_utc),
+                  reason: segment.reason,
                 };
               }
             }

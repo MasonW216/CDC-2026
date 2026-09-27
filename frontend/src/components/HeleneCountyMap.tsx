@@ -23,11 +23,12 @@
  * own statewide snapshot instead, clearly labeled as such, and is not clickable (it
  * isn't a stretch of this route -- nothing to select).
  *
- * The thin route line and endpoint markers come from a live OSRM lookup
- * keyed on the case study's real origin/destination (services/api.fetchRoute),
- * not historical routing -- roads open today aren't guaranteed to match
- * September 2024, which is exactly why this page never claims to show which
- * roads were actually closed (see "Known limits").
+ * The route line and endpoint markers come from `route.geometry`, real OSRM road
+ * geometry already in the score response (the same real routing call that produced the
+ * route's counties, sampled when the fixture was built) -- not historical routing, so
+ * this page never claims to show which roads were actually closed during Helene (see
+ * "Known limits"). Solid and bold, not dashed, so it reads clearly against the county
+ * fills underneath it.
  */
 import type { Feature, FeatureCollection } from 'geojson';
 import L, { type Layer, type PathOptions } from 'leaflet';
@@ -207,10 +208,13 @@ export default function HeleneCountyMap({
         onEachFeature={onEachCounty}
       />
       {path && path.length > 1 && (
-        <Polyline
-          positions={path}
-          pathOptions={{ color: 'var(--color-primary)', weight: 3, dashArray: '2 8' }}
-        />
+        <>
+          {/* A white casing under the colored line, like Google Maps -- the county
+              fills underneath are real, saturated color, and a thin line alone got
+              lost against them. */}
+          <Polyline positions={path} pathOptions={{ color: '#fff', weight: 7, opacity: 0.9 }} />
+          <Polyline positions={path} pathOptions={{ color: 'var(--color-primary)', weight: 4 }} />
+        </>
       )}
       <Marker position={[origin.lat, origin.lon]} icon={originIcon} />
       <Marker position={[destination.lat, destination.lon]} icon={destinationIcon} />

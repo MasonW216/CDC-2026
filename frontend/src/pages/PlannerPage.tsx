@@ -25,7 +25,7 @@
  */
 import { useMemo, useState } from 'react';
 
-import LiveRouteMap, { type RouteRender } from '@/components/LiveRouteMap';
+import LiveRouteMap, { type DangerMarker, type RouteRender } from '@/components/LiveRouteMap';
 import RiskGauge from '@/components/RiskGauge';
 import TripForm from '@/components/TripForm';
 import { ApiError, fetchRoute, scoreTrip } from '@/services/api';
@@ -166,13 +166,12 @@ export default function PlannerPage() {
       })
       .filter((r): r is RouteRender => r !== null);
 
-    let dangerMarker: { position: [number, number]; label: string } | null = null;
+    let dangerMarker: DangerMarker | null = null;
     const primaryPath = primary ? geometry.get(primary.route_id) : undefined;
     if (primary?.highest_concern_segment && primaryPath) {
+      const segment = primary.highest_concern_segment;
       const segIndex = primary.segments.findIndex(
-        (s) =>
-          s.county_fips === primary.highest_concern_segment!.county_fips &&
-          s.arrival_utc === primary.highest_concern_segment!.arrival_utc,
+        (s) => s.county_fips === segment.county_fips && s.arrival_utc === segment.arrival_utc,
       );
       if (segIndex >= 0) {
         const { highlighted } = splitRouteAtSegment(
@@ -182,11 +181,16 @@ export default function PlannerPage() {
         );
         const mid = highlighted[Math.floor(highlighted.length / 2)];
         if (mid) {
+          // The marker's own reason text already says what actually drove the score
+          // (rainfall, an official alert, or county history) -- never an icon a
+          // traveler has to guess the meaning of.
           dangerMarker = {
             position: mid,
-            label: `${primary.highest_concern_segment.county_name} · ${formatInstant(
-              primary.highest_concern_segment.arrival_utc,
-            )}`,
+            countyName: segment.county_name,
+            band: segment.band,
+            index: segment.index,
+            arrivalLabel: formatInstant(segment.arrival_utc),
+            reason: segment.reason,
           };
         }
       }

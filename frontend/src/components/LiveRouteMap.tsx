@@ -16,6 +16,7 @@ import {
   Polyline,
   Popup,
   TileLayer,
+  Tooltip,
   useMap,
   ZoomControl,
 } from 'react-leaflet';
@@ -60,11 +61,22 @@ export interface RouteRender {
 /** Back-compat name for callers with no per-segment highlight (e.g. LiveRoutePage). */
 export type ColoredRoute = RouteRender;
 
+export interface DangerMarker {
+  position: [number, number];
+  countyName: string;
+  band: string;
+  index: number | null;
+  arrivalLabel: string;
+  /** The segment's own real `reason` text -- what actually drove the score (rainfall,
+   * an official alert, or county history), never an unexplained icon. */
+  reason: string;
+}
+
 interface LiveRouteMapProps {
   origin: Location;
   destination: Location;
   routes: RouteRender[];
-  dangerMarker?: { position: [number, number]; label: string } | null;
+  dangerMarker?: DangerMarker | null;
 }
 
 function FitToRoutes({ routes }: { routes: RouteRender[] }) {
@@ -150,7 +162,18 @@ export default function LiveRouteMap({
       <Marker position={[destination.lat, destination.lon]} icon={destinationIcon} />
       {dangerMarker && (
         <Marker position={dangerMarker.position} icon={dangerIcon}>
-          <Popup>{dangerMarker.label}</Popup>
+          <Tooltip direction="top" offset={[0, -14]}>
+            Highest-concern stretch on this route &mdash; click for why
+          </Tooltip>
+          <Popup>
+            <strong>{dangerMarker.countyName}</strong>
+            {' — '}
+            {dangerMarker.band}
+            {dangerMarker.index !== null ? ` (${Math.round(dangerMarker.index)}/100)` : ''}
+            <br />
+            <span style={{ opacity: 0.75 }}>Arrival {dangerMarker.arrivalLabel}</span>
+            <p style={{ margin: '0.4em 0 0' }}>{dangerMarker.reason}</p>
+          </Popup>
         </Marker>
       )}
       <FitToRoutes routes={routes} />
