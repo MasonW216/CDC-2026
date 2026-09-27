@@ -1,77 +1,82 @@
-# MVP status (Saturday 26 Sep 2026, late evening)
+# MVP status
 
-Written from Mason's checkout of `Mason` (which contains `main`, Cameron's and Jeffrey's
-work). Verified by running it, not by reading it.
+Last updated 27 Sep 2026, 04:00 EDT, from a fresh backend restart plus a real headless-browser
+run against it. This supersedes the "late evening" version: the product changed from a fixed
+Helene replay to a **live, arbitrary-trip planner**, per the team brief that superseded the
+original MVP plan. Verified by running it, not by reading it.
 
-## What runs today
+## What runs today — live-verified, not just claimed
 
 | Piece | State |
 |---|---|
-| Routing (OSRM client, route sampling, county join) | Runs. The replay uses two provisional OSRM-derived Asheville-to-Charlotte county-stretch sequences; their original route geometry is not retained in the fixture. |
-| County boundaries | Sample fixture (simplified, about 1 km coarse) runs offline. |
-| EDA notebook and NOAA event ingestion | Runs. The EDA gate remains open; current test evidence is in `reports/mvp_verification.md`. Not part of the demo path. |
-| Prototype hazard indicator (new) | Runs offline. `scripts/run_prototype.py` writes `artifacts/demo/prototype_result.json`, identical on repeat runs. |
-| Cached Helene inputs (new) | `artifacts/demo/prototype_inputs_helene.json`: rainfall for all 100 counties and county-coded NWS flood products. |
-| Backend score endpoint | **Stub.** `routes/score.py` is 12 lines, no scoring. |
-| Results screen (fallback) | `artifacts/demo/results.html`, one self-contained page, opens in any browser, no Node and no network. Made by `scripts/render_results.py`. |
-| Results screen (React) | **Not built.** `frontend/src/fixtures/demoScore.json` is an empty placeholder. |
-| Trained model, calibration, held-out evaluation | **None.** Not part of the MVP. |
+| Geocoding (`GET /api/v1/geocode/*`) | Live, real ORS key. Verified: typed "Raleigh" in a real browser, got real results ("Raleigh, NC, USA"). |
+| Routing (OSRM) | Live. Accepts 1 route as a normal result now, not an error (fixed 27 Sep 03:xx). Route IDs are content-derived hashes, stable across independent fetches by the score endpoint and the map preview. |
+| Live forecast + alerts (Open-Meteo, NWS) | Live, no API key needed. Cache fallback with a documented freshness policy: a fallback older than 3h (forecast) / 30min (alerts) is refused, never served as current. |
+| `POST /api/v1/trips/score` | Live and working, `mode=live` and `mode=cached_replay` both verified. Real request → real OSRM + forecast + alerts → real scored response, ~1s. |
+| `GET /api/v1/methodology` | Live. The honest methodology statement, versioned with the scoring module so it can't drift. |
+| React planner → results flow | **Live-verified in a real headless browser tonight**, both paths: the "Load the Hurricane Helene replay" button (`mode=cached_replay`, offline-safe) and a typed arbitrary trip (`mode=live`). Zero console errors either way. Screenshots on file. **The button is mislabeled** — see Known limits. |
+| Frontend checks | `npm run typecheck`, `npm run lint`, `npm test` (51/51), `npm run build` (production) all pass, run tonight, not assumed. |
+| Backend checks | `pytest` 294 passed, `ruff` clean, `mypy` clean. |
+| Trained model, calibration, held-out evaluation | **None. Not part of the MVP.** The EDA gate is still open. See `docs/model_card.md`'s top section for exactly what is and isn't shipped. |
 
-## What the indicator is
+## What the score is
 
-A rule, not a model. Highest of (trailing rainfall tier, active NWS flood product tier), per
-county stretch. Levels: Lower / Elevated / High / Severe concern. The thresholds are round
-numbers picked by the team. It is not a probability, not calibrated, and not validated.
-Label it "prototype hazard indicator" everywhere.
-
-## Contract for the results screen (Jeffrey)
-
-Read `artifacts/demo/prototype_result.json`. The frontend can import a copy at
-`frontend/src/fixtures/prototypeResult.json`, typed by `frontend/src/types/prototype.ts`
-(a test fails if the copy drifts; refresh it with `cp` after rerunning the script). Example of one segment in and out:
-`artifacts/demo/prototype_contract_example.json`.
-
-Per route: `trip_label`, `highest_concern_segment` (county, arrival, reason), `advisory`,
-`segments[]` (each with `county_name`, `arrival_utc`, `label`, `reason`, `sources`,
-`data_status`, `alerts_used`), `duration_minutes`, `distance_km`, `replay_caveat`.
-Top level: `comparison` (two routes, same rule, same inputs), `inputs_provenance`.
-
-Show `replay_caveat` and `inputs_provenance` on screen. Official alerts appear above the
-recommendation.
+`prototype-score/1`, specified in full in `docs/prototype_score_spec.md`. A 0–100 index per
+route (higher = more indicated concern), built from live rainfall forecast and NWS alerts. Not
+a probability, not a trained model, not validated. Every claim in the UI must say "prototype."
 
 ## Known limits (say them out loud)
 
-- Replay of a past storm. Rainfall is ERA5 reanalysis, which a traveler would not have had at
-  departure. Stretches entering the 18:00 UTC window use rain through two hours after the
-  16:00 UTC departure. NWS alerts use their original expiry and only those issued before departure.
-- 92 zone-coded alert rows are not mapped to counties, so some watches are missing.
-- One rainfall point per county.
-- No road-closure or road-passability input.
-- Both routes come out "Severe concern" for a 12:00 departure, so the comparison offers no
-  better alternative. That is the honest result, not a bug.
-- The route fixture (`prototype_routes_provisional.json`) is mine. Jeffrey's frozen fixture
-  replaces it: pass `--routes` to `scripts/run_prototype.py`.
+- Forecasts are uncertain. One rainfall point per county. No road-closure or passability input.
+- A missing alert doesn't mean none exists; an alert issued after the request isn't seen.
+- `minutes_at_or_above_50` (exposure duration) is in the API response but **not yet shown**
+  in the current results screen — the index itself is a maximum, not duration-weighted.
+- `age_minutes` (how old the forecast/alerts are) is in the API response but **not yet shown**
+  in the current results screen — only `from_cache` and the request time are displayed.
+- Real conditions tonight (27 Sep 2026) are dry statewide with no inland flood alerts, so a
+  live trip will honestly show "Lower concern" and a tie. That's the correct result, not a bug.
+  The Helene replay is the example of what "Severe concern" looks like.
+- The planner's disclaimer text still unconditionally says "this demo replays archived
+  Hurricane Helene conditions... not a live forecast," even on the live (typed-trip) path.
+  That's stale wording from before the live path existed and should be split before the demo.
+- **Found tonight: the "Load the Hurricane Helene replay" button does not load Hurricane
+  Helene.** `mode=cached_replay` replays `artifacts/demo/saved_trip_request.json`, which is a
+  contemporary trip I saved tonight (departure `2026-09-27T10:00Z`, real dry conditions,
+  `Lower concern`) — this is the brief's "cache one contemporary trip for a demo fallback,"
+  correctly separate from historical Helene reanalysis, which must never feed the live flow.
+  The button's *label* is just wrong: it should say something like "Load saved trip (offline
+  demo)," not "Hurricane Helene." The real Helene Severe-concern example only exists as the
+  separate standalone page `artifacts/demo/results.html`. This is a one-line label fix for
+  Jeffrey, but worth catching before a judge clicks it expecting to see flooding.
 
 ## Run it
 
-```bash
-PYTHONPATH=src .venv/bin/python scripts/run_prototype.py
-```
-
-Needs no network. `scripts/build_prototype_inputs.py` rebuilds the cached inputs and does.
-
-## Fallback demo (works today)
+Two terminal tabs, from the repo root:
 
 ```bash
-PYTHONPATH=src .venv/bin/python scripts/run_prototype.py
-PYTHONPATH=src .venv/bin/python scripts/render_results.py
-open artifacts/demo/results.html
+make api                        # backend on :8000, needs .env with ORS_API_KEY
+cd frontend && npm run dev      # frontend on :5173, proxies /api to :8000
 ```
 
-Node is not installed on Mason's machine, so the React screen has not been built or run
-here. If it is not stable by the 06:00 freeze, present this page.
+Open http://localhost:5173. Both the demo button and a typed trip work.
 
-## Demo command and owner
+## Demo plan
 
-Proposed, to agree at the huddle: integration owner Jeffrey, demo command to be added here
-once the results screen exists, feature freeze 06:00.
+Live trip first (proves the real pipeline; honestly ties tonight since NC is dry), then, if a
+severe example is wanted, the standalone Helene page (`artifacts/demo/results.html`) as its
+own clearly separate artifact — not the in-app "saved trip" button, which is the offline
+fallback for a *contemporary* trip and currently also shows a dry tie. This matches the
+brief's fallback order (live → saved contemporary replay → Helene as a separate case study,
+never a silent substitute for an arbitrary trip).
+
+## Owners and open items
+
+- **Jeffrey:** split the planner disclaimer (see Known limits); the "PIVOT" rebrand and new
+  gauge UI are in progress — needs a visible "prototype" label near any 0–100 display, since
+  CLAUDE.md's "Weather Safety Score" language is reserved for the future calibrated model, not
+  tonight's rule. Consider surfacing `age_minutes` and `minutes_at_or_above_50`.
+- **Cameron:** `reports/mvp_live_acceptance.md` has a live-verification addendum from tonight;
+  several of the "pending" items there are now independently confirmed — see the addendum at
+  the top of that file for exactly which ones and what's still open.
+- **Mason:** decide the rebrand scope with Jeffrey; approve or amend the prototype-label
+  requirement before the gauge screen ships.

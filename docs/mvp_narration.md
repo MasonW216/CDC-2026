@@ -1,31 +1,35 @@
-# MVP narration draft (about 75 seconds)
+# MVP narration draft (about 80 seconds)
 
-Draft for Mason to say. The wording has been checked against the cached replay;
-the final spoken version still needs a rehearsal.
+Rewritten 27 Sep 2026 for the live-first product. Every claim checked against a real run
+tonight (browser + API), not assumed. Rehearse before presenting — timing and exact phrasing
+still need a run-through.
 
-"This demonstration compares two candidate routes for one departure time using a
-prototype flood-hazard indicator. It replays Hurricane Helene: Asheville to
-Charlotte, leaving at noon on 27 September 2024.
+"StormRoute lets a traveler enter a trip — an origin, a destination, and a future departure
+time anywhere in North Carolina — and see the fastest driving route alongside the route with
+the lowest indicated weather concern at the times they'd actually travel.
 
-We split each provisional route into county stretches and estimate when the traveler reaches each one.
-For each stretch our prototype hazard indicator looks at rainfall totals ending at the
-start of its six-hour UTC arrival window and county-coded National Weather Service flood
-products issued by departure. The higher rainfall or alert tier sets the level, from lower
-concern to severe concern. An alert can raise the level; it cannot lower it.
+[Type a real place into the planner, submit.] This is live: real routing from OpenStreetMap,
+a real weather forecast, and real official flood alerts from the National Weather Service, all
+fetched right now and scored by a transparent prototype rule. For each county a route passes
+through, we look at the forecast rainfall and any active flood watch, advisory, or warning. The
+higher of the two sets that stretch's indicated concern, from lower to severe. An alert can only
+raise it — never lower it.
 
-Here, both routes come out at severe concern. Buncombe County is the first of several
-stretches at that level, with about 233 millimeters in the 24-hour window ending at
-12:00 UTC and active flash flood warnings. The shorter route is not a lower-concern
-alternative. The advisory is to consider delaying travel and check official warnings and
-road closures.
+Tonight, North Carolina's forecast is dry statewide, so this live result honestly comes back as
+lower concern on both routes, and the comparison correctly says it doesn't favor one — that's
+the real pipeline telling the truth, not a placeholder.
 
-What this is not: it is not a trained model, not a probability, and not a validated score.
-The rainfall is retrospective reanalysis that a traveler would not have had at departure;
-some later stretches even use hours after departure. The thresholds are our own round
-numbers. One point stands for a whole county, some zone-coded alerts are missing, and
-this does not say a road is open or safe.
+To show what a higher-concern result looks like, here's a separate replay of Hurricane Helene:
+Asheville to Charlotte, September 2024. Both routes come out at severe concern — Buncombe County
+saw 233 millimeters of rain in 24 hours with active flash flood warnings — and the advisory is
+to consider delaying and to check official guidance.
 
-The next scientific steps are to finish the independent review of ten years of North
-Carolina flood reports, build a historical weather table, define baselines and evaluation
-criteria before training, calibrate, and run one frozen 2024 test before any number is
-called a risk."
+What this is not: it is not a trained model, not a calibrated flood probability, and not a
+validated safety score. It's a transparent, published formula — the rainfall thresholds and
+alert weights are our own stated policy, not learned from data. Historical reanalysis, like the
+Helene replay, is never fed into the live trip flow; only real-time forecasts are. One point
+stands in for a whole county, and this does not say a road is open or safe.
+
+The next scientific step is the part already underway: a reviewed exploration of ten years of
+North Carolina flood reports, then a historical weather table, baselines, calibration, and one
+held-out test on 2024 — before any number here is called a risk."

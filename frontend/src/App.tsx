@@ -2,9 +2,17 @@
  * Application shell and routes.
  *
  * Routes:
- *    /             PlannerPage (sidebar + map, one page: input, the
- *                  prototype hazard index, and the route map together --
- *                  see PlannerPage's own docstring)
+ *    /             PlannerPage
+ *    /results      PrototypeResultsPage (MVP demo: the prototype hazard
+ *                  indicator replay, not the real ResultsPage -- see that
+ *                  file, milestone 7, for the production Weather Safety Score)
+ *    /case-studies/helene  HeleneCaseStudyPage (standalone historical replay,
+ *                  GET /api/v1/demo/helene -- never reachable from the planner
+ *                  or from a live/cached trip result; see that file and
+ *                  docs/prototype_score_spec.md's "Historical case study")
+ *    /route        LiveRoutePage     (dev preview: a live OSRM path between
+ *                  any two points, no hazard assessment -- not part of the
+ *                  MVP demo, calls the rate-limited public OSRM server)
  *    /methodology  MethodologyPage   (not yet built -- shows a placeholder)
  *    /about        AboutPage         (not yet built -- shows a placeholder)
  *
@@ -19,7 +27,10 @@ import HeaderSearchBar from './components/HeaderSearchBar';
 import PivotLogo from './components/PivotLogo';
 import ThemeToggle from './components/ThemeToggle';
 import { HeaderSearchProvider } from './contexts/HeaderSearchContext';
+import HeleneCaseStudyPage from './pages/HeleneCaseStudyPage';
+import LiveRoutePage from './pages/LiveRoutePage';
 import PlannerPage from './pages/PlannerPage';
+import PrototypeResultsPage from './pages/PrototypeResultsPage';
 
 function ComingSoon({ page }: { page: string }) {
   return (
@@ -48,6 +59,9 @@ export default function App() {
             <NavLink to="/" className={navLinkClass} end>
               Plan a trip
             </NavLink>
+            <NavLink to="/case-studies/helene" className={navLinkClass}>
+              Helene case study
+            </NavLink>
             <NavLink to="/methodology" className={navLinkClass}>
               Methodology
             </NavLink>
@@ -63,6 +77,9 @@ export default function App() {
         <main id="main-content" className="pivot-main">
           <Routes>
             <Route path="/" element={<PlannerPage />} />
+            <Route path="/results" element={<PrototypeResultsPage />} />
+            <Route path="/case-studies/helene" element={<HeleneCaseStudyPage />} />
+            <Route path="/route" element={<LiveRoutePage />} />
             <Route path="/methodology" element={<ComingSoon page="methodology page" />} />
             <Route path="/about" element={<ComingSoon page="about page" />} />
             <Route path="*" element={<ComingSoon page="page" />} />

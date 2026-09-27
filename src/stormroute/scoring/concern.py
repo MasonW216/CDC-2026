@@ -161,6 +161,10 @@ def score_segment(
         "alerts": [alert_dict(a) for a in used],
         "rain_rate_mm_h": None,
         "rain_24h_mm": None,
+        # Exact hourly stamps the two rain terms were read from (Open-Meteo, UTC), for
+        # an audit trail; null together with the rain terms when there is a gap.
+        "rain_peak_window_utc": None,
+        "rain_24h_window_utc": None,
     }
     gap: str | None = None
     rain_component: float | None = None
@@ -178,6 +182,11 @@ def score_segment(
                 gap = terms
             else:
                 base["rain_rate_mm_h"], base["rain_24h_mm"] = terms
+                base["rain_peak_window_utc"] = [first.isoformat(), last.isoformat()]
+                base["rain_24h_window_utc"] = [
+                    (last - timedelta(hours=23)).isoformat(),
+                    last.isoformat(),
+                ]
                 rain_component = 100 * min(
                     1.0, max(terms[0] / RATE_FULL_SCALE_MM_H, terms[1] / ACCUM_FULL_SCALE_MM)
                 )
@@ -254,7 +263,48 @@ def score_route(
         "segments": segments,
         "alerts": sorted(seen.values(), key=lambda a: (-a["floor"], a["id"])),
         "reasons": reasons,
+        "contributing_factors": _contributing_factors(scored),
     }
+
+
+def _contributing_factors(scored: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Up to 3 highest-index stretches, tagged by what actually drove each one.
+
+    Built only from fields the rule already computed for that stretch -- never a fixed
+    marketing list. A `kind` other than "rain" or "alert" must not be invented; the
+    frontend maps `kind` to an icon, so a new factor needs a new field here first, not a
+    guess on the UI side (e.g. no "saturated ground" without a real soil-moisture input,
+    which this rule does not read).
+    """
+    factors = []
+    for seg in sorted(scored, key=lambda s: -s["index"])[:3]:
+        if seg["index"] <= 0:
+            continue
+        rain_component = 100 * min(
+            1.0,
+            max(
+                (seg["rain_rate_mm_h"] or 0) / RATE_FULL_SCALE_MM_H,
+                (seg["rain_24h_mm"] or 0) / ACCUM_FULL_SCALE_MM,
+            ),
+        )
+        alert_component = max((a["floor"] for a in seg["alerts"]), default=0)
+        kind = "alert" if alert_component >= rain_component and seg["alerts"] else "rain"
+        label = (
+            sorted({a["event"] for a in seg["alerts"]})[0]
+            if kind == "alert"
+            else f"Heavy rainfall, {seg['county_name']}"
+        )
+        factors.append(
+            {
+                "kind": kind,
+                "county_name": seg["county_name"],
+                "label": label,
+                "detail": seg["reason"],
+                "arrival_utc": seg["arrival_utc"],
+                "index": seg["index"],
+            }
+        )
+    return factors
 
 
 def compare(routes: Sequence[dict[str, Any]]) -> dict[str, Any]:
@@ -281,7 +331,7 @@ def compare(routes: Sequence[dict[str, Any]]) -> dict[str, Any]:
             None,
             "Weather or alert data is missing for at least one route, so no confident "
             "ranking is given.",
-            None,
+            _severe(routes),
         )
     lowest = min(routes, key=lambda r: (r["index"], r["duration_minutes"], routes.index(r)))
     difference = fastest["index"] - lowest["index"]
@@ -325,12 +375,13 @@ def compare(routes: Sequence[dict[str, Any]]) -> dict[str, Any]:
 
 def _severe(routes: Sequence[dict[str, Any]]) -> str | None:
     indexes = [r["index"] for r in routes if r["index"] is not None]
-    if indexes and min(indexes) >= SEVERE_INDEX:
-        return (
-            "Neither route avoids the warnings or heavy rain. Check official guidance and "
-            "road closures, or consider delaying."
-        )
-    return None
+    if not indexes or min(indexes) < SEVERE_INDEX:
+        return None
+    subject = "This route does not avoid" if len(routes) == 1 else "None of the routes avoid"
+    return (
+        f"{subject} the warnings or heavy rain. Check official guidance and road closures, "
+        "or consider delaying."
+    )
 
 
 def _comparison(

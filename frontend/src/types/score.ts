@@ -44,6 +44,23 @@ export interface SegmentScore {
   alerts: AlertUse[];
 }
 
+/**
+ * One thing that actually drove a stretch's index, built only from fields the rule
+ * computed for it (never a fixed list). `kind` is currently only 'rain' or 'alert' --
+ * a UI must not render any other factor (e.g. "saturated ground") unless a real input
+ * for it exists in this contract; see docs/prototype_score_spec.md.
+ */
+export interface ContributingFactor {
+  kind: 'rain' | 'alert';
+  county_name: string;
+  /** Short label: an alert's event name, or "Heavy rainfall, <county>". */
+  label: string;
+  /** The segment's own `reason` text, shown as written. */
+  detail: string;
+  arrival_utc: string;
+  index: number;
+}
+
 export interface RouteScore {
   route_id: string;
   duration_minutes: number;
@@ -60,6 +77,22 @@ export interface RouteScore {
   alerts: AlertUse[];
   /** Short bullet reasons for the route level. */
   reasons: string[];
+  /** Up to 3 stretches that actually set the index, for an icon list. May be empty. */
+  contributing_factors: ContributingFactor[];
+}
+
+/**
+ * A later departure that lowers the index by a real margin, or null if none does.
+ * `duration_minutes` does not change between offsets: no live-traffic model here.
+ */
+export interface BetterDeparture {
+  offset_hours: number;
+  extra_wait_minutes: number;
+  departure_utc: string;
+  index_before: number;
+  index_after: number;
+  /** The sentence to show, already states the "same route, no faster drive" caveat. */
+  message: string;
 }
 
 export interface Comparison {
@@ -81,6 +114,8 @@ export interface Coverage {
   forecast: {
     source: string;
     retrieved_utc: string;
+    /** Minutes between `requested_at_utc` and `retrieved_utc`. Show this, not just `from_cache`. */
+    age_minutes: number;
     horizon_hours: number;
     /** Counties with no usable forecast hours. */
     missing_counties: string[];
@@ -91,6 +126,7 @@ export interface Coverage {
   alerts: {
     source: string;
     retrieved_utc: string;
+    age_minutes: number;
     ok: boolean;
     error: string | null;
     from_cache: boolean;
@@ -101,11 +137,25 @@ export interface Coverage {
   geography: { supported: boolean; message: string | null };
 }
 
+/** Present only when `mode === 'historical_case_study'` (GET /api/v1/demo/helene). */
+export interface CaseStudyInfo {
+  name: string;
+  period: string;
+  note: string;
+  origin: { label: string; lat: number; lon: number };
+  destination: { label: string; lat: number; lon: number };
+}
+
 export interface ScoreResponse {
   schema_version: 'prototype-score/1';
   score_name: string;
-  /** 'live' for a new trip, 'cached' when replayed from saved upstream responses. */
-  mode: 'live' | 'cached';
+  /**
+   * 'live': a new trip, scored just now. 'cached': replayed from saved upstream responses
+   * (a contemporary trip, offline fallback). 'historical_case_study': the standalone Helene
+   * page (GET /api/v1/demo/helene) — never returned by POST /api/v1/trips/score, and never
+   * to be shown as, or confused with, a live or cached trip result.
+   */
+  mode: 'live' | 'cached' | 'historical_case_study';
   requested_at_utc: string;
   departure_utc: string;
   routes: RouteScore[];
@@ -113,5 +163,8 @@ export interface ScoreResponse {
   coverage: Coverage;
   /** Every alert across all routes, for the banner above any recommendation. */
   alerts: AlertUse[];
+  better_departure: BetterDeparture | null;
   limitations: string[];
+  /** Only present when mode === 'historical_case_study'. */
+  case_study?: CaseStudyInfo;
 }
