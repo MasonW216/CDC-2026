@@ -82,7 +82,8 @@ def test_bands_never_call_anything_safe():
     assert band(None) == "Not assessed"
 
 
-def test_dry_forecast_is_lower_concern_but_assessed():
+def test_dry_forecast_is_lower_concern_but_assessed(monkeypatch):
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
     seg = score_segment(stretch(), forecast({"37021": 0.0}), NO_ALERTS, NOW)
     assert seg["status"] == "assessed" and seg["index"] == 0
 
@@ -95,7 +96,8 @@ def test_rain_rate_and_accumulation_set_the_index():
     assert seg["index"] == 100  # 24 h accumulation is at full scale
 
 
-def test_missing_forecast_is_unassessed_never_zero():
+def test_missing_forecast_is_unassessed_never_zero(monkeypatch):
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
     seg = score_segment(stretch(), forecast({"37021": 0.0}, {"37021"}), NO_ALERTS, NOW)
     assert seg["status"] == "unassessed" and seg["index"] is None
     assert seg["band"] == "Not assessed"
@@ -107,6 +109,51 @@ def test_missing_forecast_with_alert_gives_a_lower_bound():
     seg = score_segment(stretch(), fc, alerts, NOW)
     assert seg["status"] == "unassessed" and seg["index"] == 80
     assert "Lower bound" in seg["reason"]
+
+
+def test_county_prior_component_raises_a_dry_assessed_index(monkeypatch):
+    monkeypatch.setattr(
+        "stormroute.scoring.concern.load_county_components", lambda: {"37021": 12.0}
+    )
+    seg = score_segment(stretch(), forecast({"37021": 0.0}), NO_ALERTS, NOW)
+    assert seg["status"] == "assessed"
+    assert seg["index"] == 12
+    assert seg["county_prior_component"] == 12.0
+    assert "2015-2024 history" in seg["reason"]
+
+
+def test_county_prior_component_is_zero_for_an_unlisted_or_average_county(monkeypatch):
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
+    seg = score_segment(stretch(), forecast({"37021": 0.0}), NO_ALERTS, NOW)
+    assert seg["county_prior_component"] == 0.0
+    assert "2015-2024 history" not in seg["reason"]
+
+
+def test_county_prior_component_never_lowers_the_index(monkeypatch):
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {"37021": 8.0})
+    fc = forecast({"37021": {k: 10.0 for k in range(-30, 5)}})
+    with_history = score_segment(stretch(), fc, NO_ALERTS, NOW)["index"]
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
+    without_history = score_segment(stretch(), fc, NO_ALERTS, NOW)["index"]
+    assert with_history >= without_history
+
+
+def test_county_prior_component_alone_gives_a_lower_bound_when_forecast_is_missing(monkeypatch):
+    monkeypatch.setattr(
+        "stormroute.scoring.concern.load_county_components", lambda: {"37021": 15.0}
+    )
+    seg = score_segment(stretch(), forecast({"37021": 0.0}, {"37021"}), NO_ALERTS, NOW)
+    assert seg["status"] == "unassessed"
+    assert seg["index"] == 15
+    assert "Lower bound" in seg["reason"]
+
+
+def test_county_with_no_fips_never_gets_a_historical_component(monkeypatch):
+    monkeypatch.setattr(
+        "stormroute.scoring.concern.load_county_components", lambda: {"37021": 30.0}
+    )
+    seg = score_segment(stretch(fips=None, name="Outside"), forecast({}), NO_ALERTS, NOW)
+    assert seg["county_prior_component"] == 0.0
 
 
 def test_arrival_beyond_horizon_is_unassessed():
@@ -140,7 +187,8 @@ def test_more_rain_never_lowers_the_index():
     assert indexes == sorted(indexes)
 
 
-def test_alert_outside_the_stretch_time_or_county_is_ignored():
+def test_alert_outside_the_stretch_time_or_county_is_ignored(monkeypatch):
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
     fc = forecast({"37021": 0.0, "37115": 0.0})
     later = AlertData((warning(begins=6, ends=9),), NOW, True)
     other = AlertData((warning(fips="37115"),), NOW, True)
@@ -407,8 +455,9 @@ def test_saved_trip_replays_offline_with_identical_scores():
     assert replay["coverage"]["forecast"]["from_cache"] is True
 
 
-def test_contributing_factors_are_grounded_in_real_computed_fields():
+def test_contributing_factors_are_grounded_in_real_computed_fields(monkeypatch):
     """No factor can appear that the rule did not actually compute."""
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
     fc = forecast({"37021": {2: 20.0}, "37115": 0.0})
     alerts = AlertData((warning(fips="37115", event="Flood Advisory", floor=50),), NOW, True)
     a = score_route(route("a", [stretch()]), fc, alerts, NOW)
@@ -422,7 +471,20 @@ def test_contributing_factors_are_grounded_in_real_computed_fields():
         assert factor["index"] > 0
 
 
-def test_contributing_factors_empty_when_nothing_drove_the_score():
+def test_contributing_factors_tag_a_purely_historical_stretch(monkeypatch):
+    monkeypatch.setattr(
+        "stormroute.scoring.concern.load_county_components", lambda: {"37021": 20.0}
+    )
+    fc = forecast({"37021": 0.0})
+    scored = score_route(route("a", [stretch()]), fc, NO_ALERTS, NOW)
+    factor = scored["contributing_factors"][0]
+    assert factor["kind"] == "historical"
+    assert "Buncombe" in factor["label"]
+    assert factor["index"] == 20
+
+
+def test_contributing_factors_empty_when_nothing_drove_the_score(monkeypatch):
+    monkeypatch.setattr("stormroute.scoring.concern.load_county_components", lambda: {})
     fc = forecast({"37021": 0.0})
     scored = score_route(route("a", [stretch()]), fc, NO_ALERTS, NOW)
     assert scored["contributing_factors"] == []

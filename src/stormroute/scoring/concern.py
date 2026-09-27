@@ -20,6 +20,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+from stormroute.scoring.county_prior import load_county_components
 from stormroute.scoring.live_forecast import Alert, AlertData, ForecastData
 
 SCHEMA_VERSION = "prototype-score/1"
@@ -152,6 +153,13 @@ def score_segment(
         key=lambda a: (-a.floor, a.id),
     )
     alert_component = max((a.floor for a in used), default=0)
+    # A real Bayesian hierarchical (Beta-Binomial) fit on the 2015-2024 NOAA Storm Events
+    # history, per county (see county_prior.py). Descriptive, not predictive; can only
+    # raise a segment's index, exactly like an alert, and is capped well below the live
+    # signal's own ceiling (see MAX_COMPONENT in that module).
+    county_component = (
+        load_county_components().get(stretch.county_fips, 0.0) if stretch.county_fips else 0.0
+    )
     base: dict[str, Any] = {
         "county_fips": stretch.county_fips,
         "county_name": stretch.county_name,
@@ -165,6 +173,9 @@ def score_segment(
         # an audit trail; null together with the rain terms when there is a gap.
         "rain_peak_window_utc": None,
         "rain_24h_window_utc": None,
+        # The Bayesian historical-rate term, always present (it needs no live forecast),
+        # 0 for a county at or below the state's historical average.
+        "county_prior_component": round(county_component, 1),
     }
     gap: str | None = None
     rain_component: float | None = None
@@ -195,19 +206,30 @@ def score_segment(
         if used
         else "no official flood product in effect"
     )
+    history_text = (
+        f"; county's 2015-2024 history runs above the state average ({county_component:.0f}-point "
+        "historical adjustment)"
+        if county_component > 0
+        else ""
+    )
     if rain_component is None:
-        # Missing forecast: an alert alone still raises a lower bound, never a full score.
-        index = alert_component if used else None
+        # Missing forecast: an alert or the historical rate alone still raises a lower
+        # bound, never a full score.
+        index = (
+            round(max(alert_component, county_component))
+            if (used or county_component > 0)
+            else None
+        )
         status = "unassessed"
-        reason = f"Forecast unavailable ({gap}); {alert_text}. Not assessed."
-        if used:
-            reason = f"Forecast unavailable ({gap}); {alert_text}. Lower bound only."
+        reason = f"Forecast unavailable ({gap}); {alert_text}{history_text}. Not assessed."
+        if used or county_component > 0:
+            reason = f"Forecast unavailable ({gap}); {alert_text}{history_text}. Lower bound only."
     else:
-        index = round(max(rain_component, alert_component))
+        index = round(max(rain_component, alert_component, county_component))
         status = "assessed"
         reason = (
             f"Forecast peak {base['rain_rate_mm_h']} mm/h and {base['rain_24h_mm']} mm over "
-            f"the prior 24 h; {alert_text}."
+            f"the prior 24 h; {alert_text}{history_text}."
         )
     base.update(status=status, index=index, band=band(index), reason=reason)
     return base
@@ -271,10 +293,10 @@ def _contributing_factors(scored: Sequence[dict[str, Any]]) -> list[dict[str, An
     """Up to 3 highest-index stretches, tagged by what actually drove each one.
 
     Built only from fields the rule already computed for that stretch -- never a fixed
-    marketing list. A `kind` other than "rain" or "alert" must not be invented; the
-    frontend maps `kind` to an icon, so a new factor needs a new field here first, not a
-    guess on the UI side (e.g. no "saturated ground" without a real soil-moisture input,
-    which this rule does not read).
+    marketing list. A `kind` other than "rain", "alert", or "historical" must not be
+    invented; the frontend maps `kind` to an icon, so a new factor needs a new field here
+    first, not a guess on the UI side (e.g. no "saturated ground" without a real
+    soil-moisture input, which this rule does not read).
     """
     factors = []
     for seg in sorted(scored, key=lambda s: -s["index"])[:3]:
@@ -288,12 +310,23 @@ def _contributing_factors(scored: Sequence[dict[str, Any]]) -> list[dict[str, An
             ),
         )
         alert_component = max((a["floor"] for a in seg["alerts"]), default=0)
-        kind = "alert" if alert_component >= rain_component and seg["alerts"] else "rain"
-        label = (
-            sorted({a["event"] for a in seg["alerts"]})[0]
-            if kind == "alert"
-            else f"Heavy rainfall, {seg['county_name']}"
+        history_component = seg.get("county_prior_component") or 0
+        ranked = sorted(
+            (
+                ("alert", alert_component if seg["alerts"] else -1),
+                ("rain", rain_component),
+                ("historical", history_component),
+            ),
+            key=lambda pair: pair[1],
+            reverse=True,
         )
+        kind = ranked[0][0]
+        if kind == "alert":
+            label = sorted({a["event"] for a in seg["alerts"]})[0]
+        elif kind == "historical":
+            label = f"County history, {seg['county_name']}"
+        else:
+            label = f"Heavy rainfall, {seg['county_name']}"
         factors.append(
             {
                 "kind": kind,

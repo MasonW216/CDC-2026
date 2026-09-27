@@ -414,7 +414,7 @@
     {
      "arrival_utc": "2024-09-27T16:00:00+00:00",
      "county_name": "Buncombe",
-     "detail": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+     "detail": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
      "index": 100,
      "kind": "rain",
      "label": "Heavy rainfall, Buncombe"
@@ -422,7 +422,7 @@
     {
      "arrival_utc": "2024-09-27T16:19:39.073247+00:00",
      "county_name": "Henderson",
-     "detail": "Forecast peak 0.9 mm/h and 219.0 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+     "detail": "Forecast peak 0.9 mm/h and 219.0 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (15-point historical adjustment).",
      "index": 100,
      "kind": "rain",
      "label": "Heavy rainfall, Henderson"
@@ -10475,6 +10475,7 @@
     "band": "Severe concern",
     "county_fips": "37021",
     "county_name": "Buncombe",
+    "county_prior_component": 3.6,
     "index": 100,
     "km": 23.7,
     "minutes": 19.7,
@@ -10488,14 +10489,14 @@
      "2024-09-27T17:00:00+00:00"
     ],
     "rain_rate_mm_h": 0.5,
-    "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+    "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
     "status": "assessed"
    },
    "index": 100,
    "is_lower_bound": false,
    "minutes_at_or_above_50": 154.3,
    "reasons": [
-    "Highest concern in Buncombe: Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+    "Highest concern in Buncombe: Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
     "About 154 minutes at High concern or above."
    ],
    "route_id": "route_0",
@@ -10547,6 +10548,7 @@
      "band": "Severe concern",
      "county_fips": "37021",
      "county_name": "Buncombe",
+     "county_prior_component": 3.6,
      "index": 100,
      "km": 23.7,
      "minutes": 19.7,
@@ -10560,7 +10562,7 @@
       "2024-09-27T17:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.5,
-     "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+     "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -10594,6 +10596,7 @@
      "band": "Severe concern",
      "county_fips": "37089",
      "county_name": "Henderson",
+     "county_prior_component": 15.3,
      "index": 100,
      "km": 27.6,
      "minutes": 20.8,
@@ -10607,7 +10610,7 @@
       "2024-09-27T17:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.9,
-     "reason": "Forecast peak 0.9 mm/h and 219.0 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+     "reason": "Forecast peak 0.9 mm/h and 219.0 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (15-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -10625,6 +10628,7 @@
      "band": "Severe concern",
      "county_fips": "37149",
      "county_name": "Polk",
+     "county_prior_component": 0.0,
      "index": 100,
      "km": 32.7,
      "minutes": 23.2,
@@ -10664,6 +10668,7 @@
      "band": "Severe concern",
      "county_fips": "37161",
      "county_name": "Rutherford",
+     "county_prior_component": 0.0,
      "index": 100,
      "km": 26.9,
      "minutes": 18.3,
@@ -10703,6 +10708,7 @@
      "band": "Severe concern",
      "county_fips": "37045",
      "county_name": "Cleveland",
+     "county_prior_component": 0.0,
      "index": 100,
      "km": 39.7,
      "minutes": 33.0,
@@ -10742,6 +10748,7 @@
      "band": "Severe concern",
      "county_fips": "37071",
      "county_name": "Gaston",
+     "county_prior_component": 0.0,
      "index": 80,
      "km": 7.0,
      "minutes": 5.1,
@@ -10781,6 +10788,7 @@
      "band": "Severe concern",
      "county_fips": "37071",
      "county_name": "Gaston",
+     "county_prior_component": 0.0,
      "index": 80,
      "km": 23.7,
      "minutes": 18.0,
@@ -10812,6 +10820,7 @@
      "band": "Severe concern",
      "county_fips": "37119",
      "county_name": "Mecklenburg",
+     "county_prior_component": 16.2,
      "index": 80,
      "km": 17.4,
      "minutes": 16.2,
@@ -10825,7 +10834,7 @@
       "2024-09-27T19:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.1,
-     "reason": "Forecast peak 0.1 mm/h and 42.3 mm over the prior 24 h; Flash Flood Warning in effect.",
+     "reason": "Forecast peak 0.1 mm/h and 42.3 mm over the prior 24 h; Flash Flood Warning in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
      "status": "assessed"
     }
    ],
@@ -10975,7 +10984,7 @@
     {
      "arrival_utc": "2024-09-27T16:00:00+00:00",
      "county_name": "Buncombe",
-     "detail": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+     "detail": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
      "index": 100,
      "kind": "rain",
      "label": "Heavy rainfall, Buncombe"
@@ -10983,7 +10992,7 @@
     {
      "arrival_utc": "2024-09-27T16:23:14.870357+00:00",
      "county_name": "McDowell",
-     "detail": "Forecast peak 1.1 mm/h and 221.7 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect.",
+     "detail": "Forecast peak 1.1 mm/h and 221.7 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
      "index": 100,
      "kind": "rain",
      "label": "Heavy rainfall, McDowell"
@@ -10991,7 +11000,7 @@
     {
      "arrival_utc": "2024-09-27T16:53:06.658102+00:00",
      "county_name": "Burke",
-     "detail": "Forecast peak 0.9 mm/h and 166.9 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect.",
+     "detail": "Forecast peak 0.9 mm/h and 166.9 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect; county's 2015-2024 history runs above the state average (18-point historical adjustment).",
      "index": 100,
      "kind": "rain",
      "label": "Heavy rainfall, Burke"
@@ -23476,6 +23485,7 @@
     "band": "Severe concern",
     "county_fips": "37021",
     "county_name": "Buncombe",
+    "county_prior_component": 3.6,
     "index": 100,
     "km": 29.6,
     "minutes": 23.2,
@@ -23489,14 +23499,14 @@
      "2024-09-27T17:00:00+00:00"
     ],
     "rain_rate_mm_h": 0.5,
-    "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+    "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
     "status": "assessed"
    },
    "index": 100,
    "is_lower_bound": false,
    "minutes_at_or_above_50": 167.2,
    "reasons": [
-    "Highest concern in Buncombe: Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+    "Highest concern in Buncombe: Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
     "About 167 minutes at High concern or above."
    ],
    "route_id": "route_1",
@@ -23548,6 +23558,7 @@
      "band": "Severe concern",
      "county_fips": "37021",
      "county_name": "Buncombe",
+     "county_prior_component": 3.6,
      "index": 100,
      "km": 29.6,
      "minutes": 23.2,
@@ -23561,7 +23572,7 @@
       "2024-09-27T17:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.5,
-     "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect.",
+     "reason": "Forecast peak 0.5 mm/h and 190.4 mm over the prior 24 h; Flash Flood Warning; Flood Warning in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -23595,6 +23606,7 @@
      "band": "Severe concern",
      "county_fips": "37111",
      "county_name": "McDowell",
+     "county_prior_component": 16.2,
      "index": 100,
      "km": 41.9,
      "minutes": 29.9,
@@ -23608,7 +23620,7 @@
       "2024-09-27T17:00:00+00:00"
      ],
      "rain_rate_mm_h": 1.1,
-     "reason": "Forecast peak 1.1 mm/h and 221.7 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect.",
+     "reason": "Forecast peak 1.1 mm/h and 221.7 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -23658,6 +23670,7 @@
      "band": "Severe concern",
      "county_fips": "37023",
      "county_name": "Burke",
+     "county_prior_component": 18.0,
      "index": 100,
      "km": 42.5,
      "minutes": 30.5,
@@ -23671,7 +23684,7 @@
       "2024-09-27T18:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.9,
-     "reason": "Forecast peak 0.9 mm/h and 166.9 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect.",
+     "reason": "Forecast peak 0.9 mm/h and 166.9 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect; county's 2015-2024 history runs above the state average (18-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -23705,6 +23718,7 @@
      "band": "Severe concern",
      "county_fips": "37035",
      "county_name": "Catawba",
+     "county_prior_component": 0.0,
      "index": 80,
      "km": 42.6,
      "minutes": 36.4,
@@ -23718,7 +23732,7 @@
       "2024-09-27T19:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.3,
-     "reason": "Forecast peak 0.3 mm/h and 79.1 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect.",
+     "reason": "Forecast peak 0.3 mm/h and 79.1 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect; county's 2015-2024 history runs above the state average (0-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -23752,6 +23766,7 @@
      "band": "Severe concern",
      "county_fips": "37035",
      "county_name": "Catawba",
+     "county_prior_component": 0.0,
      "index": 80,
      "km": 0.2,
      "minutes": 0.1,
@@ -23765,7 +23780,7 @@
       "2024-09-27T19:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.3,
-     "reason": "Forecast peak 0.3 mm/h and 79.1 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect.",
+     "reason": "Forecast peak 0.3 mm/h and 79.1 mm over the prior 24 h; Flash Flood Warning; Flood Advisory in effect; county's 2015-2024 history runs above the state average (0-point historical adjustment).",
      "status": "assessed"
     },
     {
@@ -23774,6 +23789,7 @@
      "band": "Severe concern",
      "county_fips": "37109",
      "county_name": "Lincoln",
+     "county_prior_component": 0.0,
      "index": 81,
      "km": 19.8,
      "minutes": 16.6,
@@ -23805,6 +23821,7 @@
      "band": "Severe concern",
      "county_fips": "37119",
      "county_name": "Mecklenburg",
+     "county_prior_component": 16.2,
      "index": 80,
      "km": 34.6,
      "minutes": 30.5,
@@ -23818,7 +23835,7 @@
       "2024-09-27T19:00:00+00:00"
      ],
      "rain_rate_mm_h": 0.1,
-     "reason": "Forecast peak 0.1 mm/h and 42.3 mm over the prior 24 h; Flash Flood Warning in effect.",
+     "reason": "Forecast peak 0.1 mm/h and 42.3 mm over the prior 24 h; Flash Flood Warning in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
      "status": "assessed"
     }
    ],

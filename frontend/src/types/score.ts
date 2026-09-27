@@ -9,12 +9,7 @@
 
 export type Band = 'Lower concern' | 'Elevated concern' | 'High concern' | 'Severe concern';
 export type Status = 'assessed' | 'partial' | 'unassessed';
-export type RankingKind =
-  | 'distinguishable'
-  | 'tie'
-  | 'unavailable'
-  | 'single_route'
-  | 'no_routes';
+export type RankingKind = 'distinguishable' | 'tie' | 'unavailable' | 'single_route' | 'no_routes';
 
 export interface AlertUse {
   /** e.g. "Flash Flood Warning" */
@@ -41,17 +36,23 @@ export interface SegmentScore {
   reason: string;
   rain_rate_mm_h: number | null;
   rain_24h_mm: number | null;
+  /**
+   * A Beta-Binomial Bayesian fit on 2015-2024 NOAA Storm Events history for this county
+   * (src/stormroute/scoring/county_prior.py). Descriptive, not predictive; 0 for a county
+   * at or below the state's historical average. Always present, even with no live forecast.
+   */
+  county_prior_component: number;
   alerts: AlertUse[];
 }
 
 /**
  * One thing that actually drove a stretch's index, built only from fields the rule
- * computed for it (never a fixed list). `kind` is currently only 'rain' or 'alert' --
- * a UI must not render any other factor (e.g. "saturated ground") unless a real input
- * for it exists in this contract; see docs/prototype_score_spec.md.
+ * computed for it (never a fixed list). `kind` is currently only 'rain', 'alert', or
+ * 'historical' -- a UI must not render any other factor (e.g. "saturated ground") unless
+ * a real input for it exists in this contract; see docs/prototype_score_spec.md.
  */
 export interface ContributingFactor {
-  kind: 'rain' | 'alert';
+  kind: 'rain' | 'alert' | 'historical';
   county_name: string;
   /** Short label: an alert's event name, or "Heavy rainfall, <county>". */
   label: string;

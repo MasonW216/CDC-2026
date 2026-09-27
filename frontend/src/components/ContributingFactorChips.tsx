@@ -2,6 +2,7 @@
  * Renders `route.contributing_factors` -- already structured server-side specifically for
  * this ("for an icon list", see types/score.ts), unrendered anywhere until now. A small
  * chip row: a rain glyph for `kind: 'rain'`, a warning-triangle glyph for `kind: 'alert'`,
+ * a clock glyph for `kind: 'historical'` (the county's own 2015-2024 storm-event rate),
  * never anything else (that field's own contract note forbids inventing a new kind here,
  * e.g. "saturated ground", without a real backend input for it first).
  *
@@ -15,6 +16,7 @@ import type { ContributingFactor } from '@/types/score';
 const GLYPH: Record<ContributingFactor['kind'], string> = {
   rain: '🌧️',
   alert: '⚠️',
+  historical: '🕰️',
 };
 
 function Chip({ factor }: { factor: ContributingFactor }) {

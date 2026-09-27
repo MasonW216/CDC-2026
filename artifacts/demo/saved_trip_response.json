@@ -1,202 +1,82 @@
 {
- "schema_version": "prototype-score/1",
- "score_name": "Prototype weather-concern index (0-100, higher means more indicated concern)",
- "mode": "live",
- "requested_at_utc": "2026-09-27T09:01:14+00:00",
+ "alerts": [],
+ "better_departure": null,
+ "comparison": {
+  "extra_minutes": 0.0,
+  "fastest_route_id": "route_0f1d4333c9",
+  "index_difference": 0,
+  "lowest_concern_route_id": null,
+  "message": "The routes show similar indicated concern (within 5 points), so this index does not favor one.",
+  "ranking": "tie",
+  "severe_advice": null
+ },
+ "coverage": {
+  "alerts": {
+   "age_minutes": 0.0,
+   "error": null,
+   "flood_alerts_in_effect_statewide": 0,
+   "from_cache": true,
+   "ok": true,
+   "retrieved_utc": "2026-09-27T09:01:14+00:00",
+   "source": "NWS api.weather.gov active alerts, NC",
+   "unmapped_alerts": 0
+  },
+  "forecast": {
+   "age_minutes": 0.0,
+   "error": null,
+   "from_cache": true,
+   "horizon_hours": 72,
+   "missing_counties": [],
+   "retrieved_utc": "2026-09-27T09:01:14+00:00",
+   "source": "Open-Meteo forecast API (best-match model), hourly precipitation"
+  },
+  "geography": {
+   "message": null,
+   "supported": true
+  }
+ },
  "departure_utc": "2026-09-27T12:00:00+00:00",
+ "limitations": [
+  "Prototype rule, not a calibrated flood probability or a validated score.",
+  "Forecasts are uncertain and can be wrong.",
+  "The index does not know road closures, drainage, or terrain.",
+  "No official alert seen does not mean none exists; alerts issued later are not seen.",
+  "One forecast point per county."
+ ],
+ "mode": "cached",
+ "requested_at_utc": "2026-09-27T09:01:14+00:00",
  "routes": [
   {
-   "route_id": "route_0f1d4333c9",
-   "duration_minutes": 154.3,
-   "distance_km": 198.6,
-   "status": "assessed",
-   "index": 0,
+   "alerts": [],
    "band": "Lower concern",
-   "is_lower_bound": false,
-   "minutes_at_or_above_50": 0.0,
-   "highest_concern_segment": {
-    "county_fips": "37021",
-    "county_name": "Buncombe",
-    "arrival_utc": "2026-09-27T12:00:00+00:00",
-    "minutes": 19.7,
-    "km": 23.7,
-    "alerts": [],
-    "rain_rate_mm_h": 0.0,
-    "rain_24h_mm": 0.0,
-    "rain_peak_window_utc": [
-     "2026-09-27T13:00:00+00:00",
-     "2026-09-27T13:00:00+00:00"
-    ],
-    "rain_24h_window_utc": [
-     "2026-09-26T14:00:00+00:00",
-     "2026-09-27T13:00:00+00:00"
-    ],
-    "status": "assessed",
-    "index": 0,
-    "band": "Lower concern",
-    "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-   },
-   "segments": [
+   "contributing_factors": [
     {
-     "county_fips": "37021",
-     "county_name": "Buncombe",
-     "arrival_utc": "2026-09-27T12:00:00+00:00",
-     "minutes": 19.7,
-     "km": 23.7,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T13:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T14:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37089",
-     "county_name": "Henderson",
-     "arrival_utc": "2026-09-27T12:19:39.073247+00:00",
-     "minutes": 20.8,
-     "km": 27.6,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T13:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T14:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37149",
-     "county_name": "Polk",
-     "arrival_utc": "2026-09-27T12:40:26.399099+00:00",
-     "minutes": 23.2,
-     "km": 32.7,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T13:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T15:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37161",
-     "county_name": "Rutherford",
-     "arrival_utc": "2026-09-27T13:03:36.023218+00:00",
-     "minutes": 18.3,
-     "km": 26.9,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T14:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T15:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37045",
-     "county_name": "Cleveland",
-     "arrival_utc": "2026-09-27T13:21:52.968230+00:00",
-     "minutes": 33.0,
-     "km": 39.7,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T14:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T15:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37071",
-     "county_name": "Gaston",
-     "arrival_utc": "2026-09-27T13:54:55.608610+00:00",
-     "minutes": 23.1,
-     "km": 30.6,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T14:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T16:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37119",
-     "county_name": "Mecklenburg",
      "arrival_utc": "2026-09-27T14:18:02.578407+00:00",
-     "minutes": 16.2,
-     "km": 17.4,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T15:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T16:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+     "county_name": "Mecklenburg",
+     "detail": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+     "index": 16,
+     "kind": "historical",
+     "label": "County history, Mecklenburg"
+    },
+    {
+     "arrival_utc": "2026-09-27T12:19:39.073247+00:00",
+     "county_name": "Henderson",
+     "detail": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (15-point historical adjustment).",
+     "index": 15,
+     "kind": "historical",
+     "label": "County history, Henderson"
+    },
+    {
+     "arrival_utc": "2026-09-27T12:00:00+00:00",
+     "county_name": "Buncombe",
+     "detail": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
+     "index": 4,
+     "kind": "historical",
+     "label": "County history, Buncombe"
     }
    ],
-   "alerts": [],
-   "reasons": [
-    "Highest concern in Buncombe: Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-   ],
-   "contributing_factors": [],
+   "distance_km": 198.6,
+   "duration_minutes": 154.3,
    "geometry": [
     [
      -82.551523,
@@ -10186,178 +10066,233 @@
      -80.84316,
      35.227159
     ]
-   ]
-  },
-  {
-   "route_id": "route_6ca76b33b4",
-   "duration_minutes": 167.3,
-   "distance_km": 211.2,
-   "status": "assessed",
-   "index": 0,
-   "band": "Lower concern",
+   ],
+   "highest_concern_segment": {
+    "alerts": [],
+    "arrival_utc": "2026-09-27T14:18:02.578407+00:00",
+    "band": "Lower concern",
+    "county_fips": "37119",
+    "county_name": "Mecklenburg",
+    "county_prior_component": 16.2,
+    "index": 16,
+    "km": 17.4,
+    "minutes": 16.2,
+    "rain_24h_mm": 0.0,
+    "rain_24h_window_utc": [
+     "2026-09-26T16:00:00+00:00",
+     "2026-09-27T15:00:00+00:00"
+    ],
+    "rain_peak_window_utc": [
+     "2026-09-27T15:00:00+00:00",
+     "2026-09-27T15:00:00+00:00"
+    ],
+    "rain_rate_mm_h": 0.0,
+    "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+    "status": "assessed"
+   },
+   "index": 16,
    "is_lower_bound": false,
    "minutes_at_or_above_50": 0.0,
-   "highest_concern_segment": {
-    "county_fips": "37021",
-    "county_name": "Buncombe",
-    "arrival_utc": "2026-09-27T12:00:00+00:00",
-    "minutes": 23.2,
-    "km": 29.6,
-    "alerts": [],
-    "rain_rate_mm_h": 0.0,
-    "rain_24h_mm": 0.0,
-    "rain_peak_window_utc": [
-     "2026-09-27T13:00:00+00:00",
-     "2026-09-27T13:00:00+00:00"
-    ],
-    "rain_24h_window_utc": [
-     "2026-09-26T14:00:00+00:00",
-     "2026-09-27T13:00:00+00:00"
-    ],
-    "status": "assessed",
-    "index": 0,
-    "band": "Lower concern",
-    "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-   },
+   "reasons": [
+    "Highest concern in Mecklenburg: Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment)."
+   ],
+   "route_id": "route_0f1d4333c9",
    "segments": [
     {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T12:00:00+00:00",
+     "band": "Lower concern",
      "county_fips": "37021",
      "county_name": "Buncombe",
-     "arrival_utc": "2026-09-27T12:00:00+00:00",
+     "county_prior_component": 3.6,
+     "index": 4,
+     "km": 23.7,
+     "minutes": 19.7,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T12:19:39.073247+00:00",
+     "band": "Lower concern",
+     "county_fips": "37089",
+     "county_name": "Henderson",
+     "county_prior_component": 15.3,
+     "index": 15,
+     "km": 27.6,
+     "minutes": 20.8,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (15-point historical adjustment).",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T12:40:26.399099+00:00",
+     "band": "Lower concern",
+     "county_fips": "37149",
+     "county_name": "Polk",
+     "county_prior_component": 0.0,
+     "index": 0,
+     "km": 32.7,
      "minutes": 23.2,
-     "km": 29.6,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T13:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T14:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37111",
-     "county_name": "McDowell",
-     "arrival_utc": "2026-09-27T12:23:14.870357+00:00",
-     "minutes": 29.9,
-     "km": 41.9,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T13:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T14:00:00+00:00",
-      "2026-09-27T13:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37023",
-     "county_name": "Burke",
-     "arrival_utc": "2026-09-27T12:53:06.658102+00:00",
-     "minutes": 30.5,
-     "km": 42.5,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T13:00:00+00:00",
-      "2026-09-27T14:00:00+00:00"
-     ],
      "rain_24h_window_utc": [
       "2026-09-26T15:00:00+00:00",
       "2026-09-27T14:00:00+00:00"
      ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect.",
+     "status": "assessed"
     },
     {
-     "county_fips": "37035",
-     "county_name": "Catawba",
-     "arrival_utc": "2026-09-27T13:23:38.406522+00:00",
-     "minutes": 36.5,
-     "km": 42.7,
      "alerts": [],
-     "rain_rate_mm_h": 0.0,
+     "arrival_utc": "2026-09-27T13:03:36.023218+00:00",
+     "band": "Lower concern",
+     "county_fips": "37161",
+     "county_name": "Rutherford",
+     "county_prior_component": 0.0,
+     "index": 0,
+     "km": 26.9,
+     "minutes": 18.3,
      "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T15:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T14:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect.",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T13:21:52.968230+00:00",
+     "band": "Lower concern",
+     "county_fips": "37045",
+     "county_name": "Cleveland",
+     "county_prior_component": 0.0,
+     "index": 0,
+     "km": 39.7,
+     "minutes": 33.0,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T15:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T14:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect.",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T13:54:55.608610+00:00",
+     "band": "Lower concern",
+     "county_fips": "37071",
+     "county_name": "Gaston",
+     "county_prior_component": 0.0,
+     "index": 0,
+     "km": 30.6,
+     "minutes": 23.1,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T16:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
      "rain_peak_window_utc": [
       "2026-09-27T14:00:00+00:00",
       "2026-09-27T15:00:00+00:00"
      ],
-     "rain_24h_window_utc": [
-      "2026-09-26T16:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
-    },
-    {
-     "county_fips": "37109",
-     "county_name": "Lincoln",
-     "arrival_utc": "2026-09-27T14:00:07.755232+00:00",
-     "minutes": 16.6,
-     "km": 19.8,
-     "alerts": [],
      "rain_rate_mm_h": 0.0,
-     "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T15:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "rain_24h_window_utc": [
-      "2026-09-26T16:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect.",
+     "status": "assessed"
     },
     {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T14:18:02.578407+00:00",
+     "band": "Lower concern",
      "county_fips": "37119",
      "county_name": "Mecklenburg",
-     "arrival_utc": "2026-09-27T14:16:46.173378+00:00",
-     "minutes": 30.5,
-     "km": 34.6,
-     "alerts": [],
-     "rain_rate_mm_h": 0.0,
+     "county_prior_component": 16.2,
+     "index": 16,
+     "km": 17.4,
+     "minutes": 16.2,
      "rain_24h_mm": 0.0,
-     "rain_peak_window_utc": [
-      "2026-09-27T15:00:00+00:00",
-      "2026-09-27T15:00:00+00:00"
-     ],
      "rain_24h_window_utc": [
       "2026-09-26T16:00:00+00:00",
       "2026-09-27T15:00:00+00:00"
      ],
-     "status": "assessed",
-     "index": 0,
-     "band": "Lower concern",
-     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+     "rain_peak_window_utc": [
+      "2026-09-27T15:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+     "status": "assessed"
     }
    ],
+   "status": "assessed"
+  },
+  {
    "alerts": [],
-   "reasons": [
-    "Highest concern in Buncombe: Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect."
+   "band": "Lower concern",
+   "contributing_factors": [
+    {
+     "arrival_utc": "2026-09-27T12:53:06.658102+00:00",
+     "county_name": "Burke",
+     "detail": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (18-point historical adjustment).",
+     "index": 18,
+     "kind": "historical",
+     "label": "County history, Burke"
+    },
+    {
+     "arrival_utc": "2026-09-27T12:23:14.870357+00:00",
+     "county_name": "McDowell",
+     "detail": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+     "index": 16,
+     "kind": "historical",
+     "label": "County history, McDowell"
+    },
+    {
+     "arrival_utc": "2026-09-27T14:16:46.173378+00:00",
+     "county_name": "Mecklenburg",
+     "detail": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+     "index": 16,
+     "kind": "historical",
+     "label": "County history, Mecklenburg"
+    }
    ],
-   "contributing_factors": [],
+   "distance_km": 211.2,
+   "duration_minutes": 167.3,
    "geometry": [
     [
      -82.551523,
@@ -22787,50 +22722,180 @@
      -80.84316,
      35.227159
     ]
-   ]
+   ],
+   "highest_concern_segment": {
+    "alerts": [],
+    "arrival_utc": "2026-09-27T12:53:06.658102+00:00",
+    "band": "Lower concern",
+    "county_fips": "37023",
+    "county_name": "Burke",
+    "county_prior_component": 18.0,
+    "index": 18,
+    "km": 42.5,
+    "minutes": 30.5,
+    "rain_24h_mm": 0.0,
+    "rain_24h_window_utc": [
+     "2026-09-26T15:00:00+00:00",
+     "2026-09-27T14:00:00+00:00"
+    ],
+    "rain_peak_window_utc": [
+     "2026-09-27T13:00:00+00:00",
+     "2026-09-27T14:00:00+00:00"
+    ],
+    "rain_rate_mm_h": 0.0,
+    "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (18-point historical adjustment).",
+    "status": "assessed"
+   },
+   "index": 18,
+   "is_lower_bound": false,
+   "minutes_at_or_above_50": 0.0,
+   "reasons": [
+    "Highest concern in Burke: Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (18-point historical adjustment)."
+   ],
+   "route_id": "route_6ca76b33b4",
+   "segments": [
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T12:00:00+00:00",
+     "band": "Lower concern",
+     "county_fips": "37021",
+     "county_name": "Buncombe",
+     "county_prior_component": 3.6,
+     "index": 4,
+     "km": 29.6,
+     "minutes": 23.2,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (4-point historical adjustment).",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T12:23:14.870357+00:00",
+     "band": "Lower concern",
+     "county_fips": "37111",
+     "county_name": "McDowell",
+     "county_prior_component": 16.2,
+     "index": 16,
+     "km": 41.9,
+     "minutes": 29.9,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T12:53:06.658102+00:00",
+     "band": "Lower concern",
+     "county_fips": "37023",
+     "county_name": "Burke",
+     "county_prior_component": 18.0,
+     "index": 18,
+     "km": 42.5,
+     "minutes": 30.5,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T15:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T14:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (18-point historical adjustment).",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T13:23:38.406522+00:00",
+     "band": "Lower concern",
+     "county_fips": "37035",
+     "county_name": "Catawba",
+     "county_prior_component": 0.0,
+     "index": 0,
+     "km": 42.7,
+     "minutes": 36.5,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T16:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T14:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (0-point historical adjustment).",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T14:00:07.755232+00:00",
+     "band": "Lower concern",
+     "county_fips": "37109",
+     "county_name": "Lincoln",
+     "county_prior_component": 0.0,
+     "index": 0,
+     "km": 19.8,
+     "minutes": 16.6,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T16:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T15:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect.",
+     "status": "assessed"
+    },
+    {
+     "alerts": [],
+     "arrival_utc": "2026-09-27T14:16:46.173378+00:00",
+     "band": "Lower concern",
+     "county_fips": "37119",
+     "county_name": "Mecklenburg",
+     "county_prior_component": 16.2,
+     "index": 16,
+     "km": 34.6,
+     "minutes": 30.5,
+     "rain_24h_mm": 0.0,
+     "rain_24h_window_utc": [
+      "2026-09-26T16:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_peak_window_utc": [
+      "2026-09-27T15:00:00+00:00",
+      "2026-09-27T15:00:00+00:00"
+     ],
+     "rain_rate_mm_h": 0.0,
+     "reason": "Forecast peak 0.0 mm/h and 0.0 mm over the prior 24 h; no official flood product in effect; county's 2015-2024 history runs above the state average (16-point historical adjustment).",
+     "status": "assessed"
+    }
+   ],
+   "status": "assessed"
   }
  ],
- "comparison": {
-  "ranking": "tie",
-  "fastest_route_id": "route_0f1d4333c9",
-  "lowest_concern_route_id": null,
-  "extra_minutes": 0.0,
-  "index_difference": 0,
-  "message": "The routes show similar indicated concern (within 5 points), so this index does not favor one.",
-  "severe_advice": null
- },
- "coverage": {
-  "forecast": {
-   "source": "Open-Meteo forecast API (best-match model), hourly precipitation",
-   "retrieved_utc": "2026-09-27T09:01:14+00:00",
-   "age_minutes": 0.0,
-   "horizon_hours": 72,
-   "missing_counties": [],
-   "from_cache": false,
-   "error": null
-  },
-  "alerts": {
-   "source": "NWS api.weather.gov active alerts, NC",
-   "retrieved_utc": "2026-09-27T09:01:14+00:00",
-   "age_minutes": 0.0,
-   "ok": true,
-   "error": null,
-   "from_cache": false,
-   "unmapped_alerts": 0,
-   "flood_alerts_in_effect_statewide": 0
-  },
-  "geography": {
-   "supported": true,
-   "message": null
-  }
- },
- "alerts": [],
- "better_departure": null,
- "limitations": [
-  "Prototype rule, not a calibrated flood probability or a validated score.",
-  "Forecasts are uncertain and can be wrong.",
-  "The index does not know road closures, drainage, or terrain.",
-  "No official alert seen does not mean none exists; alerts issued later are not seen.",
-  "One forecast point per county."
- ]
+ "schema_version": "prototype-score/1",
+ "score_name": "Prototype weather-concern index (0-100, higher means more indicated concern)"
 }
