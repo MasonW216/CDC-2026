@@ -6,6 +6,11 @@ September 26, 2026 (America/New_York). Contribution branch:
 before branching. Earlier missing sections and all seven required figures already
 existed on the reviewed branch; the PR description was stale.
 
+Integrated the subsequent `79c3054` spot-check documentation commit before handoff.
+Its CSV is preserved unchanged. That commit changes documentation and precheck
+evidence, not notebook code; the full/sample execution evidence therefore still
+applies. Its `claude-precheck` entries explicitly require Mason's confirmation.
+
 **Recommendation: change scope to retrospective reported-event feasibility;
 request changes before approving the gate.** The label is constructible, and its
 rarity alone does not justify stopping. The evidence does not establish statewide
@@ -65,6 +70,13 @@ approval of Cameron's own sections. Jeffrey's review remains required.
 7. **Resolve pre-gate web scope before merge.** `docs/NEXT_STEPS.md` identifies web
    and geocoding commits already included in PR #18. The team must resolve that scope
    against the gate rule; this EDA contribution does not approve those changes.
+8. **Reproduce the new hand-off finding.** Commit `79c3054` reports 86 Flash Flood-to-Flood
+   hand-offs and 62 positive windows attributable only to those hand-offs, including
+   21 test-year windows. Add the matching rule and reconciliation code to the notebook
+   before treating these numbers as verified gate evidence. Temporal adjacency alone
+   does not prove identical physical events. Keep the canonical target unchanged and
+   prespecify any sensitivity analysis before viewing model results. This review has
+   preserved the new source notes but has not independently validated those counts.
 
 ## Checklist and conditional handoff
 

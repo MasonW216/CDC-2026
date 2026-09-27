@@ -29,8 +29,9 @@ Episode concentration must be measured separately before attributing annual vari
 Data quality is strong where it was tested. Event IDs are unique, every qualifying event is
 county-coded, and parsed timestamps agree exactly with NOAA's own date-time text. NOAA labels
 every North Carolina time `EST-5`, including the 81.7% of events in daylight-saving months;
-NWS policy requires standard time year-round, so the conversion is correct, and a manual spot
-check will confirm preparers complied. Through Open-Meteo, ERA5-Land lacks precipitation and
+NWS policy requires standard time year-round, so the conversion is correct, and a spot check
+of ten events found no hour-off error: four summer and autumn events matched independent
+local storm reports to the minute. Through Open-Meteo, ERA5-Land lacks precipitation and
 wind, so Milestone 3 will fetch ERA5-Land directly from Copernicus.
 
 In the three-point weather sample, positive windows have median trailing 24-hour rainfall
@@ -41,6 +42,8 @@ before departure; the notebook's two leakage audits still need reconciliation.
 **Review recommendation: change scope** to a retrospective reported-event feasibility
 experiment until feature availability and evaluation evidence support broader claims.
 The team gate remains open; this recommendation is not Mason's decision.
+Mason's existing draft recommendation is **proceed** after the second-person reviews;
+the team must reconcile these recommendations before recording its decision.
 
 ---
 
@@ -51,11 +54,11 @@ The team gate remains open; this recommendation is not Mason's decision.
 | Unique `EVENT_ID` after cleaning | 0 duplicates | 0 duplicates in 639,467 rows | ☑ |
 | Timestamps timezone-aware UTC | 100% | 100%; fixed offset from `CZ_TIMEZONE` | ☑ |
 | Timestamps match NCEI's own date-time text | — | 2,220 of 2,220 begin and end times | ☑ |
-| Daylight-saving handling | covered by tests | Fixed offset tested; standard time year-round is NWS policy (NWSI 10-1605 §2.3); compliance spot check pending | ◐ |
+| Daylight-saving handling | covered by tests | Fixed offset tested; standard time year-round is NWS policy (NWSI 10-1605 §2.3); compliance spot check: 4 of 4 testable daylight-saving events matched to the minute (see Spot check) | ◐ |
 | County FIPS preserve leading zeroes | 5-character strings, NC only | All 2,220 events validated | ☑ |
 | Hazard filter exactly Flood / Flash Flood / Debris Flow | exact | Exact; 887 other water-related reports excluded | ☑ |
 | Events with unresolved geography | counted and documented | 0: every qualifying event is county-coded | ☑ |
-| Manually spot-checked records | ≥ 10 | Candidates selected; **checks not yet done** | ☐ |
+| Manually spot-checked records | ≥ 10 | 10 checked; 5 times confirmed, 2 not testable, 2 not verified, 1 inconclusive; **Mason to confirm** | ◐ |
 | Weather coverage by county and year | reported | 3 representative points, 10 years, 100% (`era5_seamless`); all 100 counties in Milestone 3 | ◐ |
 | Positive rate by year, month, county, event type | reported | By split, month, and county (section 9); by type below | ☑ |
 | Damage strings parsed with unit tests | covered | `tests/data/test_noaa.py` | ☑ |
@@ -196,15 +199,47 @@ into earlier training rows unless constructed out of time.
 
 ---
 
+## Spot check
+
+Ten events from [`spot_check_candidates.csv`](spot_check_candidates.csv), checked for county
+and onset time against independent records: NWS local storm reports (LSRs) from the Iowa
+Environmental Mesonet, and Census 2024 county boundaries. Three of them are summer events
+(590930 June 2015, 904861 June 2020, 1197141 July 2024). The CSV records the event ID,
+county, type, published and UTC onset, source, and notes for each. The first pass was done
+by a Claude session, so it is marked `claude-precheck`; **Mason must confirm it** and put a
+handle in the `reviewer` column before this item is ticked.
+
+| Result | Events |
+|---|---|
+| Onset time matches an LSR to the minute | 590930, 904861, 1197141, 926146 (all in daylight-saving months); 610221 (December control) |
+| Not testable: Flood entry is a hand-off from a Flash Flood entry | 663370, 663509 |
+| Not verified: no independent report in the window | 666045, 787208 |
+| Inconclusive: gauge-based, hour not settled | 1216934 |
+
+- **Timezone.** Four events in June, July and October match LSRs exactly under the fixed
+  `EST-5` offset. An hour-off error (clock time entered as daylight time) would show as a
+  60-minute miss; none did.
+- **County.** All ten `CZ_FIPS` match the named county. Eight reported points fall inside that
+  county. Two fall just outside: 663509 by 440 m (in Nash, reported Edgecombe) and 787208 by
+  2.7 km (in Duplin, reported Wayne). The pipeline uses `CZ_FIPS`, which NOAA records as
+  the county-coded authority, so labels are unaffected.
+- **Hand-off finding.** 663370 and 663509 begin exactly one minute after a Flash Flood entry
+  in the same county ends, and 86 of 535 Flood events (16%) do. Their onset is a
+  bookkeeping change, not a new flood. Under the onset rule, 62 positive windows (4.1% of
+  1,499) exist only because of such a hand-off; 21 of them are in the 2024 test year. This
+  does not change the gate decision: ADR 0001 fixes the label. Milestone 4 should report
+  metrics with and without these windows.
+
+---
+
 ## Unresolved risks
 
 1. **Standard-time compliance.** [NWS Instruction 10-1605](https://www.weather.gov/media/directives/010_pdfs/pd01016005curr.pdf)
    §2.3 requires local standard time "throughout the year" (the 2007 version says the same),
    so `EST-5` is correct by policy. Only 13 narratives quote a zoned time, too few to test
-   compliance, and none shows clock time entered as the start. The spot check of
-   [`spot_check_candidates.csv`](spot_check_candidates.csv) remains uncompleted. Checking
-   ten candidates cannot establish compliance for all 1,813 daylight-saving-month events
-   (81.7%); it can detect specific discrepancies.
+   compliance. The [spot check](#spot-check) tested it on four daylight-saving events and found
+   no hour-off error, but four of 1,813 events is a small sample, not proof of compliance.
+   This automated precheck still requires Mason's confirmation.
 2. **Weather retrieval not yet reproducible in the repo.** ADR 0005 awaits approval, and its
    county time series were retrieved by a prototype outside the repo. Milestone 3 must port
    that into `scripts/fetch_weather.py` so `make download` reproduces it.
@@ -236,6 +271,8 @@ _TBD: recorded by Mason after both reviews._ The independent review recommends *
 scope** to retrospective feasibility and requests fixes before gate approval; see
 [`cameron_gate_review.md`](cameron_gate_review.md). This does not change the locked label
 or split years. The weather source and Coastal Flood were decided on 2026-09-26.
+Mason's prior draft recommends **proceed**, conditional on confirmation of the spot
+check and the two second-person reviews. Neither recommendation is a signed gate decision.
 
 | Role | GitHub handle | Date |
 |---|---|---|
