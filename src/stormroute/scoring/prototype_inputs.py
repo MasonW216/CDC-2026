@@ -12,6 +12,7 @@ rainfall after that instant is used.
 from __future__ import annotations
 
 import json
+import math
 from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -77,7 +78,10 @@ def _trailing(
     values = [mm[index[t]] for t in wanted]
     if any(v is None for v in values):
         return None
-    return float(sum(v for v in values if v is not None))
+    # math.fsum is exact regardless of Python version; plain sum() switched to
+    # compensated summation in 3.12, so the same inputs summed on 3.11 vs 3.12
+    # land on different adjacent binary floats (108.2 vs 108.19999999999995).
+    return round(math.fsum(v for v in values if v is not None), 2)
 
 
 def build_segments(
