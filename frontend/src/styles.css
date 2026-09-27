@@ -280,55 +280,79 @@ a {
   font-size: 0.8rem;
 }
 
-/* ---- Typography ---- */
+/* ---- Typography: bold, tight display type; uppercase micro-labels ---- */
 
 h2.page-title {
-  margin: 0 0 var(--space-2);
-  font-size: 1.4rem;
-  font-weight: 700;
+  margin: 0 0 var(--space-3);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 h3.section-title {
-  margin: var(--space-5) 0 var(--space-2);
-  font-size: 1.05rem;
-  font-weight: 600;
+  margin: var(--space-6) 0 var(--space-3);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
 }
 
 h4.subsection-title {
-  margin: var(--space-4) 0 var(--space-1);
-  font-size: 0.95rem;
-  font-weight: 600;
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .note {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: 0.86rem;
+  line-height: 1.55;
   max-width: 68ch;
 }
 
-/* ---- Buttons ---- */
+/* ---- Buttons: solid black pills, outline secondary ---- */
 
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
-  font-size: 0.9rem;
+  min-height: 48px;
+  font-size: 0.95rem;
   font-weight: 600;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-surface);
+  letter-spacing: -0.005em;
+  padding: var(--space-3) var(--space-5);
+  border-radius: 999px;
+  border: 1.5px solid var(--color-text);
+  background: transparent;
   color: var(--color-text);
+  font-family: inherit;
   cursor: pointer;
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
 }
 
 .btn:hover {
-  background: var(--color-bg);
+  background: var(--color-primary-soft);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.4;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn-primary {
@@ -338,8 +362,9 @@ h4.subsection-title {
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  opacity: 0.86;
 }
 
 .btn-ghost {
@@ -348,10 +373,10 @@ h4.subsection-title {
 }
 
 .btn-ghost:hover {
-  background: var(--color-bg);
+  background: var(--color-primary-soft);
 }
 
-/* ---- Forms ---- */
+/* ---- Forms: filled gray inputs, border only on focus ---- */
 
 .field {
   position: relative;
@@ -361,26 +386,36 @@ h4.subsection-title {
 
 .field label {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--color-text-muted);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .field input[type='text'],
 .field input[type='datetime-local'] {
   width: 100%;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border-strong);
+  min-height: 48px;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid transparent;
   border-radius: var(--radius-md);
-  background: var(--color-surface);
+  background: var(--color-primary-soft);
   color: var(--color-text);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.field input::placeholder {
+  color: var(--color-text-faint);
 }
 
 .field input:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--color-text);
+  background: var(--color-surface);
 }
 
 .field input[aria-invalid='true'] {
@@ -388,7 +423,7 @@ h4.subsection-title {
 }
 
 .field .field__status {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-text-faint);
   min-height: 1.2em;
   margin: var(--space-1) 0 0;
@@ -397,6 +432,7 @@ h4.subsection-title {
 .field [role='alert'] {
   color: var(--level-3-fg);
   font-size: 0.85rem;
+  font-weight: 600;
   margin: var(--space-1) 0 0;
 }
 
@@ -406,45 +442,52 @@ h4.subsection-title {
   left: 0;
   right: 0;
   margin: var(--space-1) 0 0;
-  padding: var(--space-1);
+  padding: var(--space-1) 0;
   list-style: none;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   max-height: 260px;
   overflow-y: auto;
 }
 
 .field__results li {
   margin: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.field__results li:last-child {
+  border-bottom: none;
 }
 
 .field__results button {
   display: block;
   width: 100%;
   text-align: left;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border: none;
   background: none;
-  border-radius: var(--radius-sm);
   color: var(--color-text);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  font-family: inherit;
   cursor: pointer;
 }
 
-.field__results button:hover {
+.field__results button:hover,
+.field__results button:focus-visible {
   background: var(--color-primary-soft);
-  color: var(--color-primary);
+  outline: none;
 }
 
-/* ---- Cards ---- */
+/* ---- Cards: hairline border, no shadow ---- */
 
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-5);
   margin-bottom: var(--space-4);
 }
 
@@ -459,18 +502,19 @@ h4.subsection-title {
 .level-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: 2px var(--space-2);
+  gap: 6px;
+  padding: 4px 10px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
 .level-badge::before {
   content: '';
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: currentColor;
 }
@@ -499,22 +543,27 @@ h4.subsection-title {
 /* ---- Alert banner: visually distinct from any modeled content ---- */
 
 .alert-banner {
-  border: 1px solid var(--level-3-fg);
+  border: none;
+  border-left: 4px solid var(--level-3-fg);
   background: var(--level-3-bg);
   color: var(--level-3-fg);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   padding: var(--space-3) var(--space-4);
-  margin: var(--space-3) 0;
+  margin: var(--space-4) 0;
 }
 
 .alert-banner h4 {
   margin: 0 0 var(--space-1);
-  font-size: 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .alert-banner ul {
   margin: 0;
   padding-left: 1.2em;
+  font-weight: 500;
 }
 
 /* ---- Tables ---- */
@@ -522,22 +571,22 @@ h4.subsection-title {
 table.timeline {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 table.timeline th {
   text-align: left;
   color: var(--color-text-muted);
-  font-weight: 600;
-  font-size: 0.78rem;
+  font-weight: 700;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.1em;
   padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 2px solid var(--color-text);
 }
 
 table.timeline td {
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-3);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -955,21 +1004,21 @@ table.timeline tr:last-child td {
   background: var(--color-surface);
 }
 
-/* ---- Origin/destination connector: circle -> line -> pin ---- */
+/* ---- Origin/destination connector: circle -> line -> square ---- */
 
 .route-inputs {
   position: relative;
-  padding-left: 22px;
+  padding-left: 26px;
 }
 
 .route-inputs::before {
   content: '';
   position: absolute;
   left: 5px;
-  top: 14px;
-  bottom: 28px;
+  top: 49px;
+  bottom: 46px;
   width: 2px;
-  background: var(--color-border-strong);
+  background: var(--color-text);
 }
 
 .route-inputs__row {
@@ -979,22 +1028,23 @@ table.timeline tr:last-child td {
 
 .route-inputs__dot {
   position: absolute;
-  left: -22px;
-  top: 12px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
+  left: -26px;
+  top: 43px;
+  width: 12px;
+  height: 12px;
   z-index: 1;
 }
 
 .route-inputs__dot--origin {
+  border-radius: 50%;
   background: var(--color-surface);
-  border: 2.5px solid var(--color-text);
+  border: 3px solid var(--color-text);
 }
 
 .route-inputs__dot--destination {
-  background: var(--color-primary);
-  border: 2.5px solid var(--color-primary);
+  border-radius: 2px;
+  background: var(--color-text);
+  border: 3px solid var(--color-text);
 }
 
 .departure-field {
@@ -1005,9 +1055,9 @@ table.timeline tr:last-child td {
 
 .risk-gauge {
   position: relative;
-  width: 168px;
-  height: 168px;
-  margin: var(--space-3) auto;
+  width: 184px;
+  height: 184px;
+  margin: var(--space-4) auto var(--space-3);
 }
 
 .risk-gauge__center {
@@ -1020,23 +1070,27 @@ table.timeline tr:last-child td {
 }
 
 .risk-gauge__value {
-  font-size: 2.6rem;
+  font-size: 3.4rem;
   font-weight: 800;
   line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
   color: var(--color-text);
 }
 
 .risk-gauge__band {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  margin-top: var(--space-1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: var(--space-2);
 }
 
 /* ---- Score breakdown list ---- */
 
 .route-breakdown {
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-2);
   border-top: 1px solid var(--color-border);
 }
 
@@ -1049,10 +1103,12 @@ table.timeline tr:last-child td {
 .breakdown-list li {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2);
-  padding: var(--space-2) 0;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
   border-bottom: 1px solid var(--color-border);
-  font-size: 0.88rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.45;
 }
 
 .breakdown-list li:last-child {
@@ -1061,10 +1117,22 @@ table.timeline tr:last-child td {
 
 .breakdown-list__icon {
   flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  font-size: 0.9rem;
 }
 
 .breakdown-list__item--danger {
   color: var(--level-3-fg);
+}
+
+.breakdown-list__item--danger .breakdown-list__icon {
+  background: var(--level-3-bg);
 }
 
 /* ---- Map tiles: desaturated to approximate a muted basemap without

@@ -13,8 +13,8 @@ const BAND_LEVEL: Record<string, 0 | 1 | 2 | 3 | 'none'> = {
   'Not assessed': 'none',
 };
 
-const SIZE = 168;
-const STROKE = 14;
+const SIZE = 184;
+const STROKE = 12;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
