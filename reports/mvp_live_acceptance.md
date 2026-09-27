@@ -1,5 +1,60 @@
 # Live MVP acceptance plan — Cameron
 
+## Addendum — real live verification, 27 Sep 2026 ~04:00 EDT (from Mason's backend assistant)
+
+Cameron, welcome back. While you and Jeffrey were away I did what your report correctly said
+was still missing: an actual run, not source inspection. Everything below is from a real
+headless-browser session against a freshly restarted backend (`Mason` at `526cc0b`), plus one
+real bug I found that source review couldn't have caught.
+
+**Housekeeping first:** your report's "not verified" disposition was accurate as of when you
+wrote it, but two things changed after: (1) `90e402e`/`4c8eb51` are now merged into `Mason`
+(I did it), so "not yet in Mason" in your "Current gate" section is stale; (2) I found and
+killed a stale `uvicorn` process left running from earlier in the session that was silently
+serving pre-fix code — if you test and get "at least 2 candidates are required" on a
+single-route trip, you're hitting a zombie process, not the current code. Kill anything on
+:8000 and restart `make api` fresh.
+
+**What I actually ran, with a real Chromium browser (Playwright), against `Mason` at `526cc0b`:**
+
+1. Loaded the planner, typed "Raleigh" into Origin — got real ORS results
+   ("Raleigh, NC, USA"), selected one. Typed "Wilmington" into Destination, selected
+   "Wilmington, NC, USA". Filled a real future departure. Clicked "Analyze trip."
+2. Landed on `/results` showing "Raleigh, NC, USA to Wilmington, NC, USA," a real OSRM route
+   (211.9 km, 151 min), a real county timeline (Wake → Johnston → Sampson → Duplin → Pender ×2
+   → New Hanover), each with real `rain_rate_mm_h`/`rain_24h_mm` and honest "Lower concern"
+   (real: NC is dry tonight). **OSRM returned exactly one route for this trip**, and the app
+   correctly showed `comparison.ranking: "single_route"`, "Only one route was available, so no
+   comparison is possible" — no invented alternative. Zero console errors.
+3. Separately, clicked the "Load the Hurricane Helene replay" button and confirmed it
+   round-trips through the same results page with `mode: "cached"` shown.
+
+**This directly closes or updates several of your items:**
+
+| Your ID | Update |
+|---|---|
+| A1 | **Now verified live**, item 1–2 above. Different trip than your agreed A2 pair, but satisfies "a newly entered trip produces route alternatives [or a documented single-route result], time-matched weather/alerts, reasons" end to end, in a real browser. |
+| A2 | **Partially closed.** Raleigh→Wilmington (a second, distinct, user-typed trip, not Greensboro–Wilmington specifically) was verified in the real browser. Greensboro–Wilmington itself I verified live via direct API call (`curl`/`TestClient`, not yet through the browser) — two genuinely different real routes came back (via Alamance vs. via Randolph), both scored. **Still open: run Greensboro–Wilmington specifically through the browser**, since that's the trip you and Jeffrey agreed on. |
+| A3 | **Fixed and verified.** The "Neither route" wording bug you found (item 46 in your findings) is fixed: `_severe()` now says "This route does not avoid..." for one route, "None of the routes avoid..." for more. Verified live via the single-route Raleigh→Wilmington result above, which correctly showed no severe-advice text at all (concern was Lower, not Severe, so the wording wasn't exercised — but the code path and its unit tests are in `tests/scoring/test_concern.py::test_severe_advice_wording_matches_route_count`). |
+| A7 | **New backend behavior, unit-tested, not yet UI-tested:** a cache fallback older than 3h (forecast) / 30min (alerts) is now refused outright (treated as no cache), never served as current. Explicit `offline=True` replay is exempted on purpose. See `docs/prototype_score_spec.md`'s "Freshness policy" section. |
+| A12 | **Partially closed, one real gap found.** Cache/replay status (`mode: "cached"`) does round-trip to the results page and is visible in the disclaimer text. But: **`age_minutes` (how old the cached data is) is now in the API response and is not yet rendered anywhere in the UI** — only `from_cache` (boolean) and the request time are shown. Flag for Jeffrey. |
+| A13 | **One new finding, not in your list: the "Load the Hurricane Helene replay" button is mislabeled.** It does not load Hurricane Helene. `mode=cached_replay` replays `artifacts/demo/saved_trip_request.json`, which I generated tonight from a live, contemporary trip (today's date, dry weather, `Lower concern`) — this is correctly the brief's "cache one contemporary trip for a demo fallback," and it's correctly kept separate from Helene reanalysis (which must never feed the live flow, per the brief). The bug is purely the button's *text*: it should say something like "Load saved trip (offline demo)," not "Hurricane Helene." The real Helene Severe-concern example still exists, just as the separate standalone page `artifacts/demo/results.html`, not wired to this button. Low effort to fix, but exactly the kind of claim-vs-code mismatch your case 13 exists to catch — please verify my finding independently when you're back. |
+| A14 | **Verified live**, twice, both paths (steps 1–3 above): the demo button and the typed form take two structurally independent code paths (no shared state), matching the fix Jeffrey described. |
+
+**Still genuinely open, unchanged from your list:** A4/A5 with real (non-dry) data, A6/A8/A9/A11
+in the actual browser rather than unit tests only, `minutes_at_or_above_50` not shown in the UI,
+the planner disclaimer's unconditional Helene wording, the map legend wording question (I
+weighed in earlier: "lower modeled weather risk" matches CLAUDE.md's own approved phrase, your
+suggested change isn't required), and a full clean-Codespace run (I'm doing that next).
+
+**Verification commands**, backend fully passing: `PYTHONPATH=src:backend/src .venv/bin/python -m pytest -q`
+→ 294 passed, 3 skipped (network-only). Frontend, from `frontend/`: `npm run typecheck && npm run lint && npm test && npm run build`
+→ all clean, 51/51 tests. Both run tonight against `Mason` at `526cc0b`, not assumed from
+CI history.
+
+---
+
+
 **Purpose:** define and track independent checks through backend and frontend integration. The acceptance cases were specified before integration; this sheet is not sign-off evidence. Record the commit, test time, inputs, output, and pass/fail result for each check as the vertical slice is exercised.
 
 ## Current gate
