@@ -1,7 +1,7 @@
 event_id,why_selected,event_type,county_fips,begin_as_published,begin_utc,ncei_event_page,reviewer,county_matches,utc_time_matches_nws_product,notes
-663370,Daylight-saving period (settles EST-5),Flood,37163,09-OCT-16 00:30:00,2016-10-09 05:30,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=663370,,,,
-590930,Daylight-saving period (settles EST-5),Flood,37155,26-JUN-15 22:30:00,2015-06-27 03:30,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=590930,,,,
-666045,Daylight-saving period (settles EST-5),Flood,37107,13-OCT-16 07:00:00,2016-10-13 12:00,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=666045,,,,
+663370,Daylight-saving period (EST-5 compliance),Flood,37163,09-OCT-16 00:30:00,2016-10-09 05:30,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=663370,,,,
+590930,Daylight-saving period (EST-5 compliance),Flood,37155,26-JUN-15 22:30:00,2015-06-27 03:30,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=590930,,,,
+666045,Daylight-saving period (EST-5 compliance),Flood,37107,13-OCT-16 07:00:00,2016-10-13 12:00,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=666045,,,,
 610221,Standard-time period,Flash Flood,37151,30-DEC-15 15:18:00,2015-12-30 20:18,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=610221,,,,
 1197141,Zero duration,Flash Flood,37183,12-JUL-24 12:23:00,2024-07-12 17:23,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=1197141,,,,
 663509,Crosses local midnight,Flood,37065,09-OCT-16 00:45:00,2016-10-09 05:45,https://www.ncdc.noaa.gov/stormevents/eventdetails.jsp?id=663509,,,,

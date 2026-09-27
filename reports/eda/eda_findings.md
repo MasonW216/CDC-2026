@@ -26,18 +26,18 @@ selection year has only 53, and yearly counts swing with single storms: Florence
 had 295, Helene in 2024 had 272, and 2022 had 53.
 
 Data quality is strong where it was tested. Event IDs are unique, every qualifying event is
-county-coded, and parsed timestamps agree exactly with NOAA's own date-time text. Two issues
-remain open. First, NOAA labels every North Carolina time `EST-5`, and 81.7% of events fall
-in daylight-saving months, so a manual spot check must confirm these are really standard
-time. Second, through Open-Meteo, ERA5-Land has no precipitation or wind. A combined product
-supplies them from coarser ERA5 with complete coverage.
+county-coded, and parsed timestamps agree exactly with NOAA's own date-time text. NOAA labels
+every North Carolina time `EST-5`, including the 81.7% of events in daylight-saving months;
+NWS policy requires standard time year-round, so the conversion is correct, and a manual spot
+check will confirm preparers complied. Through Open-Meteo, ERA5-Land lacks precipitation and
+wind, so Milestone 3 will fetch ERA5-Land directly from Copernicus.
 
 Trailing rainfall features read no future hours. Windows where an event began show far more
 prior rainfall: a median of 23.0 mm over the previous 24 hours, against 0.1 mm otherwise.
 The leakage audit found the configured feature list consistent.
 
-**Draft recommendation:** proceed, once the team chooses the weather source and completes
-the spot check and the remaining descriptive sections.
+**Draft recommendation:** proceed, once the spot check and the remaining descriptive
+sections are complete.
 
 ---
 
@@ -48,7 +48,7 @@ the spot check and the remaining descriptive sections.
 | Unique `EVENT_ID` after cleaning | 0 duplicates | 0 duplicates in 639,467 rows | ☑ |
 | Timestamps timezone-aware UTC | 100% | 100%; fixed offset from `CZ_TIMEZONE` | ☑ |
 | Timestamps match NCEI's own date-time text | — | 2,220 of 2,220 begin and end times | ☑ |
-| Daylight-saving handling | covered by tests | Fixed offset tested; whether `EST-5` holds in summer is **open** | ☐ |
+| Daylight-saving handling | covered by tests | Fixed offset tested; standard time year-round is NWS policy (NWSI 10-1605 §2.3); compliance spot check pending | ◐ |
 | County FIPS preserve leading zeroes | 5-character strings, NC only | All 2,220 events validated | ☑ |
 | Hazard filter exactly Flood / Flash Flood / Debris Flow | exact | Exact; 887 other water-related reports excluded | ☑ |
 | Events with unresolved geography | counted and documented | 0: every qualifying event is county-coded | ☑ |
@@ -101,12 +101,12 @@ Positive windows by year: 2015 141 · 2016 167 · 2017 71 · 2018 295 · 2019 85
 | Decision | Choice | Justification |
 |---|---|---|
 | Label | Onset rule: `window_start <= begin < window_end` | Build guide §2.1; [ADR 0001](../../docs/adr/0001-county-six-hour-target.md). Overlap would add 1,662 ongoing windows but leave 17 events unlabeled |
-| Hazards | Flood, Flash Flood, Debris Flow | [ADR 0000](../../docs/adr/0000-specification-precedence.md). Heavy Rain (411) excluded; **Coastal Flood (66) exclusion needs team confirmation** |
+| Hazards | Flood, Flash Flood, Debris Flow | [ADR 0000](../../docs/adr/0000-specification-precedence.md). Heavy Rain (411) excluded. Coastal Flood (66) excluded by decision on 2026-09-26: tides and surge drive it, which rainfall and soil features cannot explain, and NWS reports it by zone. Official Coastal Flood Warnings still raise trip risk through the alert floor |
 | Geography | County-coded events only | All 2,220 qualifying events are county-coded, so no zone-to-county crosswalk is needed |
 | Years and splits | Train 2015–21 · select 2022 · calibrate 2023 · test 2024 | Every split has positives; selection is thin (53) |
 | Features accepted | 15 configured, plus `historical_event_rate` conditional | Leakage audit, section 11 |
 | Features rejected | 10 candidate groups | See the leakage audit below |
-| Weather source | **Open: team decision** | Via Open-Meteo, ERA5-Land lacks precipitation and wind; `era5_seamless` fills them from ERA5 (~28 km) while temperature and soil moisture stay ERA5-Land (~9 km). Alternative: ERA5-Land precipitation directly from Copernicus (account and API key) |
+| Weather source | ERA5-Land from the Copernicus Climate Data Store; gusts from ERA5 single levels (decided 2026-09-26) | Via Open-Meteo, ERA5-Land lacks precipitation and wind, and `era5_seamless` would supply them from ERA5 (~28 km). Fetching directly keeps rainfall on the ~9 km grid, which matters most in the mountains. ERA5-Land has no gust variable. Needs a Copernicus account and API key |
 
 ## Leakage audit
 
@@ -130,10 +130,14 @@ a live deployment would not have, so evaluated performance is an upper bound
 
 ## Unresolved risks
 
-1. **Summer timestamps.** 1,813 events (81.7%) begin in daylight-saving months. If NOAA's
-   `EST-5` is really clock time, they are one hour late in UTC. The spot check of
-   [`spot_check_candidates.csv`](spot_check_candidates.csv) settles it.
-2. **Weather source and resolution.** A team decision; see above.
+1. **Standard-time compliance.** [NWS Instruction 10-1605](https://www.weather.gov/media/directives/010_pdfs/pd01016005curr.pdf)
+   §2.3 requires local standard time "throughout the year" (the 2007 version says the same),
+   so `EST-5` is correct by policy. Only 13 narratives quote a zoned time, too few to test
+   compliance, and none shows clock time entered as the start. The spot check of
+   [`spot_check_candidates.csv`](spot_check_candidates.csv) verifies it for the 1,813
+   daylight-saving-month events (81.7%).
+2. **Copernicus access.** Milestone 3 needs a Copernicus account and API key, and the Climate
+   Data Store queues requests, so start the download early.
 3. **Thin, storm-driven splits.** Selection has 53 positives, and single storms dominate
    2018, 2020, and 2024. Model selection on 2022 will be noisy, so Milestone 4 must report
    grouped bootstrap intervals.
@@ -155,8 +159,8 @@ a live deployment would not have, so evaluated performance is an upper bound
 **☐ Proceed ☐ Change scope ☐ Stop**
 
 _TBD: recorded by Mason after both reviews._ Draft recommendation: **proceed**, conditional
-on the weather-source decision, the spot check, the Coastal Flood decision, and the
-Econ/Stats sections.
+on the spot check and the Econ/Stats sections. The weather source and Coastal Flood were
+decided on 2026-09-26 (see Decisions).
 
 | Role | GitHub handle | Date |
 |---|---|---|
