@@ -78,6 +78,21 @@ approval of Cameron's own sections. Jeffrey's review remains required.
    prespecify any sensitivity analysis before viewing model results. This review has
    preserved the new source notes but has not independently validated those counts.
 
+### Follow-up resolution on the Econ/Stats branch
+
+The follow-up notebook now computes the timestamp-adjacency sensitivity with an explicit
+zero-or-one-minute rule, separates report IDs from county-window labels, and exports
+`eda_handoff_sensitivity.json`. It also preserves the tracked spot-check sheet on
+reruns, reconciles weather valid-time and issue-time language, and replaces the
+nonzero-count adequacy verdict. Both sample and full modes then executed all 54 code
+cells in order from fresh kernels, with no cell errors or stderr. The tracked
+spot-check CSV checksum remained unchanged across the full run. The numbered
+requests above remain the historical
+review record; these code and wording changes address items 1–4 and 8. The human
+source confirmation, separate teammate approvals, and Mason's team gate decision
+remain open. PR #18's description and any copied claims must be refreshed after
+this branch lands.
+
 ## Checklist and conditional handoff
 
 - [x] Agree contribution scope; branch from `Mason` and target `Mason`.
@@ -86,7 +101,9 @@ approval of Cameron's own sections. Jeffrey's review remains required.
 - [x] Independently check split positives, dependence, and leakage claims.
 - [x] Restart and execute the complete notebook in full and sample modes locally.
 - [x] Update findings and document requested fixes.
-- [ ] Contribution merged into `Mason`; review its resulting head after integration.
+- [x] Contribution merged into `Mason` as PR #21; reviewed the integrated head of PR #18.
+- [x] Follow-up code reproduces the timestamp-adjacency sensitivity, preserves the
+  spot-check sheet, and corrects feature-timing and split-power claims.
 - [ ] Jeffrey independently reviews Cameron's sections.
 - [ ] Fresh-Codespace execution and ten human source checks recorded.
 - [ ] Mason records the team proceed/change-scope/stop decision.

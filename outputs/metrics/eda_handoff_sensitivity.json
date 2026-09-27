@@ -1,0 +1,70 @@
+{
+  "data_mode": "full",
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "rule": "Flood begins 0 or 1 minute after a Flash Flood ends in the same county",
+  "interpretation": "Timestamp adjacency is a candidate hand-off, not proof of the same physical flood",
+  "canonical_label_unchanged": true,
+  "summary": {
+    "flood_reports": 535,
+    "candidate_handoff_flood_ids": 86,
+    "same_episode_candidate_ids": 85,
+    "same_minute_flood_ids": 77,
+    "next_minute_flood_ids": 9,
+    "original_positive_windows": 1499,
+    "comparison_positive_windows": 1437,
+    "positive_windows_lost": 62
+  },
+  "by_year": [
+    {
+      "year": 2015,
+      "positive_windows_lost": 7
+    },
+    {
+      "year": 2016,
+      "positive_windows_lost": 9
+    },
+    {
+      "year": 2017,
+      "positive_windows_lost": 0
+    },
+    {
+      "year": 2018,
+      "positive_windows_lost": 5
+    },
+    {
+      "year": 2019,
+      "positive_windows_lost": 3
+    },
+    {
+      "year": 2020,
+      "positive_windows_lost": 14
+    },
+    {
+      "year": 2021,
+      "positive_windows_lost": 3
+    },
+    {
+      "year": 2022,
+      "positive_windows_lost": 0
+    },
+    {
+      "year": 2023,
+      "positive_windows_lost": 0
+    },
+    {
+      "year": 2024,
+      "positive_windows_lost": 21
+    }
+  ]
+}
