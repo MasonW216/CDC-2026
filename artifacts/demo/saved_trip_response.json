@@ -2,11 +2,11 @@
  "schema_version": "prototype-score/1",
  "score_name": "Prototype weather-concern index (0-100, higher means more indicated concern)",
  "mode": "live",
- "requested_at_utc": "2026-09-27T07:32:41+00:00",
+ "requested_at_utc": "2026-09-27T07:44:46+00:00",
  "departure_utc": "2026-09-27T10:00:00+00:00",
  "routes": [
   {
-   "route_id": "route_0",
+   "route_id": "route_0f1d4333c9",
    "duration_minutes": 154.3,
    "distance_km": 198.6,
    "status": "assessed",
@@ -23,6 +23,14 @@
     "alerts": [],
     "rain_rate_mm_h": 0.0,
     "rain_24h_mm": 0.0,
+    "rain_peak_window_utc": [
+     "2026-09-27T11:00:00+00:00",
+     "2026-09-27T11:00:00+00:00"
+    ],
+    "rain_24h_window_utc": [
+     "2026-09-26T12:00:00+00:00",
+     "2026-09-27T11:00:00+00:00"
+    ],
     "status": "assessed",
     "index": 0,
     "band": "Lower concern",
@@ -38,6 +46,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T11:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T12:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -52,6 +68,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T11:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T12:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -66,6 +90,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T11:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T13:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -80,6 +112,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T12:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T13:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -94,6 +134,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T12:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T13:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -108,6 +156,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T12:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T13:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -122,6 +178,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -136,6 +200,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -149,7 +221,7 @@
    "contributing_factors": []
   },
   {
-   "route_id": "route_1",
+   "route_id": "route_6ca76b33b4",
    "duration_minutes": 167.3,
    "distance_km": 211.2,
    "status": "assessed",
@@ -166,6 +238,14 @@
     "alerts": [],
     "rain_rate_mm_h": 0.0,
     "rain_24h_mm": 0.0,
+    "rain_peak_window_utc": [
+     "2026-09-27T11:00:00+00:00",
+     "2026-09-27T11:00:00+00:00"
+    ],
+    "rain_24h_window_utc": [
+     "2026-09-26T12:00:00+00:00",
+     "2026-09-27T11:00:00+00:00"
+    ],
     "status": "assessed",
     "index": 0,
     "band": "Lower concern",
@@ -181,6 +261,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T11:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T12:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -195,6 +283,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T11:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T12:00:00+00:00",
+      "2026-09-27T11:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -209,6 +305,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T11:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T13:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -223,6 +327,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T12:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T13:00:00+00:00",
+      "2026-09-27T12:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -237,6 +349,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -251,6 +371,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -265,6 +393,14 @@
      "alerts": [],
      "rain_rate_mm_h": 0.0,
      "rain_24h_mm": 0.0,
+     "rain_peak_window_utc": [
+      "2026-09-27T13:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
+     "rain_24h_window_utc": [
+      "2026-09-26T14:00:00+00:00",
+      "2026-09-27T13:00:00+00:00"
+     ],
      "status": "assessed",
      "index": 0,
      "band": "Lower concern",
@@ -280,7 +416,7 @@
  ],
  "comparison": {
   "ranking": "tie",
-  "fastest_route_id": "route_0",
+  "fastest_route_id": "route_0f1d4333c9",
   "lowest_concern_route_id": null,
   "extra_minutes": 0.0,
   "index_difference": 0,
@@ -290,7 +426,8 @@
  "coverage": {
   "forecast": {
    "source": "Open-Meteo forecast API (best-match model), hourly precipitation",
-   "retrieved_utc": "2026-09-27T07:32:42.480915+00:00",
+   "retrieved_utc": "2026-09-27T07:44:46+00:00",
+   "age_minutes": 0.0,
    "horizon_hours": 72,
    "missing_counties": [],
    "from_cache": false,
@@ -298,7 +435,8 @@
   },
   "alerts": {
    "source": "NWS api.weather.gov active alerts, NC",
-   "retrieved_utc": "2026-09-27T07:32:42.717620+00:00",
+   "retrieved_utc": "2026-09-27T07:44:46+00:00",
+   "age_minutes": 0.0,
    "ok": true,
    "error": null,
    "from_cache": false,

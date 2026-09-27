@@ -232,14 +232,18 @@ def score_trip(
     try:
         forecast = (
             fetch_forecast(
-                {f: all_points[f] for f in needed}, cache_dir=cache, offline=offline, client=client
+                {f: all_points[f] for f in needed},
+                cache_dir=cache,
+                offline=offline,
+                client=client,
+                now=requested,
             )
             if needed
             else None
         )
     except ForecastError as error:
         forecast, forecast_error = None, str(error)
-    alerts = fetch_alerts(cache_dir=cache, offline=offline, client=client)
+    alerts = fetch_alerts(cache_dir=cache, offline=offline, client=client, now=requested)
 
     scored = [score_route(r, forecast, alerts, requested) for r in routes]
     outside = sorted({s.county_name for r in routes for s in r.stretches if s.county_fips is None})
@@ -268,12 +272,13 @@ def score_trip(
             "forecast": {
                 "source": forecast.source if forecast else "Open-Meteo forecast API",
                 "retrieved_utc": retrieved.isoformat(),
+                "age_minutes": round((requested - retrieved).total_seconds() / 60, 1),
                 "horizon_hours": HORIZON_HOURS,
                 "missing_counties": missing,
                 "from_cache": bool(forecast and forecast.from_cache),
                 "error": forecast_error,
             },
-            "alerts": _alerts_block(alerts),
+            "alerts": _alerts_block(alerts, requested),
             "geography": {
                 "supported": not outside,
                 "message": (
@@ -308,10 +313,11 @@ def replay_saved_trip(saved: Mapping[str, Any], *, cache_dir: Path | None = None
     )
 
 
-def _alerts_block(alerts: AlertData) -> dict[str, Any]:
+def _alerts_block(alerts: AlertData, requested: datetime) -> dict[str, Any]:
     return {
         "source": alerts.source,
         "retrieved_utc": alerts.retrieved_utc.isoformat(),
+        "age_minutes": round((requested - alerts.retrieved_utc).total_seconds() / 60, 1),
         "ok": alerts.ok,
         "error": alerts.error,
         "from_cache": alerts.from_cache,

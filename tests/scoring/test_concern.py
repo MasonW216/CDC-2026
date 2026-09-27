@@ -284,6 +284,49 @@ def test_alert_failure_is_reported_not_raised(tmp_path):
     assert not result.ok and result.error and result.alerts == ()
 
 
+def test_stale_forecast_fallback_is_refused_not_silently_served(tmp_path):
+    points = {"37021": (35.6, -82.5)}
+    good = httpx.Client(
+        transport=httpx.MockTransport(lambda r: httpx.Response(200, json=_forecast_payload(1)))
+    )
+    fetch_forecast(points, cache_dir=tmp_path, client=good, now=NOW)
+    down = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(503)))
+    # Just inside the policy: served.
+    fresh_fallback = fetch_forecast(
+        points, cache_dir=tmp_path, client=down, now=NOW + timedelta(hours=2)
+    )
+    assert fresh_fallback.from_cache
+    # Past the policy: refused, same as no cache at all.
+    with pytest.raises(ForecastError, match="freshness policy"):
+        fetch_forecast(points, cache_dir=tmp_path, client=down, now=NOW + timedelta(hours=4))
+
+
+def test_stale_alerts_fallback_is_reported_not_silently_served(tmp_path):
+    good = httpx.Client(
+        transport=httpx.MockTransport(lambda r: httpx.Response(200, json={"features": []}))
+    )
+    fetch_alerts(cache_dir=tmp_path, client=good, now=NOW)
+    down = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500)))
+    fresh_fallback = fetch_alerts(cache_dir=tmp_path, client=down, now=NOW + timedelta(minutes=10))
+    assert fresh_fallback.ok and fresh_fallback.from_cache
+    stale_fallback = fetch_alerts(cache_dir=tmp_path, client=down, now=NOW + timedelta(hours=1))
+    assert not stale_fallback.ok
+    assert stale_fallback.error and "freshness policy" in stale_fallback.error
+
+
+def test_explicit_offline_replay_ignores_the_freshness_policy(tmp_path):
+    """The spec's own carve-out: a saved demo replay may stay old on purpose."""
+    points = {"37021": (35.6, -82.5)}
+    good = httpx.Client(
+        transport=httpx.MockTransport(lambda r: httpx.Response(200, json=_forecast_payload(1)))
+    )
+    fetch_forecast(points, cache_dir=tmp_path, client=good, now=NOW)
+    far_future = fetch_forecast(
+        points, cache_dir=tmp_path, offline=True, now=NOW + timedelta(days=30)
+    )
+    assert far_future.from_cache
+
+
 def test_score_trip_refuses_a_past_departure(tmp_path):
     with pytest.raises(TripNotSupportedError, match="past"):
         score_trip(

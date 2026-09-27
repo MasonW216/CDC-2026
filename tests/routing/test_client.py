@@ -76,12 +76,34 @@ def test_latlon_rejects_out_of_range_coordinates():
 
 def test_parses_routes_with_ids_geometry_and_edge_times():
     routes = parse_osrm_response(payload(2))
-    assert [route.route_id for route in routes] == ["route_0", "route_1"]
+    assert routes[0].route_id != routes[1].route_id
+    assert all(route.route_id.startswith("route_") for route in routes)
     first = routes[0]
     assert isinstance(first, CandidateRoute)
     assert len(first.coordinates) == len(first.edge_seconds) + 1
     assert first.duration_s == pytest.approx(120.0)
     assert first.coordinates[0] == (-82.0, 35.5)
+
+
+def test_route_id_is_stable_for_the_same_route_regardless_of_position():
+    """The score and the map fetch OSRM independently and can get a different order.
+
+    score.py and routing.py are not guaranteed the same alternative order; the ID
+    must still agree so the map and the score refer to the same geometry.
+    """
+    first_call = parse_osrm_response(payload(2))
+    swapped = payload(2)
+    swapped["routes"].reverse()
+    second_call = parse_osrm_response(swapped)
+    assert {r.route_id for r in first_call} == {r.route_id for r in second_call}
+    by_id = {r.route_id: r for r in second_call}
+    for route in first_call:
+        assert by_id[route.route_id].coordinates == route.coordinates
+
+
+def test_route_id_differs_for_genuinely_different_routes():
+    routes = parse_osrm_response(payload(3))
+    assert len({r.route_id for r in routes}) == 3
 
 
 def test_multi_leg_annotations_are_concatenated():
@@ -149,7 +171,8 @@ def test_offline_replays_the_cache_without_network(tmp_path):
     replayed = fetch_routes(
         ASHEVILLE, CHARLOTTE, base_url=BASE_URL, cache_dir=tmp_path, offline=True
     )
-    assert [route.route_id for route in replayed] == ["route_0", "route_1"]
+    assert len(replayed) == 2
+    assert replayed[0].route_id != replayed[1].route_id
 
 
 def test_offline_replay_does_not_depend_on_the_server_url(tmp_path):
@@ -190,14 +213,29 @@ def test_offline_cache_miss_fails_loudly(tmp_path):
         fetch_routes(ASHEVILLE, CHARLOTTE, base_url=BASE_URL, cache_dir=tmp_path, offline=True)
 
 
-def test_fewer_than_two_routes_is_an_error(tmp_path):
-    with pytest.raises(RoutingError, match="2"):
+def test_a_single_route_is_accepted_not_an_error(tmp_path):
+    """OSRM does not guarantee an alternative exists; one route is a normal result.
+
+    It is scored on its own (comparison.ranking == "single_route"), not a failure.
+    """
+    routes = fetch_routes(
+        ASHEVILLE,
+        CHARLOTTE,
+        base_url=BASE_URL,
+        cache_dir=tmp_path,
+        client=mock_client(payload(1), []),
+    )
+    assert len(routes) == 1
+
+
+def test_zero_routes_is_an_error(tmp_path):
+    with pytest.raises(RoutingError, match="zero routes"):
         fetch_routes(
             ASHEVILLE,
             CHARLOTTE,
             base_url=BASE_URL,
             cache_dir=tmp_path,
-            client=mock_client(payload(1), []),
+            client=mock_client({"code": "Ok", "routes": [], "waypoints": []}, []),
         )
 
 

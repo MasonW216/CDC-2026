@@ -20,26 +20,36 @@ def app():
     return create_app(Settings(model_path="x", demo_artifact_paths=[]))
 
 
-def _osrm_payload(*route_ids: str) -> dict[str, object]:
+def _osrm_payload(count: int) -> dict[str, object]:
+    """`count` routes with distinct geometry, as real OSRM alternatives would be.
+
+    Route IDs are now derived from route content (distance, duration, geometry), not
+    position, so two routes sharing identical content would collide; each gets its own
+    midpoint offset to stay distinct, matching a real alternatives response.
+    """
     return {
         "code": "Ok",
         "routes": [
             {
                 "geometry": {
-                    "coordinates": [[-82.5515, 35.5951], [-80.8431, 35.2271]],
+                    "coordinates": [
+                        [-82.5515, 35.5951],
+                        [-81.7 - 0.01 * i, 35.4],
+                        [-80.8431, 35.2271],
+                    ],
                 },
                 "legs": [
                     {
                         "annotation": {
-                            "duration": [9000.0],
-                            "distance": [190000.0],
+                            "duration": [4500.0, 4500.0],
+                            "distance": [95000.0, 95000.0],
                         }
                     }
                 ],
                 "duration": 9000.0,
                 "distance": 190000.0,
             }
-            for _ in route_ids
+            for i in range(count)
         ],
     }
 
@@ -56,13 +66,14 @@ def _params(**overrides: float) -> dict[str, float]:
 
 
 def test_route_returns_a_single_candidate(app, monkeypatch):
-    monkeypatch.setattr(routing_route, "_get_osrm_response", lambda url: _osrm_payload("route_0"))
+    monkeypatch.setattr(routing_route, "_get_osrm_response", lambda url: _osrm_payload(1))
     response = TestClient(app).get("/api/v1/routing/route", params=_params())
     assert response.status_code == 200
     body = response.json()
     assert len(body["routes"]) == 1
-    assert body["routes"][0]["route_id"] == "route_0"
-    assert body["routes"][0]["coordinates"] == [[-82.5515, 35.5951], [-80.8431, 35.2271]]
+    assert body["routes"][0]["route_id"].startswith("route_")
+    assert body["routes"][0]["coordinates"][0] == [-82.5515, 35.5951]
+    assert body["routes"][0]["coordinates"][-1] == [-80.8431, 35.2271]
     assert body["routes"][0]["duration_minutes"] == 150.0
     assert body["routes"][0]["distance_km"] == 190.0
 
@@ -70,20 +81,21 @@ def test_route_returns_a_single_candidate(app, monkeypatch):
 def test_route_does_not_require_two_alternatives(app, monkeypatch):
     """A single-candidate OSRM response is a normal result here, not an error.
 
-    fetch_routes (used by the scoring pipeline) requires 2+ alternatives;
-    this preview endpoint deliberately does not reuse that rule.
+    fetch_routes (used by the scoring pipeline) also accepts one route as of the same
+    change; only zero routes is a routing failure anywhere in this codebase now.
     """
-    monkeypatch.setattr(routing_route, "_get_osrm_response", lambda url: _osrm_payload("route_0"))
+    monkeypatch.setattr(routing_route, "_get_osrm_response", lambda url: _osrm_payload(1))
     response = TestClient(app).get("/api/v1/routing/route", params=_params())
     assert response.status_code == 200
 
 
-def test_route_returns_multiple_candidates_in_osrm_order(app, monkeypatch):
-    monkeypatch.setattr(
-        routing_route, "_get_osrm_response", lambda url: _osrm_payload("route_0", "route_1")
-    )
+def test_route_returns_multiple_candidates_with_distinct_stable_ids(app, monkeypatch):
+    monkeypatch.setattr(routing_route, "_get_osrm_response", lambda url: _osrm_payload(2))
     response = TestClient(app).get("/api/v1/routing/route", params=_params())
-    assert [r["route_id"] for r in response.json()["routes"]] == ["route_0", "route_1"]
+    ids = [r["route_id"] for r in response.json()["routes"]]
+    assert len(ids) == 2
+    assert len(set(ids)) == 2  # distinct routes get distinct IDs
+    assert all(i.startswith("route_") for i in ids)
 
 
 def test_osrm_failure_is_a_502(app, monkeypatch):

@@ -11,6 +11,12 @@ demo survives conference wifi, and the screen can show how old the data is. With
 either, the failure is raised as `ForecastError` / reported in `AlertData.error`; a caller
 must then decline a confident ranking rather than treat missing data as low concern.
 
+Freshness policy: a fallback used because a *live* fetch just failed is only served if it
+is younger than `MAX_FORECAST_FALLBACK_AGE` / `MAX_ALERTS_FALLBACK_AGE`; older than that,
+it is treated the same as no cache at all, so a stale forecast is never presented as
+current. This never applies to an explicit `offline=True` call (a saved demo replay,
+which is allowed to stay old on purpose -- see `stormroute.scoring.trip.replay_saved_trip`).
+
 Not the historical pipeline (ADR 0005): reanalysis rainfall is never fed through here.
 """
 
@@ -19,7 +25,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -31,6 +37,12 @@ USER_AGENT = "StormRoute-CDC2026 (student research prototype)"
 PAST_DAYS = 2
 FORECAST_DAYS = 5
 TIMEOUT = httpx.Timeout(10.0, read=30.0)
+
+# How old a *fallback* cache (a live fetch just failed) may be before it is refused.
+# Hourly forecasts and frequently-updated alerts justify different limits; both are
+# generous enough to survive a short outage but short enough that "current" stays true.
+MAX_FORECAST_FALLBACK_AGE = timedelta(hours=3)
+MAX_ALERTS_FALLBACK_AGE = timedelta(minutes=30)
 
 # NWS flood products in scope for v1, and the floor each sets (configs/scoring.yaml x 100).
 ALERT_FLOORS: dict[str, int] = {
@@ -137,12 +149,22 @@ def fetch_forecast(
     cache_dir: Path,
     offline: bool = False,
     client: httpx.Client | None = None,
+    now: datetime | None = None,
+    max_fallback_age: timedelta = MAX_FORECAST_FALLBACK_AGE,
 ) -> ForecastData:
     """Hourly precipitation for `{county_fips: (lat, lon)}`.
 
+    `now` is the reference time for both a fresh fetch's `retrieved_utc` and the
+    freshness check below; defaults to the real clock. Pass the request's own
+    `requested_at` for a reproducible check in tests and to keep the age reported in
+    the response consistent with the rest of that scoring pass.
+
     Raises:
-        ForecastError: offline with no cache, or the network failed with no cache.
+        ForecastError: offline with no cache; the network failed with no cache; or
+            (live attempt only, never for an explicit `offline=True` replay) the only
+            cache available is older than `max_fallback_age`.
     """
+    reference = now or _now()
     fips = sorted(points)
     params = {
         "latitude": ",".join(f"{points[f][0]:.4f}" for f in fips),
@@ -156,10 +178,9 @@ def fetch_forecast(
     if not offline:
         try:
             payload = _get_json(OPEN_METEO_URL, params, client)
-            retrieved = _now()
             hourly = parse_forecast(payload, fips)
-            _write_cache(path, payload, retrieved)
-            return ForecastData(hourly, retrieved, from_cache=False)
+            _write_cache(path, payload, reference)
+            return ForecastData(hourly, reference, from_cache=False)
         except (httpx.HTTPError, KeyError, ValueError, ForecastError) as error:
             failure = f"{type(error).__name__}: {error}"
     else:
@@ -168,6 +189,13 @@ def fetch_forecast(
     if cached is None:
         raise ForecastError(f"no forecast available ({failure}) and no cached copy")
     payload, retrieved = cached
+    if not offline:
+        age = reference - retrieved
+        if age > max_fallback_age:
+            raise ForecastError(
+                f"cached forecast is {age} old, older than the {max_fallback_age} "
+                f"freshness policy for a live fallback ({failure})"
+            )
     return ForecastData(parse_forecast(payload, fips), retrieved, from_cache=True)
 
 
@@ -209,24 +237,44 @@ def parse_alerts(payload: Any) -> tuple[tuple[Alert, ...], int, int]:
 
 
 def fetch_alerts(
-    *, cache_dir: Path, offline: bool = False, client: httpx.Client | None = None
+    *,
+    cache_dir: Path,
+    offline: bool = False,
+    client: httpx.Client | None = None,
+    now: datetime | None = None,
+    max_fallback_age: timedelta = MAX_ALERTS_FALLBACK_AGE,
 ) -> AlertData:
-    """Active NC flood alerts. Never raises: a failure comes back as `ok=False`."""
+    """Active NC flood alerts. Never raises: a failure comes back as `ok=False`.
+
+    See `fetch_forecast` for `now` and the freshness policy this applies to a fallback
+    from a failed live attempt (never to an explicit `offline=True` replay).
+    """
+    reference = now or _now()
     params = {"area": "NC"}
     path = _cache_file(cache_dir, "alerts", json.dumps(params))
     failure = "offline mode"
     if not offline:
         try:
             payload = _get_json(NWS_ALERTS_URL, params, client)
-            retrieved = _now()
             alerts, unmapped, total = parse_alerts(payload)
-            _write_cache(path, payload, retrieved)
-            return AlertData(alerts, retrieved, True, None, False, unmapped, raw_count=total)
+            _write_cache(path, payload, reference)
+            return AlertData(alerts, reference, True, None, False, unmapped, raw_count=total)
         except (httpx.HTTPError, KeyError, ValueError) as error:
             failure = f"{type(error).__name__}: {error}"
     cached = _read_cache(path)
     if cached is None:
-        return AlertData((), _now(), False, f"no alert data ({failure}) and no cached copy")
+        return AlertData((), reference, False, f"no alert data ({failure}) and no cached copy")
     payload, retrieved = cached
+    if not offline:
+        age = reference - retrieved
+        if age > max_fallback_age:
+            return AlertData(
+                (),
+                reference,
+                False,
+                f"cached alerts are {age} old, older than the {max_fallback_age} "
+                f"freshness policy for a live fallback ({failure})",
+                from_cache=True,
+            )
     alerts, unmapped, total = parse_alerts(payload)
     return AlertData(alerts, retrieved, True, None, True, unmapped, raw_count=total)

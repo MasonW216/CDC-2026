@@ -11,9 +11,9 @@
   "lon": -80.8431
  },
  "departure_utc": "2026-09-27T10:00:00+00:00",
- "as_of_utc": "2026-09-27T07:32:41+00:00",
+ "as_of_utc": "2026-09-27T07:44:46+00:00",
  "routes": {
-  "route_0": {
+  "route_0f1d4333c9": {
    "duration_minutes": 154.27166666666665,
    "distance_km": 198.63515628770432,
    "stretches": [
@@ -75,7 +75,7 @@
     }
    ]
   },
-  "route_1": {
+  "route_6ca76b33b4": {
    "duration_minutes": 167.31,
    "distance_km": 211.15306609427458,
    "stretches": [

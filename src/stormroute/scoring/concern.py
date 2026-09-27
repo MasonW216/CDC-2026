@@ -161,6 +161,10 @@ def score_segment(
         "alerts": [alert_dict(a) for a in used],
         "rain_rate_mm_h": None,
         "rain_24h_mm": None,
+        # Exact hourly stamps the two rain terms were read from (Open-Meteo, UTC), for
+        # an audit trail; null together with the rain terms when there is a gap.
+        "rain_peak_window_utc": None,
+        "rain_24h_window_utc": None,
     }
     gap: str | None = None
     rain_component: float | None = None
@@ -178,6 +182,11 @@ def score_segment(
                 gap = terms
             else:
                 base["rain_rate_mm_h"], base["rain_24h_mm"] = terms
+                base["rain_peak_window_utc"] = [first.isoformat(), last.isoformat()]
+                base["rain_24h_window_utc"] = [
+                    (last - timedelta(hours=23)).isoformat(),
+                    last.isoformat(),
+                ]
                 rain_component = 100 * min(
                     1.0, max(terms[0] / RATE_FULL_SCALE_MM_H, terms[1] / ACCUM_FULL_SCALE_MM)
                 )
