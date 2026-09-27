@@ -66,7 +66,8 @@ evaluate: ## Evaluate and export final metrics and figures (Milestone 4)
 	$(call not_yet,make evaluate,Milestone 4)
 
 api: ## Start FastAPI on port 8000 (Milestone 6)
-	$(call not_yet,make api,Milestone 6)
+	$(UV) run uvicorn stormroute_api.main:app --app-dir backend/src \
+		--reload --reload-dir backend/src --host 0.0.0.0 --port 8000
 
 web: ## Start Vite on port 5173 (Milestone 7)
 	npm --prefix $(FRONTEND_DIR) run dev

@@ -7,65 +7,128 @@ Writes          : data/raw/census_tiger/
 
 Restricting to STATEFP 37 happens downstream in stormroute.data.geography.
 Exactly 100 North Carolina counties are expected; any other count is an error.
+
+Behavior mirrors scripts/download_noaa.py: the checksum and access time are
+recorded, a file that differs from its record is never overwritten, and
+--sample validates the tracked fixture with no network access.
+
+Exit codes: 0 success, 1 conflict or failure, 2 bad arguments.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-from datetime import UTC, datetime
+import sys
 
 import httpx
-import yaml
 
 from stormroute.config import REPO_ROOT, data_path
+from stormroute.data.geography import (
+    RECORD_FILENAME,
+    SAMPLE_FILENAME,
+    TIGER_COUNTY_FILENAME,
+    TIGER_COUNTY_URL,
+    load_nc_counties,
+    load_sample_counties,
+    plan_boundary_download,
+    record_boundary_download,
+)
 from stormroute.data.noaa import download_file, sha256_of
+from stormroute.data.validation import DataContractError
+
+TIMEOUT = httpx.Timeout(30.0, read=300.0)
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
     parser.add_argument(
-        "--write-sample", action="store_true", help="Rebuild simplified NC map fixture"
+        "--sample", action="store_true", help="validate the tracked fixture; no network access"
     )
-    args = parser.parse_args()
-    manifest = yaml.safe_load((REPO_ROOT / "data/data_manifest.yaml").read_text(encoding="utf-8"))
-    source = next(d for d in manifest["datasets"] if d["name"] == "census_tiger_counties_2024")
-    directory = data_path("boundaries_raw")
-    directory.mkdir(parents=True, exist_ok=True)
-    target = directory / source["expected_file_pattern"]
-    record_path = directory / "download_record.json"
-    url = source["source_url"].rstrip("/") + "/" + target.name
-    if target.exists():
-        if not record_path.exists():
-            raise RuntimeError(
-                "County archive exists without provenance; review it before retrying."
-            )
-        record = json.loads(record_path.read_text(encoding="utf-8"))
-        if record["sha256"] != sha256_of(target) or record["source_url"] != url:
-            raise RuntimeError("County archive differs from its provenance record; refusing reuse.")
-        print(f"Verified existing {target.name}")
-        if args.write_sample:
-            write_sample(record)
-        return
-    with httpx.Client(timeout=httpx.Timeout(30.0, read=300.0), follow_redirects=True) as client:
-        checksum, size = download_file(client, url, target)
-    record_path.write_text(
-        json.dumps(
-            {
-                "source_url": url,
-                "filename": target.name,
-                "sha256": checksum,
-                "size_bytes": size,
-                "retrieved_at_utc": datetime.now(UTC).isoformat(),
-            },
-            indent=2,
+    parser.add_argument(
+        "--dry-run", action="store_true", help="show what would happen without downloading"
+    )
+    parser.add_argument(
+        "--adopt-existing",
+        action="store_true",
+        help="record an unrecorded file already on disk instead of refusing",
+    )
+    parser.add_argument(
+        "--write-sample", action="store_true", help="Rebuild Cameron's EDA display fixture"
+    )
+    return parser.parse_args(argv)
+
+
+def run_sample() -> int:
+    fixture = data_path("sample") / SAMPLE_FILENAME
+    try:
+        counties = load_sample_counties()
+    except (OSError, DataContractError) as error:
+        print(error, file=sys.stderr)
+        return 1
+    print(f"Sample mode: {len(counties)} counties from {fixture.relative_to(REPO_ROOT)}")
+    print("No network access. Set STORMROUTE_DATA_MODE=sample for notebooks and tests.")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if args.sample:
+        return run_sample()
+
+    raw_dir = data_path("boundaries_raw")
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    destination = raw_dir / TIGER_COUNTY_FILENAME
+
+    action = plan_boundary_download(raw_dir, adopt_existing=args.adopt_existing)
+    print(f"  {action.kind:<8}  {TIGER_COUNTY_FILENAME}  ({action.reason})")
+    if action.kind == "conflict":
+        print("\nConflict; nothing was downloaded.", file=sys.stderr)
+        return 1
+    if args.dry_run:
+        print("\nDry run: nothing was downloaded.")
+        return 0
+
+    if action.kind == "download":
+        print(f"Downloading {TIGER_COUNTY_URL} ...", flush=True)
+        with httpx.Client(timeout=TIMEOUT, follow_redirects=True) as client:
+            download_file(client, TIGER_COUNTY_URL, destination)
+
+    # Validate before recording: a bad file must never become the checksum that
+    # later runs trust and skip.
+    try:
+        counties = load_nc_counties(destination)
+    except Exception as error:  # pyogrio raises its own types for unreadable files
+        print(f"{destination.name} failed validation:\n{error}", file=sys.stderr)
+        if action.kind == "download":
+            destination.unlink(missing_ok=True)
+            print("The downloaded file was deleted and not recorded.", file=sys.stderr)
+        return 1
+
+    if action.kind in ("download", "adopt"):
+        note = "downloaded" if action.kind == "download" else "adopted from disk"
+        record_boundary_download(
+            raw_dir, sha256_of(destination), destination.stat().st_size, note=note
         )
-        + "\n",
-        encoding="utf-8",
+    print(f"Validated {len(counties)} North Carolina counties.")
+    record_path = raw_dir / RECORD_FILENAME
+    shown = (
+        record_path.relative_to(REPO_ROOT) if record_path.is_relative_to(REPO_ROOT) else record_path
     )
-    print(f"Downloaded {target.name}; SHA-256 {checksum}")
+    print(f"Download record: {shown}")
     if args.write_sample:
-        write_sample(json.loads(record_path.read_text(encoding="utf-8")))
+        payload = json.loads(record_path.read_text(encoding="utf-8"))
+        entry = payload.get("files", {}).get(TIGER_COUNTY_FILENAME, payload)
+        write_sample(
+            {
+                "source_url": entry.get("url", entry.get("source_url", TIGER_COUNTY_URL)),
+                "sha256": entry["sha256"],
+                "retrieved_at_utc": entry.get(
+                    "recorded_at_utc", entry.get("retrieved_at_utc", "unknown")
+                ),
+            }
+        )
+    return 0
 
 
 def write_sample(source: dict[str, str]) -> None:
@@ -94,4 +157,4 @@ def write_sample(source: dict[str, str]) -> None:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

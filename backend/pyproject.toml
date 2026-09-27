@@ -4,7 +4,8 @@
 # Declared separately from the root project so the deployable service's runtime
 # dependencies stay visible and minimal: the API needs FastAPI and the scoring
 # package, not JupyterLab. Development and testing still happen from the root
-# environment, which installs this package in editable mode.
+# environment: its `dev` extra installs these runtime dependencies (keep the pins
+# in sync), and pytest / `make api` put backend/src on the import path.
 # ---------------------------------------------------------------------------
 
 [build-system]
