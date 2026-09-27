@@ -25,7 +25,9 @@ Label it "prototype hazard indicator" everywhere.
 
 ## Contract for the results screen (Jeffrey)
 
-Read `artifacts/demo/prototype_result.json`. Example of one segment in and out:
+Read `artifacts/demo/prototype_result.json`. The frontend can import a copy at
+`frontend/src/fixtures/prototypeResult.json`, typed by `frontend/src/types/prototype.ts`
+(a test fails if the copy drifts; refresh it with `cp` after rerunning the script). Example of one segment in and out:
 `artifacts/demo/prototype_contract_example.json`.
 
 Per route: `trip_label`, `highest_concern_segment` (county, arrival, reason), `advisory`,

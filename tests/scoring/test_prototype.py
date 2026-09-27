@@ -146,3 +146,10 @@ def test_cached_result_matches_a_fresh_run():
     )
     cached = json.loads((root / "prototype_result.json").read_text())
     assert json.loads(json.dumps(fresh, sort_keys=True)) == cached
+
+
+def test_frontend_fixture_is_a_copy_of_the_artifact():
+    root = Path(__file__).resolve().parents[2]
+    artifact = root / "artifacts" / "demo" / "prototype_result.json"
+    fixture = root / "frontend" / "src" / "fixtures" / "prototypeResult.json"
+    assert fixture.read_bytes() == artifact.read_bytes()
