@@ -29,11 +29,20 @@
  */
 import { useState } from 'react';
 
-import LiveRouteMap, { type ColoredRoute } from '@/components/LiveRouteMap';
+import LiveRouteMap, { type RouteRender } from '@/components/LiveRouteMap';
 import TripForm from '@/components/TripForm';
 import { ApiError, fetchRoute, scoreTrip } from '@/services/api';
 import type { RouteScore, ScoreResponse } from '@/types/score';
 import type { Location, TripRequest } from '@/types/trip';
+import { splitRouteAtSegment } from '@/utils/routeSegments';
+
+function formatInstant(iso: string): string {
+  return `${new Intl.DateTimeFormat('en-US', {
+    timeZone: 'UTC',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(iso))} UTC`;
+}
 
 const LOWER_CONCERN_COLOR = 'var(--level-0-fg, #157347)';
 const HIGHER_CONCERN_COLOR = 'var(--level-3-fg, #b3261e)';
@@ -47,8 +56,9 @@ type Status =
       kind: 'success';
       origin: Location;
       destination: Location;
-      routes: ColoredRoute[];
+      routes: RouteRender[];
       score: ScoreResponse;
+      dangerMarker: { position: [number, number]; label: string } | null;
     };
 
 function routeColor(route: RouteScore, comparison: ScoreResponse['comparison']): string {
@@ -58,6 +68,16 @@ function routeColor(route: RouteScore, comparison: ScoreResponse['comparison']):
   return route.route_id === comparison.lowest_concern_route_id
     ? LOWER_CONCERN_COLOR
     : HIGHER_CONCERN_COLOR;
+}
+
+function bandColorVar(band: string): string {
+  const level: Record<string, 0 | 1 | 2 | 3> = {
+    'Lower concern': 0,
+    'Elevated concern': 1,
+    'High concern': 2,
+    'Severe concern': 3,
+  };
+  return `var(--level-${level[band] ?? 'none'}-fg)`;
 }
 
 export default function LiveRoutePage() {
@@ -71,14 +91,52 @@ export default function LiveRoutePage() {
         scoreTrip({ ...request, mode: 'live' }),
       ]);
       const scoreByRouteId = new Map(score.routes.map((route) => [route.route_id, route]));
-      const routes: ColoredRoute[] = routeResponse.routes.map((candidate) => {
+      let dangerMarker: { position: [number, number]; label: string } | null = null;
+      const routes: RouteRender[] = routeResponse.routes.map((candidate) => {
         const matched = scoreByRouteId.get(candidate.route_id);
+        // OSRM/GeoJSON gives (lon, lat); Leaflet wants (lat, lon).
+        const path: [number, number][] = candidate.coordinates.map(([lon, lat]) => [lat, lon]);
+        const isRecommended = matched?.route_id === score.comparison.lowest_concern_route_id;
+
+        let highlight: RouteRender['highlight'] = null;
+        if (matched?.highest_concern_segment) {
+          const segIndex = matched.segments.findIndex(
+            (s) =>
+              s.county_fips === matched.highest_concern_segment!.county_fips &&
+              s.arrival_utc === matched.highest_concern_segment!.arrival_utc,
+          );
+          if (segIndex >= 0) {
+            highlight = {
+              segmentKm: matched.segments.map((s) => s.km),
+              index: segIndex,
+              color: bandColorVar(matched.highest_concern_segment.band),
+            };
+            // Only surface one marker on the map: the recommended route's own
+            // worst stretch (or, on a tie/single route, whichever we show).
+            if (
+              !dangerMarker &&
+              (isRecommended || score.comparison.ranking !== 'distinguishable')
+            ) {
+              const { highlighted } = splitRouteAtSegment(path, highlight.segmentKm, segIndex);
+              const mid = highlighted[Math.floor(highlighted.length / 2)];
+              if (mid) {
+                dangerMarker = {
+                  position: mid,
+                  label: `${matched.highest_concern_segment.county_name} · ${formatInstant(
+                    matched.highest_concern_segment.arrival_utc,
+                  )}`,
+                };
+              }
+            }
+          }
+        }
+
         return {
           id: candidate.route_id,
-          // OSRM/GeoJSON gives (lon, lat); Leaflet wants (lat, lon).
-          path: candidate.coordinates.map(([lon, lat]) => [lat, lon]),
+          path,
           color: matched ? routeColor(matched, score.comparison) : NEUTRAL_COLOR,
-          emphasized: matched?.route_id === score.comparison.lowest_concern_route_id,
+          weight: isRecommended ? 5 : 4,
+          highlight,
         };
       });
       if (routes.length === 0) {
@@ -91,6 +149,7 @@ export default function LiveRoutePage() {
         destination: request.destination,
         routes,
         score,
+        dangerMarker,
       });
     } catch (error) {
       setStatus({
@@ -122,6 +181,7 @@ export default function LiveRoutePage() {
               origin={status.origin}
               destination={status.destination}
               routes={status.routes}
+              dangerMarker={status.dangerMarker}
             />
           )}
 

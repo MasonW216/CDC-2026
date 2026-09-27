@@ -608,7 +608,12 @@ table.timeline tr:last-child td {
 .search-bar {
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-3) var(--space-4);
+  /* Extra left padding: .route-inputs__dot sits 22px left of its row, so the
+     origin/destination connector needs that much clearance from whatever
+     contains it -- .pivot-sidebar has it via its own padding, but this bar
+     sits inside .map-page's negative margin (full-bleed map), which cancels
+     the page's normal padding and would otherwise clip the dots off-screen. */
+  padding: var(--space-3) var(--space-4) var(--space-3) calc(var(--space-4) + 22px);
 }
 
 .search-bar form {

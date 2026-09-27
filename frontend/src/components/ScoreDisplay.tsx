@@ -10,6 +10,7 @@
  * Layout rule inherited by every caller: official NWS alerts render above any advisory
  * or recommendation, never below or beside it.
  */
+import RiskGauge from '@/components/RiskGauge';
 import { BAND_CLASS, formatInstant } from '@/utils/scoreDisplay';
 import type { AlertUse, RouteScore } from '@/types/score';
 
@@ -48,11 +49,17 @@ export function RouteCard({ label, route }: { label: string; route: RouteScore }
       <h3 id={`route-heading-${label}`} className="subsection-title" style={{ marginTop: 0 }}>
         {label}: <LevelBadge band={route.band} index={route.index} />
       </h3>
-      <p className="note">
+      <RiskGauge index={route.index} band={route.band} />
+      <p className="note" style={{ textAlign: 'center' }}>
         {route.distance_km} km &middot; {Math.round(route.duration_minutes)} min
         {route.status !== 'assessed' ? ` · ${route.status}` : ''}
-        {route.is_lower_bound ? ' · index is a lower bound (partial data)' : ''}
       </p>
+      {route.is_lower_bound && (
+        <p role="note" className="note" style={{ textAlign: 'center' }}>
+          This index is a lower bound: some inputs for this route are missing, so the true concern
+          could be higher.
+        </p>
+      )}
 
       <AlertList alerts={route.alerts} />
 
