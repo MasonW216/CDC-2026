@@ -2,7 +2,7 @@
  "schema_version": "prototype-score/1",
  "score_name": "Prototype weather-concern index (0-100, higher means more indicated concern)",
  "mode": "live",
- "requested_at_utc": "2026-09-27T05:14:35+00:00",
+ "requested_at_utc": "2026-09-27T05:33:49+00:00",
  "departure_utc": "2026-09-27T08:00:00+00:00",
  "routes": [
   {
@@ -260,7 +260,7 @@
  "coverage": {
   "forecast": {
    "source": "Open-Meteo forecast API (best-match model), hourly precipitation",
-   "retrieved_utc": "2026-09-27T05:14:36.000099+00:00",
+   "retrieved_utc": "2026-09-27T05:33:49.952537+00:00",
    "horizon_hours": 72,
    "missing_counties": [],
    "from_cache": false,
@@ -268,7 +268,7 @@
   },
   "alerts": {
    "source": "NWS api.weather.gov active alerts, NC",
-   "retrieved_utc": "2026-09-27T05:14:36.189658+00:00",
+   "retrieved_utc": "2026-09-27T05:33:50.141629+00:00",
    "ok": true,
    "error": null,
    "from_cache": false,
