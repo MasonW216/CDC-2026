@@ -45,10 +45,10 @@ export default function PlannerPage() {
     <section aria-labelledby="planner-heading">
       <h2 id="planner-heading">Plan a trip</h2>
       <p role="note">
-        StormRoute compares the modeled weather-hazard exposure of routes and departure times based
-        on available weather data. It is a comparative decision index, not a guarantee of safety,
-        and it never overrides an official National Weather Service warning. For current conditions
-        and official warnings, visit weather.gov.
+        This demo replays archived flood conditions during Hurricane Helene. Its prototype
+        indicator is not a live forecast or a guarantee of safety, and it never overrides an
+        official National Weather Service warning. For current conditions and official warnings,
+        visit weather.gov.
       </p>
 
       <button type="button" onClick={loadDemoScenario}>

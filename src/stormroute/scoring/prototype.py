@@ -157,6 +157,7 @@ def active_alerts(
         for a in alerts
         if (a.phenomena, a.significance) in ALERT_LEVELS
         and a.known_utc <= decision_utc
+        and a.issued_utc <= decision_utc
         and a.issued_utc <= arrival_utc < a.expires_utc
     ]
 

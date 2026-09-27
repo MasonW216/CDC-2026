@@ -1,5 +1,10 @@
 # Presentation Outline — 7 minutes + 2 minutes Q&A
 
+> This is the planned post-evaluation presentation, not the September 2026 MVP
+> replay. Do not present its model, calibration, score, or performance sections
+> as completed work. Use [the MVP limitations and next-step slides](mvp_gate_slides.md)
+> for the current demo.
+
 > **Owner:** Mason · **Rehearsals required:** at least three, timed.
 > Timing is fixed; content is drafted in Milestone 9.
 

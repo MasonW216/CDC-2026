@@ -77,7 +77,9 @@ def _trailing(
     values = [mm[index[t]] for t in wanted]
     if any(v is None for v in values):
         return None
-    return float(sum(v for v in values if v is not None))
+    # The cached source has 0.1 mm resolution. Round away binary-sum noise so
+    # the checked-in JSON is stable across Python builds and platforms.
+    return round(sum(v for v in values if v is not None), 1)
 
 
 def build_segments(

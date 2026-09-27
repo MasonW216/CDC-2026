@@ -1,13 +1,13 @@
 {
  "comparison": {
-  "extra_minutes": -13.0,
+  "extra_minutes": null,
   "levels": {
    "route_0": 3,
    "route_1": 3
   },
-  "lower_indicated_concern_route": "route_0",
-  "note": "Both routes were scored by the same rule on the same cached inputs. This compares indicator levels; it does not say either route is safe.",
-  "other_route": "route_1"
+  "lower_indicated_concern_route": null,
+  "note": "Both routes have the same indicator level; no lower-concern alternative was found. Neither route is known to be safe.",
+  "other_route": null
  },
  "departure_time": "2024-09-27T12:00:00-04:00",
  "destination": {
