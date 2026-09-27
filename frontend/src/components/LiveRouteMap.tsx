@@ -9,9 +9,6 @@
  */
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { Fragment, useEffect } from 'react';
 import {
   MapContainer,
@@ -26,19 +23,27 @@ import {
 import { splitRouteAtSegment } from '@/utils/routeSegments';
 import type { Location } from '@/types/trip';
 
-const defaultIcon = L.icon({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
+// Rider-app style endpoints: a ringed dot for the start, a solid square for
+// the end. Pure CSS divIcons (styles.css .trip-endpoint), no image assets.
+const originIcon = L.divIcon({
+  className: 'trip-endpoint trip-endpoint--origin',
+  html: '<span></span>',
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
+});
+
+const destinationIcon = L.divIcon({
+  className: 'trip-endpoint trip-endpoint--destination',
+  html: '<span></span>',
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
 });
 
 const dangerIcon = L.divIcon({
   className: 'danger-marker',
   html: '<span>!</span>',
-  iconSize: [26, 26],
-  iconAnchor: [13, 13],
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
 });
 
 export interface RouteRender {
@@ -141,15 +146,15 @@ export default function LiveRouteMap({
           </Fragment>
         );
       })}
-      <Marker position={[origin.lat, origin.lon]} icon={defaultIcon} />
-      <Marker position={[destination.lat, destination.lon]} icon={defaultIcon} />
+      <Marker position={[origin.lat, origin.lon]} icon={originIcon} />
+      <Marker position={[destination.lat, destination.lon]} icon={destinationIcon} />
       {dangerMarker && (
         <Marker position={dangerMarker.position} icon={dangerIcon}>
           <Popup>{dangerMarker.label}</Popup>
         </Marker>
       )}
       <FitToRoutes routes={routes} />
-      <ZoomControl position="bottomright" />
+      <ZoomControl position="topright" />
     </MapContainer>
   );
 }
