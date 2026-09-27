@@ -130,16 +130,6 @@ def test_trailing_rainfall_uses_only_hours_up_to_window_start():
 
 
 def test_cached_result_matches_a_fresh_run():
-    def stable(value: object) -> object:
-        # Summing the same tenth-mm inputs may produce adjacent binary floats.
-        if isinstance(value, float):
-            return round(value, 6)
-        if isinstance(value, dict):
-            return {key: stable(item) for key, item in value.items()}
-        if isinstance(value, list):
-            return [stable(item) for item in value]
-        return value
-
     root = Path(__file__).resolve().parents[2] / "artifacts" / "demo"
     if not (root / "prototype_result.json").exists():
         return
@@ -155,4 +145,11 @@ def test_cached_result_matches_a_fresh_run():
         root / "prototype_routes_provisional.json", root / "prototype_inputs_helene.json"
     )
     cached = json.loads((root / "prototype_result.json").read_text())
-    assert stable(json.loads(json.dumps(fresh, sort_keys=True))) == stable(cached)
+    assert json.loads(json.dumps(fresh, sort_keys=True)) == cached
+
+
+def test_frontend_fixture_is_a_copy_of_the_artifact():
+    root = Path(__file__).resolve().parents[2]
+    artifact = root / "artifacts" / "demo" / "prototype_result.json"
+    fixture = root / "frontend" / "src" / "fixtures" / "prototypeResult.json"
+    assert fixture.read_bytes() == artifact.read_bytes()

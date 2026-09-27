@@ -1,0 +1,408 @@
+{
+ "comparison": {
+  "extra_minutes": -13.0,
+  "levels": {
+   "route_0": 3,
+   "route_1": 3
+  },
+  "lower_indicated_concern_route": "route_0",
+  "note": "Both routes were scored by the same rule on the same cached inputs. This compares indicator levels; it does not say either route is safe.",
+  "other_route": "route_1"
+ },
+ "departure_time": "2024-09-27T12:00:00-04:00",
+ "destination": {
+  "label": "Charlotte, NC",
+  "lat": 35.2271,
+  "lon": -80.8431
+ },
+ "inputs_provenance": {
+  "retrieved_utc": "2026-09-27T03:49Z",
+  "sources": {
+   "alerts": "IEM VTEC archive, https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py, states=NC, 2024-09-25T00:00Z to 2024-09-29T00:00Z",
+   "precipitation": "Open-Meteo archive API, model era5_seamless, https://archive-api.open-meteo.com/v1/archive"
+  },
+  "zone_coded_alert_rows_excluded": 92
+ },
+ "origin": {
+  "label": "Asheville, NC",
+  "lat": 35.5951,
+  "lon": -82.5515
+ },
+ "route_fixture_provenance": "OSRM public demo server via stormroute.routing.client; counties from data/sample/nc_counties_sample.geojson (simplified boundaries, about 1 km coarse); stretches from stormroute.routing.sampling and collapse_intervals",
+ "routes": {
+  "route_0": {
+   "advisory": "Official flood warnings or extreme rainfall on part of this route. Consider delaying or reducing travel through the affected counties, and follow official guidance and road closures.",
+   "decision_time_utc": "2024-09-27T16:00:00+00:00",
+   "distance_km": 198.6,
+   "duration_minutes": 154.3,
+   "highest_concern_segment": {
+    "alerts_used": [
+     "Flood Warning (event GSP-13)",
+     "Flood Warning (event GSP-12)",
+     "Flood Warning (event GSP-15)",
+     "Flash Flood Warning (event GSP-97)",
+     "Flash Flood Warning (event GSP-106)"
+    ],
+    "arrival_utc": "2024-09-27T16:00:00+00:00",
+    "county_fips": "37021",
+    "county_name": "Buncombe",
+    "data_status": "complete",
+    "label": "Severe concern",
+    "level": 3,
+    "precip_24h_mm": 232.6,
+    "precip_72h_mm": 325.6,
+    "reason": "Rainfall 233 mm in the prior 24 h and 326 mm in the prior 72 h; active flash flood warning, flood warning.",
+    "sources": [
+     "ERA5 reanalysis rainfall (Open-Meteo)",
+     "NWS flood products (IEM archive)"
+    ],
+    "window_start_utc": "2024-09-27T12:00:00+00:00"
+   },
+   "indicator_name": "Prototype hazard indicator",
+   "replay_caveat": "Replay of a past storm using reanalysis rainfall and archived alerts. A traveler would not have had this rainfall at departure time. Alerts use their original expiry, so a warning extended before departure counts as expired. Prototype rule, not a calibrated probability or a validated score.",
+   "segments": [
+    {
+     "alerts_used": [
+      "Flood Warning (event GSP-13)",
+      "Flood Warning (event GSP-12)",
+      "Flood Warning (event GSP-15)",
+      "Flash Flood Warning (event GSP-97)",
+      "Flash Flood Warning (event GSP-106)"
+     ],
+     "arrival_utc": "2024-09-27T16:00:00+00:00",
+     "county_fips": "37021",
+     "county_name": "Buncombe",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 232.6,
+     "precip_72h_mm": 325.6,
+     "reason": "Rainfall 233 mm in the prior 24 h and 326 mm in the prior 72 h; active flash flood warning, flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flood Warning (event GSP-14)",
+      "Flood Warning (event GSP-12)",
+      "Flash Flood Warning (event GSP-101)"
+     ],
+     "arrival_utc": "2024-09-27T16:19:39.073247+00:00",
+     "county_fips": "37089",
+     "county_name": "Henderson",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 267.0,
+     "precip_72h_mm": 367.7,
+     "reason": "Rainfall 267 mm in the prior 24 h and 368 mm in the prior 72 h; active flash flood warning, flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flash Flood Warning (event GSP-101)"
+     ],
+     "arrival_utc": "2024-09-27T16:40:26.399099+00:00",
+     "county_fips": "37149",
+     "county_name": "Polk",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 280.1,
+     "precip_72h_mm": 351.5,
+     "reason": "Rainfall 280 mm in the prior 24 h and 352 mm in the prior 72 h; active flash flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flash Flood Warning (event GSP-101)",
+      "Flash Flood Warning (event GSP-109)"
+     ],
+     "arrival_utc": "2024-09-27T17:03:36.023218+00:00",
+     "county_fips": "37161",
+     "county_name": "Rutherford",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 225.4,
+     "precip_72h_mm": 306.9,
+     "reason": "Rainfall 225 mm in the prior 24 h and 307 mm in the prior 72 h; active flash flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flood Warning (event GSP-23)",
+      "Flood Warning (event GSP-22)"
+     ],
+     "arrival_utc": "2024-09-27T17:21:52.968230+00:00",
+     "county_fips": "37045",
+     "county_name": "Cleveland",
+     "data_status": "complete",
+     "label": "High concern",
+     "level": 2,
+     "precip_24h_mm": 84.7,
+     "precip_72h_mm": 127.8,
+     "reason": "Rainfall 85 mm in the prior 24 h and 128 mm in the prior 72 h; active flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flash Flood Warning (event GSP-66)",
+      "Flood Warning (event GSP-24)"
+     ],
+     "arrival_utc": "2024-09-27T17:54:55.608610+00:00",
+     "county_fips": "37071",
+     "county_name": "Gaston",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 64.6,
+     "precip_72h_mm": 87.3,
+     "reason": "Rainfall 65 mm in the prior 24 h and 87 mm in the prior 72 h; active flash flood warning, flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flash Flood Warning (event GSP-66)",
+      "Flood Warning (event GSP-24)"
+     ],
+     "arrival_utc": "2024-09-27T18:00:00+00:00",
+     "county_fips": "37071",
+     "county_name": "Gaston",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 80.8,
+     "precip_72h_mm": 108.9,
+     "reason": "Rainfall 81 mm in the prior 24 h and 109 mm in the prior 72 h; active flash flood warning, flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T18:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flash Flood Warning (event GSP-66)"
+     ],
+     "arrival_utc": "2024-09-27T18:18:02.578407+00:00",
+     "county_fips": "37119",
+     "county_name": "Mecklenburg",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 43.9,
+     "precip_72h_mm": 73.8,
+     "reason": "Rainfall 44 mm in the prior 24 h and 74 mm in the prior 72 h; active flash flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T18:00:00+00:00"
+    }
+   ],
+   "trip_label": "Severe concern",
+   "trip_level": 3,
+   "unassessed_segments": []
+  },
+  "route_1": {
+   "advisory": "Official flood warnings or extreme rainfall on part of this route. Consider delaying or reducing travel through the affected counties, and follow official guidance and road closures.",
+   "decision_time_utc": "2024-09-27T16:00:00+00:00",
+   "distance_km": 211.2,
+   "duration_minutes": 167.3,
+   "highest_concern_segment": {
+    "alerts_used": [
+     "Flood Warning (event GSP-13)",
+     "Flood Warning (event GSP-12)",
+     "Flood Warning (event GSP-15)",
+     "Flash Flood Warning (event GSP-97)",
+     "Flash Flood Warning (event GSP-106)"
+    ],
+    "arrival_utc": "2024-09-27T16:00:00+00:00",
+    "county_fips": "37021",
+    "county_name": "Buncombe",
+    "data_status": "complete",
+    "label": "Severe concern",
+    "level": 3,
+    "precip_24h_mm": 232.6,
+    "precip_72h_mm": 325.6,
+    "reason": "Rainfall 233 mm in the prior 24 h and 326 mm in the prior 72 h; active flash flood warning, flood warning.",
+    "sources": [
+     "ERA5 reanalysis rainfall (Open-Meteo)",
+     "NWS flood products (IEM archive)"
+    ],
+    "window_start_utc": "2024-09-27T12:00:00+00:00"
+   },
+   "indicator_name": "Prototype hazard indicator",
+   "replay_caveat": "Replay of a past storm using reanalysis rainfall and archived alerts. A traveler would not have had this rainfall at departure time. Alerts use their original expiry, so a warning extended before departure counts as expired. Prototype rule, not a calibrated probability or a validated score.",
+   "segments": [
+    {
+     "alerts_used": [
+      "Flood Warning (event GSP-13)",
+      "Flood Warning (event GSP-12)",
+      "Flood Warning (event GSP-15)",
+      "Flash Flood Warning (event GSP-97)",
+      "Flash Flood Warning (event GSP-106)"
+     ],
+     "arrival_utc": "2024-09-27T16:00:00+00:00",
+     "county_fips": "37021",
+     "county_name": "Buncombe",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 232.6,
+     "precip_72h_mm": 325.6,
+     "reason": "Rainfall 233 mm in the prior 24 h and 326 mm in the prior 72 h; active flash flood warning, flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flood Advisory (event GSP-169)",
+      "Flash Flood Warning (event GSP-102)",
+      "Flash Flood Warning (event GSP-103)"
+     ],
+     "arrival_utc": "2024-09-27T16:23:14.870357+00:00",
+     "county_fips": "37111",
+     "county_name": "McDowell",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 234.9,
+     "precip_72h_mm": 321.1,
+     "reason": "Rainfall 235 mm in the prior 24 h and 321 mm in the prior 72 h; active flash flood warning, flood advisory.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flood Advisory (event GSP-169)",
+      "Flood Advisory (event GSP-170)",
+      "Flash Flood Warning (event GSP-102)",
+      "Flash Flood Warning (event GSP-103)"
+     ],
+     "arrival_utc": "2024-09-27T16:53:06.658102+00:00",
+     "county_fips": "37023",
+     "county_name": "Burke",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 154.9,
+     "precip_72h_mm": 227.6,
+     "reason": "Rainfall 155 mm in the prior 24 h and 228 mm in the prior 72 h; active flash flood warning, flood advisory.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flood Advisory (event GSP-168)"
+     ],
+     "arrival_utc": "2024-09-27T17:23:38.406522+00:00",
+     "county_fips": "37035",
+     "county_name": "Catawba",
+     "data_status": "complete",
+     "label": "High concern",
+     "level": 2,
+     "precip_24h_mm": 65.5,
+     "precip_72h_mm": 108.2,
+     "reason": "Rainfall 66 mm in the prior 24 h and 108 mm in the prior 72 h; active flood advisory.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T12:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flood Advisory (event GSP-168)"
+     ],
+     "arrival_utc": "2024-09-27T18:00:00+00:00",
+     "county_fips": "37035",
+     "county_name": "Catawba",
+     "data_status": "complete",
+     "label": "High concern",
+     "level": 2,
+     "precip_24h_mm": 82.8,
+     "precip_72h_mm": 133.9,
+     "reason": "Rainfall 83 mm in the prior 24 h and 134 mm in the prior 72 h; active flood advisory.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T18:00:00+00:00"
+    },
+    {
+     "alerts_used": [],
+     "arrival_utc": "2024-09-27T18:00:07.755232+00:00",
+     "county_fips": "37109",
+     "county_name": "Lincoln",
+     "data_status": "complete",
+     "label": "High concern",
+     "level": 2,
+     "precip_24h_mm": 85.4,
+     "precip_72h_mm": 132.6,
+     "reason": "Rainfall 85 mm in the prior 24 h and 133 mm in the prior 72 h.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)"
+     ],
+     "window_start_utc": "2024-09-27T18:00:00+00:00"
+    },
+    {
+     "alerts_used": [
+      "Flash Flood Warning (event GSP-66)"
+     ],
+     "arrival_utc": "2024-09-27T18:16:46.173378+00:00",
+     "county_fips": "37119",
+     "county_name": "Mecklenburg",
+     "data_status": "complete",
+     "label": "Severe concern",
+     "level": 3,
+     "precip_24h_mm": 43.9,
+     "precip_72h_mm": 73.8,
+     "reason": "Rainfall 44 mm in the prior 24 h and 74 mm in the prior 72 h; active flash flood warning.",
+     "sources": [
+      "ERA5 reanalysis rainfall (Open-Meteo)",
+      "NWS flood products (IEM archive)"
+     ],
+     "window_start_utc": "2024-09-27T18:00:00+00:00"
+    }
+   ],
+   "trip_label": "Severe concern",
+   "trip_level": 3,
+   "unassessed_segments": []
+  }
+ },
+ "scenario": "helene_asheville_charlotte"
+}
