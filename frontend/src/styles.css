@@ -1,34 +1,44 @@
 /**
  * Global styles and the design tokens the whole app shares.
  *
- * Defines the risk palette. Two hard constraints:
+ * Brand: PIVOT. Chrome (buttons, nav, focus, links) is Uber-inspired --
+ * near-black primary, white surfaces, bold high-contrast type, minimal color
+ * outside of it. Two hard constraints unrelated to the brand refresh, and not
+ * to be touched by it:
  *
  *   * risk is never encoded by color alone -- every risk level also carries a
  *     label, an icon, or a pattern, because a colorblind traveler must be able
  *     to read the result;
  *   * contrast meets WCAG AA at minimum.
  *
+ * The four --level-*-fg/bg pairs and --route-current/--route-recommended are
+ * product-safety semantics, not chrome: don't recolor them for brand reasons.
+ * --route-recommended intentionally equals --level-0-fg (the same green
+ * "lower concern" already means), not --color-primary, so a recommended
+ * route and a low-concern reading say the same thing in the same color.
+ *
  * Also respects prefers-reduced-motion and prefers-color-scheme.
  */
 
 :root {
-  --color-bg: #f5f6f8;
+  --color-bg: #f6f6f7;
   --color-surface: #ffffff;
-  --color-border: #e5e7eb;
-  --color-border-strong: #d1d5db;
-  --color-text: #14181f;
-  --color-text-muted: #5b6472;
-  --color-text-faint: #8891a0;
+  --color-border: #e5e5e5;
+  --color-border-strong: #cccccc;
+  --color-text: #000000;
+  --color-text-muted: #545454;
+  --color-text-faint: #8e8e8e;
 
-  --color-primary: #2f6fed;
-  --color-primary-hover: #1d54c9;
+  --color-primary: #000000;
+  --color-primary-hover: #276ef1;
   --color-primary-contrast: #ffffff;
-  --color-primary-soft: #eaf1ff;
+  --color-primary-soft: #f0f0f0;
 
-  --color-map-control: #1a1d22;
-  --color-map-control-hover: #2c3038;
+  --color-map-control: #000000;
+  --color-map-control-hover: #2b2b2b;
 
-  /* Concern levels: color is always paired with the text label, never alone. */
+  /* Concern levels: color is always paired with the text label, never alone.
+     Product-safety semantics -- see file header. Do not recolor for brand. */
   --level-0-bg: #e8f7ee;
   --level-0-fg: #1a8f5a;
   --level-1-bg: #fff6e0;
@@ -41,19 +51,20 @@
   --level-none-fg: #5b6472;
 
   /* The route/current-vs-recommended palette, separate from concern-level
-     colors: gray means "not our pick", blue means "our pick" (solid) or "an
-     alternative" (dashed) -- it does not by itself encode hazard level. */
+     colors: gray means "not our pick", green means "our pick" (solid, same
+     green as "lower concern") or "an alternative" (dashed) -- it does not by
+     itself encode hazard level beyond that. */
   --route-current: #9aa1ad;
-  --route-recommended: var(--color-primary);
+  --route-recommended: var(--level-0-fg);
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 
-  --shadow-sm: 0 1px 2px rgba(20, 24, 31, 0.06), 0 1px 1px rgba(20, 24, 31, 0.04);
-  --shadow-md: 0 4px 12px rgba(20, 24, 31, 0.08), 0 2px 4px rgba(20, 24, 31, 0.05);
-  --shadow-lg: 0 12px 32px rgba(20, 24, 31, 0.14);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.18);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -67,21 +78,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-bg: #0b0e13;
-    --color-surface: #12161c;
-    --color-border: #262b33;
-    --color-border-strong: #383f4a;
-    --color-text: #eef0f3;
-    --color-text-muted: #a4acb8;
-    --color-text-faint: #78808d;
+    --color-bg: #000000;
+    --color-surface: #141414;
+    --color-border: #2b2b2b;
+    --color-border-strong: #3d3d3d;
+    --color-text: #ffffff;
+    --color-text-muted: #a6a6a6;
+    --color-text-faint: #737373;
 
-    --color-primary: #588ef2;
-    --color-primary-hover: #7ea5f5;
-    --color-primary-contrast: #0b0e13;
-    --color-primary-soft: #16233b;
-
-    --color-map-control: #05070a;
-    --color-map-control-hover: #14181f;
+    --color-primary: #ffffff;
+    --color-primary-hover: #5b8def;
+    --color-primary-contrast: #000000;
+    --color-primary-soft: #1f1f1f;
 
     --level-0-bg: #103a26;
     --level-0-fg: #5fd696;
@@ -101,21 +109,18 @@
 }
 
 :root[data-theme='dark'] {
-  --color-bg: #0b0e13;
-  --color-surface: #12161c;
-  --color-border: #262b33;
-  --color-border-strong: #383f4a;
-  --color-text: #eef0f3;
-  --color-text-muted: #a4acb8;
-  --color-text-faint: #78808d;
+  --color-bg: #000000;
+  --color-surface: #141414;
+  --color-border: #2b2b2b;
+  --color-border-strong: #3d3d3d;
+  --color-text: #ffffff;
+  --color-text-muted: #a6a6a6;
+  --color-text-faint: #737373;
 
-  --color-primary: #588ef2;
-  --color-primary-hover: #7ea5f5;
-  --color-primary-contrast: #0b0e13;
-  --color-primary-soft: #16233b;
-
-  --color-map-control: #05070a;
-  --color-map-control-hover: #14181f;
+  --color-primary: #ffffff;
+  --color-primary-hover: #5b8def;
+  --color-primary-contrast: #000000;
+  --color-primary-soft: #1f1f1f;
 
   --level-0-bg: #103a26;
   --level-0-fg: #5fd696;
