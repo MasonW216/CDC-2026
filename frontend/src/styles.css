@@ -569,3 +569,182 @@ table.timeline tr:last-child td {
   border-radius: var(--radius-sm) 0 0 0;
   font-size: 0.72rem !important;
 }
+
+/* ---- Full-bleed map view: search bar, AI badge, and legend float over the
+   map itself, like a maps app. Color always carries a text label too. ---- */
+
+.map-page {
+  margin: calc(-1 * var(--space-5));
+}
+
+.map-view {
+  position: relative;
+  height: min(70vh, 660px);
+  overflow: hidden;
+}
+
+.map-view .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+.map-view__overlay {
+  position: absolute;
+  z-index: 500; /* above Leaflet's own panes (max ~650 for controls) */
+}
+
+/* A normal-flow bar above the map, not floating over it, so it can never
+   overlap the AI badge or legend that DO float over the map itself. */
+.search-bar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+}
+
+.search-bar form {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.search-bar .field {
+  margin: 0;
+  flex: 1 1 180px;
+  min-width: 160px;
+}
+
+.search-bar .field label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.search-bar input[type='datetime-local'] {
+  padding: var(--space-2) var(--space-2);
+  font-size: 0.85rem;
+}
+
+.ai-badge {
+  top: var(--space-4);
+  left: var(--space-4);
+  max-width: 280px;
+}
+
+.ai-badge__card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+}
+
+.ai-badge__orb {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--color-primary-hover);
+  background: radial-gradient(
+    circle at 35% 30%,
+    #ffffff 0%,
+    var(--color-primary-soft) 45%,
+    #b6ebe3 75%,
+    var(--color-primary) 100%
+  );
+  box-shadow:
+    0 0 0 4px var(--color-primary-soft),
+    0 0 18px rgba(15, 118, 110, 0.45);
+}
+
+.ai-badge__body h4 {
+  margin: 0 0 var(--space-1);
+  font-size: 0.85rem;
+}
+
+.ai-badge__route-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 2px 0;
+}
+
+.ai-badge__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.ai-badge details summary {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: var(--space-1);
+}
+
+.ai-badge details p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: var(--space-1) 0 0;
+}
+
+.map-legend {
+  bottom: var(--space-4);
+  right: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3) var(--space-4);
+  max-width: 260px;
+}
+
+.map-legend__row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  margin-bottom: var(--space-2);
+}
+
+.map-legend__row:last-child {
+  margin-bottom: 0;
+}
+
+.map-legend__swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+
+.map-legend__row strong {
+  display: block;
+  font-size: 0.82rem;
+}
+
+.map-legend__row span {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.map-status {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3) var(--space-5);
+}
