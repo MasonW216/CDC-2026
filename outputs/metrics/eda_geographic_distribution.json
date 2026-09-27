@@ -1,0 +1,7853 @@
+{
+  "data_mode": "full",
+  "population": "Unique cleaned NC qualifying events with UTC beginnings in configured period",
+  "source_files": [
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz"
+  ],
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "boundary_provenance": {
+    "files": {
+      "tl_2024_us_county.zip": {
+        "bytes": 83913260,
+        "note": "downloaded",
+        "recorded_at_utc": "2026-09-27T02:24:15+00:00",
+        "sha256": "04e668d3502757c837c13444730547cd967f28a2c49aeffb873d1792ab2cb97b",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip"
+      }
+    },
+    "source": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip"
+  },
+  "git_commit": "6243c03",
+  "years_in_denominator": 10,
+  "counties": [
+    {
+      "county_fips": "37001",
+      "county_name": "Alamance",
+      "event_count": 20,
+      "land_area_km2": 1096.763237,
+      "reports_per_study_year": 2.0,
+      "reports_per_1000_land_km2_year": 1.8235476286
+    },
+    {
+      "county_fips": "37003",
+      "county_name": "Alexander",
+      "event_count": 8,
+      "land_area_km2": 673.368516,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 1.1880567342
+    },
+    {
+      "county_fips": "37005",
+      "county_name": "Alleghany",
+      "event_count": 12,
+      "land_area_km2": 608.220278,
+      "reports_per_study_year": 1.2,
+      "reports_per_1000_land_km2_year": 1.972969405
+    },
+    {
+      "county_fips": "37007",
+      "county_name": "Anson",
+      "event_count": 16,
+      "land_area_km2": 1376.478141,
+      "reports_per_study_year": 1.6,
+      "reports_per_1000_land_km2_year": 1.1623867843
+    },
+    {
+      "county_fips": "37009",
+      "county_name": "Ashe",
+      "event_count": 35,
+      "land_area_km2": 1104.023356,
+      "reports_per_study_year": 3.5,
+      "reports_per_1000_land_km2_year": 3.1702227865
+    },
+    {
+      "county_fips": "37011",
+      "county_name": "Avery",
+      "event_count": 12,
+      "land_area_km2": 640.602137,
+      "reports_per_study_year": 1.2,
+      "reports_per_1000_land_km2_year": 1.8732375849
+    },
+    {
+      "county_fips": "37013",
+      "county_name": "Beaufort",
+      "event_count": 11,
+      "land_area_km2": 2156.776424,
+      "reports_per_study_year": 1.1,
+      "reports_per_1000_land_km2_year": 0.5100204118
+    },
+    {
+      "county_fips": "37015",
+      "county_name": "Bertie",
+      "event_count": 12,
+      "land_area_km2": 1810.858562,
+      "reports_per_study_year": 1.2,
+      "reports_per_1000_land_km2_year": 0.6626690925
+    },
+    {
+      "county_fips": "37017",
+      "county_name": "Bladen",
+      "event_count": 42,
+      "land_area_km2": 2266.124566,
+      "reports_per_study_year": 4.2,
+      "reports_per_1000_land_km2_year": 1.8533844357
+    },
+    {
+      "county_fips": "37019",
+      "county_name": "Brunswick",
+      "event_count": 87,
+      "land_area_km2": 2201.66877,
+      "reports_per_study_year": 8.7,
+      "reports_per_1000_land_km2_year": 3.9515480796
+    },
+    {
+      "county_fips": "37021",
+      "county_name": "Buncombe",
+      "event_count": 21,
+      "land_area_km2": 1700.301514,
+      "reports_per_study_year": 2.1,
+      "reports_per_1000_land_km2_year": 1.2350750633
+    },
+    {
+      "county_fips": "37023",
+      "county_name": "Burke",
+      "event_count": 36,
+      "land_area_km2": 1311.146878,
+      "reports_per_study_year": 3.6,
+      "reports_per_1000_land_km2_year": 2.74568781
+    },
+    {
+      "county_fips": "37025",
+      "county_name": "Cabarrus",
+      "event_count": 30,
+      "land_area_km2": 935.587423,
+      "reports_per_study_year": 3.0,
+      "reports_per_1000_land_km2_year": 3.2065416082
+    },
+    {
+      "county_fips": "37027",
+      "county_name": "Caldwell",
+      "event_count": 30,
+      "land_area_km2": 1222.176567,
+      "reports_per_study_year": 3.0,
+      "reports_per_1000_land_km2_year": 2.4546371457
+    },
+    {
+      "county_fips": "37029",
+      "county_name": "Camden",
+      "event_count": 10,
+      "land_area_km2": 622.441458,
+      "reports_per_study_year": 1.0,
+      "reports_per_1000_land_km2_year": 1.6065767907
+    },
+    {
+      "county_fips": "37031",
+      "county_name": "Carteret",
+      "event_count": 43,
+      "land_area_km2": 1314.694122,
+      "reports_per_study_year": 4.3,
+      "reports_per_1000_land_km2_year": 3.2707227697
+    },
+    {
+      "county_fips": "37033",
+      "county_name": "Caswell",
+      "event_count": 11,
+      "land_area_km2": 1101.99579,
+      "reports_per_study_year": 1.1,
+      "reports_per_1000_land_km2_year": 0.9981889314
+    },
+    {
+      "county_fips": "37035",
+      "county_name": "Catawba",
+      "event_count": 18,
+      "land_area_km2": 1039.552776,
+      "reports_per_study_year": 1.8,
+      "reports_per_1000_land_km2_year": 1.7315138217
+    },
+    {
+      "county_fips": "37037",
+      "county_name": "Chatham",
+      "event_count": 9,
+      "land_area_km2": 1765.03086,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.5099060988
+    },
+    {
+      "county_fips": "37039",
+      "county_name": "Cherokee",
+      "event_count": 8,
+      "land_area_km2": 1179.842036,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.6780568717
+    },
+    {
+      "county_fips": "37041",
+      "county_name": "Chowan",
+      "event_count": 7,
+      "land_area_km2": 447.179939,
+      "reports_per_study_year": 0.7,
+      "reports_per_1000_land_km2_year": 1.5653653909
+    },
+    {
+      "county_fips": "37043",
+      "county_name": "Clay",
+      "event_count": 5,
+      "land_area_km2": 556.849483,
+      "reports_per_study_year": 0.5,
+      "reports_per_1000_land_km2_year": 0.8979087083
+    },
+    {
+      "county_fips": "37045",
+      "county_name": "Cleveland",
+      "event_count": 8,
+      "land_area_km2": 1202.409706,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.665330624
+    },
+    {
+      "county_fips": "37047",
+      "county_name": "Columbus",
+      "event_count": 35,
+      "land_area_km2": 2429.920494,
+      "reports_per_study_year": 3.5,
+      "reports_per_1000_land_km2_year": 1.4403763451
+    },
+    {
+      "county_fips": "37049",
+      "county_name": "Craven",
+      "event_count": 10,
+      "land_area_km2": 1829.934615,
+      "reports_per_study_year": 1.0,
+      "reports_per_1000_land_km2_year": 0.5464676125
+    },
+    {
+      "county_fips": "37051",
+      "county_name": "Cumberland",
+      "event_count": 39,
+      "land_area_km2": 1690.137276,
+      "reports_per_study_year": 3.9,
+      "reports_per_1000_land_km2_year": 2.3075048728
+    },
+    {
+      "county_fips": "37053",
+      "county_name": "Currituck",
+      "event_count": 20,
+      "land_area_km2": 678.344374,
+      "reports_per_study_year": 2.0,
+      "reports_per_1000_land_km2_year": 2.9483549605
+    },
+    {
+      "county_fips": "37055",
+      "county_name": "Dare",
+      "event_count": 20,
+      "land_area_km2": 992.558552,
+      "reports_per_study_year": 2.0,
+      "reports_per_1000_land_km2_year": 2.0149944766
+    },
+    {
+      "county_fips": "37057",
+      "county_name": "Davidson",
+      "event_count": 29,
+      "land_area_km2": 1432.251776,
+      "reports_per_study_year": 2.9,
+      "reports_per_1000_land_km2_year": 2.0247836649
+    },
+    {
+      "county_fips": "37059",
+      "county_name": "Davie",
+      "event_count": 4,
+      "land_area_km2": 682.977539,
+      "reports_per_study_year": 0.4,
+      "reports_per_1000_land_km2_year": 0.5856707976
+    },
+    {
+      "county_fips": "37061",
+      "county_name": "Duplin",
+      "event_count": 36,
+      "land_area_km2": 2110.115795,
+      "reports_per_study_year": 3.6,
+      "reports_per_1000_land_km2_year": 1.7060675099
+    },
+    {
+      "county_fips": "37063",
+      "county_name": "Durham",
+      "event_count": 42,
+      "land_area_km2": 744.748241,
+      "reports_per_study_year": 4.2,
+      "reports_per_1000_land_km2_year": 5.6394896541
+    },
+    {
+      "county_fips": "37065",
+      "county_name": "Edgecombe",
+      "event_count": 14,
+      "land_area_km2": 1309.073894,
+      "reports_per_study_year": 1.4,
+      "reports_per_1000_land_km2_year": 1.0694583449
+    },
+    {
+      "county_fips": "37067",
+      "county_name": "Forsyth",
+      "event_count": 26,
+      "land_area_km2": 1056.834341,
+      "reports_per_study_year": 2.6,
+      "reports_per_1000_land_km2_year": 2.4601774366
+    },
+    {
+      "county_fips": "37069",
+      "county_name": "Franklin",
+      "event_count": 19,
+      "land_area_km2": 1273.761678,
+      "reports_per_study_year": 1.9,
+      "reports_per_1000_land_km2_year": 1.491644813
+    },
+    {
+      "county_fips": "37071",
+      "county_name": "Gaston",
+      "event_count": 12,
+      "land_area_km2": 921.389625,
+      "reports_per_study_year": 1.2,
+      "reports_per_1000_land_km2_year": 1.3023806297
+    },
+    {
+      "county_fips": "37073",
+      "county_name": "Gates",
+      "event_count": 9,
+      "land_area_km2": 882.181709,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 1.0201979828
+    },
+    {
+      "county_fips": "37075",
+      "county_name": "Graham",
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_study_year": 0.0,
+      "reports_per_1000_land_km2_year": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "county_name": "Granville",
+      "event_count": 6,
+      "land_area_km2": 1377.850209,
+      "reports_per_study_year": 0.6,
+      "reports_per_1000_land_km2_year": 0.4354609783
+    },
+    {
+      "county_fips": "37079",
+      "county_name": "Greene",
+      "event_count": 15,
+      "land_area_km2": 690.838975,
+      "reports_per_study_year": 1.5,
+      "reports_per_1000_land_km2_year": 2.1712729801
+    },
+    {
+      "county_fips": "37081",
+      "county_name": "Guilford",
+      "event_count": 58,
+      "land_area_km2": 1673.100202,
+      "reports_per_study_year": 5.8,
+      "reports_per_1000_land_km2_year": 3.4666184327
+    },
+    {
+      "county_fips": "37083",
+      "county_name": "Halifax",
+      "event_count": 8,
+      "land_area_km2": 1874.472932,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.4267866376
+    },
+    {
+      "county_fips": "37085",
+      "county_name": "Harnett",
+      "event_count": 24,
+      "land_area_km2": 1541.299797,
+      "reports_per_study_year": 2.4,
+      "reports_per_1000_land_km2_year": 1.5571273056
+    },
+    {
+      "county_fips": "37087",
+      "county_name": "Haywood",
+      "event_count": 7,
+      "land_area_km2": 1433.71385,
+      "reports_per_study_year": 0.7,
+      "reports_per_1000_land_km2_year": 0.488242476
+    },
+    {
+      "county_fips": "37089",
+      "county_name": "Henderson",
+      "event_count": 34,
+      "land_area_km2": 965.930095,
+      "reports_per_study_year": 3.4,
+      "reports_per_1000_land_km2_year": 3.5199234578
+    },
+    {
+      "county_fips": "37091",
+      "county_name": "Hertford",
+      "event_count": 7,
+      "land_area_km2": 914.689353,
+      "reports_per_study_year": 0.7,
+      "reports_per_1000_land_km2_year": 0.7652871412
+    },
+    {
+      "county_fips": "37093",
+      "county_name": "Hoke",
+      "event_count": 9,
+      "land_area_km2": 1010.491623,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.8906555775
+    },
+    {
+      "county_fips": "37095",
+      "county_name": "Hyde",
+      "event_count": 9,
+      "land_area_km2": 1585.958032,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.567480338
+    },
+    {
+      "county_fips": "37097",
+      "county_name": "Iredell",
+      "event_count": 11,
+      "land_area_km2": 1487.784939,
+      "reports_per_study_year": 1.1,
+      "reports_per_1000_land_km2_year": 0.7393541709
+    },
+    {
+      "county_fips": "37099",
+      "county_name": "Jackson",
+      "event_count": 9,
+      "land_area_km2": 1271.968586,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.7075646442
+    },
+    {
+      "county_fips": "37101",
+      "county_name": "Johnston",
+      "event_count": 32,
+      "land_area_km2": 2051.314542,
+      "reports_per_study_year": 3.2,
+      "reports_per_1000_land_km2_year": 1.5599752912
+    },
+    {
+      "county_fips": "37103",
+      "county_name": "Jones",
+      "event_count": 8,
+      "land_area_km2": 1220.836956,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.6552881579
+    },
+    {
+      "county_fips": "37105",
+      "county_name": "Lee",
+      "event_count": 7,
+      "land_area_km2": 660.633151,
+      "reports_per_study_year": 0.7,
+      "reports_per_1000_land_km2_year": 1.0595895755
+    },
+    {
+      "county_fips": "37107",
+      "county_name": "Lenoir",
+      "event_count": 27,
+      "land_area_km2": 1033.630007,
+      "reports_per_study_year": 2.7,
+      "reports_per_1000_land_km2_year": 2.6121532673
+    },
+    {
+      "county_fips": "37109",
+      "county_name": "Lincoln",
+      "event_count": 5,
+      "land_area_km2": 766.251553,
+      "reports_per_study_year": 0.5,
+      "reports_per_1000_land_km2_year": 0.6525272256
+    },
+    {
+      "county_fips": "37111",
+      "county_name": "McDowell",
+      "event_count": 41,
+      "land_area_km2": 1139.476684,
+      "reports_per_study_year": 4.1,
+      "reports_per_1000_land_km2_year": 3.5981429524
+    },
+    {
+      "county_fips": "37113",
+      "county_name": "Macon",
+      "event_count": 9,
+      "land_area_km2": 1335.304967,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.6740033343
+    },
+    {
+      "county_fips": "37115",
+      "county_name": "Madison",
+      "event_count": 6,
+      "land_area_km2": 1164.498324,
+      "reports_per_study_year": 0.6,
+      "reports_per_1000_land_km2_year": 0.5152433349
+    },
+    {
+      "county_fips": "37117",
+      "county_name": "Martin",
+      "event_count": 8,
+      "land_area_km2": 1182.102538,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.6767602423
+    },
+    {
+      "county_fips": "37119",
+      "county_name": "Mecklenburg",
+      "event_count": 35,
+      "land_area_km2": 1356.149121,
+      "reports_per_study_year": 3.5,
+      "reports_per_1000_land_km2_year": 2.5808371261
+    },
+    {
+      "county_fips": "37121",
+      "county_name": "Mitchell",
+      "event_count": 8,
+      "land_area_km2": 573.036227,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 1.396072294
+    },
+    {
+      "county_fips": "37123",
+      "county_name": "Montgomery",
+      "event_count": 9,
+      "land_area_km2": 1273.075626,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.7069493608
+    },
+    {
+      "county_fips": "37125",
+      "county_name": "Moore",
+      "event_count": 21,
+      "land_area_km2": 1806.846432,
+      "reports_per_study_year": 2.1,
+      "reports_per_1000_land_km2_year": 1.1622459789
+    },
+    {
+      "county_fips": "37127",
+      "county_name": "Nash",
+      "event_count": 9,
+      "land_area_km2": 1399.742907,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.6429752174
+    },
+    {
+      "county_fips": "37129",
+      "county_name": "New Hanover",
+      "event_count": 90,
+      "land_area_km2": 497.859414,
+      "reports_per_study_year": 9.0,
+      "reports_per_1000_land_km2_year": 18.0773924263
+    },
+    {
+      "county_fips": "37131",
+      "county_name": "Northampton",
+      "event_count": 7,
+      "land_area_km2": 1390.073547,
+      "reports_per_study_year": 0.7,
+      "reports_per_1000_land_km2_year": 0.5035704776
+    },
+    {
+      "county_fips": "37133",
+      "county_name": "Onslow",
+      "event_count": 24,
+      "land_area_km2": 1973.791551,
+      "reports_per_study_year": 2.4,
+      "reports_per_1000_land_km2_year": 1.2159338704
+    },
+    {
+      "county_fips": "37135",
+      "county_name": "Orange",
+      "event_count": 33,
+      "land_area_km2": 1029.631957,
+      "reports_per_study_year": 3.3,
+      "reports_per_1000_land_km2_year": 3.2050287266
+    },
+    {
+      "county_fips": "37137",
+      "county_name": "Pamlico",
+      "event_count": 3,
+      "land_area_km2": 871.570771,
+      "reports_per_study_year": 0.3,
+      "reports_per_1000_land_km2_year": 0.3442061276
+    },
+    {
+      "county_fips": "37139",
+      "county_name": "Pasquotank",
+      "event_count": 17,
+      "land_area_km2": 587.610261,
+      "reports_per_study_year": 1.7,
+      "reports_per_1000_land_km2_year": 2.8930740541
+    },
+    {
+      "county_fips": "37141",
+      "county_name": "Pender",
+      "event_count": 46,
+      "land_area_km2": 2256.65668,
+      "reports_per_study_year": 4.6,
+      "reports_per_1000_land_km2_year": 2.0384137475
+    },
+    {
+      "county_fips": "37143",
+      "county_name": "Perquimans",
+      "event_count": 8,
+      "land_area_km2": 640.17398,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 1.2496602877
+    },
+    {
+      "county_fips": "37145",
+      "county_name": "Person",
+      "event_count": 7,
+      "land_area_km2": 1016.154888,
+      "reports_per_study_year": 0.7,
+      "reports_per_1000_land_km2_year": 0.6888713603
+    },
+    {
+      "county_fips": "37147",
+      "county_name": "Pitt",
+      "event_count": 33,
+      "land_area_km2": 1689.62017,
+      "reports_per_study_year": 3.3,
+      "reports_per_1000_land_km2_year": 1.9531016844
+    },
+    {
+      "county_fips": "37149",
+      "county_name": "Polk",
+      "event_count": 18,
+      "land_area_km2": 615.606325,
+      "reports_per_study_year": 1.8,
+      "reports_per_1000_land_km2_year": 2.923946566
+    },
+    {
+      "county_fips": "37151",
+      "county_name": "Randolph",
+      "event_count": 27,
+      "land_area_km2": 2026.239779,
+      "reports_per_study_year": 2.7,
+      "reports_per_1000_land_km2_year": 1.3325175174
+    },
+    {
+      "county_fips": "37153",
+      "county_name": "Richmond",
+      "event_count": 9,
+      "land_area_km2": 1226.849527,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.7335862958
+    },
+    {
+      "county_fips": "37155",
+      "county_name": "Robeson",
+      "event_count": 27,
+      "land_area_km2": 2453.480732,
+      "reports_per_study_year": 2.7,
+      "reports_per_1000_land_km2_year": 1.1004773605
+    },
+    {
+      "county_fips": "37157",
+      "county_name": "Rockingham",
+      "event_count": 48,
+      "land_area_km2": 1465.006557,
+      "reports_per_study_year": 4.8,
+      "reports_per_1000_land_km2_year": 3.2764358474
+    },
+    {
+      "county_fips": "37159",
+      "county_name": "Rowan",
+      "event_count": 11,
+      "land_area_km2": 1325.062503,
+      "reports_per_study_year": 1.1,
+      "reports_per_1000_land_km2_year": 0.8301495194
+    },
+    {
+      "county_fips": "37161",
+      "county_name": "Rutherford",
+      "event_count": 15,
+      "land_area_km2": 1464.475268,
+      "reports_per_study_year": 1.5,
+      "reports_per_1000_land_km2_year": 1.0242576524
+    },
+    {
+      "county_fips": "37163",
+      "county_name": "Sampson",
+      "event_count": 36,
+      "land_area_km2": 2449.952011,
+      "reports_per_study_year": 3.6,
+      "reports_per_1000_land_km2_year": 1.4694165371
+    },
+    {
+      "county_fips": "37165",
+      "county_name": "Scotland",
+      "event_count": 10,
+      "land_area_km2": 826.569986,
+      "reports_per_study_year": 1.0,
+      "reports_per_1000_land_km2_year": 1.2098189106
+    },
+    {
+      "county_fips": "37167",
+      "county_name": "Stanly",
+      "event_count": 27,
+      "land_area_km2": 1023.253139,
+      "reports_per_study_year": 2.7,
+      "reports_per_1000_land_km2_year": 2.6386432615
+    },
+    {
+      "county_fips": "37169",
+      "county_name": "Stokes",
+      "event_count": 26,
+      "land_area_km2": 1163.740817,
+      "reports_per_study_year": 2.6,
+      "reports_per_1000_land_km2_year": 2.2341744502
+    },
+    {
+      "county_fips": "37171",
+      "county_name": "Surry",
+      "event_count": 52,
+      "land_area_km2": 1379.541809,
+      "reports_per_study_year": 5.2,
+      "reports_per_1000_land_km2_year": 3.7693674567
+    },
+    {
+      "county_fips": "37173",
+      "county_name": "Swain",
+      "event_count": 8,
+      "land_area_km2": 1366.790479,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.5853128276
+    },
+    {
+      "county_fips": "37175",
+      "county_name": "Transylvania",
+      "event_count": 38,
+      "land_area_km2": 979.943598,
+      "reports_per_study_year": 3.8,
+      "reports_per_1000_land_km2_year": 3.8777741982
+    },
+    {
+      "county_fips": "37177",
+      "county_name": "Tyrrell",
+      "event_count": 1,
+      "land_area_km2": 1012.10667,
+      "reports_per_study_year": 0.1,
+      "reports_per_1000_land_km2_year": 0.0988038148
+    },
+    {
+      "county_fips": "37179",
+      "county_name": "Union",
+      "event_count": 22,
+      "land_area_km2": 1638.787125,
+      "reports_per_study_year": 2.2,
+      "reports_per_1000_land_km2_year": 1.3424562388
+    },
+    {
+      "county_fips": "37181",
+      "county_name": "Vance",
+      "event_count": 4,
+      "land_area_km2": 653.701482,
+      "reports_per_study_year": 0.4,
+      "reports_per_1000_land_km2_year": 0.6119000966
+    },
+    {
+      "county_fips": "37183",
+      "county_name": "Wake",
+      "event_count": 156,
+      "land_area_km2": 2161.621264,
+      "reports_per_study_year": 15.6,
+      "reports_per_1000_land_km2_year": 7.216805395
+    },
+    {
+      "county_fips": "37185",
+      "county_name": "Warren",
+      "event_count": 9,
+      "land_area_km2": 1112.119289,
+      "reports_per_study_year": 0.9,
+      "reports_per_1000_land_km2_year": 0.8092657046
+    },
+    {
+      "county_fips": "37187",
+      "county_name": "Washington",
+      "event_count": 1,
+      "land_area_km2": 897.456201,
+      "reports_per_study_year": 0.1,
+      "reports_per_1000_land_km2_year": 0.1114260505
+    },
+    {
+      "county_fips": "37189",
+      "county_name": "Watauga",
+      "event_count": 68,
+      "land_area_km2": 809.214845,
+      "reports_per_study_year": 6.8,
+      "reports_per_1000_land_km2_year": 8.4032071854
+    },
+    {
+      "county_fips": "37191",
+      "county_name": "Wayne",
+      "event_count": 23,
+      "land_area_km2": 1434.65114,
+      "reports_per_study_year": 2.3,
+      "reports_per_1000_land_km2_year": 1.6031772017
+    },
+    {
+      "county_fips": "37193",
+      "county_name": "Wilkes",
+      "event_count": 37,
+      "land_area_km2": 1952.016296,
+      "reports_per_study_year": 3.7,
+      "reports_per_1000_land_km2_year": 1.8954759792
+    },
+    {
+      "county_fips": "37195",
+      "county_name": "Wilson",
+      "event_count": 24,
+      "land_area_km2": 952.012884,
+      "reports_per_study_year": 2.4,
+      "reports_per_1000_land_km2_year": 2.5209742855
+    },
+    {
+      "county_fips": "37197",
+      "county_name": "Yadkin",
+      "event_count": 19,
+      "land_area_km2": 867.498039,
+      "reports_per_study_year": 1.9,
+      "reports_per_1000_land_km2_year": 2.1902066801
+    },
+    {
+      "county_fips": "37199",
+      "county_name": "Yancey",
+      "event_count": 8,
+      "land_area_km2": 809.610024,
+      "reports_per_study_year": 0.8,
+      "reports_per_1000_land_km2_year": 0.988130058
+    }
+  ],
+  "county_years": [
+    {
+      "county_fips": "37001",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 1.8235476286
+    },
+    {
+      "county_fips": "37001",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 3.6470952573
+    },
+    {
+      "county_fips": "37001",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37001",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 6.3824167002
+    },
+    {
+      "county_fips": "37001",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 0.9117738143
+    },
+    {
+      "county_fips": "37001",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 0.9117738143
+    },
+    {
+      "county_fips": "37001",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37001",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 0.9117738143
+    },
+    {
+      "county_fips": "37001",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 0.9117738143
+    },
+    {
+      "county_fips": "37001",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1096.763237,
+      "reports_per_1000_land_km2": 2.7353214429
+    },
+    {
+      "county_fips": "37003",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37003",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37003",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37003",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37003",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 2.9701418354
+    },
+    {
+      "county_fips": "37003",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 4.4552127531
+    },
+    {
+      "county_fips": "37003",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37003",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37003",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 1.4850709177
+    },
+    {
+      "county_fips": "37003",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 673.368516,
+      "reports_per_1000_land_km2": 2.9701418354
+    },
+    {
+      "county_fips": "37005",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37005",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37005",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37005",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 6.5765646834
+    },
+    {
+      "county_fips": "37005",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37005",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 6.5765646834
+    },
+    {
+      "county_fips": "37005",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37005",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37005",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 3.2882823417
+    },
+    {
+      "county_fips": "37005",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 608.220278,
+      "reports_per_1000_land_km2": 3.2882823417
+    },
+    {
+      "county_fips": "37007",
+      "year": 2015,
+      "event_count": 4,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 2.9059669608
+    },
+    {
+      "county_fips": "37007",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 0.7264917402
+    },
+    {
+      "county_fips": "37007",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 0.7264917402
+    },
+    {
+      "county_fips": "37007",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 2.1794752206
+    },
+    {
+      "county_fips": "37007",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37007",
+      "year": 2020,
+      "event_count": 5,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 3.632458701
+    },
+    {
+      "county_fips": "37007",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37007",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37007",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37007",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1376.478141,
+      "reports_per_1000_land_km2": 1.4529834804
+    },
+    {
+      "county_fips": "37009",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 2.717333817
+    },
+    {
+      "county_fips": "37009",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 1.811555878
+    },
+    {
+      "county_fips": "37009",
+      "year": 2017,
+      "event_count": 4,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 3.623111756
+    },
+    {
+      "county_fips": "37009",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 1.811555878
+    },
+    {
+      "county_fips": "37009",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 1.811555878
+    },
+    {
+      "county_fips": "37009",
+      "year": 2020,
+      "event_count": 11,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 9.9635573289
+    },
+    {
+      "county_fips": "37009",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 0.905777939
+    },
+    {
+      "county_fips": "37009",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 0.905777939
+    },
+    {
+      "county_fips": "37009",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 1.811555878
+    },
+    {
+      "county_fips": "37009",
+      "year": 2024,
+      "event_count": 7,
+      "land_area_km2": 1104.023356,
+      "reports_per_1000_land_km2": 6.340445573
+    },
+    {
+      "county_fips": "37011",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 3.1220626415
+    },
+    {
+      "county_fips": "37011",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37011",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 1.5610313208
+    },
+    {
+      "county_fips": "37011",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 3.1220626415
+    },
+    {
+      "county_fips": "37011",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 3.1220626415
+    },
+    {
+      "county_fips": "37011",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37011",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 1.5610313208
+    },
+    {
+      "county_fips": "37011",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 1.5610313208
+    },
+    {
+      "county_fips": "37011",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37011",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 640.602137,
+      "reports_per_1000_land_km2": 4.6830939623
+    },
+    {
+      "county_fips": "37013",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "year": 2016,
+      "event_count": 5,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 2.3182745992
+    },
+    {
+      "county_fips": "37013",
+      "year": 2017,
+      "event_count": 3,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 1.3909647595
+    },
+    {
+      "county_fips": "37013",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.9273098397
+    },
+    {
+      "county_fips": "37013",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 2156.776424,
+      "reports_per_1000_land_km2": 0.4636549198
+    },
+    {
+      "county_fips": "37015",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "year": 2016,
+      "event_count": 5,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 2.7611212189
+    },
+    {
+      "county_fips": "37015",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 1.1044484876
+    },
+    {
+      "county_fips": "37015",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 1.1044484876
+    },
+    {
+      "county_fips": "37015",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1810.858562,
+      "reports_per_1000_land_km2": 1.6566727314
+    },
+    {
+      "county_fips": "37017",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.4412820085
+    },
+    {
+      "county_fips": "37017",
+      "year": 2016,
+      "event_count": 25,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 11.0320502125
+    },
+    {
+      "county_fips": "37017",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37017",
+      "year": 2018,
+      "event_count": 9,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 3.9715380765
+    },
+    {
+      "county_fips": "37017",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37017",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37017",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37017",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37017",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 0.4412820085
+    },
+    {
+      "county_fips": "37017",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 2266.124566,
+      "reports_per_1000_land_km2": 2.647692051
+    },
+    {
+      "county_fips": "37019",
+      "year": 2015,
+      "event_count": 18,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 8.1756167164
+    },
+    {
+      "county_fips": "37019",
+      "year": 2016,
+      "event_count": 9,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 4.0878083582
+    },
+    {
+      "county_fips": "37019",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 0.4542009287
+    },
+    {
+      "county_fips": "37019",
+      "year": 2018,
+      "event_count": 9,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 4.0878083582
+    },
+    {
+      "county_fips": "37019",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 1.3626027861
+    },
+    {
+      "county_fips": "37019",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 1.8168037148
+    },
+    {
+      "county_fips": "37019",
+      "year": 2021,
+      "event_count": 5,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 2.2710046434
+    },
+    {
+      "county_fips": "37019",
+      "year": 2022,
+      "event_count": 3,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 1.3626027861
+    },
+    {
+      "county_fips": "37019",
+      "year": 2023,
+      "event_count": 7,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 3.1794065008
+    },
+    {
+      "county_fips": "37019",
+      "year": 2024,
+      "event_count": 28,
+      "land_area_km2": 2201.66877,
+      "reports_per_1000_land_km2": 12.7176260033
+    },
+    {
+      "county_fips": "37021",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 1.176261965
+    },
+    {
+      "county_fips": "37021",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 0.5881309825
+    },
+    {
+      "county_fips": "37021",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 0.5881309825
+    },
+    {
+      "county_fips": "37021",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 4.1169168776
+    },
+    {
+      "county_fips": "37021",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 1.176261965
+    },
+    {
+      "county_fips": "37021",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 0.5881309825
+    },
+    {
+      "county_fips": "37021",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 1.176261965
+    },
+    {
+      "county_fips": "37021",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37021",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37021",
+      "year": 2024,
+      "event_count": 5,
+      "land_area_km2": 1700.301514,
+      "reports_per_1000_land_km2": 2.9406549126
+    },
+    {
+      "county_fips": "37023",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 2.288073175
+    },
+    {
+      "county_fips": "37023",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 0.7626910583
+    },
+    {
+      "county_fips": "37023",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 0.7626910583
+    },
+    {
+      "county_fips": "37023",
+      "year": 2018,
+      "event_count": 10,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 7.6269105832
+    },
+    {
+      "county_fips": "37023",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 2.288073175
+    },
+    {
+      "county_fips": "37023",
+      "year": 2020,
+      "event_count": 8,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 6.1015284666
+    },
+    {
+      "county_fips": "37023",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 1.5253821166
+    },
+    {
+      "county_fips": "37023",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 0.7626910583
+    },
+    {
+      "county_fips": "37023",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 0.7626910583
+    },
+    {
+      "county_fips": "37023",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 1311.146878,
+      "reports_per_1000_land_km2": 4.5761463499
+    },
+    {
+      "county_fips": "37025",
+      "year": 2015,
+      "event_count": 8,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 8.550777622
+    },
+    {
+      "county_fips": "37025",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37025",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 1.0688472027
+    },
+    {
+      "county_fips": "37025",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 6.4130832165
+    },
+    {
+      "county_fips": "37025",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 2.1376944055
+    },
+    {
+      "county_fips": "37025",
+      "year": 2020,
+      "event_count": 6,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 6.4130832165
+    },
+    {
+      "county_fips": "37025",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37025",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37025",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 2.1376944055
+    },
+    {
+      "county_fips": "37025",
+      "year": 2024,
+      "event_count": 5,
+      "land_area_km2": 935.587423,
+      "reports_per_1000_land_km2": 5.3442360137
+    },
+    {
+      "county_fips": "37027",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 0.8182123819
+    },
+    {
+      "county_fips": "37027",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 0.8182123819
+    },
+    {
+      "county_fips": "37027",
+      "year": 2017,
+      "event_count": 3,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 2.4546371457
+    },
+    {
+      "county_fips": "37027",
+      "year": 2018,
+      "event_count": 9,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 7.3639114372
+    },
+    {
+      "county_fips": "37027",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 2.4546371457
+    },
+    {
+      "county_fips": "37027",
+      "year": 2020,
+      "event_count": 5,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 4.0910619096
+    },
+    {
+      "county_fips": "37027",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 0.8182123819
+    },
+    {
+      "county_fips": "37027",
+      "year": 2022,
+      "event_count": 2,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 1.6364247638
+    },
+    {
+      "county_fips": "37027",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 0.8182123819
+    },
+    {
+      "county_fips": "37027",
+      "year": 2024,
+      "event_count": 4,
+      "land_area_km2": 1222.176567,
+      "reports_per_1000_land_km2": 3.2728495276
+    },
+    {
+      "county_fips": "37029",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 3.2131535814
+    },
+    {
+      "county_fips": "37029",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 4.8197303721
+    },
+    {
+      "county_fips": "37029",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37029",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 1.6065767907
+    },
+    {
+      "county_fips": "37029",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37029",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 1.6065767907
+    },
+    {
+      "county_fips": "37029",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37029",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37029",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37029",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 622.441458,
+      "reports_per_1000_land_km2": 4.8197303721
+    },
+    {
+      "county_fips": "37031",
+      "year": 2015,
+      "event_count": 6,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 4.5637992135
+    },
+    {
+      "county_fips": "37031",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37031",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37031",
+      "year": 2018,
+      "event_count": 5,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 3.8031660113
+    },
+    {
+      "county_fips": "37031",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 0.7606332023
+    },
+    {
+      "county_fips": "37031",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 2.2818996068
+    },
+    {
+      "county_fips": "37031",
+      "year": 2021,
+      "event_count": 3,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 2.2818996068
+    },
+    {
+      "county_fips": "37031",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37031",
+      "year": 2023,
+      "event_count": 5,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 3.8031660113
+    },
+    {
+      "county_fips": "37031",
+      "year": 2024,
+      "event_count": 20,
+      "land_area_km2": 1314.694122,
+      "reports_per_1000_land_km2": 15.2126640451
+    },
+    {
+      "county_fips": "37033",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 1.8148889661
+    },
+    {
+      "county_fips": "37033",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37033",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 0.9074444831
+    },
+    {
+      "county_fips": "37033",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 3.6297779323
+    },
+    {
+      "county_fips": "37033",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37033",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 1.8148889661
+    },
+    {
+      "county_fips": "37033",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37033",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37033",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37033",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1101.99579,
+      "reports_per_1000_land_km2": 1.8148889661
+    },
+    {
+      "county_fips": "37035",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37035",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 1.9239042463
+    },
+    {
+      "county_fips": "37035",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37035",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37035",
+      "year": 2019,
+      "event_count": 5,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 4.8097606158
+    },
+    {
+      "county_fips": "37035",
+      "year": 2020,
+      "event_count": 8,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 7.6956169852
+    },
+    {
+      "county_fips": "37035",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37035",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37035",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37035",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1039.552776,
+      "reports_per_1000_land_km2": 2.8858563695
+    },
+    {
+      "county_fips": "37037",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37037",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.5665623319
+    },
+    {
+      "county_fips": "37037",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37037",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 1.6996869958
+    },
+    {
+      "county_fips": "37037",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37037",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37037",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.5665623319
+    },
+    {
+      "county_fips": "37037",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37037",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 1.1331246639
+    },
+    {
+      "county_fips": "37037",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1765.03086,
+      "reports_per_1000_land_km2": 1.1331246639
+    },
+    {
+      "county_fips": "37039",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 1.6951421792
+    },
+    {
+      "county_fips": "37039",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37039",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37039",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37039",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37039",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37039",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 1.6951421792
+    },
+    {
+      "county_fips": "37039",
+      "year": 2022,
+      "event_count": 3,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 2.5427132688
+    },
+    {
+      "county_fips": "37039",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.8475710896
+    },
+    {
+      "county_fips": "37039",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1179.842036,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 6.708708818
+    },
+    {
+      "county_fips": "37041",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 2.2362362727
+    },
+    {
+      "county_fips": "37041",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 2.2362362727
+    },
+    {
+      "county_fips": "37041",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 2.2362362727
+    },
+    {
+      "county_fips": "37041",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 447.179939,
+      "reports_per_1000_land_km2": 2.2362362727
+    },
+    {
+      "county_fips": "37043",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 1.7958174166
+    },
+    {
+      "county_fips": "37043",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37043",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37043",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37043",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37043",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 1.7958174166
+    },
+    {
+      "county_fips": "37043",
+      "year": 2021,
+      "event_count": 3,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 5.3874522498
+    },
+    {
+      "county_fips": "37043",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37043",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37043",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 556.849483,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.83166328
+    },
+    {
+      "county_fips": "37045",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 3.32665312
+    },
+    {
+      "county_fips": "37045",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.83166328
+    },
+    {
+      "county_fips": "37045",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37045",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1202.409706,
+      "reports_per_1000_land_km2": 1.66332656
+    },
+    {
+      "county_fips": "37047",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 0.8230721972
+    },
+    {
+      "county_fips": "37047",
+      "year": 2016,
+      "event_count": 7,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 2.8807526902
+    },
+    {
+      "county_fips": "37047",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 0.8230721972
+    },
+    {
+      "county_fips": "37047",
+      "year": 2018,
+      "event_count": 9,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 3.7038248874
+    },
+    {
+      "county_fips": "37047",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37047",
+      "year": 2020,
+      "event_count": 5,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 2.057680493
+    },
+    {
+      "county_fips": "37047",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 0.4115360986
+    },
+    {
+      "county_fips": "37047",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37047",
+      "year": 2023,
+      "event_count": 6,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 2.4692165916
+    },
+    {
+      "county_fips": "37047",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 2429.920494,
+      "reports_per_1000_land_km2": 1.2346082958
+    },
+    {
+      "county_fips": "37049",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.5464676125
+    },
+    {
+      "county_fips": "37049",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37049",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 1.0929352249
+    },
+    {
+      "county_fips": "37049",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 1.6394028374
+    },
+    {
+      "county_fips": "37049",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.5464676125
+    },
+    {
+      "county_fips": "37049",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37049",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37049",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37049",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37049",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1829.934615,
+      "reports_per_1000_land_km2": 1.6394028374
+    },
+    {
+      "county_fips": "37051",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 0.5916679161
+    },
+    {
+      "county_fips": "37051",
+      "year": 2016,
+      "event_count": 7,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 4.1416754126
+    },
+    {
+      "county_fips": "37051",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 0.5916679161
+    },
+    {
+      "county_fips": "37051",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 2.3666716644
+    },
+    {
+      "county_fips": "37051",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 1.1833358322
+    },
+    {
+      "county_fips": "37051",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 1.7750037483
+    },
+    {
+      "county_fips": "37051",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37051",
+      "year": 2022,
+      "event_count": 5,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 2.9583395805
+    },
+    {
+      "county_fips": "37051",
+      "year": 2023,
+      "event_count": 9,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 5.3250112448
+    },
+    {
+      "county_fips": "37051",
+      "year": 2024,
+      "event_count": 7,
+      "land_area_km2": 1690.137276,
+      "reports_per_1000_land_km2": 4.1416754126
+    },
+    {
+      "county_fips": "37053",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37053",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 4.4225324407
+    },
+    {
+      "county_fips": "37053",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37053",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 2.9483549605
+    },
+    {
+      "county_fips": "37053",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37053",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 4.4225324407
+    },
+    {
+      "county_fips": "37053",
+      "year": 2021,
+      "event_count": 5,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 7.3708874012
+    },
+    {
+      "county_fips": "37053",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37053",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37053",
+      "year": 2024,
+      "event_count": 7,
+      "land_area_km2": 678.344374,
+      "reports_per_1000_land_km2": 10.3192423617
+    },
+    {
+      "county_fips": "37055",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37055",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 4.0299889532
+    },
+    {
+      "county_fips": "37055",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37055",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 6.0449834299
+    },
+    {
+      "county_fips": "37055",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37055",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 1.0074972383
+    },
+    {
+      "county_fips": "37055",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 2.0149944766
+    },
+    {
+      "county_fips": "37055",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37055",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 3.0224917149
+    },
+    {
+      "county_fips": "37055",
+      "year": 2024,
+      "event_count": 4,
+      "land_area_km2": 992.558552,
+      "reports_per_1000_land_km2": 4.0299889532
+    },
+    {
+      "county_fips": "37057",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 0.6982012637
+    },
+    {
+      "county_fips": "37057",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 1.3964025275
+    },
+    {
+      "county_fips": "37057",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37057",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 4.8874088462
+    },
+    {
+      "county_fips": "37057",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 2.0946037912
+    },
+    {
+      "county_fips": "37057",
+      "year": 2020,
+      "event_count": 10,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 6.9820126374
+    },
+    {
+      "county_fips": "37057",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 0.6982012637
+    },
+    {
+      "county_fips": "37057",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37057",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37057",
+      "year": 2024,
+      "event_count": 5,
+      "land_area_km2": 1432.251776,
+      "reports_per_1000_land_km2": 3.4910063187
+    },
+    {
+      "county_fips": "37059",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 4.3925309819
+    },
+    {
+      "county_fips": "37059",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 1.464176994
+    },
+    {
+      "county_fips": "37059",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37059",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 682.977539,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37061",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37061",
+      "year": 2016,
+      "event_count": 5,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 2.3695382082
+    },
+    {
+      "county_fips": "37061",
+      "year": 2017,
+      "event_count": 4,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 1.8956305666
+    },
+    {
+      "county_fips": "37061",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 3.3173534915
+    },
+    {
+      "county_fips": "37061",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37061",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 1.8956305666
+    },
+    {
+      "county_fips": "37061",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37061",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37061",
+      "year": 2023,
+      "event_count": 10,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 4.7390764164
+    },
+    {
+      "county_fips": "37061",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 2110.115795,
+      "reports_per_1000_land_km2": 2.8434458499
+    },
+    {
+      "county_fips": "37063",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 4.0282068958
+    },
+    {
+      "county_fips": "37063",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 5.3709425277
+    },
+    {
+      "county_fips": "37063",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37063",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 8.0564137915
+    },
+    {
+      "county_fips": "37063",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 4.0282068958
+    },
+    {
+      "county_fips": "37063",
+      "year": 2020,
+      "event_count": 8,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 10.7418850554
+    },
+    {
+      "county_fips": "37063",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37063",
+      "year": 2022,
+      "event_count": 5,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 6.7136781596
+    },
+    {
+      "county_fips": "37063",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 4.0282068958
+    },
+    {
+      "county_fips": "37063",
+      "year": 2024,
+      "event_count": 10,
+      "land_area_km2": 744.748241,
+      "reports_per_1000_land_km2": 13.4273563192
+    },
+    {
+      "county_fips": "37065",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.7638988178
+    },
+    {
+      "county_fips": "37065",
+      "year": 2016,
+      "event_count": 6,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 4.5833929066
+    },
+    {
+      "county_fips": "37065",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37065",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 1.5277976355
+    },
+    {
+      "county_fips": "37065",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37065",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 2.2916964533
+    },
+    {
+      "county_fips": "37065",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.7638988178
+    },
+    {
+      "county_fips": "37065",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37065",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37065",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 1309.073894,
+      "reports_per_1000_land_km2": 0.7638988178
+    },
+    {
+      "county_fips": "37067",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37067",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.946222091
+    },
+    {
+      "county_fips": "37067",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37067",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 6.6235546371
+    },
+    {
+      "county_fips": "37067",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37067",
+      "year": 2020,
+      "event_count": 11,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 10.4084430012
+    },
+    {
+      "county_fips": "37067",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.946222091
+    },
+    {
+      "county_fips": "37067",
+      "year": 2022,
+      "event_count": 5,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 4.7311104551
+    },
+    {
+      "county_fips": "37067",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37067",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 1056.834341,
+      "reports_per_1000_land_km2": 0.946222091
+    },
+    {
+      "county_fips": "37069",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37069",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37069",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37069",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37069",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 1.5701524347
+    },
+    {
+      "county_fips": "37069",
+      "year": 2020,
+      "event_count": 7,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 5.4955335216
+    },
+    {
+      "county_fips": "37069",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37069",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37069",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 1.5701524347
+    },
+    {
+      "county_fips": "37069",
+      "year": 2024,
+      "event_count": 8,
+      "land_area_km2": 1273.761678,
+      "reports_per_1000_land_km2": 6.280609739
+    },
+    {
+      "county_fips": "37071",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 3.2559515742
+    },
+    {
+      "county_fips": "37071",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37071",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37071",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37071",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 2.1706343828
+    },
+    {
+      "county_fips": "37071",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 3.2559515742
+    },
+    {
+      "county_fips": "37071",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 1.0853171914
+    },
+    {
+      "county_fips": "37071",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37071",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37071",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 921.389625,
+      "reports_per_1000_land_km2": 3.2559515742
+    },
+    {
+      "county_fips": "37073",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 3.4006599427
+    },
+    {
+      "county_fips": "37073",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 1.1335533142
+    },
+    {
+      "county_fips": "37073",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37073",
+      "year": 2024,
+      "event_count": 5,
+      "land_area_km2": 882.181709,
+      "reports_per_1000_land_km2": 5.6677665712
+    },
+    {
+      "county_fips": "37075",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37075",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 756.194687,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.7257682972
+    },
+    {
+      "county_fips": "37077",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.7257682972
+    },
+    {
+      "county_fips": "37077",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.7257682972
+    },
+    {
+      "county_fips": "37077",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 0.7257682972
+    },
+    {
+      "county_fips": "37077",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1377.850209,
+      "reports_per_1000_land_km2": 1.4515365944
+    },
+    {
+      "county_fips": "37079",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37079",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 4.3425459601
+    },
+    {
+      "county_fips": "37079",
+      "year": 2017,
+      "event_count": 8,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 11.5801225604
+    },
+    {
+      "county_fips": "37079",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 1.44751532
+    },
+    {
+      "county_fips": "37079",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37079",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37079",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 2.8950306401
+    },
+    {
+      "county_fips": "37079",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37079",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37079",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 690.838975,
+      "reports_per_1000_land_km2": 1.44751532
+    },
+    {
+      "county_fips": "37081",
+      "year": 2015,
+      "event_count": 4,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 2.3907713329
+    },
+    {
+      "county_fips": "37081",
+      "year": 2016,
+      "event_count": 5,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 2.9884641661
+    },
+    {
+      "county_fips": "37081",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 0.5976928332
+    },
+    {
+      "county_fips": "37081",
+      "year": 2018,
+      "event_count": 8,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 4.7815426658
+    },
+    {
+      "county_fips": "37081",
+      "year": 2019,
+      "event_count": 10,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 5.9769283322
+    },
+    {
+      "county_fips": "37081",
+      "year": 2020,
+      "event_count": 8,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 4.7815426658
+    },
+    {
+      "county_fips": "37081",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 0.5976928332
+    },
+    {
+      "county_fips": "37081",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 0.5976928332
+    },
+    {
+      "county_fips": "37081",
+      "year": 2023,
+      "event_count": 8,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 4.7815426658
+    },
+    {
+      "county_fips": "37081",
+      "year": 2024,
+      "event_count": 12,
+      "land_area_km2": 1673.100202,
+      "reports_per_1000_land_km2": 7.1723139987
+    },
+    {
+      "county_fips": "37083",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37083",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 1.0669665941
+    },
+    {
+      "county_fips": "37083",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37083",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37083",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37083",
+      "year": 2020,
+      "event_count": 5,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 2.6674164853
+    },
+    {
+      "county_fips": "37083",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37083",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37083",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.5334832971
+    },
+    {
+      "county_fips": "37083",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1874.472932,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37085",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37085",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 2.595212176
+    },
+    {
+      "county_fips": "37085",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37085",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 4.541621308
+    },
+    {
+      "county_fips": "37085",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37085",
+      "year": 2020,
+      "event_count": 9,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 5.8392273959
+    },
+    {
+      "county_fips": "37085",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 0.648803044
+    },
+    {
+      "county_fips": "37085",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37085",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37085",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1541.299797,
+      "reports_per_1000_land_km2": 1.946409132
+    },
+    {
+      "county_fips": "37087",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.6974892514
+    },
+    {
+      "county_fips": "37087",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37087",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37087",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37087",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37087",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.6974892514
+    },
+    {
+      "county_fips": "37087",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 1.3949785029
+    },
+    {
+      "county_fips": "37087",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.6974892514
+    },
+    {
+      "county_fips": "37087",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37087",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1433.71385,
+      "reports_per_1000_land_km2": 1.3949785029
+    },
+    {
+      "county_fips": "37089",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 3.1058148157
+    },
+    {
+      "county_fips": "37089",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 1.0352716052
+    },
+    {
+      "county_fips": "37089",
+      "year": 2017,
+      "event_count": 3,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 3.1058148157
+    },
+    {
+      "county_fips": "37089",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 6.2116296314
+    },
+    {
+      "county_fips": "37089",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 1.0352716052
+    },
+    {
+      "county_fips": "37089",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 3.1058148157
+    },
+    {
+      "county_fips": "37089",
+      "year": 2021,
+      "event_count": 4,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 4.141086421
+    },
+    {
+      "county_fips": "37089",
+      "year": 2022,
+      "event_count": 3,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 3.1058148157
+    },
+    {
+      "county_fips": "37089",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 1.0352716052
+    },
+    {
+      "county_fips": "37089",
+      "year": 2024,
+      "event_count": 9,
+      "land_area_km2": 965.930095,
+      "reports_per_1000_land_km2": 9.3174444472
+    },
+    {
+      "county_fips": "37091",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37091",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 3.2798020335
+    },
+    {
+      "county_fips": "37091",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37091",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37091",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37091",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 1.0932673445
+    },
+    {
+      "county_fips": "37091",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37091",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37091",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 1.0932673445
+    },
+    {
+      "county_fips": "37091",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 914.689353,
+      "reports_per_1000_land_km2": 2.186534689
+    },
+    {
+      "county_fips": "37093",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2016,
+      "event_count": 5,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 4.9480865414
+    },
+    {
+      "county_fips": "37093",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 3.9584692331
+    },
+    {
+      "county_fips": "37093",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37093",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1010.491623,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37095",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 1.2610674177
+    },
+    {
+      "county_fips": "37095",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37095",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37095",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.6305337089
+    },
+    {
+      "county_fips": "37095",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.6305337089
+    },
+    {
+      "county_fips": "37095",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37095",
+      "year": 2021,
+      "event_count": 3,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 1.8916011266
+    },
+    {
+      "county_fips": "37095",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37095",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 1.2610674177
+    },
+    {
+      "county_fips": "37095",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1585.958032,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 1.3442803107
+    },
+    {
+      "county_fips": "37097",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 1.3442803107
+    },
+    {
+      "county_fips": "37097",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 0.6721401553
+    },
+    {
+      "county_fips": "37097",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 2.016420466
+    },
+    {
+      "county_fips": "37097",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1487.784939,
+      "reports_per_1000_land_km2": 2.016420466
+    },
+    {
+      "county_fips": "37099",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 1.572365876
+    },
+    {
+      "county_fips": "37099",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37099",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37099",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37099",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.786182938
+    },
+    {
+      "county_fips": "37099",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 3.144731752
+    },
+    {
+      "county_fips": "37099",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37099",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37099",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37099",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1271.968586,
+      "reports_per_1000_land_km2": 1.572365876
+    },
+    {
+      "county_fips": "37101",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37101",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 0.974984557
+    },
+    {
+      "county_fips": "37101",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 0.4874922785
+    },
+    {
+      "county_fips": "37101",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 1.4624768355
+    },
+    {
+      "county_fips": "37101",
+      "year": 2019,
+      "event_count": 5,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 2.4374613925
+    },
+    {
+      "county_fips": "37101",
+      "year": 2020,
+      "event_count": 10,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 4.874922785
+    },
+    {
+      "county_fips": "37101",
+      "year": 2021,
+      "event_count": 7,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 3.4124459495
+    },
+    {
+      "county_fips": "37101",
+      "year": 2022,
+      "event_count": 2,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 0.974984557
+    },
+    {
+      "county_fips": "37101",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 0.4874922785
+    },
+    {
+      "county_fips": "37101",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 2051.314542,
+      "reports_per_1000_land_km2": 0.4874922785
+    },
+    {
+      "county_fips": "37103",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37103",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.8191101974
+    },
+    {
+      "county_fips": "37103",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.8191101974
+    },
+    {
+      "county_fips": "37103",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 1.6382203948
+    },
+    {
+      "county_fips": "37103",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37103",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.8191101974
+    },
+    {
+      "county_fips": "37103",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37103",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37103",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37103",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1220.836956,
+      "reports_per_1000_land_km2": 2.4573305921
+    },
+    {
+      "county_fips": "37105",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37105",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 1.5136993935
+    },
+    {
+      "county_fips": "37105",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37105",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 6.054797574
+    },
+    {
+      "county_fips": "37105",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37105",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 3.027398787
+    },
+    {
+      "county_fips": "37105",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37105",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37105",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37105",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 660.633151,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37107",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37107",
+      "year": 2016,
+      "event_count": 11,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 10.642105904
+    },
+    {
+      "county_fips": "37107",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 1.9349283462
+    },
+    {
+      "county_fips": "37107",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 0.9674641731
+    },
+    {
+      "county_fips": "37107",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37107",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 1.9349283462
+    },
+    {
+      "county_fips": "37107",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37107",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37107",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 2.9023925193
+    },
+    {
+      "county_fips": "37107",
+      "year": 2024,
+      "event_count": 8,
+      "land_area_km2": 1033.630007,
+      "reports_per_1000_land_km2": 7.7397133847
+    },
+    {
+      "county_fips": "37109",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 5.2202178049
+    },
+    {
+      "county_fips": "37109",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 1.3050544512
+    },
+    {
+      "county_fips": "37109",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37109",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 766.251553,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37111",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 2.6327875262
+    },
+    {
+      "county_fips": "37111",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 2.6327875262
+    },
+    {
+      "county_fips": "37111",
+      "year": 2017,
+      "event_count": 3,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 2.6327875262
+    },
+    {
+      "county_fips": "37111",
+      "year": 2018,
+      "event_count": 13,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 11.4087459467
+    },
+    {
+      "county_fips": "37111",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37111",
+      "year": 2020,
+      "event_count": 8,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 7.0207667365
+    },
+    {
+      "county_fips": "37111",
+      "year": 2021,
+      "event_count": 4,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 3.5103833682
+    },
+    {
+      "county_fips": "37111",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37111",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37111",
+      "year": 2024,
+      "event_count": 7,
+      "land_area_km2": 1139.476684,
+      "reports_per_1000_land_km2": 6.1431708944
+    },
+    {
+      "county_fips": "37113",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.7488925936
+    },
+    {
+      "county_fips": "37113",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37113",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37113",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 1.4977851872
+    },
+    {
+      "county_fips": "37113",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.7488925936
+    },
+    {
+      "county_fips": "37113",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 2.9955703744
+    },
+    {
+      "county_fips": "37113",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37113",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37113",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37113",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 1335.304967,
+      "reports_per_1000_land_km2": 0.7488925936
+    },
+    {
+      "county_fips": "37115",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37115",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37115",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.8587388916
+    },
+    {
+      "county_fips": "37115",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37115",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.8587388916
+    },
+    {
+      "county_fips": "37115",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.8587388916
+    },
+    {
+      "county_fips": "37115",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.8587388916
+    },
+    {
+      "county_fips": "37115",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37115",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37115",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1164.498324,
+      "reports_per_1000_land_km2": 1.7174777832
+    },
+    {
+      "county_fips": "37117",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.8459503028
+    },
+    {
+      "county_fips": "37117",
+      "year": 2017,
+      "event_count": 3,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 2.5378509085
+    },
+    {
+      "county_fips": "37117",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37117",
+      "year": 2024,
+      "event_count": 4,
+      "land_area_km2": 1182.102538,
+      "reports_per_1000_land_km2": 3.3838012113
+    },
+    {
+      "county_fips": "37119",
+      "year": 2015,
+      "event_count": 8,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 5.8990562882
+    },
+    {
+      "county_fips": "37119",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 0.737382036
+    },
+    {
+      "county_fips": "37119",
+      "year": 2017,
+      "event_count": 3,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 2.2121461081
+    },
+    {
+      "county_fips": "37119",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 2.2121461081
+    },
+    {
+      "county_fips": "37119",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 1.4747640721
+    },
+    {
+      "county_fips": "37119",
+      "year": 2020,
+      "event_count": 10,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 7.3738203603
+    },
+    {
+      "county_fips": "37119",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 1.4747640721
+    },
+    {
+      "county_fips": "37119",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37119",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37119",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 1356.149121,
+      "reports_per_1000_land_km2": 4.4242922162
+    },
+    {
+      "county_fips": "37121",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37121",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37121",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 3.4901807351
+    },
+    {
+      "county_fips": "37121",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37121",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 3.4901807351
+    },
+    {
+      "county_fips": "37121",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37121",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37121",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 1.7450903676
+    },
+    {
+      "county_fips": "37121",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37121",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 573.036227,
+      "reports_per_1000_land_km2": 5.2352711027
+    },
+    {
+      "county_fips": "37123",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.7854992897
+    },
+    {
+      "county_fips": "37123",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.7854992897
+    },
+    {
+      "county_fips": "37123",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37123",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 1.5709985795
+    },
+    {
+      "county_fips": "37123",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37123",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 2.3564978692
+    },
+    {
+      "county_fips": "37123",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 1.5709985795
+    },
+    {
+      "county_fips": "37123",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37123",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37123",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1273.075626,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37125",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 1.1069009322
+    },
+    {
+      "county_fips": "37125",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 2.2138018645
+    },
+    {
+      "county_fips": "37125",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 0.5534504661
+    },
+    {
+      "county_fips": "37125",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 1.6603513984
+    },
+    {
+      "county_fips": "37125",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37125",
+      "year": 2020,
+      "event_count": 7,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 3.8741532628
+    },
+    {
+      "county_fips": "37125",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 1.1069009322
+    },
+    {
+      "county_fips": "37125",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37125",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37125",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1806.846432,
+      "reports_per_1000_land_km2": 1.1069009322
+    },
+    {
+      "county_fips": "37127",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37127",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 1.4288338166
+    },
+    {
+      "county_fips": "37127",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.7144169083
+    },
+    {
+      "county_fips": "37127",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 1.4288338166
+    },
+    {
+      "county_fips": "37127",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37127",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 2.8576676331
+    },
+    {
+      "county_fips": "37127",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37127",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37127",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37127",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1399.742907,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37129",
+      "year": 2015,
+      "event_count": 34,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 68.2923713882
+    },
+    {
+      "county_fips": "37129",
+      "year": 2016,
+      "event_count": 13,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 26.1117890602
+    },
+    {
+      "county_fips": "37129",
+      "year": 2017,
+      "event_count": 4,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 8.0343966339
+    },
+    {
+      "county_fips": "37129",
+      "year": 2018,
+      "event_count": 9,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 18.0773924263
+    },
+    {
+      "county_fips": "37129",
+      "year": 2019,
+      "event_count": 9,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 18.0773924263
+    },
+    {
+      "county_fips": "37129",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37129",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 4.017198317
+    },
+    {
+      "county_fips": "37129",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37129",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37129",
+      "year": 2024,
+      "event_count": 19,
+      "land_area_km2": 497.859414,
+      "reports_per_1000_land_km2": 38.1633840111
+    },
+    {
+      "county_fips": "37131",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 2.1581591898
+    },
+    {
+      "county_fips": "37131",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.7193863966
+    },
+    {
+      "county_fips": "37131",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.7193863966
+    },
+    {
+      "county_fips": "37131",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1390.073547,
+      "reports_per_1000_land_km2": 1.4387727932
+    },
+    {
+      "county_fips": "37133",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37133",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 1.519917338
+    },
+    {
+      "county_fips": "37133",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 1.0132782253
+    },
+    {
+      "county_fips": "37133",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 1.0132782253
+    },
+    {
+      "county_fips": "37133",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37133",
+      "year": 2020,
+      "event_count": 7,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 3.5464737887
+    },
+    {
+      "county_fips": "37133",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37133",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 0.5066391127
+    },
+    {
+      "county_fips": "37133",
+      "year": 2023,
+      "event_count": 8,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 4.0531129014
+    },
+    {
+      "county_fips": "37133",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 1973.791551,
+      "reports_per_1000_land_km2": 0.5066391127
+    },
+    {
+      "county_fips": "37135",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 2.9136624787
+    },
+    {
+      "county_fips": "37135",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 3.884883305
+    },
+    {
+      "county_fips": "37135",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 1.9424416525
+    },
+    {
+      "county_fips": "37135",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 3.884883305
+    },
+    {
+      "county_fips": "37135",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 0.9712208262
+    },
+    {
+      "county_fips": "37135",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 0.9712208262
+    },
+    {
+      "county_fips": "37135",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37135",
+      "year": 2022,
+      "event_count": 8,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 7.7697666099
+    },
+    {
+      "county_fips": "37135",
+      "year": 2023,
+      "event_count": 6,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 5.8273249574
+    },
+    {
+      "county_fips": "37135",
+      "year": 2024,
+      "event_count": 4,
+      "land_area_km2": 1029.631957,
+      "reports_per_1000_land_km2": 3.884883305
+    },
+    {
+      "county_fips": "37137",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37137",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 1.1473537586
+    },
+    {
+      "county_fips": "37137",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37137",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 1.1473537586
+    },
+    {
+      "county_fips": "37137",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37137",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37137",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37137",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 1.1473537586
+    },
+    {
+      "county_fips": "37137",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37137",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 871.570771,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37139",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 1.7018082671
+    },
+    {
+      "county_fips": "37139",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 5.1054248013
+    },
+    {
+      "county_fips": "37139",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37139",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 1.7018082671
+    },
+    {
+      "county_fips": "37139",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 5.1054248013
+    },
+    {
+      "county_fips": "37139",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 1.7018082671
+    },
+    {
+      "county_fips": "37139",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37139",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37139",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37139",
+      "year": 2024,
+      "event_count": 8,
+      "land_area_km2": 587.610261,
+      "reports_per_1000_land_km2": 13.6144661368
+    },
+    {
+      "county_fips": "37141",
+      "year": 2015,
+      "event_count": 5,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 2.2156671169
+    },
+    {
+      "county_fips": "37141",
+      "year": 2016,
+      "event_count": 13,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 5.7607345039
+    },
+    {
+      "county_fips": "37141",
+      "year": 2017,
+      "event_count": 10,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 4.4313342338
+    },
+    {
+      "county_fips": "37141",
+      "year": 2018,
+      "event_count": 7,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 3.1019339637
+    },
+    {
+      "county_fips": "37141",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37141",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 1.3294002701
+    },
+    {
+      "county_fips": "37141",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37141",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37141",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 0.8862668468
+    },
+    {
+      "county_fips": "37141",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 2256.65668,
+      "reports_per_1000_land_km2": 2.6588005403
+    },
+    {
+      "county_fips": "37143",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37143",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 4.6862260787
+    },
+    {
+      "county_fips": "37143",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37143",
+      "year": 2018,
+      "event_count": 1,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 1.5620753596
+    },
+    {
+      "county_fips": "37143",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 1.5620753596
+    },
+    {
+      "county_fips": "37143",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 3.1241507192
+    },
+    {
+      "county_fips": "37143",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37143",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37143",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37143",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 640.17398,
+      "reports_per_1000_land_km2": 1.5620753596
+    },
+    {
+      "county_fips": "37145",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37145",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.9841019433
+    },
+    {
+      "county_fips": "37145",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.9841019433
+    },
+    {
+      "county_fips": "37145",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 2.95230583
+    },
+    {
+      "county_fips": "37145",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37145",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37145",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37145",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37145",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37145",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1016.154888,
+      "reports_per_1000_land_km2": 1.9682038867
+    },
+    {
+      "county_fips": "37147",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37147",
+      "year": 2016,
+      "event_count": 12,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 7.1021879432
+    },
+    {
+      "county_fips": "37147",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 0.5918489953
+    },
+    {
+      "county_fips": "37147",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37147",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37147",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 0.5918489953
+    },
+    {
+      "county_fips": "37147",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37147",
+      "year": 2022,
+      "event_count": 3,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 1.7755469858
+    },
+    {
+      "county_fips": "37147",
+      "year": 2023,
+      "event_count": 9,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 5.3266409574
+    },
+    {
+      "county_fips": "37147",
+      "year": 2024,
+      "event_count": 7,
+      "land_area_km2": 1689.62017,
+      "reports_per_1000_land_km2": 4.1429429669
+    },
+    {
+      "county_fips": "37149",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 3.2488295178
+    },
+    {
+      "county_fips": "37149",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37149",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37149",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 9.7464885534
+    },
+    {
+      "county_fips": "37149",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37149",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 6.4976590356
+    },
+    {
+      "county_fips": "37149",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 1.6244147589
+    },
+    {
+      "county_fips": "37149",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 1.6244147589
+    },
+    {
+      "county_fips": "37149",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 1.6244147589
+    },
+    {
+      "county_fips": "37149",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 615.606325,
+      "reports_per_1000_land_km2": 4.8732442767
+    },
+    {
+      "county_fips": "37151",
+      "year": 2015,
+      "event_count": 5,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 2.4676250322
+    },
+    {
+      "county_fips": "37151",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 1.4805750193
+    },
+    {
+      "county_fips": "37151",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 0.4935250064
+    },
+    {
+      "county_fips": "37151",
+      "year": 2018,
+      "event_count": 5,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 2.4676250322
+    },
+    {
+      "county_fips": "37151",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 0.9870500129
+    },
+    {
+      "county_fips": "37151",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 0.9870500129
+    },
+    {
+      "county_fips": "37151",
+      "year": 2021,
+      "event_count": 4,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 1.9741000258
+    },
+    {
+      "county_fips": "37151",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37151",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 1.4805750193
+    },
+    {
+      "county_fips": "37151",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 2026.239779,
+      "reports_per_1000_land_km2": 0.9870500129
+    },
+    {
+      "county_fips": "37153",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.8150958842
+    },
+    {
+      "county_fips": "37153",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 1.6301917684
+    },
+    {
+      "county_fips": "37153",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.8150958842
+    },
+    {
+      "county_fips": "37153",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 1.6301917684
+    },
+    {
+      "county_fips": "37153",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37153",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 1.6301917684
+    },
+    {
+      "county_fips": "37153",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37153",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37153",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37153",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 1226.849527,
+      "reports_per_1000_land_km2": 0.8150958842
+    },
+    {
+      "county_fips": "37155",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.8151684152
+    },
+    {
+      "county_fips": "37155",
+      "year": 2016,
+      "event_count": 4,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 1.6303368304
+    },
+    {
+      "county_fips": "37155",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37155",
+      "year": 2018,
+      "event_count": 11,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 4.4834262835
+    },
+    {
+      "county_fips": "37155",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37155",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.8151684152
+    },
+    {
+      "county_fips": "37155",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37155",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37155",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 0.8151684152
+    },
+    {
+      "county_fips": "37155",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 2453.480732,
+      "reports_per_1000_land_km2": 2.4455052456
+    },
+    {
+      "county_fips": "37157",
+      "year": 2015,
+      "event_count": 4,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 2.7303632061
+    },
+    {
+      "county_fips": "37157",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37157",
+      "year": 2017,
+      "event_count": 5,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 3.4129540077
+    },
+    {
+      "county_fips": "37157",
+      "year": 2018,
+      "event_count": 17,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 11.6040436261
+    },
+    {
+      "county_fips": "37157",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 0.6825908015
+    },
+    {
+      "county_fips": "37157",
+      "year": 2020,
+      "event_count": 6,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 4.0955448092
+    },
+    {
+      "county_fips": "37157",
+      "year": 2021,
+      "event_count": 4,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 2.7303632061
+    },
+    {
+      "county_fips": "37157",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37157",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37157",
+      "year": 2024,
+      "event_count": 11,
+      "land_area_km2": 1465.006557,
+      "reports_per_1000_land_km2": 7.5084988169
+    },
+    {
+      "county_fips": "37159",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.7546813812
+    },
+    {
+      "county_fips": "37159",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37159",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.7546813812
+    },
+    {
+      "county_fips": "37159",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 1.5093627625
+    },
+    {
+      "county_fips": "37159",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37159",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 3.018725525
+    },
+    {
+      "county_fips": "37159",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37159",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37159",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 0.7546813812
+    },
+    {
+      "county_fips": "37159",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1325.062503,
+      "reports_per_1000_land_km2": 1.5093627625
+    },
+    {
+      "county_fips": "37161",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37161",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 0.6828384349
+    },
+    {
+      "county_fips": "37161",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 0.6828384349
+    },
+    {
+      "county_fips": "37161",
+      "year": 2018,
+      "event_count": 5,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 3.4141921747
+    },
+    {
+      "county_fips": "37161",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37161",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 2.0485153048
+    },
+    {
+      "county_fips": "37161",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 1.3656768699
+    },
+    {
+      "county_fips": "37161",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37161",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37161",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 1464.475268,
+      "reports_per_1000_land_km2": 2.0485153048
+    },
+    {
+      "county_fips": "37163",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 0.4081712603
+    },
+    {
+      "county_fips": "37163",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 0.8163425206
+    },
+    {
+      "county_fips": "37163",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37163",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 0.8163425206
+    },
+    {
+      "county_fips": "37163",
+      "year": 2019,
+      "event_count": 4,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 1.6326850412
+    },
+    {
+      "county_fips": "37163",
+      "year": 2020,
+      "event_count": 13,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 5.3062263839
+    },
+    {
+      "county_fips": "37163",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 0.4081712603
+    },
+    {
+      "county_fips": "37163",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37163",
+      "year": 2023,
+      "event_count": 7,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 2.8571988221
+    },
+    {
+      "county_fips": "37163",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 2449.952011,
+      "reports_per_1000_land_km2": 2.4490275618
+    },
+    {
+      "county_fips": "37165",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 2.4196378212
+    },
+    {
+      "county_fips": "37165",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 1.2098189106
+    },
+    {
+      "county_fips": "37165",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37165",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 3.6294567318
+    },
+    {
+      "county_fips": "37165",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37165",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37165",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37165",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37165",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37165",
+      "year": 2024,
+      "event_count": 4,
+      "land_area_km2": 826.569986,
+      "reports_per_1000_land_km2": 4.8392756424
+    },
+    {
+      "county_fips": "37167",
+      "year": 2015,
+      "event_count": 2,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 1.9545505641
+    },
+    {
+      "county_fips": "37167",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 0.977275282
+    },
+    {
+      "county_fips": "37167",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37167",
+      "year": 2018,
+      "event_count": 4,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 3.9091011281
+    },
+    {
+      "county_fips": "37167",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 1.9545505641
+    },
+    {
+      "county_fips": "37167",
+      "year": 2020,
+      "event_count": 12,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 11.7273033843
+    },
+    {
+      "county_fips": "37167",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37167",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 0.977275282
+    },
+    {
+      "county_fips": "37167",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 2.9318258461
+    },
+    {
+      "county_fips": "37167",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1023.253139,
+      "reports_per_1000_land_km2": 1.9545505641
+    },
+    {
+      "county_fips": "37169",
+      "year": 2015,
+      "event_count": 3,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 2.5778935964
+    },
+    {
+      "county_fips": "37169",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37169",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37169",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 5.1557871928
+    },
+    {
+      "county_fips": "37169",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 1.7185957309
+    },
+    {
+      "county_fips": "37169",
+      "year": 2020,
+      "event_count": 7,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 6.0150850582
+    },
+    {
+      "county_fips": "37169",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37169",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37169",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37169",
+      "year": 2024,
+      "event_count": 8,
+      "land_area_km2": 1163.740817,
+      "reports_per_1000_land_km2": 6.8743829237
+    },
+    {
+      "county_fips": "37171",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 0.7248783571
+    },
+    {
+      "county_fips": "37171",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 0.7248783571
+    },
+    {
+      "county_fips": "37171",
+      "year": 2017,
+      "event_count": 4,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 2.8995134282
+    },
+    {
+      "county_fips": "37171",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 4.3492701423
+    },
+    {
+      "county_fips": "37171",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37171",
+      "year": 2020,
+      "event_count": 19,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 13.7726887841
+    },
+    {
+      "county_fips": "37171",
+      "year": 2021,
+      "event_count": 5,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 3.6243917853
+    },
+    {
+      "county_fips": "37171",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37171",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 2.1746350712
+    },
+    {
+      "county_fips": "37171",
+      "year": 2024,
+      "event_count": 13,
+      "land_area_km2": 1379.541809,
+      "reports_per_1000_land_km2": 9.4234186417
+    },
+    {
+      "county_fips": "37173",
+      "year": 2015,
+      "event_count": 1,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.7316410345
+    },
+    {
+      "county_fips": "37173",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.7316410345
+    },
+    {
+      "county_fips": "37173",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37173",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 1.463282069
+    },
+    {
+      "county_fips": "37173",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.7316410345
+    },
+    {
+      "county_fips": "37173",
+      "year": 2020,
+      "event_count": 1,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.7316410345
+    },
+    {
+      "county_fips": "37173",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37173",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37173",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37173",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1366.790479,
+      "reports_per_1000_land_km2": 1.463282069
+    },
+    {
+      "county_fips": "37175",
+      "year": 2015,
+      "event_count": 7,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 7.1432682598
+    },
+    {
+      "county_fips": "37175",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 1.0204668943
+    },
+    {
+      "county_fips": "37175",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 1.0204668943
+    },
+    {
+      "county_fips": "37175",
+      "year": 2018,
+      "event_count": 6,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 6.1228013656
+    },
+    {
+      "county_fips": "37175",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 3.0614006828
+    },
+    {
+      "county_fips": "37175",
+      "year": 2020,
+      "event_count": 8,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 8.1637351541
+    },
+    {
+      "county_fips": "37175",
+      "year": 2021,
+      "event_count": 4,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 4.081867577
+    },
+    {
+      "county_fips": "37175",
+      "year": 2022,
+      "event_count": 3,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 3.0614006828
+    },
+    {
+      "county_fips": "37175",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37175",
+      "year": 2024,
+      "event_count": 5,
+      "land_area_km2": 979.943598,
+      "reports_per_1000_land_km2": 5.1023344713
+    },
+    {
+      "county_fips": "37177",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.9880381482
+    },
+    {
+      "county_fips": "37177",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37177",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1012.10667,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37179",
+      "year": 2015,
+      "event_count": 10,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 6.1020738127
+    },
+    {
+      "county_fips": "37179",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 0.6102073813
+    },
+    {
+      "county_fips": "37179",
+      "year": 2017,
+      "event_count": 2,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 1.2204147625
+    },
+    {
+      "county_fips": "37179",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 1.2204147625
+    },
+    {
+      "county_fips": "37179",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37179",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 1.8306221438
+    },
+    {
+      "county_fips": "37179",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37179",
+      "year": 2022,
+      "event_count": 1,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 0.6102073813
+    },
+    {
+      "county_fips": "37179",
+      "year": 2023,
+      "event_count": 1,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 0.6102073813
+    },
+    {
+      "county_fips": "37179",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 1638.787125,
+      "reports_per_1000_land_km2": 1.2204147625
+    },
+    {
+      "county_fips": "37181",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 1.5297502416
+    },
+    {
+      "county_fips": "37181",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2020,
+      "event_count": 2,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 3.0595004831
+    },
+    {
+      "county_fips": "37181",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37181",
+      "year": 2024,
+      "event_count": 1,
+      "land_area_km2": 653.701482,
+      "reports_per_1000_land_km2": 1.5297502416
+    },
+    {
+      "county_fips": "37183",
+      "year": 2015,
+      "event_count": 7,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 3.2383101131
+    },
+    {
+      "county_fips": "37183",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 1.3878471913
+    },
+    {
+      "county_fips": "37183",
+      "year": 2017,
+      "event_count": 6,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 2.7756943827
+    },
+    {
+      "county_fips": "37183",
+      "year": 2018,
+      "event_count": 18,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 8.3270831481
+    },
+    {
+      "county_fips": "37183",
+      "year": 2019,
+      "event_count": 6,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 2.7756943827
+    },
+    {
+      "county_fips": "37183",
+      "year": 2020,
+      "event_count": 23,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 10.6401618003
+    },
+    {
+      "county_fips": "37183",
+      "year": 2021,
+      "event_count": 8,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 3.7009258436
+    },
+    {
+      "county_fips": "37183",
+      "year": 2022,
+      "event_count": 26,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 12.0280089917
+    },
+    {
+      "county_fips": "37183",
+      "year": 2023,
+      "event_count": 21,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 9.7149303394
+    },
+    {
+      "county_fips": "37183",
+      "year": 2024,
+      "event_count": 38,
+      "land_area_km2": 2161.621264,
+      "reports_per_1000_land_km2": 17.5793977571
+    },
+    {
+      "county_fips": "37185",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37185",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.8991841162
+    },
+    {
+      "county_fips": "37185",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37185",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 1.7983682324
+    },
+    {
+      "county_fips": "37185",
+      "year": 2019,
+      "event_count": 0,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37185",
+      "year": 2020,
+      "event_count": 4,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 3.5967364648
+    },
+    {
+      "county_fips": "37185",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 1.7983682324
+    },
+    {
+      "county_fips": "37185",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37185",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37185",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 1112.119289,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2018,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 1.1142605053
+    },
+    {
+      "county_fips": "37187",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37187",
+      "year": 2024,
+      "event_count": 0,
+      "land_area_km2": 897.456201,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37189",
+      "year": 2015,
+      "event_count": 9,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 11.121891863
+    },
+    {
+      "county_fips": "37189",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 1.2357657626
+    },
+    {
+      "county_fips": "37189",
+      "year": 2017,
+      "event_count": 6,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 7.4145945753
+    },
+    {
+      "county_fips": "37189",
+      "year": 2018,
+      "event_count": 10,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 12.3576576255
+    },
+    {
+      "county_fips": "37189",
+      "year": 2019,
+      "event_count": 6,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 7.4145945753
+    },
+    {
+      "county_fips": "37189",
+      "year": 2020,
+      "event_count": 6,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 7.4145945753
+    },
+    {
+      "county_fips": "37189",
+      "year": 2021,
+      "event_count": 7,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 8.6503603379
+    },
+    {
+      "county_fips": "37189",
+      "year": 2022,
+      "event_count": 9,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 11.121891863
+    },
+    {
+      "county_fips": "37189",
+      "year": 2023,
+      "event_count": 2,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 2.4715315251
+    },
+    {
+      "county_fips": "37189",
+      "year": 2024,
+      "event_count": 12,
+      "land_area_km2": 809.214845,
+      "reports_per_1000_land_km2": 14.8291891506
+    },
+    {
+      "county_fips": "37191",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37191",
+      "year": 2016,
+      "event_count": 3,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 2.0911006978
+    },
+    {
+      "county_fips": "37191",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37191",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 2.0911006978
+    },
+    {
+      "county_fips": "37191",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 0.6970335659
+    },
+    {
+      "county_fips": "37191",
+      "year": 2020,
+      "event_count": 3,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 2.0911006978
+    },
+    {
+      "county_fips": "37191",
+      "year": 2021,
+      "event_count": 2,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 1.3940671319
+    },
+    {
+      "county_fips": "37191",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37191",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 2.0911006978
+    },
+    {
+      "county_fips": "37191",
+      "year": 2024,
+      "event_count": 8,
+      "land_area_km2": 1434.65114,
+      "reports_per_1000_land_km2": 5.5762685276
+    },
+    {
+      "county_fips": "37193",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37193",
+      "year": 2016,
+      "event_count": 1,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 0.5122908052
+    },
+    {
+      "county_fips": "37193",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 0.5122908052
+    },
+    {
+      "county_fips": "37193",
+      "year": 2018,
+      "event_count": 10,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 5.1229080518
+    },
+    {
+      "county_fips": "37193",
+      "year": 2019,
+      "event_count": 2,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 1.0245816104
+    },
+    {
+      "county_fips": "37193",
+      "year": 2020,
+      "event_count": 17,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 8.708943688
+    },
+    {
+      "county_fips": "37193",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37193",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37193",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37193",
+      "year": 2024,
+      "event_count": 6,
+      "land_area_km2": 1952.016296,
+      "reports_per_1000_land_km2": 3.0737448311
+    },
+    {
+      "county_fips": "37195",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37195",
+      "year": 2016,
+      "event_count": 2,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 2.1008119046
+    },
+    {
+      "county_fips": "37195",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37195",
+      "year": 2018,
+      "event_count": 2,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 2.1008119046
+    },
+    {
+      "county_fips": "37195",
+      "year": 2019,
+      "event_count": 3,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 3.1512178568
+    },
+    {
+      "county_fips": "37195",
+      "year": 2020,
+      "event_count": 11,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 11.5544654751
+    },
+    {
+      "county_fips": "37195",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 1.0504059523
+    },
+    {
+      "county_fips": "37195",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37195",
+      "year": 2023,
+      "event_count": 3,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 3.1512178568
+    },
+    {
+      "county_fips": "37195",
+      "year": 2024,
+      "event_count": 2,
+      "land_area_km2": 952.012884,
+      "reports_per_1000_land_km2": 2.1008119046
+    },
+    {
+      "county_fips": "37197",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37197",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37197",
+      "year": 2017,
+      "event_count": 1,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 1.152740358
+    },
+    {
+      "county_fips": "37197",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 3.4582210739
+    },
+    {
+      "county_fips": "37197",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 1.152740358
+    },
+    {
+      "county_fips": "37197",
+      "year": 2020,
+      "event_count": 10,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 11.5274035795
+    },
+    {
+      "county_fips": "37197",
+      "year": 2021,
+      "event_count": 0,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37197",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37197",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37197",
+      "year": 2024,
+      "event_count": 4,
+      "land_area_km2": 867.498039,
+      "reports_per_1000_land_km2": 4.6109614318
+    },
+    {
+      "county_fips": "37199",
+      "year": 2015,
+      "event_count": 0,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37199",
+      "year": 2016,
+      "event_count": 0,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37199",
+      "year": 2017,
+      "event_count": 0,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37199",
+      "year": 2018,
+      "event_count": 3,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 3.7054877176
+    },
+    {
+      "county_fips": "37199",
+      "year": 2019,
+      "event_count": 1,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 1.2351625725
+    },
+    {
+      "county_fips": "37199",
+      "year": 2020,
+      "event_count": 0,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37199",
+      "year": 2021,
+      "event_count": 1,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 1.2351625725
+    },
+    {
+      "county_fips": "37199",
+      "year": 2022,
+      "event_count": 0,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37199",
+      "year": 2023,
+      "event_count": 0,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 0.0
+    },
+    {
+      "county_fips": "37199",
+      "year": 2024,
+      "event_count": 3,
+      "land_area_km2": 809.610024,
+      "reports_per_1000_land_km2": 3.7054877176
+    }
+  ],
+  "zero_report_counties": [
+    {
+      "county_fips": "37075",
+      "county_name": "Graham"
+    }
+  ],
+  "interpretation": "Report frequencies; not road risk or proof of complete reporting"
+}

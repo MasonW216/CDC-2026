@@ -35,7 +35,7 @@ from typing import Literal
 import geopandas as gpd
 from pyproj import CRS
 
-from stormroute.config import data_mode, data_path, load_config
+from stormroute.config import DataMode, data_mode, data_path, load_config
 from stormroute.data.noaa import sha256_of
 from stormroute.data.validation import DataContractError
 
@@ -70,7 +70,11 @@ def _load_record(raw_dir: Path) -> dict[str, dict[str, object]]:
     path = raw_dir / RECORD_FILENAME
     if not path.exists():
         return {}
-    files: dict[str, dict[str, object]] = json.loads(path.read_text(encoding="utf-8"))["files"]
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    # Preserve compatibility with Cameron's earlier single-file provenance.
+    files: dict[str, dict[str, object]] = payload.get("files", {})
+    if "files" not in payload and "sha256" in payload:
+        files[TIGER_COUNTY_FILENAME] = payload
     return files
 
 
@@ -211,3 +215,30 @@ def load_nc_counties(path: Path | None = None) -> gpd.GeoDataFrame:
             "or set STORMROUTE_DATA_MODE=sample to use the tracked fixture."
         )
     return counties_from_tiger(gpd.read_file(f"zip://{path}"))
+
+
+def load_counties(mode: DataMode | None = None) -> gpd.GeoDataFrame:
+    """Load and validate full TIGER geometry or the simplified offline fixture."""
+    mode = mode or data_mode()
+    if mode == "sample":
+        path = data_path("sample") / "nc_counties_2024.geojson"
+        record = json.loads(path.with_suffix(".json").read_text(encoding="utf-8"))
+    else:
+        directory = data_path("boundaries_raw")
+        record = json.loads((directory / "download_record.json").read_text(encoding="utf-8"))
+        path = directory / "tl_2024_us_county.zip"
+        record = record.get("files", {}).get(path.name, record)
+    if sha256_of(path) != record["sha256"]:
+        raise ValueError("County boundary checksum does not match its provenance record")
+    counties = gpd.read_file(path)
+    config = load_config("data")["geography"]
+    counties = counties.loc[counties["STATEFP"] == config["state_fips"]].copy()
+    if len(counties) != config["expected_county_count"] or not counties["GEOID"].is_unique:
+        raise ValueError("Expected exactly 100 unique North Carolina counties")
+    if not counties["GEOID"].str.fullmatch(r"37\d{3}").all():
+        raise ValueError("Invalid county FIPS")
+    if counties.crs is None or counties.geometry.isna().any() or counties.geometry.is_empty.any():
+        raise ValueError("Missing county geometry or CRS")
+    if not counties.geometry.is_valid.all():
+        raise ValueError("Invalid county geometry")
+    return counties.to_crs(config["crs_storage"]).sort_values("GEOID").reset_index(drop=True)

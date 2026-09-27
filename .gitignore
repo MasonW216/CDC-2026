@@ -48,6 +48,7 @@ data/processed/*
 # Executed notebook copies from `make eda` and CI; the tracked notebooks stay
 # output-free.
 outputs/executed/
+outputs/tools/
 
 # Generated predictions are large; keep the directory, drop the contents.
 outputs/predictions/*

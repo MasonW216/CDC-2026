@@ -1,0 +1,161 @@
+/**
+ * Hurricane Helene case study: a standalone historical demo, not a trip result.
+ *
+ * Fetches GET /api/v1/demo/helene on mount -- never posts anything, never reachable from
+ * the planner. Renders with the exact same components as the live results page
+ * (LevelBadge, RouteCard, from ScoreDisplay.tsx) so a Severe-concern
+ * result looks identical whether it came from a live trip or from here: one visual
+ * language, one prototype-score/1 contract, two different `mode` values.
+ *
+ * Shows a clear "historical, not live" banner above everything else on the page, so it
+ * can never be mistaken for a scored trip -- see docs/prototype_score_spec.md's
+ * "Historical case study" section for why this must stay a separate page.
+ */
+import { useEffect, useState } from 'react';
+
+import RouteComparisonChart from '@/components/RouteComparisonChart';
+import { RouteCard } from '@/components/ScoreDisplay';
+import { ApiError, fetchCountyBoundaries, fetchHeleneCaseStudy } from '@/services/api';
+import type { CountyBoundaries } from '@/types/geography';
+import type { ScoreResponse } from '@/types/score';
+import { formatInstant } from '@/utils/scoreDisplay';
+
+type LoadState =
+  | { kind: 'loading' }
+  | { kind: 'error'; message: string }
+  | { kind: 'ready'; score: ScoreResponse };
+
+export default function HeleneCaseStudyPage() {
+  const [state, setState] = useState<LoadState>({ kind: 'loading' });
+  const [counties, setCounties] = useState<CountyBoundaries | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchHeleneCaseStudy()
+      .then((score) => {
+        if (!cancelled) setState({ kind: 'ready', score });
+      })
+      .catch((error: unknown) => {
+        if (cancelled) return;
+        setState({
+          kind: 'error',
+          message: error instanceof ApiError ? error.message : 'Could not load the case study.',
+        });
+      });
+    // County shapes are map decoration, not core content: a failure here degrades the map
+    // to no county coloring (RouteMap already handles `counties === null`), never blocks
+    // the page or the route/alert data above.
+    fetchCountyBoundaries()
+      .then((data) => {
+        if (!cancelled) setCounties(data);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // A local const (not a nested property access) so TypeScript's narrowing survives into
+  // the .map() closure below.
+  const caseStudy = state.kind === 'ready' ? state.score.case_study : undefined;
+
+  return (
+    <section aria-labelledby="helene-heading">
+      <h2 id="helene-heading" className="page-title">
+        Case study: Hurricane Helene
+      </h2>
+
+      <div role="note" className="card" style={{ borderLeft: '4px solid var(--color-accent)' }}>
+        <p style={{ margin: 0, fontWeight: 600 }}>
+          This is a historical replay, not a live trip result.
+        </p>
+        <p className="note" style={{ marginBottom: 0 }}>
+          It shows what StormRoute's prototype hazard indicator reports for a real severe-weather
+          period (Hurricane Helene, 23&ndash;28 September 2024), using the same scoring rule as a
+          live trip. The rainfall here is historical reanalysis, retrieved after the fact — a
+          traveler would not have had it at departure. This page never feeds into, and is never
+          shown as, a live or saved trip result. Plan a real trip on the{' '}
+          <a href="/">planner page</a> instead.
+        </p>
+      </div>
+
+      {state.kind === 'loading' && (
+        <p role="status" className="note">
+          Loading the case study&hellip;
+        </p>
+      )}
+
+      {state.kind === 'error' && (
+        <p role="alert">
+          {state.message} Try reloading the page; this reads cached files and needs no network.
+        </p>
+      )}
+
+      {state.kind === 'ready' && caseStudy && (
+        <>
+          <p className="note">
+            {caseStudy.origin.label} to {caseStudy.destination.label}, departing{' '}
+            {formatInstant(state.score.departure_utc)}. {caseStudy.note}
+          </p>
+
+          <div className="card-grid" style={{ marginTop: 'var(--space-4)' }}>
+            {state.score.routes.map((route, index) => (
+              <RouteCard
+                key={route.route_id}
+                label={`Route ${index + 1}`}
+                route={route}
+                origin={caseStudy.origin}
+                destination={caseStudy.destination}
+                counties={counties}
+              />
+            ))}
+          </div>
+
+          <section aria-labelledby="helene-comparison-heading" className="card">
+            <h3 id="helene-comparison-heading" className="section-title" style={{ marginTop: 0 }}>
+              Comparison
+            </h3>
+            <RouteComparisonChart
+              routes={state.score.routes}
+              comparison={state.score.comparison}
+              labels={Object.fromEntries(
+                state.score.routes.map((route, index) => [route.route_id, `Route ${index + 1}`]),
+              )}
+            />
+            <p>{state.score.comparison.message}</p>
+            {state.score.comparison.severe_advice && <p>{state.score.comparison.severe_advice}</p>}
+          </section>
+
+          {/* Each route above already shows its own grouped alert summary (AlertSummary),
+              positioned above its map and advisory, satisfying the "alerts above advisory"
+              rule per-route. A combined page-level flat list here would repeat every one
+              of them a second time as a single wall of text -- the exact problem this
+              redesign exists to fix -- so it is deliberately not duplicated here. */}
+
+          {state.score.limitations.length > 0 && (
+            <section aria-labelledby="helene-limits-heading" className="card">
+              <h3 id="helene-limits-heading" className="section-title" style={{ marginTop: 0 }}>
+                Known limits
+              </h3>
+              <ul className="note">
+                {state.score.limitations.map((limitation) => (
+                  <li key={limitation}>{limitation}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <section aria-labelledby="helene-provenance-heading" className="card">
+            <h3 id="helene-provenance-heading" className="section-title" style={{ marginTop: 0 }}>
+              Inputs and provenance
+            </h3>
+            <ul className="note">
+              <li>Rainfall: {state.score.coverage.forecast.source}</li>
+              <li>Alerts: {state.score.coverage.alerts.source}</li>
+            </ul>
+          </section>
+        </>
+      )}
+    </section>
+  );
+}

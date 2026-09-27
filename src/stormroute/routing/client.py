@@ -85,6 +85,33 @@ def build_route_url(base_url: str, origin: LatLon, destination: LatLon) -> str:
     return f"{base_url.rstrip('/')}/route/v1/driving/{points}?{options}"
 
 
+def _route_id(
+    coordinates: tuple[tuple[float, float], ...], duration_s: float, distance_m: float
+) -> str:
+    """A route ID derived from the route's own content, not its position in the response.
+
+    Two separate OSRM calls for the same trip are not guaranteed to return alternatives
+    in the same order (score.py and routing.py each fetch independently), so a
+    positional "route_0"/"route_1" can silently point at different geometry between the
+    map preview and the score. Hashing distance, duration, and a sparse, rounded sample
+    of the polyline (not every point, so negligible float-formatting differences between
+    two responses for the physically same route do not change the ID) gives the same ID
+    to the same route wherever it is fetched, and a different one to a genuinely
+    different alternative.
+    """
+    step = max(1, len(coordinates) // 20)
+    sample = [*coordinates[::step], coordinates[-1]]
+    key = json.dumps(
+        {
+            "distance_m": round(distance_m),
+            "duration_s": round(duration_s),
+            "points": [[round(lon, 4), round(lat, 4)] for lon, lat in sample],
+        },
+        sort_keys=True,
+    )
+    return "route_" + hashlib.sha256(key.encode()).hexdigest()[:10]
+
+
 def _parse_route(index: int, route: dict[str, Any]) -> CandidateRoute:
     coordinates = tuple((float(lon), float(lat)) for lon, lat in route["geometry"]["coordinates"])
     edge_seconds: list[float] = []
@@ -99,17 +126,18 @@ def _parse_route(index: int, route: dict[str, Any]) -> CandidateRoute:
             "Was the request made with overview=full?"
         )
     duration_s = float(route["duration"])
+    distance_m = float(route["distance"])
     annotated_s = sum(edge_seconds)
     if annotated_s > 0:
         scale = duration_s / annotated_s
         edge_seconds = [seconds * scale for seconds in edge_seconds]
     return CandidateRoute(
-        route_id=f"route_{index}",
+        route_id=_route_id(coordinates, duration_s, distance_m),
         coordinates=coordinates,
         edge_seconds=tuple(edge_seconds),
         edge_meters=tuple(edge_meters),
         duration_s=duration_s,
-        distance_m=float(route["distance"]),
+        distance_m=distance_m,
     )
 
 
@@ -140,15 +168,18 @@ def fetch_routes(
     offline: bool = False,
     client: httpx.Client | None = None,
 ) -> list[CandidateRoute]:
-    """Return 2-3 candidate routes, from the cache when present.
+    """Return every candidate route OSRM offers (1 to `MAX_ROUTES`), from the cache when present.
 
-    A response is cached as raw JSON before parsing, so a replay reproduces the
-    exact routes. With `offline=True` only the cache is read; a miss is an error,
-    never a silent network call.
+    `alternatives=true` asks for up to a few routes, but OSRM does not guarantee more
+    than one exists between two points; a single route is a normal result, scored on its
+    own (`comparison.ranking == "single_route"`), not an error. Zero routes is the only
+    routing failure. A response is cached as raw JSON before parsing, so a replay
+    reproduces the exact routes. With `offline=True` only the cache is read; a miss is an
+    error, never a silent network call.
 
     Raises:
-        RoutingError: on a cache miss offline, a network or HTTP failure, a
-            non-Ok OSRM response, or fewer than two routes.
+        RoutingError: on a cache miss offline, a network or HTTP failure, a non-Ok OSRM
+            response, or zero routes.
     """
     url = build_route_url(base_url, origin, destination)
     cached = _cache_path(cache_dir, url)
@@ -178,8 +209,6 @@ def fetch_routes(
         cached.write_text(json.dumps(payload), encoding="utf-8")
 
     routes = parse_osrm_response(payload)
-    if len(routes) < MIN_ROUTES:
-        raise RoutingError(
-            f"OSRM returned {len(routes)} route(s); at least {MIN_ROUTES} candidates are required"
-        )
+    if not routes:
+        raise RoutingError("OSRM returned zero routes between those points")
     return routes[:MAX_ROUTES]

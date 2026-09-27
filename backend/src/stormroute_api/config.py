@@ -7,10 +7,11 @@ Settings are never echoed in a response or a log line.
 """
 
 from pathlib import Path
+from typing import Annotated
 
 import yaml
-from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 from stormroute.config import REPO_ROOT
 
@@ -39,5 +40,25 @@ class Settings(BaseSettings):
     )
 
     env: str = "development"
+    cors_origins: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: ["http://localhost:5173", "http://127.0.0.1:5173"]
+    )
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, value: str | list[str]) -> list[str]:
+        """Parse env origins and reject wildcard access."""
+        if isinstance(value, str):
+            value = [origin.strip() for origin in value.split(",") if origin.strip()]
+        if any("*" in origin for origin in value):
+            raise ValueError("CORS wildcard origins are not allowed")
+        return value
+
     model_path: Path = REPO_ROOT / "artifacts" / "models" / "stormroute_model.joblib"
     demo_artifact_paths: list[Path] = Field(default_factory=_demo_artifact_paths)
+    # Unprefixed, like NWS_USER_AGENT and ORS_API_KEY: an external-service
+    # setting, not a STORMROUTE_-namespaced one.
+    ors_api_key: str | None = Field(default=None, validation_alias="ORS_API_KEY")
+    routing_base_url: str = Field(
+        default="https://router.project-osrm.org", validation_alias="ROUTING_BASE_URL"
+    )

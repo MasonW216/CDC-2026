@@ -13,6 +13,7 @@ import pytest
 from shapely.geometry import Polygon, box
 
 from stormroute.config import data_path
+from stormroute.data import geography
 from stormroute.data.geography import (
     AREA_CRS,
     COUNTY_COLUMNS,
@@ -211,3 +212,35 @@ def test_record_stores_url_checksum_size_and_utc_time(tmp_path):
     assert entry["bytes"] == 123
     assert entry["url"].endswith(TIGER_COUNTY_FILENAME)
     assert entry["recorded_at_utc"].endswith("+00:00")
+
+
+def test_sample_has_complete_county_inventory():
+    counties = geography.load_counties("sample")
+    assert len(counties) == 100
+    assert counties.GEOID.is_unique
+    assert counties.GEOID.str.fullmatch(r"37\d{3}").all()
+    assert counties.geometry.is_valid.all()
+    assert (counties.ALAND > 0).all()
+
+
+def test_checksum_mismatch_rejected(monkeypatch):
+    monkeypatch.setattr(geography, "sha256_of", lambda path: "incorrect")
+    with pytest.raises(ValueError, match="checksum"):
+        geography.load_counties("sample")
+
+
+def test_incomplete_inventory_rejected(monkeypatch):
+    original = gpd.read_file
+    monkeypatch.setattr(gpd, "read_file", lambda path: original(path).iloc[:-1])
+    with pytest.raises(ValueError, match="100 unique"):
+        geography.load_counties("sample")
+
+
+def test_plan_accepts_legacy_boundary_record(tmp_path):
+    path = write_file(tmp_path / TIGER_COUNTY_FILENAME)
+    (tmp_path / "download_record.json").write_text(
+        json.dumps({"sha256": sha256_of(path), "source_url": geography.TIGER_COUNTY_URL})
+    )
+    assert plan_boundary_download(tmp_path).kind == "skip"
+    path.write_bytes(b"corrupted")
+    assert plan_boundary_download(tmp_path).kind == "conflict"

@@ -18,6 +18,7 @@ Exit codes: 0 success, 1 conflict or failure, 2 bad arguments.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 
 import httpx
@@ -51,6 +52,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--adopt-existing",
         action="store_true",
         help="record an unrecorded file already on disk instead of refusing",
+    )
+    parser.add_argument(
+        "--write-sample", action="store_true", help="Rebuild Cameron's EDA display fixture"
     )
     return parser.parse_args(argv)
 
@@ -112,7 +116,44 @@ def main(argv: list[str] | None = None) -> int:
         record_path.relative_to(REPO_ROOT) if record_path.is_relative_to(REPO_ROOT) else record_path
     )
     print(f"Download record: {shown}")
+    if args.write_sample:
+        payload = json.loads(record_path.read_text(encoding="utf-8"))
+        entry = payload.get("files", {}).get(TIGER_COUNTY_FILENAME, payload)
+        write_sample(
+            {
+                "source_url": entry.get("url", entry.get("source_url", TIGER_COUNTY_URL)),
+                "sha256": entry["sha256"],
+                "retrieved_at_utc": entry.get(
+                    "recorded_at_utc", entry.get("retrieved_at_utc", "unknown")
+                ),
+            }
+        )
     return 0
+
+
+def write_sample(source: dict[str, str]) -> None:
+    from stormroute.data.geography import load_counties
+
+    counties = load_counties("full")[["STATEFP", "GEOID", "NAME", "ALAND", "geometry"]]
+    counties = counties.to_crs("EPSG:5070")
+    counties.geometry = counties.geometry.simplify(1000, preserve_topology=True)
+    target = data_path("sample") / "nc_counties_2024.geojson"
+    counties.to_crs("EPSG:4326").to_file(target, driver="GeoJSON")
+    target.with_suffix(".json").write_text(
+        json.dumps(
+            {
+                "sha256": sha256_of(target),
+                "source_url": source["source_url"],
+                "source_sha256": source["sha256"],
+                "retrieved_at_utc": source["retrieved_at_utc"],
+                "derivation": "NC filter; EPSG:5070 simplification at 1000 m; EPSG:4326 output",
+                "use": "EDA display only; not spatial joins, routing, or area measurement",
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":

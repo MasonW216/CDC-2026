@@ -1,0 +1,64 @@
+{
+  "data_mode": "full",
+  "population": "Unique cleaned NC qualifying events with UTC beginnings in configured period",
+  "source_files": [
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz"
+  ],
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "git_commit": "595f4d7",
+  "window_start_inclusive": "2024-09-25T00:00:00+00:00",
+  "window_end_exclusive": "2024-09-30T00:00:00+00:00",
+  "selection": "UTC event onset in an exploratory date window; not causal storm attribution",
+  "events_2024": 440,
+  "events_study_period": 2220,
+  "window_shares": {
+    "of_2024": 0.20227272727272727,
+    "of_study_period": 0.04009009009009009
+  },
+  "groups": [
+    {
+      "group": "Selected Helene-period window",
+      "event_count": 89,
+      "observed_counties": 43,
+      "Flood": 19,
+      "Flash Flood": 69,
+      "Debris Flow": 1
+    },
+    {
+      "group": "Rest of 2024",
+      "event_count": 351,
+      "observed_counties": 70,
+      "Flood": 52,
+      "Flash Flood": 298,
+      "Debris Flow": 1
+    },
+    {
+      "group": "2015-2023",
+      "event_count": 1780,
+      "observed_counties": 99,
+      "Flood": 464,
+      "Flash Flood": 1298,
+      "Debris Flow": 18
+    }
+  ]
+}

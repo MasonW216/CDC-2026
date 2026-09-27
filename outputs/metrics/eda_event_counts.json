@@ -1,0 +1,542 @@
+{
+  "data_mode": "full",
+  "population": "Unique cleaned NC qualifying events with UTC beginnings in configured period",
+  "time_basis": "UTC beginning; months pooled across years",
+  "period_start_inclusive": "2015-01-01T00:00:00+00:00",
+  "period_end_exclusive": "2025-01-01T00:00:00+00:00",
+  "cleaned_events": 2220,
+  "events_counted": 2220,
+  "excluded_outside_utc_period": 0,
+  "county_coverage": "Observed county FIPS only; no complete county inventory inferred",
+  "source_files": [
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz"
+  ],
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "git_commit": "595f4d7",
+  "counts": {
+    "year": [
+      {
+        "year": 2015,
+        "event_count": 198
+      },
+      {
+        "year": 2016,
+        "event_count": 245
+      },
+      {
+        "year": 2017,
+        "event_count": 107
+      },
+      {
+        "year": 2018,
+        "event_count": 362
+      },
+      {
+        "year": 2019,
+        "event_count": 114
+      },
+      {
+        "year": 2020,
+        "event_count": 399
+      },
+      {
+        "year": 2021,
+        "event_count": 111
+      },
+      {
+        "year": 2022,
+        "event_count": 89
+      },
+      {
+        "year": 2023,
+        "event_count": 155
+      },
+      {
+        "year": 2024,
+        "event_count": 440
+      }
+    ],
+    "month": [
+      {
+        "month": 1,
+        "event_count": 77
+      },
+      {
+        "month": 2,
+        "event_count": 83
+      },
+      {
+        "month": 3,
+        "event_count": 14
+      },
+      {
+        "month": 4,
+        "event_count": 116
+      },
+      {
+        "month": 5,
+        "event_count": 130
+      },
+      {
+        "month": 6,
+        "event_count": 154
+      },
+      {
+        "month": 7,
+        "event_count": 237
+      },
+      {
+        "month": 8,
+        "event_count": 385
+      },
+      {
+        "month": 9,
+        "event_count": 465
+      },
+      {
+        "month": 10,
+        "event_count": 313
+      },
+      {
+        "month": 11,
+        "event_count": 159
+      },
+      {
+        "month": 12,
+        "event_count": 87
+      }
+    ],
+    "county": [
+      {
+        "county_fips": "37183",
+        "event_count": 156
+      },
+      {
+        "county_fips": "37129",
+        "event_count": 90
+      },
+      {
+        "county_fips": "37019",
+        "event_count": 87
+      },
+      {
+        "county_fips": "37189",
+        "event_count": 68
+      },
+      {
+        "county_fips": "37081",
+        "event_count": 58
+      },
+      {
+        "county_fips": "37171",
+        "event_count": 52
+      },
+      {
+        "county_fips": "37157",
+        "event_count": 48
+      },
+      {
+        "county_fips": "37141",
+        "event_count": 46
+      },
+      {
+        "county_fips": "37031",
+        "event_count": 43
+      },
+      {
+        "county_fips": "37017",
+        "event_count": 42
+      },
+      {
+        "county_fips": "37063",
+        "event_count": 42
+      },
+      {
+        "county_fips": "37111",
+        "event_count": 41
+      },
+      {
+        "county_fips": "37051",
+        "event_count": 39
+      },
+      {
+        "county_fips": "37175",
+        "event_count": 38
+      },
+      {
+        "county_fips": "37193",
+        "event_count": 37
+      },
+      {
+        "county_fips": "37023",
+        "event_count": 36
+      },
+      {
+        "county_fips": "37061",
+        "event_count": 36
+      },
+      {
+        "county_fips": "37163",
+        "event_count": 36
+      },
+      {
+        "county_fips": "37009",
+        "event_count": 35
+      },
+      {
+        "county_fips": "37047",
+        "event_count": 35
+      },
+      {
+        "county_fips": "37119",
+        "event_count": 35
+      },
+      {
+        "county_fips": "37089",
+        "event_count": 34
+      },
+      {
+        "county_fips": "37135",
+        "event_count": 33
+      },
+      {
+        "county_fips": "37147",
+        "event_count": 33
+      },
+      {
+        "county_fips": "37101",
+        "event_count": 32
+      },
+      {
+        "county_fips": "37025",
+        "event_count": 30
+      },
+      {
+        "county_fips": "37027",
+        "event_count": 30
+      },
+      {
+        "county_fips": "37057",
+        "event_count": 29
+      },
+      {
+        "county_fips": "37107",
+        "event_count": 27
+      },
+      {
+        "county_fips": "37151",
+        "event_count": 27
+      },
+      {
+        "county_fips": "37155",
+        "event_count": 27
+      },
+      {
+        "county_fips": "37167",
+        "event_count": 27
+      },
+      {
+        "county_fips": "37067",
+        "event_count": 26
+      },
+      {
+        "county_fips": "37169",
+        "event_count": 26
+      },
+      {
+        "county_fips": "37085",
+        "event_count": 24
+      },
+      {
+        "county_fips": "37133",
+        "event_count": 24
+      },
+      {
+        "county_fips": "37195",
+        "event_count": 24
+      },
+      {
+        "county_fips": "37191",
+        "event_count": 23
+      },
+      {
+        "county_fips": "37179",
+        "event_count": 22
+      },
+      {
+        "county_fips": "37021",
+        "event_count": 21
+      },
+      {
+        "county_fips": "37125",
+        "event_count": 21
+      },
+      {
+        "county_fips": "37001",
+        "event_count": 20
+      },
+      {
+        "county_fips": "37053",
+        "event_count": 20
+      },
+      {
+        "county_fips": "37055",
+        "event_count": 20
+      },
+      {
+        "county_fips": "37069",
+        "event_count": 19
+      },
+      {
+        "county_fips": "37197",
+        "event_count": 19
+      },
+      {
+        "county_fips": "37035",
+        "event_count": 18
+      },
+      {
+        "county_fips": "37149",
+        "event_count": 18
+      },
+      {
+        "county_fips": "37139",
+        "event_count": 17
+      },
+      {
+        "county_fips": "37007",
+        "event_count": 16
+      },
+      {
+        "county_fips": "37079",
+        "event_count": 15
+      },
+      {
+        "county_fips": "37161",
+        "event_count": 15
+      },
+      {
+        "county_fips": "37065",
+        "event_count": 14
+      },
+      {
+        "county_fips": "37005",
+        "event_count": 12
+      },
+      {
+        "county_fips": "37011",
+        "event_count": 12
+      },
+      {
+        "county_fips": "37015",
+        "event_count": 12
+      },
+      {
+        "county_fips": "37071",
+        "event_count": 12
+      },
+      {
+        "county_fips": "37013",
+        "event_count": 11
+      },
+      {
+        "county_fips": "37033",
+        "event_count": 11
+      },
+      {
+        "county_fips": "37097",
+        "event_count": 11
+      },
+      {
+        "county_fips": "37159",
+        "event_count": 11
+      },
+      {
+        "county_fips": "37029",
+        "event_count": 10
+      },
+      {
+        "county_fips": "37049",
+        "event_count": 10
+      },
+      {
+        "county_fips": "37165",
+        "event_count": 10
+      },
+      {
+        "county_fips": "37037",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37073",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37093",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37095",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37099",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37113",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37123",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37127",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37153",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37185",
+        "event_count": 9
+      },
+      {
+        "county_fips": "37003",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37039",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37045",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37083",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37103",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37117",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37121",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37143",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37173",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37199",
+        "event_count": 8
+      },
+      {
+        "county_fips": "37041",
+        "event_count": 7
+      },
+      {
+        "county_fips": "37087",
+        "event_count": 7
+      },
+      {
+        "county_fips": "37091",
+        "event_count": 7
+      },
+      {
+        "county_fips": "37105",
+        "event_count": 7
+      },
+      {
+        "county_fips": "37131",
+        "event_count": 7
+      },
+      {
+        "county_fips": "37145",
+        "event_count": 7
+      },
+      {
+        "county_fips": "37077",
+        "event_count": 6
+      },
+      {
+        "county_fips": "37115",
+        "event_count": 6
+      },
+      {
+        "county_fips": "37043",
+        "event_count": 5
+      },
+      {
+        "county_fips": "37109",
+        "event_count": 5
+      },
+      {
+        "county_fips": "37059",
+        "event_count": 4
+      },
+      {
+        "county_fips": "37181",
+        "event_count": 4
+      },
+      {
+        "county_fips": "37137",
+        "event_count": 3
+      },
+      {
+        "county_fips": "37177",
+        "event_count": 1
+      },
+      {
+        "county_fips": "37187",
+        "event_count": 1
+      }
+    ],
+    "hazard": [
+      {
+        "event_type": "Flood",
+        "event_count": 535
+      },
+      {
+        "event_type": "Flash Flood",
+        "event_count": 1665
+      },
+      {
+        "event_type": "Debris Flow",
+        "event_count": 20
+      }
+    ]
+  }
+}

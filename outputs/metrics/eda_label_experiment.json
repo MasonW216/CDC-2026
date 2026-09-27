@@ -1,0 +1,843 @@
+{
+  "data_mode": "full",
+  "experiment_year": 2020,
+  "windows": 146400,
+  "counties": 100,
+  "negative_windows": 146138,
+  "positive_fraction": 0.0017896174863387979,
+  "comparison": {
+    "onset_positive_windows": 262,
+    "overlap_positive_windows": 452,
+    "onset_only_windows": 1,
+    "overlap_only_windows": 191,
+    "year_onset_events": 399,
+    "year_onsets_missing_end": 0,
+    "year_onsets_zero_duration": 26
+  },
+  "source_files": [
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz"
+  ],
+  "source_sha256": {
+    "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+    "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+    "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+    "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+    "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+  },
+  "boundary_provenance": {
+    "files": {
+      "tl_2024_us_county.zip": {
+        "bytes": 83913260,
+        "note": "downloaded",
+        "recorded_at_utc": "2026-09-27T02:24:15+00:00",
+        "sha256": "04e668d3502757c837c13444730547cd967f28a2c49aeffb873d1792ab2cb97b",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip"
+      }
+    },
+    "source": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip"
+  },
+  "git_commit": "6243c03",
+  "monthly_balance": [
+    {
+      "month": 1,
+      "windows": 12400,
+      "positives": 5,
+      "negatives": 12395,
+      "positive_fraction": 0.0004032258
+    },
+    {
+      "month": 2,
+      "windows": 11600,
+      "positives": 47,
+      "negatives": 11553,
+      "positive_fraction": 0.0040517241
+    },
+    {
+      "month": 3,
+      "windows": 12400,
+      "positives": 0,
+      "negatives": 12400,
+      "positive_fraction": 0.0
+    },
+    {
+      "month": 4,
+      "windows": 12000,
+      "positives": 17,
+      "negatives": 11983,
+      "positive_fraction": 0.0014166667
+    },
+    {
+      "month": 5,
+      "windows": 12400,
+      "positives": 26,
+      "negatives": 12374,
+      "positive_fraction": 0.0020967742
+    },
+    {
+      "month": 6,
+      "windows": 12000,
+      "positives": 26,
+      "negatives": 11974,
+      "positive_fraction": 0.0021666667
+    },
+    {
+      "month": 7,
+      "windows": 12400,
+      "positives": 3,
+      "negatives": 12397,
+      "positive_fraction": 0.0002419355
+    },
+    {
+      "month": 8,
+      "windows": 12400,
+      "positives": 41,
+      "negatives": 12359,
+      "positive_fraction": 0.0033064516
+    },
+    {
+      "month": 9,
+      "windows": 12000,
+      "positives": 10,
+      "negatives": 11990,
+      "positive_fraction": 0.0008333333
+    },
+    {
+      "month": 10,
+      "windows": 12400,
+      "positives": 11,
+      "negatives": 12389,
+      "positive_fraction": 0.0008870968
+    },
+    {
+      "month": 11,
+      "windows": 12000,
+      "positives": 76,
+      "negatives": 11924,
+      "positive_fraction": 0.0063333333
+    },
+    {
+      "month": 12,
+      "windows": 12400,
+      "positives": 0,
+      "negatives": 12400,
+      "positive_fraction": 0.0
+    }
+  ],
+  "county_balance": [
+    {
+      "county_fips": "37001",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37003",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37005",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37007",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37009",
+      "windows": 1464,
+      "positives": 7,
+      "negatives": 1457,
+      "positive_fraction": 0.0047814208
+    },
+    {
+      "county_fips": "37011",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37013",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37015",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37017",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37019",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37021",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37023",
+      "windows": 1464,
+      "positives": 7,
+      "negatives": 1457,
+      "positive_fraction": 0.0047814208
+    },
+    {
+      "county_fips": "37025",
+      "windows": 1464,
+      "positives": 6,
+      "negatives": 1458,
+      "positive_fraction": 0.0040983607
+    },
+    {
+      "county_fips": "37027",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37029",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37031",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37033",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37035",
+      "windows": 1464,
+      "positives": 8,
+      "negatives": 1456,
+      "positive_fraction": 0.0054644809
+    },
+    {
+      "county_fips": "37037",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37039",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37041",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37043",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37045",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37047",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37049",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37051",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37053",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37055",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37057",
+      "windows": 1464,
+      "positives": 6,
+      "negatives": 1458,
+      "positive_fraction": 0.0040983607
+    },
+    {
+      "county_fips": "37059",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37061",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37063",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37065",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37067",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37069",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37071",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37073",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37075",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37077",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37079",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37081",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37083",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37085",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37087",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37089",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37091",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37093",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37095",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37097",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37099",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37101",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37103",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37105",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37107",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37109",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37111",
+      "windows": 1464,
+      "positives": 7,
+      "negatives": 1457,
+      "positive_fraction": 0.0047814208
+    },
+    {
+      "county_fips": "37113",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37115",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37117",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37119",
+      "windows": 1464,
+      "positives": 9,
+      "negatives": 1455,
+      "positive_fraction": 0.006147541
+    },
+    {
+      "county_fips": "37121",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37123",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37125",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37127",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37129",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37131",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37133",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37135",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37137",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37139",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37141",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37143",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37145",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37147",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37149",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37151",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37153",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37155",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37157",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37159",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37161",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37163",
+      "windows": 1464,
+      "positives": 6,
+      "negatives": 1458,
+      "positive_fraction": 0.0040983607
+    },
+    {
+      "county_fips": "37165",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37167",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37169",
+      "windows": 1464,
+      "positives": 6,
+      "negatives": 1458,
+      "positive_fraction": 0.0040983607
+    },
+    {
+      "county_fips": "37171",
+      "windows": 1464,
+      "positives": 10,
+      "negatives": 1454,
+      "positive_fraction": 0.0068306011
+    },
+    {
+      "county_fips": "37173",
+      "windows": 1464,
+      "positives": 1,
+      "negatives": 1463,
+      "positive_fraction": 0.0006830601
+    },
+    {
+      "county_fips": "37175",
+      "windows": 1464,
+      "positives": 6,
+      "negatives": 1458,
+      "positive_fraction": 0.0040983607
+    },
+    {
+      "county_fips": "37177",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37179",
+      "windows": 1464,
+      "positives": 3,
+      "negatives": 1461,
+      "positive_fraction": 0.0020491803
+    },
+    {
+      "county_fips": "37181",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37183",
+      "windows": 1464,
+      "positives": 8,
+      "negatives": 1456,
+      "positive_fraction": 0.0054644809
+    },
+    {
+      "county_fips": "37185",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37187",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    },
+    {
+      "county_fips": "37189",
+      "windows": 1464,
+      "positives": 5,
+      "negatives": 1459,
+      "positive_fraction": 0.0034153005
+    },
+    {
+      "county_fips": "37191",
+      "windows": 1464,
+      "positives": 2,
+      "negatives": 1462,
+      "positive_fraction": 0.0013661202
+    },
+    {
+      "county_fips": "37193",
+      "windows": 1464,
+      "positives": 8,
+      "negatives": 1456,
+      "positive_fraction": 0.0054644809
+    },
+    {
+      "county_fips": "37195",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37197",
+      "windows": 1464,
+      "positives": 4,
+      "negatives": 1460,
+      "positive_fraction": 0.0027322404
+    },
+    {
+      "county_fips": "37199",
+      "windows": 1464,
+      "positives": 0,
+      "negatives": 1464,
+      "positive_fraction": 0.0
+    }
+  ],
+  "interpretation": "Onset labels from reports; negatives do not establish safe conditions"
+}

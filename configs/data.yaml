@@ -73,7 +73,11 @@ paths:
   data_quality_report: outputs/metrics/data_quality.json
 
 weather:
-  provider: TODO              # ERA5-Land directly or via Open-Meteo; decided in Milestone 2
+  # Copernicus Climate Data Store, chosen at the Milestone 2 EDA because
+  # Open-Meteo's ERA5-Land has no precipitation or wind
+  # (reports/eda/eda_findings.md). ERA5-Land has no gust variable, so gusts come
+  # from ERA5. Datasets and retrieval method: ADR 0005 (proposed).
+  provider: copernicus_cds
   cadence_hours: 1
   # Rolling windows computed strictly from hours at or before the prediction
   # timestamp. See src/stormroute/features/rolling_weather.py.

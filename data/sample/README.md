@@ -68,6 +68,34 @@ measured in Milestone 2, and is reported in
 [reports/eda/eda_findings.md](../../reports/eda/eda_findings.md). Never quote a
 rate computed from this file.
 
+## `weather_sample.csv`
+
+48 hours (2024-09-26 00:00 to 2024-09-27 23:00 UTC) of hourly Open-Meteo archive
+data during Hurricane Helene, for the three representative points in EDA section
+10 (Buncombe, Mecklenburg, New Hanover). It covers **both** models the notebook
+compares:
+
+- `era5_land`: precipitation and wind are **empty**, exactly as Open-Meteo
+  returns them. That gap is the section 10 finding, so it is preserved, not filled.
+- `era5_seamless`: every variable present. Precipitation and wind come from
+  ERA5; temperature and soil moisture from ERA5-Land.
+
+Units: mm, °C, m/s, m³/m³. Times are UTC. At 25 KB it is the largest CSV fixture;
+anything shorter than 48 hours cannot exercise the 24-hour rolling features.
+
+## `nc_counties_2024.geojson`
+
+Real Census TIGER/Line 2024 boundaries for all 100 NC counties, simplified at
+1,000 meters in EPSG:5070 and stored in EPSG:4326 for offline EDA display.
+Unlike the event fixtures, these county identities and boundaries are derived
+from real public source data. The adjacent JSON records the source URL,
+retrieval timestamp, archive checksum, derivation, and fixture checksum.
+`ALAND` preserves Census land area; never measure area from simplified geometry.
+This map is not suitable for precise spatial joins or routing.
+
+Rebuild with `uv run python scripts/download_boundaries.py --write-sample`.
+Synthetic event counts plotted on this real map remain synthetic.
+
 ## `nc_counties_sample.geojson`
 
 All 100 North Carolina counties from the 2024 Census TIGER/Line file, run
@@ -86,6 +114,6 @@ Regenerate from the real file rather than editing by hand.
 ## Rules
 
 - Public, already-published values only. Never a private or re-identifiable record.
-- Keep the CSV fixtures under a few kilobytes; the county GeoJSON is the one exception (~80 KB).
+- Keep CSV fixtures small (tens of kilobytes at most); the county GeoJSON is the one larger exception (~80 KB).
 - Preserve the real column names and types of the upstream source.
 - A fixture change and its test change belong in the same pull request.

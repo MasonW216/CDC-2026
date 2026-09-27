@@ -1,28 +1,28 @@
 # StormRoute
 
-**Explainable AI that helps North Carolina travelers compare routes and departure
-times to reduce flood-hazard exposure.**
+**A prototype being developed to help North Carolina travelers compare routes
+and departure times by modeled flood-hazard exposure.**
 
-> **Project status: Milestone 0, repository scaffold.**
-> The structure, configuration, and documentation are in place. No data pipeline,
-> model, or application code exists yet. **EDA is the first scientific
-> milestone.** Nothing is modeled until the EDA verification gate is approved.
+> **Project status: data ingestion and sample EDA development; EDA gate pending.**
+> Census boundaries are verified, and analysis code runs on synthetic event
+> fixtures. Full-data findings, a trained model, and application behavior remain
+> unverified. **EDA is the first scientific milestone.** Modeling waits for gate approval.
 > See [the build guide](docs/build_guide.md).
 
 Carolina Data Challenge 2026 · Natural Science Track · AI for Social Good
 
 ---
 
-## 1. What it does
+## 1. Intended behavior
 
-Enter an origin, a destination, and a departure time. StormRoute:
+The planned application accepts an origin, destination, and departure time to:
 
-1. gives the trip a **0–100 Weather Safety Score**, which is a comparative index of
+1. give the trip a **0–100 Weather Safety Score**, which is a comparative index of
    modeled flood-hazard exposure;
-2. shows **which part of the route** contributes the most exposure, and when you
+2. show **which part of the route** contributes the most exposure, and when you
    would be there;
-3. recommends a **route or departure-time change** that improves the score; and
-4. shows the **trade-off**: score before and after, plus the added travel time.
+3. recommend a **route or departure-time change** that improves the score; and
+4. show the **trade-off**: score before and after, plus the added travel time.
 
 > **Leave four hours later: 54 → 81 (+27).** This avoids the peak modeled
 > flood-hazard window in Haywood County without increasing drive time.
@@ -34,13 +34,12 @@ _TBD (Milestone 7)._
 
 ## 3. Why
 
-Flood-related road deaths often happen when people drive into water they
-could not judge. Most of that exposure comes from decisions made before the
-trip starts. A traveler can already see a forecast and an alert list. What they
-usually cannot see is a single comparison of their options: *this route, now*
-versus *that route, later*, in terms they can act on.
+The project focuses on decisions made before a trip: comparing *this route, now*
+with *that route, later*. Its intended contribution is to explain differences in
+modeled exposure alongside forecasts and official alerts. Reduced real-world
+exposure or harm has not been demonstrated.
 
-## 4. Key capabilities
+## 4. Planned capabilities
 
 - Trip-level score with a plain-language band. The top band is never called "safe".
 - Worst-segment explanation at county × six-hour resolution.
@@ -65,6 +64,8 @@ flowchart LR
 Details are in [docs/architecture.md](docs/architecture.md).
 
 ## 6. Data and model
+
+The following is the planned design, not a trained or evaluated model.
 
 | | |
 |---|---|

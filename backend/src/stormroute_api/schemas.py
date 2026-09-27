@@ -1,20 +1,47 @@
-"""Pydantic request and response models.
+"""Pydantic request model for the trip score endpoint.
 
-The wire contract, versioned and tested. A score response must carry:
+The response is the `prototype-score/1` contract from
+`stormroute.scoring.concern` / `stormroute.scoring.trip`, mirrored for the frontend in
+`frontend/src/types/score.ts`. It is returned as a plain dict (FastAPI serializes it
+as-is): the scoring module is the single source of truth for that shape, so it is not
+re-declared here as a second Pydantic model that could drift from it.
 
-  * model and data version;
-  * the safety score and its plain-language band;
-  * modeled route risk both before and after alert policy;
-  * the worst segment and its expected arrival time;
-  * the primary contributing factors;
-  * official alerts intersecting the route;
-  * alternative routes and departure times;
-  * the recommendation, with score delta and time cost;
-  * a confidence/coverage indicator;
-  * warnings and limitations.
-
-A score is never serialized without the information needed to interpret it.
-`frontend/src/types/trip.ts` mirrors these shapes and must change with them.
+This supersedes the milestone-6 production `ScoreResponse` sketch (0-100 calibrated
+Weather Safety Score, model/data version, confidence report) that the docstring here
+used to describe. That contract returns once a trained, calibrated model exists
+(see docs/build_guide.md); tonight's endpoint serves the prototype index instead, per
+the MVP brief.
 """
 
-# TODO(milestone-6): implement. See docs/build_guide.md.
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Literal
+
+from pydantic import BaseModel, Field, field_validator
+
+
+class Location(BaseModel):
+    """A named point: a label for display plus WGS84 coordinates."""
+
+    label: str
+    lat: float = Field(ge=-90, le=90)
+    lon: float = Field(ge=-180, le=180)
+
+
+class TripRequest(BaseModel):
+    """Body of `POST /api/v1/trips/score`. Mirrors `frontend/src/types/trip.ts`."""
+
+    origin: Location
+    destination: Location
+    departure_time: datetime
+    mode: Literal["live", "cached_replay"] = "live"
+
+    @field_validator("departure_time")
+    @classmethod
+    def _tz_aware(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            raise ValueError(
+                "departure_time must include a UTC offset, e.g. ...+00:00 or ...-04:00"
+            )
+        return value

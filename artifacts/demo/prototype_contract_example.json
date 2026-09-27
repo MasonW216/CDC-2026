@@ -1,0 +1,43 @@
+{
+ "purpose": "One worked example of the indicator contract (input -> output). Real values from the Helene replay.",
+ "input": {
+  "county_fips": "37021",
+  "arrival_window_utc": "2024-09-27T12:00:00+00:00",
+  "arrival_utc": "2024-09-27T16:00:00+00:00",
+  "decision_time_utc": "2024-09-27T16:00:00+00:00",
+  "precip_24h_mm": 232.6,
+  "precip_72h_mm": 325.6,
+  "precip_units": "mm, trailing sum ending at the start of the arrival window, ERA5 reanalysis",
+  "alerts_known_at_decision": [
+   "Flood Warning (event GSP-13)",
+   "Flood Warning (event GSP-12)",
+   "Flood Warning (event GSP-15)",
+   "Flash Flood Warning (event GSP-97)",
+   "Flash Flood Warning (event GSP-106)"
+  ],
+  "missing": []
+ },
+ "output": {
+  "level": 3,
+  "label": "Severe concern",
+  "reason": "24 h rain 233 mm and 72 h rain 326 mm, both ending 2024-09-27 12:00 UTC; active flash flood warning, flood warning.",
+  "sources": [
+   "ERA5 reanalysis rainfall (Open-Meteo)",
+   "NWS flood products (IEM archive)"
+  ],
+  "data_status": "complete"
+ },
+ "missing_data_example": {
+  "input": {
+   "county_fips": "37021",
+   "precip_24h_mm": null,
+   "precip_72h_mm": null,
+   "alerts_known_at_decision": []
+  },
+  "output": {
+   "level": null,
+   "label": "Not assessed",
+   "data_status": "missing_weather"
+  }
+ }
+}
