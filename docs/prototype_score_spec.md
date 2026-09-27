@@ -133,6 +133,29 @@ a real number for a coverage gap: only offsets where the route is still fully `a
 are considered. Drive time (`duration_minutes`) does not change between offsets; say so
 when displaying a delta.
 
+## Route geometry (`RouteScore.geometry`)
+
+Additive field: `[[lon, lat], ...] | null`, the real road polyline for that route (OSRM
+convention, matching `GET /api/v1/routing/route`'s coordinate order). Does not affect the
+score -- attached to an already-scored route as the last step of `build_response`, never
+threaded into `RouteInput`/`Stretch`/`score_route`/`score_segment`.
+
+- `mode: "live"`: taken directly from the OSRM data already fetched during scoring
+  (`CandidateRoute.coordinates`) -- no second network call.
+- `mode: "cached"` / `"historical_case_study"`: baked into the fixture JSON once, alongside
+  `stretches`, under a `"geometry"` key per route (see `geometry_from_fixture`). These pages
+  stay fully offline and deterministic; the geometry is real, just captured in advance.
+- `null` means no real geometry is available for this route. A UI must fall back to a
+  schematic line through the segment county centers and say so, never draw nothing and never
+  claim a schematic line is the real road.
+
+## County boundaries (`GET /api/v1/geography/counties`)
+
+Serves `data/sample/nc_counties_2024.geojson` unchanged: 100 features, `Polygon` geometry,
+property `GEOID` (5-character county FIPS) matching `SegmentScore.county_fips` exactly, so a
+client joins a scored segment to its county shape with no server-side spatial logic. Static
+data, cached in memory at import time, no request parameters.
+
 ## Historical case study (`GET /api/v1/demo/helene`)
 
 A standalone, non-live demo page's data source: the Hurricane Helene (Sep 2024)

@@ -75,3 +75,11 @@ def test_checked_in_fixture_matches_a_fresh_call():
     cached = json.loads(fixture.read_text())
     fresh = json.loads(json.dumps(helene_case_study(), sort_keys=True))
     assert fresh == cached
+
+
+def test_routes_carry_real_road_geometry():
+    result = helene_case_study()
+    for route in result["routes"]:
+        assert route["geometry"]
+        assert len(route["geometry"]) > 100  # a real multi-point road polyline, not a stub
+        assert all(len(point) == 2 for point in route["geometry"])

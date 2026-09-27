@@ -97,7 +97,8 @@ def _score_live(request: Request, body: TripRequest) -> dict[str, Any]:
     durations = {c.route_id: c.duration_s / 60 for c in candidates}
     routes = routes_from_intervals(intervals, durations, names)
 
+    geometry = {c.route_id: list(c.coordinates) for c in candidates}
     try:
-        return score_trip(routes, body.departure_time)
+        return score_trip(routes, body.departure_time, geometry=geometry)
     except TripNotSupportedError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error

@@ -14,7 +14,8 @@
 import { useEffect, useState } from 'react';
 
 import { AlertList, RouteCard } from '@/components/ScoreDisplay';
-import { ApiError, fetchHeleneCaseStudy } from '@/services/api';
+import { ApiError, fetchCountyBoundaries, fetchHeleneCaseStudy } from '@/services/api';
+import type { CountyBoundaries } from '@/types/geography';
 import type { ScoreResponse } from '@/types/score';
 import { formatInstant } from '@/utils/scoreDisplay';
 
@@ -25,6 +26,7 @@ type LoadState =
 
 export default function HeleneCaseStudyPage() {
   const [state, setState] = useState<LoadState>({ kind: 'loading' });
+  const [counties, setCounties] = useState<CountyBoundaries | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -39,10 +41,22 @@ export default function HeleneCaseStudyPage() {
           message: error instanceof ApiError ? error.message : 'Could not load the case study.',
         });
       });
+    // County shapes are map decoration, not core content: a failure here degrades the map
+    // to no county coloring (RouteMap already handles `counties === null`), never blocks
+    // the page or the route/alert data above.
+    fetchCountyBoundaries()
+      .then((data) => {
+        if (!cancelled) setCounties(data);
+      })
+      .catch(() => undefined);
     return () => {
       cancelled = true;
     };
   }, []);
+
+  // A local const (not a nested property access) so TypeScript's narrowing survives into
+  // the .map() closure below.
+  const caseStudy = state.kind === 'ready' ? state.score.case_study : undefined;
 
   return (
     <section aria-labelledby="helene-heading">
@@ -76,17 +90,23 @@ export default function HeleneCaseStudyPage() {
         </p>
       )}
 
-      {state.kind === 'ready' && (
+      {state.kind === 'ready' && caseStudy && (
         <>
           <p className="note">
-            {state.score.case_study?.origin.label} to {state.score.case_study?.destination.label}
-            , departing {formatInstant(state.score.departure_utc)}.{' '}
-            {state.score.case_study?.note}
+            {caseStudy.origin.label} to {caseStudy.destination.label}, departing{' '}
+            {formatInstant(state.score.departure_utc)}. {caseStudy.note}
           </p>
 
           <div className="card-grid" style={{ marginTop: 'var(--space-4)' }}>
             {state.score.routes.map((route, index) => (
-              <RouteCard key={route.route_id} label={`Route ${index + 1}`} route={route} />
+              <RouteCard
+                key={route.route_id}
+                label={`Route ${index + 1}`}
+                route={route}
+                origin={caseStudy.origin}
+                destination={caseStudy.destination}
+                counties={counties}
+              />
             ))}
           </div>
 

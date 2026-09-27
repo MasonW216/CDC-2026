@@ -14,9 +14,12 @@
  * Layout rule: official NWS alerts render above the advisory, never below or
  * beside it.
  */
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { RouteCard } from '@/components/ScoreDisplay';
+import { fetchCountyBoundaries } from '@/services/api';
+import type { CountyBoundaries } from '@/types/geography';
 import type { ScoreResponse } from '@/types/score';
 import type { TripRequest } from '@/types/trip';
 import { formatInstant } from '@/utils/scoreDisplay';
@@ -48,6 +51,21 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
   } | null;
   const score = props.score ?? state?.score;
   const request = props.request ?? state?.request;
+  const [counties, setCounties] = useState<CountyBoundaries | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    // Map decoration only -- a failure here must not block the page; RouteMap already
+    // handles counties === null (no county coloring, still shows the road geometry).
+    fetchCountyBoundaries()
+      .then((data) => {
+        if (!cancelled) setCounties(data);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (!score || !request) {
     return <NoTripYet />;
@@ -72,7 +90,14 @@ export default function PrototypeResultsPage(props: PrototypeResultsPageProps = 
 
       <div className="card-grid" style={{ marginTop: 'var(--space-4)' }}>
         {score.routes.map((route, index) => (
-          <RouteCard key={route.route_id} label={`Route ${index + 1}`} route={route} />
+          <RouteCard
+            key={route.route_id}
+            label={`Route ${index + 1}`}
+            route={route}
+            origin={request.origin}
+            destination={request.destination}
+            counties={counties}
+          />
         ))}
       </div>
 

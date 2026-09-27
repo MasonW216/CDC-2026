@@ -55,7 +55,8 @@ def main() -> None:
     durations = {c.route_id: c.duration_s / 60 for c in candidates}
     routes = routes_from_intervals(intervals, durations, names)
 
-    response = score_trip(routes, departure, now=as_of, cache_dir=DEFAULT_CACHE)
+    geometry = {c.route_id: list(c.coordinates) for c in candidates}
+    response = score_trip(routes, departure, now=as_of, cache_dir=DEFAULT_CACHE, geometry=geometry)
     request = {
         "purpose": "Saved contemporary trip for the offline demo fallback.",
         "origin": {"label": args.origin[0], "lat": origin.lat, "lon": origin.lon},
@@ -70,6 +71,9 @@ def main() -> None:
             r.route_id: {
                 "duration_minutes": r.duration_minutes,
                 "distance_km": r.distance_km,
+                # Real OSRM road geometry, [lon, lat] pairs, so the offline replay can draw
+                # the actual road path, not a schematic line -- see geometry_from_fixture().
+                "geometry": [list(point) for point in geometry.get(r.route_id, [])],
                 "stretches": [
                     {
                         "county_fips": s.county_fips,

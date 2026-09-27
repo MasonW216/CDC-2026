@@ -502,6 +502,60 @@ h4.subsection-title {
   padding-left: 1.2em;
 }
 
+/* ---- Contributing-factor chips: renders route.contributing_factors ---- */
+
+.factor-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: var(--space-2) 0;
+  padding: 0;
+}
+
+.factor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.factor-chip[data-kind='alert'] {
+  border-color: var(--level-3-fg);
+  color: var(--level-3-fg);
+}
+
+.factor-chip[data-kind='rain'] {
+  border-color: var(--level-1-fg);
+  color: var(--level-1-fg);
+}
+
+/* ---- Grouped alert summary: replaces a flat, potentially 20+ line alert list ---- */
+
+.alert-summary ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.alert-summary__group {
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
+  border-radius: 999px;
+  padding: 2px var(--space-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* ---- Tables ---- */
 
 table.timeline {
@@ -541,6 +595,53 @@ table.timeline tr:last-child td {
 
 .leaflet-container {
   font-family: inherit;
+}
+
+/* ---- RouteMap: the per-route interactive map (county shapes + real road line),
+   replacing the old county-timeline table. Leaflet requires an explicitly sized
+   parent or it renders blank -- the min-height below is load-bearing. ---- */
+
+.route-map {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  margin: var(--space-3) 0;
+}
+
+.route-map .leaflet-container {
+  height: 320px;
+  min-height: 320px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .route-map .leaflet-container {
+    height: 380px;
+    min-height: 380px;
+  }
+}
+
+/* Leaflet popups inherit the app's own card styling instead of Leaflet's defaults,
+   so a county popup looks like the rest of the product, not a foreign widget. */
+.leaflet-popup-content-wrapper {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.leaflet-popup-content {
+  margin: var(--space-3);
+  font-size: 0.9rem;
+}
+
+.leaflet-popup-content .alert-banner {
+  margin: var(--space-2) 0;
+}
+
+.leaflet-popup-tip {
+  background: var(--color-surface);
 }
 
 /* Recolor Leaflet's default zoom control as a dark floating pill. */

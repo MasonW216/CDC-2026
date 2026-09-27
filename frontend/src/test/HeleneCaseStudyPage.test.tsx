@@ -10,15 +10,26 @@ import heleneCaseStudy from '../../../artifacts/demo/helene_case_study.json';
 import HeleneCaseStudyPage from '../pages/HeleneCaseStudyPage';
 import type { ScoreResponse } from '../types/score';
 
+// react-leaflet needs a real layout engine it doesn't get in jsdom (see
+// test/LiveRoutePage.test.tsx for the same, earlier precedent); the page logic under
+// test here is data loading and page copy, not map rendering, so RouteMap is mocked to
+// a simple summary.
+vi.mock('../components/RouteMap', () => ({
+  default: ({ route }: { route: { route_id: string } }) => (
+    <div data-testid={`map-${route.route_id}`} />
+  ),
+}));
+
 vi.mock('../services/api', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../services/api')>();
-  return { ...actual, fetchHeleneCaseStudy: vi.fn() };
+  return { ...actual, fetchHeleneCaseStudy: vi.fn(), fetchCountyBoundaries: vi.fn() };
 });
 
 import * as api from '../services/api';
 
 const score = heleneCaseStudy as ScoreResponse;
 const fetchHeleneCaseStudy = vi.mocked(api.fetchHeleneCaseStudy);
+const fetchCountyBoundaries = vi.mocked(api.fetchCountyBoundaries);
 
 function renderPage() {
   return render(
@@ -31,6 +42,8 @@ function renderPage() {
 describe('HeleneCaseStudyPage', () => {
   beforeEach(() => {
     fetchHeleneCaseStudy.mockReset();
+    fetchCountyBoundaries.mockReset();
+    fetchCountyBoundaries.mockResolvedValue({ type: 'FeatureCollection', features: [] });
   });
 
   it('shows a loading state, then the fetched case study', async () => {

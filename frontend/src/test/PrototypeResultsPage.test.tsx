@@ -3,12 +3,35 @@
  * (artifacts/demo/saved_trip_response.json, produced by the actual scoring
  * pipeline -- not hand-crafted fixture data).
  */
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import savedTripResponse from '../../../artifacts/demo/saved_trip_response.json';
 import PrototypeResultsPage from '../pages/PrototypeResultsPage';
-import type { ScoreResponse } from '../types/score';
+import type { RouteScore, ScoreResponse } from '../types/score';
+
+// react-leaflet needs a real layout engine it doesn't get in jsdom (see
+// test/LiveRoutePage.test.tsx). Renders enough of the route's real data (county names)
+// that tests can still verify the right route reached the map, without a real Leaflet
+// mount.
+vi.mock('../components/RouteMap', () => ({
+  default: ({ route }: { route: RouteScore }) => (
+    <div data-testid={`map-${route.route_id}`}>
+      {route.segments.map((s) => (
+        <span key={`${s.county_fips}-${s.arrival_utc}`}>{s.county_name}</span>
+      ))}
+    </div>
+  ),
+}));
+
+vi.mock('../services/api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../services/api')>();
+  return {
+    ...actual,
+    fetchCountyBoundaries: vi.fn().mockResolvedValue({ type: 'FeatureCollection', features: [] }),
+  };
+});
 
 const score = savedTripResponse as ScoreResponse;
 const request = {

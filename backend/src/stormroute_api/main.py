@@ -18,6 +18,7 @@ for why):
     GET  /api/v1/geocode/reverse
     GET  /api/v1/routing/route
     GET  /api/v1/demo/helene
+    GET  /api/v1/geography/counties
 
 Run with: make api
 """
@@ -26,7 +27,15 @@ from fastapi import FastAPI
 
 from stormroute_api import __version__
 from stormroute_api.config import Settings
-from stormroute_api.routes import case_study, geocode, health, methodology, routing, score
+from stormroute_api.routes import (
+    case_study,
+    geocode,
+    geography,
+    health,
+    methodology,
+    routing,
+    score,
+)
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -39,6 +48,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(score.router)
     app.include_router(methodology.router)
     app.include_router(case_study.router)
+    app.include_router(geography.router)
     return app
 
 

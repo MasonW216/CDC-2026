@@ -79,6 +79,14 @@ export interface RouteScore {
   reasons: string[];
   /** Up to 3 stretches that actually set the index, for an icon list. May be empty. */
   contributing_factors: ContributingFactor[];
+  /**
+   * Real road polyline, [lon, lat] pairs (OSRM/GeoJSON order; each inner array has exactly
+   * 2 numbers, typed as number[] rather than a tuple only so JSON-imported test fixtures
+   * satisfy the type without an unsafe cast). Null means no real geometry is available --
+   * fall back to a schematic line through segment county centers and say so; never draw
+   * nothing, and never present a schematic line as the real road.
+   */
+  geometry: number[][] | null;
 }
 
 /**

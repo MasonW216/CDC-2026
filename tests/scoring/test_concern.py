@@ -23,7 +23,7 @@ from stormroute.scoring.live_forecast import (
     fetch_forecast,
     parse_alerts,
 )
-from stormroute.scoring.trip import TripNotSupportedError, score_trip
+from stormroute.scoring.trip import TripNotSupportedError, build_response, score_trip
 
 NOW = datetime(2026, 9, 27, 6, 0, tzinfo=UTC)
 NO_ALERTS = AlertData((), NOW, True)
@@ -488,3 +488,21 @@ def test_recommend_departure_never_trades_a_coverage_gap_for_a_lower_number():
         routes, NOW + timedelta(hours=2), base_scored, truncated, NO_ALERTS, NOW
     )
     assert result is None
+
+
+def test_geometry_is_attached_when_provided_and_null_otherwise():
+    fc = forecast({"37021": 0.0})
+    routes = [route("only", [stretch()])]
+    with_geo = build_response(
+        routes,
+        NOW,
+        fc,
+        NO_ALERTS,
+        NOW,
+        mode="live",
+        geometry={"only": [(-82.0, 35.6), (-81.9, 35.5)]},
+    )
+    assert with_geo["routes"][0]["geometry"] == [[-82.0, 35.6], [-81.9, 35.5]]
+
+    without_geo = build_response(routes, NOW, fc, NO_ALERTS, NOW, mode="live")
+    assert without_geo["routes"][0]["geometry"] is None
