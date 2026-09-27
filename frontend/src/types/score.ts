@@ -114,6 +114,8 @@ export interface Coverage {
   forecast: {
     source: string;
     retrieved_utc: string;
+    /** Minutes between `requested_at_utc` and `retrieved_utc`. Show this, not just `from_cache`. */
+    age_minutes: number;
     horizon_hours: number;
     /** Counties with no usable forecast hours. */
     missing_counties: string[];
@@ -124,6 +126,7 @@ export interface Coverage {
   alerts: {
     source: string;
     retrieved_utc: string;
+    age_minutes: number;
     ok: boolean;
     error: string | null;
     from_cache: boolean;
@@ -134,11 +137,25 @@ export interface Coverage {
   geography: { supported: boolean; message: string | null };
 }
 
+/** Present only when `mode === 'historical_case_study'` (GET /api/v1/demo/helene). */
+export interface CaseStudyInfo {
+  name: string;
+  period: string;
+  note: string;
+  origin: { label: string; lat: number; lon: number };
+  destination: { label: string; lat: number; lon: number };
+}
+
 export interface ScoreResponse {
   schema_version: 'prototype-score/1';
   score_name: string;
-  /** 'live' for a new trip, 'cached' when replayed from saved upstream responses. */
-  mode: 'live' | 'cached';
+  /**
+   * 'live': a new trip, scored just now. 'cached': replayed from saved upstream responses
+   * (a contemporary trip, offline fallback). 'historical_case_study': the standalone Helene
+   * page (GET /api/v1/demo/helene) — never returned by POST /api/v1/trips/score, and never
+   * to be shown as, or confused with, a live or cached trip result.
+   */
+  mode: 'live' | 'cached' | 'historical_case_study';
   requested_at_utc: string;
   departure_utc: string;
   routes: RouteScore[];
@@ -148,4 +165,6 @@ export interface ScoreResponse {
   alerts: AlertUse[];
   better_departure: BetterDeparture | null;
   limitations: string[];
+  /** Only present when mode === 'historical_case_study'. */
+  case_study?: CaseStudyInfo;
 }

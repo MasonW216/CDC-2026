@@ -245,6 +245,34 @@ def score_trip(
         forecast, forecast_error = None, str(error)
     alerts = fetch_alerts(cache_dir=cache, offline=offline, client=client, now=requested)
 
+    return build_response(
+        routes,
+        departure,
+        forecast,
+        alerts,
+        requested,
+        mode="cached" if (forecast and forecast.from_cache) or alerts.from_cache else "live",
+        forecast_error=forecast_error,
+    )
+
+
+def build_response(
+    routes: Sequence[RouteInput],
+    departure: datetime,
+    forecast: ForecastData | None,
+    alerts: AlertData,
+    requested: datetime,
+    *,
+    mode: str,
+    forecast_error: str | None = None,
+) -> dict[str, Any]:
+    """Assemble the `prototype-score/1` response from already-fetched inputs.
+
+    Shared by `score_trip` (live Open-Meteo/NWS) and
+    `stormroute.scoring.historical_case_study` (historical reanalysis + archived alerts),
+    so both produce byte-identical shapes through one code path -- `mode` is the only
+    thing that tells them apart, never a second response contract.
+    """
     scored = [score_route(r, forecast, alerts, requested) for r in routes]
     outside = sorted({s.county_name for r in routes for s in r.stretches if s.county_fips is None})
     missing = sorted(
@@ -263,7 +291,7 @@ def score_trip(
     return {
         "schema_version": SCHEMA_VERSION,
         "score_name": SCORE_NAME,
-        "mode": "cached" if (forecast and forecast.from_cache) or alerts.from_cache else "live",
+        "mode": mode,
         "requested_at_utc": requested.isoformat(),
         "departure_utc": departure.isoformat(),
         "routes": scored,

@@ -133,6 +133,22 @@ a real number for a coverage gap: only offsets where the route is still fully `a
 are considered. Drive time (`duration_minutes`) does not change between offsets; say so
 when displaying a delta.
 
+## Historical case study (`GET /api/v1/demo/helene`)
+
+A standalone, non-live demo page's data source: the Hurricane Helene (Sep 2024)
+Asheville-Charlotte replay, scored by this exact rule (`build_response`, the same function
+`score_trip` uses), fed ERA5 reanalysis rainfall and archived NWS alerts instead of live
+Open-Meteo/NWS data. `mode: "historical_case_study"` is the only thing distinguishing it from
+a live response -- same schema, same fields, same formula. `stormroute.scoring.trip` (the live
+path) never imports this module; the dependency runs one way, enforced by
+`tests/scoring/test_historical_case_study.py::test_never_mixes_into_a_live_response`.
+
+Never reachable from `POST /api/v1/trips/score`: this is a deliberate second endpoint so a
+live request can never be served historical reanalysis, per the brief ("historical reanalysis
+rainfall is not a live forecast and must not be fed into the live trip flow"). A UI must
+visually and textually distinguish this page from the live planner -- it is a case study, not
+a trip result.
+
 ## Fixed limitations to display
 
 Forecasts are uncertain and can be wrong. The index does not know road closures, drainage,

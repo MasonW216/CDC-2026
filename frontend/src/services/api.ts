@@ -128,3 +128,12 @@ export function fetchRoute(origin: Location, destination: Location): Promise<Rou
 export function scoreTrip(request: TripRequest): Promise<ScoreResponse> {
   return post<ScoreResponse>('/api/v1/trips/score', request, 20000);
 }
+
+/**
+ * The Hurricane Helene case study (GET /api/v1/demo/helene): a standalone historical
+ * replay, `mode: 'historical_case_study'`, scored by the same rule as a live trip but
+ * never reachable from `scoreTrip`. See docs/prototype_score_spec.md.
+ */
+export function fetchHeleneCaseStudy(): Promise<ScoreResponse> {
+  return get<ScoreResponse>('/api/v1/demo/helene', {});
+}
