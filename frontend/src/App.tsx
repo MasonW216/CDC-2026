@@ -3,7 +3,9 @@
  *
  * Routes:
  *    /             PlannerPage
- *    /results      ResultsPage       (not yet built -- shows a placeholder)
+ *    /results      PrototypeResultsPage (MVP demo: the prototype hazard
+ *                  indicator replay, not the real ResultsPage -- see that
+ *                  file, milestone 7, for the production Weather Safety Score)
  *    /methodology  MethodologyPage   (not yet built -- shows a placeholder)
  *
  * Also owns the persistent header and map/data source attribution required by
@@ -14,6 +16,7 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 import PlannerPage from './pages/PlannerPage';
+import PrototypeResultsPage from './pages/PrototypeResultsPage';
 
 function ComingSoon({ page }: { page: string }) {
   return (
@@ -37,7 +40,7 @@ export default function App() {
       <main id="main-content">
         <Routes>
           <Route path="/" element={<PlannerPage />} />
-          <Route path="/results" element={<ComingSoon page="results page" />} />
+          <Route path="/results" element={<PrototypeResultsPage />} />
           <Route path="/methodology" element={<ComingSoon page="methodology page" />} />
           <Route path="*" element={<ComingSoon page="page" />} />
         </Routes>
