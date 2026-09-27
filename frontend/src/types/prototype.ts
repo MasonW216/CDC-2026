@@ -62,10 +62,11 @@ export interface PrototypeResult {
   route_fixture_provenance: string;
   routes: Record<string, PrototypeRoute>;
   comparison: {
-    lower_indicated_concern_route: string;
-    other_route: string;
+    /** Null when no route has a lower indicator level. */
+    lower_indicated_concern_route: string | null;
+    other_route: string | null;
     levels: Record<string, ConcernLevel>;
-    extra_minutes: number;
+    extra_minutes: number | null;
     note: string;
   } | null;
 }

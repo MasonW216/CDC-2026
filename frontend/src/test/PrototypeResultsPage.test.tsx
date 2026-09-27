@@ -36,7 +36,7 @@ describe('PrototypeResultsPage', () => {
       const route = fixture.routes[routeIds[index] as string];
       expect(route).toBeDefined();
       expect(
-        screen.getByRole('heading', { level: 3, name: new RegExp(`Route ${index + 1}:`) }),
+        screen.getByRole('heading', { level: 3, name: new RegExp(`Route ${index}:`) }),
       ).toBeTruthy();
     }
     // Every segment's county name appears somewhere in the timeline tables.
@@ -96,5 +96,34 @@ describe('PrototypeResultsPage', () => {
     if (fixture.comparison) {
       expect(screen.getByText(fixture.comparison.note)).toBeTruthy();
     }
+  });
+
+  it('does not invent a time trade-off when tied routes have no lower-concern alternative', () => {
+    const comparison = fixture.comparison;
+    expect(comparison).not.toBeNull();
+    if (!comparison) {
+      return;
+    }
+    const note =
+      'Both routes have the same indicator level; no lower-concern alternative was found.';
+    const tied: PrototypeResult = {
+      ...fixture,
+      comparison: {
+        ...comparison,
+        lower_indicated_concern_route: null,
+        other_route: null,
+        extra_minutes: null,
+        note,
+      },
+    };
+    render(<PrototypeResultsPage data={tied} />);
+    expect(screen.getByText(note)).toBeTruthy();
+    expect(document.body.textContent).not.toMatch(/null is|0 minutes shorter/);
+  });
+
+  it('labels complete status as rainfall coverage, not complete hazard data', () => {
+    render(<PrototypeResultsPage />);
+    expect(screen.getAllByText('24 h and 72 h rainfall available').length).toBeGreaterThan(0);
+    expect(screen.queryByText('Complete data')).toBeNull();
   });
 });
