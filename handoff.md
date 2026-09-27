@@ -98,3 +98,32 @@ still uncommitted as of this handoff: the `RouteComparisonChart` addition, the p
 alert-list removal on the Helene page, the jsdom `ResizeObserver` test-setup fix, and this
 file. Ask Mason for the push script, or check `git status` — nothing here should be a
 surprise given the table above.
+
+## Addendum, 27 Sep 2026, ~09:20 EDT — a real Bayesian term in the score
+
+Pushed as `95cc092` on `Mason`, after this file was first written. Short version: the live
+score used to read zero historical data; now one small term does.
+
+- **New**: `SegmentScore.county_prior_component` (number, always present) and a new
+  `ContributingFactor.kind: 'historical'` (alongside the existing `'rain'`/`'alert'`).
+  Backend: `src/stormroute/scoring/county_prior.py` (a Beta-Binomial conjugate fit on the
+  2015-2024 NOAA Storm Events data, partial pooling, capped well below Severe). Full
+  writeup: `prototype_score_spec.md`'s "County history term" section.
+- **Additive only**, same rule as everything else in this file: `segment_index =
+  round(max(rain_component, alert_component, county_prior_component))`. It can only raise
+  a segment's index, never lower it. The dry saved demo trip's index went from a flat 0 to
+  16/18 as a direct, honest result — real 10-year history speaking when tonight's weather
+  is silent. The Helene case study is untouched (rain still dominates its Severe score).
+- **For the PIVOT branch specifically**: checked `origin/Jeffrey` directly before pushing.
+  `RiskGauge`/`ScoreDisplay` there only read `index`, `band`, and
+  `highest_concern_segment.reason` — none of which break, since `reason`'s new sentence
+  ("...county's 2015-2024 history runs above the state average...") is just plain text
+  that will show up for free once this merges, no code change needed for that. The one
+  thing genuinely out of date on that branch: `types/score.ts` still types `kind` as only
+  `'rain' | 'alert'` and doesn't declare `county_prior_component` — cosmetic (JS doesn't
+  enforce it at runtime, nothing crashes), but worth picking up the two-field diff from
+  `Mason`'s `types/score.ts` next time you sync, so `tsc` stays accurate to what the API
+  actually returns.
+- Verification: 355 backend tests, 60 frontend tests (on `Mason`, pre-PIVOT), ruff/mypy/
+  eslint/tsc clean, `docs/model_card.md` updated (it previously claimed the live formula
+  had "no fitted parameters," no longer true for this one term).
