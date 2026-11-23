@@ -78,7 +78,7 @@ notebook = [
     "nbstripout>=0.7,<1",
     "seaborn>=0.13,<1",
     "mapclassify>=2.6,<3",
-    "folium>=0.17,<1",
+    "folium>=0.17,<2",
 ]
 
 [project.urls]
